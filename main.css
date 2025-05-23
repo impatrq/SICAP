@@ -31,6 +31,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 .subtitulo{
     text-align: center;
 }
+.quien{
+    text-align: center;
+    font-size: 40px;
+}
 #boton-facul{
     padding: 0;
     margin: 0;
@@ -42,7 +46,69 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     outline: none;
     border: none;
     box-shadow: none !important;
-    ;
+}
+#boton-titi{
+    background-image:url("/images/titi.jpg") !important;
+    padding: 0;
+    margin: 0;
+    width: 30%;
+    border: none;
+    background-size: contain !important; 
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    box-shadow: none !important;
+}
+#boton-facus{
+    background-image: url("/images/facus.jpg") !important;
+    padding: 0;
+    margin: 0;
+    width: 30%;
+    border: none;
+    background-size: contain !important; 
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    box-shadow: none !important;
+}
+#boton-pablo{
+    background-image: url("/images/pablo.jpg") !important;
+    padding: 0;
+    margin: 0;
+    width: 30%;
+    border: none;
+    background-size: contain !important; 
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    box-shadow: none !important;
+}
+#boton-lauty{
+    background-image: url("/images/lauty.jpg") !important;
+    padding: 0;
+    margin: 0;
+    width: 30%;
+    border: none;
+    background-size: contain !important; 
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    box-shadow: none !important;
+}
+
+.titulo-modal-facul{
+    color: #000 ;
+    text-align: center;
+}
+.contenido-modal-facul{
+display: flex !important;
+} 
+.facul-en-modal{
+    width: 10%;
+    height: auto;
+}
+#cerrar-modal{
+    color: #000;
 }
 .presentacion{
     display: flex;
