@@ -18,10 +18,53 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     vertical-align: baseline;
     font-family: Geoform;
 }
-.barra-de-navegación{
-    background-color: burlywood;
+#header{
+    padding-bottom: 350px !important;
+}
+h1{
+    padding-top: 150px !important;
+}
+.nav{
+    top: 0;
+    position: fixed !important;
+    z-index: 1000;
+    width: 100%;
+    display: flex;
+    align-items: center;
     height: 30px;
     text-decoration: none;
+    justify-content:center;
+    transition: all 0.5s ease;  
+    padding: 30px 0 10px 0 !important;
+}
+.nav.active{
+    background: rgba(0, 0, 0, 0.88);
+    padding: 15px;
+    border-radius: 5px;
+} 
+.nav.active a{
+    color: white;
+}
+nav.active a:hover{
+    background:black ;
+}
+.menu{
+    display: flex;
+}
+.menu li{
+    list-style: none;
+    margin: 5px;
+}
+.menu li a{ 
+    text-decoration: none !important;
+    font-weight: bolder;
+    transition: all 0.5s ease;
+}
+.menu li a:hover{
+    padding: 5px 10px;
+    color: #000;
+    background: white;
+    border-radius: 15px;
 }
 .titulo{
     text-align: center;
@@ -38,84 +81,161 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 #boton-facul{
     padding: 0;
     margin: 0;
-    width: 30%;
+    width:500px;
+    height:600px;
     border: none;
     background-image: url("/images/facul.jpg") !important;
-    background-size: contain !important; 
+    background-size: cover !important; 
+    background-position:center !important; 
     border-radius: 10px;
     outline: none;
     border: none;
     box-shadow: none !important;
 }
+#boton-facul:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+    transform: scale(1.1);
+}
+#boton-titi:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+    transform: scale(1.1);
+}
+#boton-facus:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+    transform: scale(1.1);
+}
+#boton-pablo:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+    transform: scale(1.1);
+}
+#boton-lauty:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+    transform: scale(1.1);
+}
 #boton-titi{
-    background-image:url("/images/titi.jpg") !important;
     padding: 0;
     margin: 0;
-    width: 30%;
+    width:500px;
+    height:600px;
     border: none;
-    background-size: contain !important; 
+    background-image: url("/images/titi.jpg") !important;
+    background-size: cover !important; 
+    background-position:center !important; 
     border-radius: 10px;
     outline: none;
     border: none;
     box-shadow: none !important;
 }
 #boton-facus{
-    background-image: url("/images/facus.jpg") !important;
     padding: 0;
     margin: 0;
-    width: 30%;
+    width:500px;
+    height:600px;
     border: none;
-    background-size: contain !important; 
+    background-image: url("/images/facus.jpg") !important;
+    background-size: cover !important; 
+    background-position:center !important; 
     border-radius: 10px;
     outline: none;
     border: none;
     box-shadow: none !important;
 }
 #boton-pablo{
-    background-image: url("/images/pablo.jpg") !important;
     padding: 0;
     margin: 0;
-    width: 30%;
+    width:500px;
+    height:600px;
     border: none;
-    background-size: contain !important; 
+    background-image: url("/images/pablo.jpg") !important;
+    background-size: cover !important; 
+    background-position:center !important; 
     border-radius: 10px;
     outline: none;
     border: none;
     box-shadow: none !important;
 }
 #boton-lauty{
-    background-image: url("/images/lauty.jpg") !important;
     padding: 0;
     margin: 0;
-    width: 30%;
+    width:500px;
+    height:600px;
     border: none;
-    background-size: contain !important; 
+    background-image: url("/images/lauty.jpg") !important;
+    background-size: cover !important; 
+    background-position:center !important; 
     border-radius: 10px;
     outline: none;
     border: none;
     box-shadow: none !important;
 }
+#modal{
+    border-radius: 5%;
+}
 
-.titulo-modal-facul{
-    color: #000 ;
+#modal::backdrop{
+    background: rgba(0, 0, 0, 0.55);
+}
+#modal1::backdrop{
+    background: rgba(0, 0, 0, 0.55);
+}
+#modal2::backdrop{
+    background: rgba(0, 0, 0, 0.55);
+}
+#modal3::backdrop{
+    background: rgba(0, 0, 0, 0.55);
+}
+#modal4::backdrop{
+    background: rgba(0, 0, 0, 0.55);
+}
+#modal{
+    max-width: 800px !important;
+}
+#modal1{
+    max-width: 800px !important;
+}
+#modal2{
+    max-width: 800px !important;
+}
+#modal3{
+    max-width: 800px !important;
+}
+#modal4{
+    max-width: 800px !important;
+}
+.titulo-modal{
+    color: #000   !important;
     text-align: center;
 }
-.contenido-modal-facul{
+.contenido-modal{
 display: flex !important;
 } 
-.facul-en-modal{
-    width: 10%;
-    height: auto;
+.imagen-en-modal{
+    width: 400px;
+    height: 500px;
+    margin-right: 20px;
+    border-radius: 10%;
 }
+
 #cerrar-modal{
-    color: #000;
+    color:black !important;
+}
+#cerrar-modal1{
+    color:black !important;
+}
+#cerrar-modal2{
+    color:black !important;
+}
+#cerrar-modal3{
+    color:black !important;
+}
+#cerrar-modal4{
+    color:black !important;
 }
 .presentacion{
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
     gap: 2em;
-
 }
 .donde-se-puede-aplicar{
     text-align: center;
@@ -127,12 +247,7 @@ display: flex !important;
     width: 30%;
     border-radius: 10px;
 }
-.imagen-modal{
-    height: 30%;
-    width: 30%;
-    border-radius: 10px;
-    text-align: left;
-}
+
 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
@@ -275,7 +390,7 @@ a:hover {
 
 .dark a {
     color: #fff;
-    border-bottom-color: rgba(255, 255, 255, 0.5);
+    border-bottom: none;
 }
 
 .dark a:hover {
@@ -1512,7 +1627,6 @@ ul.menu {
 ul.menu li {
     display: inline-block;
     line-height: 1em;
-    border-left: solid 1px #e6e6e6;
     padding: 0 0 0 0.5em;
     margin: 0 0 0 0.5em;
 }
@@ -2037,7 +2151,7 @@ button.alt:hover,
     background-size: cover;
     background-position: top left, center center;
     background-repeat: repeat, no-repeat;
-    padding: 14em 0 14em 0;
+    padding: 0em 0 14em 0;
     text-align: center;
     color: #fff;
 }
