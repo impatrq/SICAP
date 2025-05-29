@@ -19,10 +19,17 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     font-family: Geoform;
 }
 #header{
-    padding-bottom: 350px !important;
+    padding-bottom: 370px !important;
 }
 h1{
     padding-top: 150px !important;
+}
+.links-inicio{
+    margin: 5px;
+}
+.links-inicio :hover{
+
+    transform: scale(2.2);
 }
 .nav{
     top: 0;
@@ -168,8 +175,10 @@ nav.active a:hover{
     border: none;
     box-shadow: none !important;
 }
-#modal{
+#modal, #modal1, #modal2, #modal3, #modal4{
     border-radius: 5%;
+    overflow: hidden;
+    
 }
 
 #modal::backdrop{
@@ -207,29 +216,85 @@ nav.active a:hover{
     text-align: center;
 }
 .contenido-modal{
-display: flex !important;
-} 
+    display: flex;
+    flex-direction: row;
+}
+.contenido-imagen{
+    flex-direction: column;
+}
+.info-modal{
+    flex-direction: row;
+}
+.Roles{
+    text-align: center;
+    color: black !important;
+    font-size: bolder;
+}
 .imagen-en-modal{
-    width: 400px;
     height: 500px;
     margin-right: 20px;
     border-radius: 10%;
 }
+.info-modal{
+    display: flex;
+    flex-direction: row; /* Asegura que los elementos estén en columna */
+    
+}
 
 #cerrar-modal{
     color:black !important;
+    position: absolute;
+    top: 10px; /* Ajusta la distancia desde arriba */
+    right: -45px; /* Ajusta la distancia desde la derecha */
+    background: none; /* Quita el fondo */
+    border: none; /* Quita el borde */
+    font-size: 25px; /* Tamaño del icono */
+    cursor: pointer; /* Hace que sea clickeable */
 }
+
 #cerrar-modal1{
     color:black !important;
+    position: absolute;
+    top: 10px; /* Ajusta la distancia desde arriba */
+    right: -45px; /* Ajusta la distancia desde la derecha */
+    background: none; /* Quita el fondo */
+    border: none; /* Quita el borde */
+    font-size: 25px; /* Tamaño del icono */
+    cursor: pointer; /* Hace que sea clickeable */
 }
 #cerrar-modal2{
     color:black !important;
+    position: absolute;
+    top: 10px; /* Ajusta la distancia desde arriba */
+    right: -45px; /* Ajusta la distancia desde la derecha */
+    background: none; /* Quita el fondo */
+    border: none; /* Quita el borde */
+    font-size: 25px; /* Tamaño del icono */
+    cursor: pointer; /* Hace que sea clickeable */
 }
 #cerrar-modal3{
     color:black !important;
+    position: absolute;
+    top: 10px; /* Ajusta la distancia desde arriba */
+    right: -45px; /* Ajusta la distancia desde la derecha */
+    background: none; /* Quita el fondo */
+    border: none; /* Quita el borde */
+    font-size: 25px; /* Tamaño del icono */
+    cursor: pointer; /* Hace que sea clickeable */
 }
 #cerrar-modal4{
     color:black !important;
+    position: absolute;
+    top: 10px; /* Ajusta la distancia desde arriba */
+    right: -45px; /* Ajusta la distancia desde la derecha */
+    background: none; /* Quita el fondo */
+    border: none; /* Quita el borde */
+    font-size: 25px; /* Tamaño del icono */
+    cursor: pointer; /* Hace que sea clickeable */
+}
+#cerrar-modal:hover, #cerrar-modal1:hover, #cerrar-modal2:hover, #cerrar-modal3:hover, #cerrar-modal4:hover{
+    
+    transform: scale(2.2);
 }
 .presentacion{
     display: flex;
