@@ -2,6 +2,8 @@
 🔜 Pronto disponible
 <br><br>
 🗓️ Objetivo del Proyecto:![Imagen de WhatsApp 2025-04-21 a las 10 49 51_631583bd](https://github.com/user-attachments/assets/569426ec-28a7-4774-afd9-004fa3ef2b5e)
+![Imagen de WhatsApp 2025-04-21 a las 10 49 51_631583bd](https://github.com/user-attachments/assets/deb96cba-8a0f-485b-a572-8e85fbd43b70)
+
 
 SICAP (Sistema Integral de Control de Almacenes y Pañoles) tiene como finalidad brindar una solución eficiente para el control de inventario, registro y gestión de materiales en pañoles de empresas e instituciones. Su implementación permite optimizar recursos, reducir pérdidas y mejorar la trazabilidad de herramientas y repuestos.
 <br><br>
