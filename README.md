@@ -4,4 +4,13 @@
 	<img src="./images/logotipo-de-instagram.png" width="25" alt="" style="text-aling: center">
 </a>
 </div>
+
 ---
+
+<h2>Nuestra Propuesta</h2>
+<h2>Como surgio el proyecto</h2>
+<h2>Caracteristicas Principales</h2>
+<h2>Materiales Necesarios</h2>
+<h2>Integrantes</h2>
+<h2>Informacion de Contacto</h2>
+
