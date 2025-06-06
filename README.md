@@ -1,1 +1,1 @@
-![erasebg-transformed (1)](https://github.com/user-attachments/assets/08f293e2-e865-4de3-9743-3519e8d20e1c)
+![erasebg-transformed (2)](https://github.com/user-attachments/assets/008f8fdd-e42c-4a58-99b5-93392dd60eef)
