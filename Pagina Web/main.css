@@ -91,7 +91,7 @@ nav.active a:hover{
     width:500px;
     height:600px;
     border: none;
-    background-image: url("/images/facul.jpg") !important;
+    background-image: url("/Pagina Web/images/facul.jpg") !important;
     background-size: cover !important; 
     background-position:center !important; 
     border-radius: 10px;
@@ -126,7 +126,7 @@ nav.active a:hover{
     width:500px;
     height:600px;
     border: none;
-    background-image: url("/images/titi.jpg") !important;
+    background-image: url("/Pagina Web/images/titi.jpg") !important;
     background-size: cover !important; 
     background-position:center !important; 
     border-radius: 10px;
@@ -140,7 +140,7 @@ nav.active a:hover{
     width:500px;
     height:600px;
     border: none;
-    background-image: url("/images/facus.jpg") !important;
+    background-image: url("/Pagina Web/images/facus.jpg") !important;
     background-size: cover !important; 
     background-position:center !important; 
     border-radius: 10px;
@@ -154,7 +154,7 @@ nav.active a:hover{
     width:500px;
     height:600px;
     border: none;
-    background-image: url("/images/pablo.jpg") !important;
+    background-image: url("/Pagina Web/images/pablo.jpg") !important;
     background-size: cover !important; 
     background-position:center !important; 
     border-radius: 10px;
@@ -168,7 +168,7 @@ nav.active a:hover{
     width:500px;
     height:600px;
     border: none;
-    background-image: url("/images/lauty.jpg") !important;
+    background-image: url("/Pagina Web/images/lauty.jpg") !important;
     background-size: cover !important; 
     background-position:center !important; 
     border-radius: 10px;
@@ -2213,7 +2213,7 @@ button.alt:hover,
 #header {
     position: relative;
     margin: 0;
-    background-image:url(/images/pantalla\ principal\ 3.png);
+    background-image:url(./images/pantalla\ principal\ 3.png);
     background-size: cover;
     background-position: top left, center center;
     background-repeat: repeat, no-repeat;
@@ -2279,19 +2279,19 @@ button.alt:hover,
 }
 
 .main > .content.style1 {
-    background-image: url(/images/background\ 2.png);
+    background-image: url(./images/background\ 2.png);
     background-position: center;
     background-size: cover;
 }
 
 .main > .content.style2 {
-    background-image: url(/images/background\ 1.png);
+    background-image: url(./images/background\ 1.png);
     background-position: center;
     background-size: cover;
 }
 
 .main > .content.style3 {
-    background: url("images/bgtr.svg") top right no-repeat, url("images/bgbl.svg") bottom left no-repeat, url("images/overlay.png"), linear-gradient(45deg, #284B63, #4C5C68, #C5C3C6);
+    background: url(".images/bgtr.svg") top right no-repeat, url(".images/bgbl.svg") bottom left no-repeat, url(".images/overlay.png"), linear-gradient(45deg, #284B63, #4C5C68, #C5C3C6);
 }
 
 .main > .content.style4 {
