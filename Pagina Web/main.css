@@ -54,7 +54,7 @@ h2{
 }
 .nav.active{
     background: rgba(0, 0, 0, 0.88);
-    padding: 15px;
+    padding: 8px 0;
     border-radius: 5px;
 } 
 .nav.active a{
@@ -92,6 +92,146 @@ nav.active a:hover{
 .subtitulo{
     text-align: center;
 }
+/* main.css */
+
+/* ... (código existente) ... */
+
+/* Ajustes para Narrow (pantallas de 737px a 1000px) */
+@media screen and (max-width: 1000px) {
+    /* Header adjustments */
+    #header {
+        padding: 8em 0.5em 8em 0.5em !important; /* Reducir aún más el padding horizontal del header */
+    }
+
+    .titulo {
+        font-size: 55px; /* Ajuste ligeramente el tamaño del título */
+    }
+
+    .subtitulo {
+        font-size: 1em; /* Ajuste del subtítulo */
+    }
+
+    .nav {
+        height: auto;
+        padding: 15px 0 !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 0;
+        min-width: 0;
+        overflow-x: hidden; /* Mantener hidden para asegurar que no haya scroll */
+        white-space: normal;
+        flex-wrap: nowrap; /* Sigue forzando una sola línea */
+        justify-content: space-between; /* Distribuye el espacio equitativamente */
+        padding: 0 5px; /* Pequeño padding para los bordes */
+    }
+
+    .menu li {
+        margin: 0 1px; /* Margen horizontal mínimo */
+        flex-shrink: 1;
+        flex-basis: auto;
+        min-width: 0;
+    }
+
+    .menu li a {
+        padding: 1px 2px; /* Padding extremadamente reducido */
+        font-size: 0.65em; /* Tamaño de fuente más pequeño para enlaces cortos */
+        line-height: 1.1;
+        text-transform: uppercase;
+        white-space: normal; /* Permitir que el texto se envuelva para ajustarse si fuera necesario (aunque `nowrap` en `.menu` es la dominante) */
+        text-align: center; /* Centrar el texto si se reduce mucho */
+        display: block; /* Para que el padding y text-align funcionen */
+        /* Eliminamos text-overflow: ellipsis y overflow: hidden aquí */
+    }
+
+    /* Ajuste para los enlaces que pueden tener texto más largo */
+    .menu li:nth-child(2) a, /* ¿Que es S.I.C.A.P? */
+    .menu li:nth-child(3) a, /* ¿Donde se puede aplicar S.I.C.A.P? */
+    .menu li:nth-child(4) a, /* ¿Que es la tecnología RFID? */
+    .menu li:nth-child(5) a, /* ¿Quienes somos? */
+    .menu li:nth-child(6) a  /* ¿Como funciona S.I.C.A.P? */ {
+        font-size: 0.6em; /* Reducir aún más para los textos más largos en Narrow */
+    }
+    .nav.active {
+    background: rgba(0, 0, 0, 0.88);
+    padding: 8px 0; /* Reduced padding for top/bottom, 0 for left/right */
+    border-radius: 5px;
+}
+
+/* ... (resto del código existente, busca las media queries y añade las reglas dentro de ellas) ... */
+
+@media screen and (max-width: 1000px) {
+    /* ... otros estilos para 1000px ... */
+
+    .nav.active {
+        padding: 5px 0; /* More compact in Narrow */
+    }
+
+    /* ... otros estilos para 1000px ... */
+}
+    
+}
+
+/* Ajustes para Mobile (pantallas de hasta 736px) */
+@media screen and (max-width: 736px) {
+    #header {
+        padding: 5em 0.2em 5em 0.2em !important; /* Padding horizontal casi nulo para el header */
+    }
+
+    .titulo {
+        font-size: 30px; /* Título aún más pequeño para móviles muy pequeños */
+        padding-top: 100px !important; /* Ajustar padding superior */
+    }
+
+    .subtitulo {
+        font-size: 0.7em;
+    }
+
+    .nav.active {
+        padding: 5px; /* Padding del nav activo mínimo */
+    }
+
+    .menu {
+        padding: 0; /* Eliminar padding horizontal del menú */
+        justify-content: space-between; /* Mantener la distribución del espacio */
+    }
+
+    .menu li {
+        margin: 0; /* Eliminar margen horizontal */
+    }
+
+    .menu li a {
+        padding: 0; /* Eliminar padding de los enlaces */
+        font-size: 0.55em; /* **Tamaño de fuente extremadamente pequeño** para los enlaces */
+        line-height: 1; /* Reducir el alto de línea */
+    }
+
+    /* Ajuste para los enlaces que pueden tener texto más largo */
+    .menu li:nth-child(2) a,
+    .menu li:nth-child(3) a,
+    .menu li:nth-child(4) a,
+    .menu li:nth-child(5) a,
+    .menu li:nth-child(6) a {
+        font-size: 0.5em; /* Aún más pequeño para los textos más largos en Mobile */
+    }
+    @media screen and (max-width: 736px) {
+    /* ... otros estilos para 736px ... */
+
+    .nav.active {
+        padding: 3px 0; /* Even more compact in Mobile */
+    }
+
+    /* ... otros estilos para 736px ... */
+}
+
+/* ... (fin del archivo) ... */
+}
+
 .quien{
     text-align: center;
     font-size: 40px;
