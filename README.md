@@ -13,10 +13,12 @@
 <h2>Caracteristicas Principales</h2>
 <h2>Materiales Necesarios</h2>
 <h2>Integrantes</h2>
-Patella Tiziano
-Lautaro Santolucito
-Facundo Spagnoletta 
-Facundo Ledesma 
-Pablo Osores
+<ul>
+<li>Patella Tiziano</li>
+<li>Lautaro Santolucito</li>
+<li>Facundo Spagnoletta</li> 
+<li>Facundo Ledesma</li> 
+<li>Pablo Osores </li>
+</ul>
 <h2>Informacion de Contacto</h2>
 
