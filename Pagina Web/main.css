@@ -54,9 +54,11 @@ h2{
 }
 .nav.active{
     background: rgba(0, 0, 0, 0.88);
-    padding: 8px 0;
-    border-radius: 5px;
+    padding: 8px 0 0 0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius:5px ;
 } 
+
 .nav.active a{
     color: white;
 }
@@ -2631,3 +2633,7 @@ button.alt:hover,
         font-size: 1.25em;
     }
 }
+@media (max-width: 768px) { /* Ajusta el valor de 768px según el breakpoint de tu diseño mobile */
+    ul {
+    margin-bottom: 0; /* Elimina el margin-bottom en resoluciones mobile */
+}}
