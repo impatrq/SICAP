@@ -2646,3 +2646,14 @@ dialog {
     padding: 10px; /* Reduce el padding en móviles */
 }
 }
+@media (max-width: 768px) {
+.contenido-modal {
+    flex-direction: column; /* Cambia la dirección a columna */
+    align-items: flex-start; /* Alinea a la izquierda en móviles */
+}
+
+.contenido-imagen {
+    padding-right: 0; /* Elimina el espacio en móviles */
+    margin-bottom: 10px; /* Espacio entre la imagen y el texto en móviles */
+}
+}
