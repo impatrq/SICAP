@@ -2637,3 +2637,12 @@ button.alt:hover,
     ul {
     margin-bottom: 0; /* Elimina el margin-bottom en resoluciones mobile */
 }}
+@media (max-width: 768px) {
+dialog {
+    width: 95%; /* Ancho del 95% de la pantalla en móviles */
+    max-width: none; /* Elimina el ancho máximo */
+    height: auto;
+    max-height: 90vh; /* Altura máxima del 90% del viewport height en móviles */
+    padding: 10px; /* Reduce el padding en móviles */
+}
+}
