@@ -22,3 +22,9 @@
 </ul>
 <h2>Informacion de Contacto</h2>
 Conocé nuestras últimas novedades y avances en  <a href="https://www.instagram.com/proyecto.sicap/">Instagram</a>📱🙌🎉
+<div></div>
+
+---
+Contactanos por correo electrónico para más información o para hablar con nuestro equipo 📧
+
+✉️proyecto.sicap08@gmail.com
