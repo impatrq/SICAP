@@ -21,4 +21,4 @@
 <li>Pablo Osores </li>
 </ul>
 <h2>Informacion de Contacto</h2>
-
+Conocé nuestras últimas novedades y avances en  <a href="https://www.instagram.com/proyecto.sicap/">Instagram</a>📱🙌🎉
