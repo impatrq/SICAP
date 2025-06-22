@@ -7,7 +7,10 @@ Durante las 4 horas de profesionalizante de la mañana, Lautaro se encargó del 
 Tiziano Patella:
 En las 4 horas de profesionalizante de la mañana, Tiziano también estuvo trabajando en el desarrollo de la página web. Su tarea principal fue la resolución de problemas técnicos relacionados con el código. Logró solucionar el inconveniente que afectaba al encabezado (header) y, además, consiguió implementar y hacer funcionales las ventanas modales, en las cuales se detalla la información de cada uno de los integrantes del equipo.
 
+<h2>Jueves 29/05 </h2>
 
+Tiziano Patella:
+Durante las 4 horas de la clase de Representación Visual y Frontal de Datos con el profesor Carlassara, Tiziano se dedicó a perfeccionar las ventanas modales de la página. Utilizando la técnica de flex-box, trabajó en el diseño de un espacio que permite que toda la información de los integrantes se visualice correctamente dentro del modal. Adicionalmente, implementó animaciones para mejorar la estética y la experiencia de usuario de la página. Finalmente, integró los enlaces a las cuentas de Instagram y GitHub, facilitando el acceso a las redes sociales de SICAP.
 
 
 
