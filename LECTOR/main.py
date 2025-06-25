@@ -4,19 +4,13 @@ from Reader import RFIDReader
 lector = RFIDReader(tx=17, rx=16)
 
 while True:
-    try:
-        tag = lector.read_tag()
+    tag = lector.read_tag()
 
-        if tag:
+    if tag:
+        print("Tag detectado:", tag)
 
-            print("Tag leído:", tag)
-
-        else:
-            
-            print("No se detectó ningún tag.")
-
-    except Exception as e:
-        
-        print("Error al procesar el tag:", e)
+    else:
+            print("Tag no reconocido")
 
     time.sleep(1)
+
