@@ -47,3 +47,8 @@ Me estuve basando en mis conocimientos de diseño electrónico y comunicación d
 Facu L:
 
 Elabore en canva la publicacion/historia sobre que ya contamos con la pagina web
+
+<h2>Viernes 27/06/2025
+
+Facu L:
+Elabore las imagenes para poder usar en la pagina web y que quede mucho mas estetico 
