@@ -34,3 +34,9 @@ Tiziano Patella: Durante las horas de la mañana, me ajustar de arreglar un  pro
 <h2>Viernes 13/06/2025</h2>
 
 Tiziano Patella: Durante las 4hrs de profesionalizante de la tarde (con Arguello Padre) se encargo se conseguir un dominio para la pagina web. Se presentaron demasiadas complicaciones ya que una vez comprado el dominio en Hostinger no pedían pagar una mensualidad para el hosting de la pagina web. Ante esa problemática, rembolsamos el dominio comprado ya que creímos que no nos iba a ser útil. Sin embargo tras consultar con compañeros  de otros grupos y con profesores, encontramos la manera de usar el dominio comprado y poder publicar la pagina sin la necesidad de pagar por hosting.  Descubrí que a través de Github pages que puede publicar la pagina guardada en el repositorio de la escuela usando github para el hosting. Así que tras comprar el dominio de vuelta (sicap.site) trabajé junto a fabri para poder configurar todo para la correcta publicación del sitio. Debido al retraso que nos generaron los problemas anteriores lo único que quedó pendiente fue cambiar la url de github pages por las del dominio comprado para que la pagina se muestre  donde nosotros queríamos. 
+
+<h2>Miercoles 18/06/2025</h2>
+
+Facu L:
+
+Basándome en mis conocimientos de diseño electrónico y comunicación de datos, realicé un conjunto de publicaciones centradas en una **placa conversora de señal RS232 a TTL**. Este contenido fue creado con el objetivo de difundir de forma clara y visual el funcionamiento, las características y el propósito de esta placa dentro de un sistema electrónico.
