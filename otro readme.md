@@ -33,7 +33,7 @@ Observamos que muchos entornos técnicos carecen de un sistema eficiente para co
 
 ---
 
-## Materiales Necesarios
+## 🧰 Componentes del Sistema
 
 - ESP32  
 - Lector RFID (RS232)  
