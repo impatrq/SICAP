@@ -39,4 +39,4 @@ Tiziano Patella: Durante las 4hrs de profesionalizante de la tarde (con Arguello
 
 Facu L:
 
-Basándome en mis conocimientos de diseño electrónico y comunicación de datos, realicé un conjunto de publicaciones centradas en una **placa conversora de señal RS232 a TTL**. Este contenido fue creado con el objetivo de difundir de forma clara y visual el funcionamiento, las características y el propósito de esta placa dentro de un sistema electrónico.
+Me estuve basando en mis conocimientos de diseño electrónico y comunicación de datos, realicé un conjunto de publicaciones centradas en una **placa conversora de señal RS232 a TTL**. Este contenido fue creado con el objetivo de difundir de forma clara y visual el funcionamiento, las características y el propósito de esta placa dentro de un sistema electrónico.
