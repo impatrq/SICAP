@@ -33,19 +33,6 @@ Observamos que muchos entornos técnicos carecen de un sistema eficiente para co
 
 ---
 
-## 🧰 Componentes del Sistema
-
-- ESP32  
-- Lector RFID (RS232)  
-- Antenas RFID  
-- Conversor RS232 a TTL  
-- Router local  
-- Fuente de 5V  
-- PC servidor  
-- Cables y conectores varios  
-
----
-
 ## Integrantes
 
 - Patella Tiziano  
