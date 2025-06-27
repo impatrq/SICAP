@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://www.instagram.com/proyecto.sicap/" target="_blank" rel="noopener noreferrer">
-    <img src="./images/logotipo-de-instagram.png" width="25" alt="Instagram" style="vertical-align: middle;">
+    <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" width="20" alt="Instagram" style="vertical-align: middle;">
     @proyecto.sicap
   </a>
 </div>
@@ -11,7 +11,7 @@
 
 ## Nuestra Propuesta
 
-SICAP (Sistema Inteligente de Control de Almacén y Pañol) es una solución automatizada pensada para mejorar la gestión de herramientas, materiales e insumos en talleres, escuelas técnicas y empresas. Utiliza RFID, ESP32 y servidores locales para registrar entradas y salidas de forma confiable.
+**SICAP** (Sistema Inteligente de Control de Almacén y Pañol) es una solución automatizada pensada para mejorar la gestión de herramientas, materiales e insumos en talleres, escuelas técnicas y empresas. Utiliza RFID, ESP32 y servidores locales para registrar entradas y salidas de forma confiable.
 
 ---
 
@@ -23,12 +23,12 @@ Observamos que muchos entornos técnicos carecen de un sistema eficiente para co
 
 ## Características Principales
 
-- Lectura RFID con ESP32
-- Interfaz web responsive
-- Base de datos local
-- Control por ID de usuario
-- Placa RS232 a TTL desarrollada a medida
-- Registro de entradas/salidas automático
+- Lectura RFID con ESP32  
+- Interfaz web responsive  
+- Base de datos local  
+- Control por ID de usuario  
+- Placa RS232 a TTL desarrollada a medida  
+- Registro de entradas/salidas automático  
 - Acceso desde cualquier dispositivo conectado a la red
 
 ---
