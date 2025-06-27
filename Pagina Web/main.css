@@ -253,65 +253,6 @@ nav.active a:hover{
     box-shadow: none !important;
 }
 
-/* Ajuste para .miembro-ledsma según tu pedido */
-.miembro-ledsma {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 2px solid #000;
-  border-bottom-width: 40px; /* Hace el borde inferior más grueso para el texto */
-  border-radius: 16px;
-  background: transparent;
-  padding: 0;
-  
-  margin: 0 auto;
-  box-shadow: none;
-  gap: 0;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 30%;
-}
-
-.miembro-facul {
-    height: 700px !important;
-    width: 100% !important;
-    object-fit: cover;
-    border: none;
-    display: block;
-}
-
-.descripcion-facul {
-  bottom: 8px; /* Ajusta para centrar el texto en el borde inferior */
-  left: 0;
-  width: 100%;
-  text-align: center;
-  display: block;
-  color: #000;
-  background: transparent;
-  font-size: 1em;
-  padding: 0 8px;
-  z-index: 2;
-}
-
-/* Opcional: para que el texto no sobresalga en móviles */
-@media (max-width: 600px) {
-  .miembro-ledsma {
-    max-width: 95vw;
-  }
-  .miembro-facul {
-    width: 90vw;
-    height: 90vw;
-    max-width: 180px;
-    max-height: 180px;
-  }
-}
-.miembro-facul{
-    height: 70%;
-    width: 25%;
-}
-
 #boton-facul:hover{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
     transform: scale(1.1);
@@ -2453,7 +2394,7 @@ button.alt:hover,
 #header {
     position: relative;
     margin: 0;
-    background-image:url(/Pagina\ Web/images/collage-facul.png);
+    background-image:url(./images/pantalla\ principal\ 3.png);
     background-size: cover;
     background-position: top left, center center;
     background-repeat: repeat, no-repeat;
