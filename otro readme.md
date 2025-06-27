@@ -1,10 +1,17 @@
 ![erasebg-transformed (2)_Edited](https://github.com/user-attachments/assets/8eb748f6-3675-4d02-9954-1f70998ea98e)
 
 <div align="center">
-  <a href="https://www.instagram.com/proyecto.sicap/" target="_blank" rel="noopener noreferrer">
-    <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" width="20" alt="Instagram" style="vertical-align: middle;">
-    @proyecto.sicap
-  </a>
+
+🔗 Visitanos en  
+👉 <a href="https://sicap.site" target="_blank" rel="noopener noreferrer"><strong>sicap.site</strong></a>
+
+<br><br>
+
+<a href="https://www.instagram.com/proyecto.sicap/" target="_blank" rel="noopener noreferrer">
+  <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" width="20" alt="Instagram" style="vertical-align: middle;">
+  @proyecto.sicap
+</a>
+
 </div>
 
 ---
@@ -45,9 +52,6 @@ Observamos que muchos entornos técnicos carecen de un sistema eficiente para co
 
 ## Información de Contacto
 
-👉 Seguinos en [Instagram](https://www.instagram.com/proyecto.sicap/) 📱🙌🎉
-
----
-
-Contactanos por correo electrónico para más información o para hablar con nuestro equipo:  
-✉️ **proyecto.sicap08@gmail.com**
+🌐 Sitio web oficial: [sicap.site](https://sicap.site)  
+📸 Instagram: [@proyecto.sicap](https://www.instagram.com/proyecto.sicap/) 📱🙌🎉  
+📧 Correo: **proyecto.sicap08@gmail.com**
