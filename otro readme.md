@@ -58,8 +58,7 @@ Observamos que muchos entornos técnicos carecen de un sistema eficiente para co
 
 ## Información de Contacto
 
-Conocé nuestras últimas novedades y avances en  
-👉 [Instagram](https://www.instagram.com/proyecto.sicap/) 📱🙌🎉
+👉 Seguinos en [Instagram](https://www.instagram.com/proyecto.sicap/) 📱🙌🎉
 
 ---
 
