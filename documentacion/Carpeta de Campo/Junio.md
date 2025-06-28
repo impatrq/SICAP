@@ -51,4 +51,8 @@ Elabore en canva la publicacion/historia sobre que ya contamos con la pagina web
 <h2>Viernes 27/06/2025
 
 Facu L:
-Elabore las imagenes para poder usar en la pagina web y que quede mucho mas estetico 
+Elabore las imagenes para poder usar en la pagina web y que quede mucho mas estetico.
+
+Facu S:
+
+El trabajo del día de ayer consistió en el refinamiento del código principal del lector RFID. Específicamente, hice una mejora del módulo de cooldown ya implementado, corrigiendo errores preexistentes para asegurar su correcto funcionamiento y optimizar su comportamiento. Esta tarea fue clave para prevenir lecturas redundantes de manera más eficaz. También continué mejorando la salida de datos por consola, consolidando el sistema que agrupa las lecturas de un mismo tag y muestra un contador (ej: A232456 X3), lo cual simplifica significativamente el monitoreo durante las pruebas. Finalmente, se dediqué tiempo a tareas de gestión, actualizando tanto la documentación personal en la carpeta de campo como el estado de las tareas en el tablero de Trello.
