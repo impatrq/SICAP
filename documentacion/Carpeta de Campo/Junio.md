@@ -48,7 +48,7 @@ Facu L:
 
 Elabore en canva la publicacion/historia sobre que ya contamos con la pagina web.
 
-<h2>Viernes 20/06/2025
+<h2>Viernes 20/06/2025 </h2>
 
 Facu S:
 
@@ -59,6 +59,18 @@ Primero, realicé la conexión física del conversor RS232 al ESP32, utilizando 
 Una vez establecida la conexión, desarrollé y cargué un script básico en Python para el ESP32 que permite leer datos entrantes a través del puerto UART. El objetivo era verificar si el sistema lograba detectar etiquetas RFID al aproximarlas al lector.
 
 El código logró el objetivo a medias, ya que se mostraban, pero te tomaba datos mal y no funcionaba del todo bien.
+
+<h2>Lunes 23/06/2025 </h2>
+
+Facu S: 
+
+Durante hoy, me puse como meta poder arreglar el código y hacerle unas modificaciones estéticas y funcionales que me recomendó Carlassara.
+
+Luego de poner a analizar el código, supe lo que corregir, esto eran unas definiciones que tenía que ajustar de la clase que cree para el Reader y así poder tener los datos que precisaba.
+
+El código implementado logró su propósito: pude visualizar en la consola los datos de los tags detectados en tiempo real. Cada vez que una etiqueta RFID era leída por la antena, el ESP32 recibía la señal correctamente y la imprimía por consola, confirmando que la comunicación UART y el flujo de datos eran estables.
+
+Este avance representa un paso importante en la arquitectura del sistema, ya que valida el canal de comunicación entre el lector UHF y el microcontrolador, habilitando así el desarrollo posterior del módulo de identificación y registro de herramientas/personas.
 
 <h2>Viernes 27/06/2025
 
