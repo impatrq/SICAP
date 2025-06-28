@@ -46,7 +46,19 @@ Me estuve basando en mis conocimientos de diseño electrónico y comunicación d
 
 Facu L:
 
-Elabore en canva la publicacion/historia sobre que ya contamos con la pagina web
+Elabore en canva la publicacion/historia sobre que ya contamos con la pagina web.
+
+<h2>Viernes 20/06/2025
+
+Facu S:
+
+Durante la jornada de hoy avancé con la etapa de integración del sistema de lectura RFID, específicamente enfocándome en establecer la comunicación entre el lector UHF y el microcontrolador ESP32 a través del conversor.
+
+Primero, realicé la conexión física del conversor RS232 al ESP32, utilizando los pines adecuados para la interfaz UART. Este conversor me permitió vincular el lector RFID, que opera con protocolo RS232, con mi computadora y posteriormente con el microcontrolador.
+
+Una vez establecida la conexión, desarrollé y cargué un script básico en Python para el ESP32 que permite leer datos entrantes a través del puerto UART. El objetivo era verificar si el sistema lograba detectar etiquetas RFID al aproximarlas al lector.
+
+El código logró el objetivo a medias, ya que se mostraban, pero te tomaba datos mal y no funcionaba del todo bien.
 
 <h2>Viernes 27/06/2025
 
