@@ -42,6 +42,12 @@ Facu L:
 Me estuve basando en mis conocimientos de diseño electrónico y comunicación de datos, realicé un conjunto de publicaciones centradas en una **placa conversora de señal RS232 a TTL**. Este contenido fue creado con el objetivo de difundir de forma clara y visual el funcionamiento, las características y el propósito de esta placa dentro de un sistema electrónico.
 <a href="https://www.instagram.com/p/DLDcrjmur0s/?img_index=1">Publicaion instagram</a>
 
+Facu S: 
+
+En primer lugar, realicé pruebas específicas sobre el funcionamiento del conversor **RS232 a TTL**, con el objetivo de asegurar su correcto desempeño antes de integrarlo definitivamente en el sistema. Mediante conexiones controladas y test de comunicación UART, validé que el módulo funcionara de forma estable y sin pérdidas de datos, requisito clave para garantizar la transmisión entre el lector RFID UHF y el ESP32.
+
+Paralelamente, avancé en el estudio y práctica de programación en **MicroPython**, específicamente en la definición de clases que me permitirán estructurar el código del lector RFID de manera más modular y escalable. Esta etapa de aprendizaje fue esencial para preparar el entorno de desarrollo y sentar una base más sólida para los futuros módulos de lectura e identificación.
+
 <h2>Jueves 19/06/2025</h2>
 
 Facu L:
