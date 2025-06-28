@@ -72,6 +72,25 @@ El código implementado logró su propósito: pude visualizar en la consola los 
 
 Este avance representa un paso importante en la arquitectura del sistema, ya que valida el canal de comunicación entre el lector UHF y el microcontrolador, habilitando así el desarrollo posterior del módulo de identificación y registro de herramientas/personas.
 
+<h2>Miercoles 25/06/2025 </h2>
+
+Facu S:
+
+En el día de hoy trabajé en la mejora del código fuente del sistema **S.IC.A.P**.
+
+El script original presentaba limitaciones tanto en la forma en que se mostraban los datos como en el manejo de lecturas repetidas. Para resolverlo, implementé dos mejoras clave:
+
+- **Formateo de salida en consola**: los tags leídos por el lector RFID se imprimían en una misma línea continua, dificultando el seguimiento en tiempo real. Incorporé **saltos de línea** automáticos para que cada detección aparezca en una nueva línea, mejorando la legibilidad del registro.
+- **Sistema de cooldown temporal**: para evitar lecturas redundantes, desarrollé un mecanismo que impide que una misma etiqueta se registre múltiples veces en intervalos muy breves. Este sistema utiliza una ventana de tiempo que bloquea temporalmente la relectura de un mismo tag, asegurando una detección más precisa y ordenada.
+
+Una vez finalizadas las modificaciones, procedimos a **realizar diversas pruebas funcionales** directamente en el sistema. Se colocaron y retiraron múltiples etiquetas RFID en distintos intervalos y posiciones, validando que:
+
+- Cada tag sea leído solo una vez dentro del tiempo establecido.
+- El sistema responda en tiempo real con estabilidad.
+- La visualización en consola sea clara y segmentada.
+
+Estas pruebas permitieron confirmar el correcto funcionamiento del nuevo código en condiciones reales, consolidando así un avance importante en la fiabilidad y usabilidad del sistema.
+
 <h2>Viernes 27/06/2025
 
 Facu L:
