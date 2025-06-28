@@ -35,6 +35,10 @@ Tiziano Patella: Durante las horas de la mañana, me ajustar de arreglar un  pro
 
 Tiziano Patella: Durante las 4hrs de profesionalizante de la tarde (con Arguello Padre) se encargo se conseguir un dominio para la pagina web. Se presentaron demasiadas complicaciones ya que una vez comprado el dominio en Hostinger no pedían pagar una mensualidad para el hosting de la pagina web. Ante esa problemática, rembolsamos el dominio comprado ya que creímos que no nos iba a ser útil. Sin embargo tras consultar con compañeros  de otros grupos y con profesores, encontramos la manera de usar el dominio comprado y poder publicar la pagina sin la necesidad de pagar por hosting.  Descubrí que a través de Github pages que puede publicar la pagina guardada en el repositorio de la escuela usando github para el hosting. Así que tras comprar el dominio de vuelta (sicap.site) trabajé junto a fabri para poder configurar todo para la correcta publicación del sitio. Debido al retraso que nos generaron los problemas anteriores lo único que quedó pendiente fue cambiar la url de github pages por las del dominio comprado para que la pagina se muestre  donde nosotros queríamos. 
 
+Facu S:
+
+Inicié la **búsqueda de proveedores gráficos** para el diseño y producción de **stickers personalizados del sistema S.IC.A.P**. El objetivo es etiquetar visualmente las herramientas y elementos del sistema con un diseño propio, que incluya el nombre del proyecto y un espacio para la identificación RFID correspondiente.
+
 <h2>Miercoles 18/06/2025</h2>
 
 Facu L:
@@ -100,7 +104,7 @@ Estas pruebas permitieron confirmar el correcto funcionamiento del nuevo código
 <h2>Viernes 27/06/2025
 
 Facu L:
-Elabore las imagenes para poder usar en la pagina web y que quede mucho mas estetico.
+Elabore las imagenes para poder usar en la pagina web y que quede mucho mas estetico. 
 
 Facu S:
 
