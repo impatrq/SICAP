@@ -27,7 +27,9 @@ a{
 }
 h1{
     padding-top: 250px !important;
+    color: #284B63 !important;
 }
+
 h2{
     font-weight:500 !important;;
 }
@@ -85,7 +87,7 @@ nav.active a:hover{
 }
 .titulo{
     text-align: center;
-    font-size: 90px;
+    font-size: 105px;
     margin: 0;
     font-weight:300;
     
@@ -2453,7 +2455,7 @@ button.alt:hover,
 #header {
     position: relative;
     margin: 0;
-    background-image:url(/Pagina\ Web/images/collage-facul.png);
+    background-image:url(/Pagina\ Web/images/newcollage.jpg);
     background-size: cover;
     background-position: top left, center center;
     background-repeat: repeat, no-repeat;
