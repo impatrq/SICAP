@@ -150,17 +150,23 @@ nav.active a:hover{
     text-align: center;
     font-size: 105px;
     margin: 0;
-    font-weight:300;
+    font-weight:500;
+    text-shadow:
+    -1px -1px 0 #000,  /* Sombra superior izquierda */
+     1px -1px 0 #000,  /* Sombra superior derecha */
+    -1px  1px 0 #000,  /* Sombra inferior izquierda */
+     1px  1px 0 #000;  /* Sombra inferior derecha */
+}
     
 
-}
+
 .subtitulo{
     text-align: center;
     text-shadow:
-    -0.5px -0.5px 0 #000,  /* Sombra superior izquierda */
-     0.5px -0.5px 0 #000,  /* Sombra superior derecha */
-    -0.5px  0.5px 0 #000,  /* Sombra inferior izquierda */
-     0.5px  px 0 #000;  /* Sombra inferior derecha */
+    -1px -1px 0 #000,  /* Sombra superior izquierda */
+     1px -1px 0 #000,  /* Sombra superior derecha */
+    -1px  1px 0 #000,  /* Sombra inferior izquierda */
+     1px  1px 0 #000;  /* Sombra inferior derecha */
 }
 /* main.css */
 
