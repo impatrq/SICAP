@@ -109,3 +109,13 @@ Elabore las imagenes para poder usar en la pagina web y que quede mucho mas este
 Facu S:
 
 El trabajo del día de ayer consistió en el refinamiento del código principal del lector RFID. Específicamente, hice una mejora del módulo de cooldown ya implementado, corrigiendo errores preexistentes para asegurar su correcto funcionamiento y optimizar su comportamiento. Esta tarea fue clave para prevenir lecturas redundantes de manera más eficaz. También continué mejorando la salida de datos por consola, consolidando el sistema que agrupa las lecturas de un mismo tag y muestra un contador (ej: A232456 X3), lo cual simplifica significativamente el monitoreo durante las pruebas. Finalmente, se dediqué tiempo a tareas de gestión, actualizando tanto la documentación personal en la carpeta de campo como el estado de las tareas en el tablero de Trello.
+
+
+<h2>Lunes 30/06/2025</h2>
+
+Lautaro Santolucito:
+Durante la jornada de hoy estuve trabajando en la configuración inicial del servidor con Django, que va a ser el encargado de recibir los datos del ESP32 dentro del sistema S.I.C.A.P. Arranqué creando el proyecto desde cero, generé la app para manejar los registros RFID y definí el modelo de base de datos para guardar los tags.
+
+Después programé un endpoint que permite recibir datos por POST en formato JSON, y estuve haciendo pruebas locales con curl para confirmar que los datos llegaran bien y se guardaran correctamente. También configuré el servidor para que se pueda acceder desde otros dispositivos de la red, agregando mi IP a ALLOWED_HOSTS y levantando el servidor en modo público dentro de la red local.
+
+Por ahora estoy en fase de pruebas. Todavía no empecé a probar con el ESP32 porque antes quiero dejar el servidor bien afilado, estable y funcionando sin errores. La integración con el microcontrolador va a ser el siguiente paso una vez que esté todo listo del lado del backend.
