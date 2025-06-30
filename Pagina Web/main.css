@@ -95,6 +95,11 @@ nav.active a:hover{
 }
 .subtitulo{
     text-align: center;
+    text-shadow:
+    -0.5px -0.5px 0 #000,  /* Sombra superior izquierda */
+     0.5px -0.5px 0 #000,  /* Sombra superior derecha */
+    -0.5px  0.5px 0 #000,  /* Sombra inferior izquierda */
+     0.5px  0.5px 0 #000;  /* Sombra inferior derecha */
 }
 /* main.css */
 
@@ -2456,6 +2461,7 @@ button.alt:hover,
     position: relative;
     margin: 0;
     background-image:url(/Pagina\ Web/images/newcollage.jpg);
+    background-attachment: fixed;
     background-size: cover;
     background-position: top left, center center;
     background-repeat: repeat, no-repeat;
