@@ -109,3 +109,7 @@ Elabore las imagenes para poder usar en la pagina web y que quede mucho mas este
 Facu S:
 
 El trabajo del día de ayer consistió en el refinamiento del código principal del lector RFID. Específicamente, hice una mejora del módulo de cooldown ya implementado, corrigiendo errores preexistentes para asegurar su correcto funcionamiento y optimizar su comportamiento. Esta tarea fue clave para prevenir lecturas redundantes de manera más eficaz. También continué mejorando la salida de datos por consola, consolidando el sistema que agrupa las lecturas de un mismo tag y muestra un contador (ej: A232456 X3), lo cual simplifica significativamente el monitoreo durante las pruebas. Finalmente, se dediqué tiempo a tareas de gestión, actualizando tanto la documentación personal en la carpeta de campo como el estado de las tareas en el tablero de Trello.
+
+Patella Tiziano:
+
+El día de hoy me encargue de trabajar en unos problemas que se estaban generando en la pagina web.La problemática que generaban los modales a la pagina era que al pasar por su respectiva seccion estos causaban bajones en las personas que querian ver la pagina y altos tiempo de carga, ante esta problematica busque una forma de solucionar el trabado que generaban el mal funcionamiento de la pagina. Tras hablar con el profe Medina el me recomendó que el problema podría estar en las imágenes y no en el modal como tal, por lo  que tras reducir el peso de la imágenes y ajustar otros valores para que queden mejor las nuevas imágenes se logro solucionar la problemática de los modales.
