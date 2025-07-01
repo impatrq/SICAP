@@ -28,17 +28,6 @@
 
 ---
 
-📆 Semana del 11 al 17 de mayo  
-📄 Descripción general de la semana:  
-**Lautaro:**  
-- Acomodé el Trello del grupo.  
-- Creé este documento de bitácora personal para tener todo bien documentado.  
-- Acomodamos el perfil de LinkedIn para la nota que nos hicieron los chicos de Checkpoint.  
-- Nos pusimos de acuerdo sobre qué publicaciones subir al Instagram del proyecto (historia de las calcomanías y de la nota de Checkpoint).  
-- Se comenzó a plantear la idea de diseñar un adaptador RS232 a TTL.
-
----
-
 📆 Semana del 18 al 24 de mayo  
 
 📅 20/05/2025  
@@ -93,15 +82,161 @@
 ✅ Tareas realizadas:  
 - No se registraron actividades del grupo durante el sábado.
 
-📄 Descripción general de la semana del 18 al 24 de mayo:  
-**Lautaro:**  
-- Avancé con la carpeta de campo y colaboré con compañeros en tareas como diseño, organización y documentación.  
-- Supervisé el diseño de la plaqueta y apoyé la preparación de la presentación en Canva.  
-- Participé activamente en la mejora del espacio de trabajo junto al grupo.  
-- Asistí y permanecí durante la jornada extendida del viernes para recibir a la inspectora.  
-**Grupo:**  
-- Se diseñó el circuito RS232 a TTL.  
-- Se realizaron tareas de presupuestación de materiales.  
-- Se organizaron tareas individuales claras: diseño de placa, presentación, programación, etc.  
-- Se mejoró el orden físico del espacio de trabajo (limpieza, lockers, escritorios).  
-- Se mantuvo una actitud participativa y profesional frente a la visita de la inspectora.
+---
+
+📆 Semana del 25 al 31 de mayo
+
+📅 26/05/2025  
+✅ Tareas realizadas:  
+- Se asistió a la escuela pero solo se dictaron 4 horas por la mañana con el profesor Scicolone.  
+- Por rotación institucional, se liberó a los alumnos a las 12:00 h.
+
+📅 27/05/2025  
+✅ Tareas realizadas:  
+- No hubo clases debido a la rotura de un caño de agua perteneciente a la Fuerza Aérea.
+
+📅 28/05/2025  
+✅ Tareas realizadas:  
+- Lautaro y Tiziano trabajaron las 4 horas de profesionalizantes en la web.  
+- Lautaro completó la página con toda la información necesaria sobre el proyecto.  
+- Tiziano solucionó problemas del header y logró que las ventanas modales funcionen.
+
+📅 29/05/2025  
+✅ Tareas realizadas:  
+- Tiziano perfeccionó las ventanas modales usando flexbox y animaciones.  
+- Agregó enlaces a Instagram y GitHub.  
+- Lautaro colaboró en la estructura y organización del contenido.  
+- El resto del grupo realizó horas profesionalizantes en la UTN.
+
+📅 30/05/2025  
+✅ Tareas realizadas:  
+- El grupo asistió a una exposición en la UADE.
+
+---
+
+📆 Semana del 1 al 7 de junio
+
+📅 02/06/2025  
+✅ Tareas realizadas:  
+- Se cursó con Scicolone durante 4 horas. Luego, salida por rotación institucional.
+
+📅 03/06/2025  
+✅ Tareas realizadas:  
+- Lautaro y Tiziano trabajaron en la web.  
+- Se completó y ajustó contenido.  
+- Se mejoró estructura, animaciones y ventanas modales.
+
+📅 04/06/2025  
+✅ Tareas realizadas:  
+- Tiziano y Lautaro estuvieron en el hangar mientras los demás iban a la UTN.  
+- Se agujereó la placa, se soldaron los componentes, se verificaron pistas.  
+- Se hizo y editó un video para publicar en Instagram.
+
+📅 05/06/2025  
+✅ Tareas realizadas:  
+- Asistencia a charla sobre software libre con Fabrizio.  
+- Se valoró su posible aplicación al proyecto.
+
+📅 06/06/2025  
+✅ Tareas realizadas:  
+- Se verificaron pistas de la placa.  
+- Lautaro y Pablo soldaron un microchip.  
+- No se alcanzó a probar la placa.
+
+---
+
+📆 Semana del 9 al 14 de junio
+
+📅 09/06/2025  
+✅ Tareas realizadas:  
+- Se asistió a clase con Solomiewichs y se rindió con Salinas.
+
+📅 10/06/2025  
+✅ Tareas realizadas:  
+- Lautaro investigó conexiones de la placa y detectó la falta de un pin VCC.  
+- Se evaluó rehacer la placa.  
+- Tiziano cargó la descripción de los integrantes en la web y se sacaron fotos.  
+- Se investigó cómo registrar el dominio del sitio.
+
+📅 11/06/2025  
+✅ Tareas realizadas:  
+- Lautaro rehízo por completo la placa TTL en su casa y la trajo funcionando.  
+- Tiziano dejó lista la versión 1.0 de la web.
+
+📅 12/06/2025  
+✅ Tareas realizadas:  
+- Tiziano solucionó errores en móviles con media queries.  
+- Se discutieron ideas para publicar avances del proyecto en redes.
+
+📅 13/06/2025  
+✅ Tareas realizadas:  
+- Tiziano y Fabrizio configuraron el dominio `sicap.site` usando GitHub Pages.  
+- Se publicó el sitio y se compartió en redes.  
+- Se analizó cómo testear la placa con el lector.
+
+---
+
+📆 Semana del 16 al 20 de junio
+
+📅 16/06/2025  
+✅ Tareas realizadas:  
+- Feriado nacional. No hubo actividades.
+
+📅 17/06/2025  
+✅ Tareas realizadas:  
+- Se cursó con Montoni.  
+- Por la tarde, se probaron conexiones entre la plaqueta TTL y el micro.  
+- Se logró comunicación exitosa.
+
+📅 18/06/2025  
+✅ Tareas realizadas:  
+- Visita a la Universidad Nacional de Quilmes por la mañana.  
+- Por la tarde, se conectó exitosamente el microcontrolador al lector RFID.  
+- Se detectaron etiquetas correctamente.
+
+📅 19/06/2025  
+✅ Tareas realizadas:  
+- Jornada reducida por ingreso tardío.  
+- Por la tarde se cumplió con tareas de taller sin avanzar en SICAP.
+
+📅 20/06/2025  
+✅ Tareas realizadas:  
+- Feriado por el Día de la Bandera.
+
+---
+
+📆 Semana del 23 al 28 de junio
+
+📅 23/06/2025  
+✅ Tareas realizadas:  
+- No se hicieron avances técnicos por tener clase con Salinas.
+
+📅 24/06/2025  
+✅ Tareas realizadas:  
+- Faltaron la mayoría de los compañeros (día de bioaca).  
+- Lautaro no faltó. Investigó a fondo el servidor y la placa.  
+- Logró leer etiquetas RFID, mejoró conexiones y fabricó un nuevo cable RS232 hombre–hembra.  
+- Por la mañana programó para la materia de Montoni.
+
+📅 25/06/2025  
+✅ Tareas realizadas:  
+- Se revisó el código para entender por qué no funcionaba y se mejoró.  
+- Se lograron leer datos en crudo y el ID de las etiquetas RFID.  
+- Se evaluó cómo armar el servidor de almacenamiento.  
+- Se corrigió un error en el cable armado.
+
+📅 26/06/2025  
+✅ Tareas realizadas:  
+- Ingreso tardío institucional.  
+- Por la tarde hubo prueba con la profesora Lara.
+
+📅 27/06/2025  
+✅ Tareas realizadas:  
+- Clases normales a la mañana.  
+- Por la tarde, en profesionalizantes, se decidió que cada uno cargue su carpeta en GitHub.  
+- Lautaro resolvió problemas con GitHub Desktop, ordenó y subió todos los archivos.  
+- Investigó cómo montar un servidor para recibir datos de las etiquetas y hacer una web interactiva.
+
+---
+
+✅ **Fin de bitácora – Última actualización: 28/06/2025**
