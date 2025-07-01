@@ -123,11 +123,15 @@ Patella Tiziano:
 
 El día de hoy me encargue de trabajar en unos problemas que se estaban generando en la pagina web.La problemática que generaban los modales a la pagina era que al pasar por su respectiva seccion estos causaban bajones en las personas que querian ver la pagina y altos tiempo de carga, ante esta problematica busque una forma de solucionar el trabado que generaban el mal funcionamiento de la pagina. Tras hablar con el profe Medina el me recomendó que el problema podría estar en las imágenes y no en el modal como tal, por lo  que tras reducir el peso de la imágenes y ajustar otros valores para que queden mejor las nuevas imágenes se logro solucionar la problemática de los modales.
 
----
-<br>
-Lunes 30/06/2025
+
+
+<h2>Lunes 30/06/2025</h2>
 Lautaro Santolucito: Durante la jornada de hoy estuve trabajando en la configuración inicial del servidor con Django, que va a ser el encargado de recibir los datos del ESP32 dentro del sistema S.I.C.A.P. Arranqué creando el proyecto desde cero, generé la app para manejar los registros RFID y definí el modelo de base de datos para guardar los tags.
 
 Después programé un endpoint que permite recibir datos por POST en formato JSON, y estuve haciendo pruebas locales con curl para confirmar que los datos llegaran bien y se guardaran correctamente. También configuré el servidor para que se pueda acceder desde otros dispositivos de la red, agregando mi IP a ALLOWED_HOSTS y levantando el servidor en modo público dentro de la red local.
 
 Por ahora estoy en fase de pruebas. Todavía no empecé a probar con el ESP32 porque antes quiero dejar el servidor bien afilado, estable y funcionando sin errores. La integración con el microcontrolador va a ser el siguiente paso una vez que esté todo listo del lado del backend
+
+Patella Tiziano:
+
+El día de hoy me encargue de hacer unos ajustes al inicio de la pagina web. Tras haber cambiado la imagen de inicio por el collage que hizo Facundo Ledesma, nos dimos cuenta que el nuevo fondo afectaba la legibilidad del titulo y subtitulo del proyecto, asi que tras consultar con mis compañeros por la estetica que ellos preferian termine modificando para presentar un inicio de la pagina adecuado. Una vez finalizada esa tarea ( y dando finalizada la primera version de la pagina web) me encaegue de comezar con el desarrollo de la web-app. Lo primero que tuve que hacer fue investigar como desarrolla una aplicacion, sin embargo este día no vino ninguno de los profesores de profecionalizante por lo que me tuve que guiar de la informacion de internet y esperar a la proxima para corroborar la informacion con los profes. Tras haber investigado terminé encontrando una aplicacion (Bubble) en la cual podiamos hacer la aplicacion sin escribir ninguna linea de codigo, sin embargo no sabia si iba a ser util para lo que necesitamos hacer por lo que preferí no profundizar mas en el tema y esperar para realizar consultas. 
