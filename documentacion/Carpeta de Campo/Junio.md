@@ -101,7 +101,7 @@ Una vez finalizadas las modificaciones, procedimos a **realizar diversas pruebas
 
 Estas pruebas permitieron confirmar el correcto funcionamiento del nuevo código en condiciones reales, consolidando así un avance importante en la fiabilidad y usabilidad del sistema.
 
-<h2>Viernes 27/06/2025
+<h2>Viernes 27/06/2025 </h2>
 
 Facu L:
 Elabore las imagenes para poder usar en la pagina web y que quede mucho mas estetico. 
@@ -109,3 +109,10 @@ Elabore las imagenes para poder usar en la pagina web y que quede mucho mas este
 Facu S:
 
 El trabajo del día de ayer consistió en el refinamiento del código principal del lector RFID. Específicamente, hice una mejora del módulo de cooldown ya implementado, corrigiendo errores preexistentes para asegurar su correcto funcionamiento y optimizar su comportamiento. Esta tarea fue clave para prevenir lecturas redundantes de manera más eficaz. También continué mejorando la salida de datos por consola, consolidando el sistema que agrupa las lecturas de un mismo tag y muestra un contador (ej: A232456 X3), lo cual simplifica significativamente el monitoreo durante las pruebas. Finalmente, se dediqué tiempo a tareas de gestión, actualizando tanto la documentación personal en la carpeta de campo como el estado de las tareas en el tablero de Trello.
+
+<h2>Lunes 30/06/2025 </h2>
+
+Hice una reorganización en el archivo Reader.py con el objetivo de optimizar la visualización de datos en la consola. Para ello, le agregué una función específica que gestiona la salida de las lecturas de etiquetas RFID. Esta nueva lógica previene que se genere un salto de línea con cada detección individual. En su lugar, el sistema ahora agrega las lecturas de un mismo tag y las presenta en una sola línea junto a un contador que indica la frecuencia con la que ha sido detectado. Esta mejora aumenta significativamente la legibilidad de la salida en tiempo real, facilitando las tareas de depuración y monitoreo.
+
+Adicionalmente, se inició el desarrollo de una nueva funcionalidad. Se comenzó a estructurar una tabla de asignaciones o diccionario de datos dentro del código. El objetivo de esta tabla es mapear el identificador numérico de cada tag RFID tenga una descripción propia (por ejemplo, asociar un tag E200 con el texto que necesite). El trabajo quedó en proceso, con la meta de que la consola muestre esta descripción personalizada en lugar del código del tag, mejorando así el uso del sistema para el operador final.
+
