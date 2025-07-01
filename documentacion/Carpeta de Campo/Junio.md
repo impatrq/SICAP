@@ -35,6 +35,8 @@ Tiziano Patella: Durante las horas de la mañana, me ajustar de arreglar un  pro
 
 Tiziano Patella: Durante las 4hrs de profesionalizante de la tarde (con Arguello Padre) se encargo se conseguir un dominio para la pagina web. Se presentaron demasiadas complicaciones ya que una vez comprado el dominio en Hostinger no pedían pagar una mensualidad para el hosting de la pagina web. Ante esa problemática, rembolsamos el dominio comprado ya que creímos que no nos iba a ser útil. Sin embargo tras consultar con compañeros  de otros grupos y con profesores, encontramos la manera de usar el dominio comprado y poder publicar la pagina sin la necesidad de pagar por hosting.  Descubrí que a través de Github pages que puede publicar la pagina guardada en el repositorio de la escuela usando github para el hosting. Así que tras comprar el dominio de vuelta (sicap.site) trabajé junto a fabri para poder configurar todo para la correcta publicación del sitio. Debido al retraso que nos generaron los problemas anteriores lo único que quedó pendiente fue cambiar la url de github pages por las del dominio comprado para que la pagina se muestre  donde nosotros queríamos. 
 
+---
+
 Facu S:
 
 Inicié la **búsqueda de proveedores gráficos** para el diseño y producción de **stickers personalizados del sistema S.IC.A.P**. El objetivo es etiquetar visualmente las herramientas y elementos del sistema con un diseño propio, que incluya el nombre del proyecto y un espacio para la identificación RFID correspondiente.
@@ -45,6 +47,8 @@ Facu L:
 
 Me estuve basando en mis conocimientos de diseño electrónico y comunicación de datos, realicé un conjunto de publicaciones centradas en una **placa conversora de señal RS232 a TTL**. Este contenido fue creado con el objetivo de difundir de forma clara y visual el funcionamiento, las características y el propósito de esta placa dentro de un sistema electrónico.
 <a href="https://www.instagram.com/p/DLDcrjmur0s/?img_index=1">Publicaion instagram</a>
+
+---
 
 Facu S: 
 
@@ -111,13 +115,19 @@ En mi caso, resolví algunos problemas que tenía con GitHub Desktop y me enfoqu
 
 Además, en la última hora de clase aproveché para investigar sobre los servidores que vamos a necesitar para gestionar la información cuando se lean las etiquetas RFID, y sobre cómo montar una página interactiva hosteada directamente por ese servidor.
 
+---
 
 Facu L:
+
 Elabore las imagenes para poder usar en la pagina web y que quede mucho mas estetico. 
+
+---
 
 Facu S:
 
 El trabajo del día de ayer consistió en el refinamiento del código principal del lector RFID. Específicamente, hice una mejora del módulo de cooldown ya implementado, corrigiendo errores preexistentes para asegurar su correcto funcionamiento y optimizar su comportamiento. Esta tarea fue clave para prevenir lecturas redundantes de manera más eficaz. También continué mejorando la salida de datos por consola, consolidando el sistema que agrupa las lecturas de un mismo tag y muestra un contador (ej: A232456 X3), lo cual simplifica significativamente el monitoreo durante las pruebas. Finalmente, se dediqué tiempo a tareas de gestión, actualizando tanto la documentación personal en la carpeta de campo como el estado de las tareas en el tablero de Trello.
+
+---
 
 Patella Tiziano:
 
@@ -126,12 +136,23 @@ El día de hoy me encargue de trabajar en unos problemas que se estaban generand
 
 
 <h2>Lunes 30/06/2025</h2>
-Lautaro Santolucito: Durante la jornada de hoy estuve trabajando en la configuración inicial del servidor con Django, que va a ser el encargado de recibir los datos del ESP32 dentro del sistema S.I.C.A.P. Arranqué creando el proyecto desde cero, generé la app para manejar los registros RFID y definí el modelo de base de datos para guardar los tags.
+
+Lautaro Santolucito: 
+
+Durante la jornada de hoy estuve trabajando en la configuración inicial del servidor con Django, que va a ser el encargado de recibir los datos del ESP32 dentro del sistema S.I.C.A.P. Arranqué creando el proyecto desde cero, generé la app para manejar los registros RFID y definí el modelo de base de datos para guardar los tags.
 
 Después programé un endpoint que permite recibir datos por POST en formato JSON, y estuve haciendo pruebas locales con curl para confirmar que los datos llegaran bien y se guardaran correctamente. También configuré el servidor para que se pueda acceder desde otros dispositivos de la red, agregando mi IP a ALLOWED_HOSTS y levantando el servidor en modo público dentro de la red local.
 
 Por ahora estoy en fase de pruebas. Todavía no empecé a probar con el ESP32 porque antes quiero dejar el servidor bien afilado, estable y funcionando sin errores. La integración con el microcontrolador va a ser el siguiente paso una vez que esté todo listo del lado del backend
 
+---
+
 Patella Tiziano:
 
 El día de hoy me encargue de hacer unos ajustes al inicio de la pagina web. Tras haber cambiado la imagen de inicio por el collage que hizo Facundo Ledesma, nos dimos cuenta que el nuevo fondo afectaba la legibilidad del titulo y subtitulo del proyecto, asi que tras consultar con mis compañeros por la estetica que ellos preferian termine modificando para presentar un inicio de la pagina adecuado. Una vez finalizada esa tarea ( y dando finalizada la primera version de la pagina web) me encaegue de comezar con el desarrollo de la web-app. Lo primero que tuve que hacer fue investigar como desarrolla una aplicacion, sin embargo este día no vino ninguno de los profesores de profecionalizante por lo que me tuve que guiar de la informacion de internet y esperar a la proxima para corroborar la informacion con los profes. Tras haber investigado terminé encontrando una aplicacion (Bubble) en la cual podiamos hacer la aplicacion sin escribir ninguna linea de codigo, sin embargo no sabia si iba a ser util para lo que necesitamos hacer por lo que preferí no profundizar mas en el tema y esperar para realizar consultas. 
+
+<h2>Martes 1/07/2025</h2>
+
+Patella Tiziano: 
+
+El día de hoy le fuí a presentar al profe Medina lo que había investigado ayer acerca del desarrollo de la app y sobre la aplicacion que supuestamente me podia hacer el trabajo sin necesidad de codigo, sin embargo el me dijo que no me servian para lo que necesitabamos por varias razones y que ese tipo de programanas se suelen usar para hacer "maquetados" de las aplicaciones. Como alternativa me explico como era la forma correcta de trabajar para hacer la app y que debía hacer ( usar frameworks). Tras haberme explicado todos los tipos de frameworks que existian y que hacian cada uno llegamos a la conclusion de que el que nos iba a servir a nuestro grupo era "IONIC", así que procedí a instalar node.js y cofigurar IONIC para comenzar con el desarrollo cuanto antes. Tras unas complicaciones logré ejecutar de forma exitosa la apicacion y editarla para poder darle el aspecto que yo quería.
