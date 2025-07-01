@@ -103,6 +103,15 @@ Estas pruebas permitieron confirmar el correcto funcionamiento del nuevo código
 
 <h2>Viernes 27/06/2025 </h2>
 
+<br>
+Lautaro Santolucito:<br><br>
+Por la tarde, en el horario de Profesionalizantes con el profesor Arguello, decidimos avanzar de forma individual en tareas específicas y que cada uno complete por su cuenta la carpeta de campo en relación con GitHub.
+
+En mi caso, resolví algunos problemas que tenía con GitHub Desktop y me enfoqué a fondo en organizar, subir y acomodar correctamente los archivos del proyecto en el repositorio. Me aseguré de que todo quede bien claro, ordenado y completo. Quedé conforme con el resultado final.
+
+Además, en la última hora de clase aproveché para investigar sobre los servidores que vamos a necesitar para gestionar la información cuando se lean las etiquetas RFID, y sobre cómo montar una página interactiva hosteada directamente por ese servidor.
+
+
 Facu L:
 Elabore las imagenes para poder usar en la pagina web y que quede mucho mas estetico. 
 
