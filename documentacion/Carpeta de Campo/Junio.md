@@ -156,3 +156,11 @@ El día de hoy me encargue de hacer unos ajustes al inicio de la pagina web. Tra
 Patella Tiziano: 
 
 El día de hoy le fuí a presentar al profe Medina lo que había investigado ayer acerca del desarrollo de la app y sobre la aplicacion que supuestamente me podia hacer el trabajo sin necesidad de codigo, sin embargo el me dijo que no me servian para lo que necesitabamos por varias razones y que ese tipo de programanas se suelen usar para hacer "maquetados" de las aplicaciones. Como alternativa me explico como era la forma correcta de trabajar para hacer la app y que debía hacer ( usar frameworks). Tras haberme explicado todos los tipos de frameworks que existian y que hacian cada uno llegamos a la conclusion de que el que nos iba a servir a nuestro grupo era "IONIC", así que procedí a instalar node.js y cofigurar IONIC para comenzar con el desarrollo cuanto antes. Tras unas complicaciones logré ejecutar de forma exitosa la apicacion y editarla para poder darle el aspecto que yo quería.
+
+
+<h2>Miercoles 2/07/2025</h2>
+
+Facu Ledesma:
+
+Hoy estuve trabajando en dos publicaciones importantes para SICAP, por un lado anuncié con mucha alegría que ya tenemos nuestra página web oficial, un gran paso para seguir creciendo y mostrando todo lo que venimos haciendo, y por otro lado compartí un agradecimiento especial a LedMull por habernos regalado las camperas que ahora nos identifican como equipo, muy contento por todo lo que estamos construyendo.
+
