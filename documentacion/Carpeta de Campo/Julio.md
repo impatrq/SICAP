@@ -15,9 +15,9 @@ Primero creé un nuevo proyecto en Django llamado sicap_backend, con una app esp
 
 Realicé pruebas exitosas enviando datos desde la terminal y verifiqué que los registros se almacenan correctamente en la base de datos. También confirmé su correcto guardado accediendo al panel de administración de Django.
 
-Más tarde, en la escuela, trabajamos en el ESP32 con el lector RFID. Se cargaron los archivos main.py y wifi.py, y se conectó el dispositivo a la red "Cooperadora Profesores". Luego:
+Más tarde, en la escuela, trabajamos en el ESP32 con el lector RFID. Se cargaron los archivos main.py y wifi.py, y se conectó el dispositivo a la red "Cooperadora Alumnos". Luego:
 
-Verificamos que el lector detecta los tags correctamente.
+Verifique que el lector detecta los tags correctamente.
 
 Se imprimen en consola los códigos leídos.
 
