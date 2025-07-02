@@ -30,3 +30,8 @@ Se confirmaron múltiples respuestas 200 OK desde el servidor, demostrando que e
 También creé una lógica de lectura mejorada con control de repeticiones y TIMEOUT, para evitar enviar el mismo tag muchas veces seguidas.
 
 Finalmente, estuve pensando en cómo mostrar todo esto en la feria. Se me ocurrió usar una Raspberry Pi o una notebook vieja como servidor local, sin depender del WiFi del colegio (que suele fallar). Incluso consideré llevar un router propio, para tener una red cerrada exclusiva del proyecto y sin interferencias.
+
+Facu Ledesma:
+
+Hoy estuve trabajando en dos publicaciones importantes para SICAP, por un lado anuncié con mucha alegría que ya tenemos nuestra página web oficial, un gran paso para seguir creciendo y mostrando todo lo que venimos haciendo, y por otro lado compartí un agradecimiento especial a LedMull por habernos regalado las camperas que ahora nos identifican como equipo, muy contento por todo lo que estamos construyendo.
+
