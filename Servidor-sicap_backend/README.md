@@ -35,14 +35,7 @@ Dentro de la app `registros`, hay un modelo llamado `RegistroTag`. Guarda dos co
 - Hacer pruebas con hardware real.
 - En el futuro, conectar este backend con la página web para consultar todos los registros.
 
----
 
-> ⚙️ Cualquier cambio en los modelos requiere correr:
->
-> ```bash
-> python3 manage.py makemigrations
-> python3 manage.py migrate
-> ```
 
 ---
 
