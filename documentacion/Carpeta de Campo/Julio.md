@@ -9,14 +9,24 @@ Además, comencé a tomar nota de los pasos técnicos para poder documentar todo
 
 <h2>Miércoles 2/07/2025</h2>
 Lautaro Santolucito:
-Durante la madrugada y la mañana, me dediqué a avanzar con el backend del proyecto SICAP. El objetivo principal fue armar un servidor interno que nos permita recibir, almacenar y luego consultar los datos que va a enviar el ESP32 cuando detecte un tag RFID.
+Durante la madrugada y la mañana me dediqué a avanzar con el backend del proyecto SICAP. El objetivo principal fue armar un servidor interno que permita recibir, almacenar y luego consultar los datos que enviará el ESP32 al detectar un tag RFID.
 
-Primero creé un nuevo proyecto en Django llamado sicap_backend, y dentro de él una app específica llamada registros. Ahí definí un modelo (RegistroTag) para guardar cada tag leído junto con la fecha y hora en que fue recibido.
+Primero creé un nuevo proyecto en Django llamado sicap_backend, con una app específica llamada registros. Allí definí un modelo (RegistroTag) para guardar cada tag leído junto con la fecha y hora en que fue recibido. Luego armé un endpoint REST en la ruta /api/recibir/ que permite recibir datos en formato JSON (por ejemplo: {"tag": "A1B2C3D4"}).
 
-Después armé un endpoint en la ruta /api/recibir/ que permite recibir los datos en formato JSON (por ejemplo: {"tag": "A1B2C3D4"}). Hice varias pruebas mandando datos desde la terminal y logré verificar que todo se guarda correctamente en la base de datos. También accedí al panel de administración de Django para confirmar que los registros se almacenan bien.
+Realicé pruebas exitosas enviando datos desde la terminal y verifiqué que los registros se almacenan correctamente en la base de datos. También confirmé su correcto guardado accediendo al panel de administración de Django.
 
-Por otro lado, revisé el código que están usando mis compañeros para leer los tags desde la ESP32 y lo guardé para después integrarlo con el servidor. Además, preparé un archivo wifi.py con los datos de conexión para que el microcontrolador se conecte automáticamente a la red cuando esté listo.
+Más tarde, en la escuela, trabajamos en el ESP32 con el lector RFID. Se cargaron los archivos main.py y wifi.py, y se conectó el dispositivo a la red "Cooperadora Profesores". Luego:
 
-Finalmente, estuve pensando en cómo vamos a mostrar todo esto en la feria. Se me ocurrió que podríamos usar una Raspberry Pi o una computadora vieja como servidor local, para no depender del WiFi del colegio, que suele ser inestable. También pensé en llevar nuestro propio router, así tenemos una red cerrada dedicada al proyecto y sin interferencias.
+Verificamos que el lector detecta los tags correctamente.
 
-Cabe aclarar que esta última parte es una idea personal que todavía no hablé con el resto del grupo.
+Se imprimen en consola los códigos leídos.
+
+Los datos se envían al servidor Django.
+
+Se ajustó el parámetro ALLOWED_HOSTS para aceptar la IP del ESP.
+
+Se confirmaron múltiples respuestas 200 OK desde el servidor, demostrando que el sistema ya está funcionando de punta a punta.
+
+También creé una lógica de lectura mejorada con control de repeticiones y TIMEOUT, para evitar enviar el mismo tag muchas veces seguidas.
+
+Finalmente, estuve pensando en cómo mostrar todo esto en la feria. Se me ocurrió usar una Raspberry Pi o una notebook vieja como servidor local, sin depender del WiFi del colegio (que suele fallar). Incluso consideré llevar un router propio, para tener una red cerrada exclusiva del proyecto y sin interferencias.
