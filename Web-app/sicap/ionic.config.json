@@ -1,7 +1,0 @@
-{
-  "name": "sicap",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
