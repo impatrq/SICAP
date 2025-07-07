@@ -1,24 +1,45 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>Login S.I.C.A.P.</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">login</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <h1>sicap</h1>
-    <div> 
-      <input class="username" type="text" placeholder="Username" />
-    </div>
-    <div>
-      <input class="password" type="text" placeholder="Password" />
-    </div>
-    <div>
-      <input type="submit">
-    </div>
-    
+<ion-content>
+  <div class="login-container">
+
+    <ion-card>
+      <ion-card-header class="ion-text-center">
+        <!-- Puedes reemplazar esto con tu logo si tienes uno -->
+        <ion-icon name="shield-checkmark-outline" color="primary" class="login-icon"></ion-icon>
+        <ion-card-title>S.I.C.A.P.</ion-card-title>
+        <ion-card-subtitle>Sistema Integral de Control Automatizado del Pañol</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form>
+
+          <ion-item>
+            <ion-icon name="person-outline" slot="start" color="medium"></ion-icon>
+            <ion-label position="floating">Usuario</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+
+
+
+          <ion-item>
+            <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input type="password"></ion-input>
+          </ion-item>
+          
+          <br>
+
+          <ion-button type="submit" expand="block" shape="round">
+            Ingresar
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
 </ion-content>
