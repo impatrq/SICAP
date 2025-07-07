@@ -8,6 +8,10 @@ Las pruebas fueron exitosas, el servidor recibió los datos y los procesó como 
 
 Además, comencé a tomar nota de los pasos técnicos para poder documentar todo correctamente más adelante, pensando en la carpeta de campo y en cómo explicarlo si algún profe me lo pregunta.
 
+Patella Tiziano: 
+
+El día de hoy le fuí a presentar al profe Medina lo que había investigado ayer acerca del desarrollo de la app y sobre la aplicacion que supuestamente me podia hacer el trabajo sin necesidad de codigo, sin embargo el me dijo que no me servian para lo que necesitabamos por varias razones y que ese tipo de programanas se suelen usar para hacer "maquetados" de las aplicaciones. Como alternativa me explico como era la forma correcta de trabajar para hacer la app y que debía hacer ( usar frameworks). Tras haberme explicado todos los tipos de frameworks que existian y que hacian cada uno llegamos a la conclusion de que el que nos iba a servir a nuestro grupo era "IONIC", así que procedí a instalar node.js y cofigurar IONIC para comenzar con el desarrollo cuanto antes. Tras unas complicaciones logré ejecutar de forma exitosa la apicacion y editarla para poder darle el aspecto que yo quería.
+
 <h2>Miércoles 2/07/2025</h2>
 
 Lautaro Santolucito:
@@ -45,6 +49,15 @@ La jornada comenzó con una fase de formación enfocada en el desarrollo del fro
 Durante la tarde, se finalizó la etapa de desarrollo local del script principal en Python. Con el código ya funcional, el enfoque se trasladó a la siguiente fase: la integración con el servidor. Se iniciaron las primeras pruebas conceptuales para investigar y definir la metodología de conexión y el protocolo para la transmisión de datos desde el script del lector RFID hacia el backend.
 
 Paralelamente, se completó el curso básico de JavaScript con una duración total de 6 horas en videos sumado a prácticas en simultaneo que fui haciendo y se reforzaron los conocimientos adquiridos mediante la realización de ejercicios prácticos en la plataforma SoloLearn.
+
+
+**Patella Tiziano:**
+
+El día de hoy me encargué de trabajar con la primera parte de la web app con la que los usuarios tendran que intecartuar al inicar, el inicio de sesión. Lo primero que tuve que hacer fue crear una nueva ruta en la app la cual llamé "login" e iba a coresponder justamente al inicio de sesión de los usuarios. 
+
+Tras consultar con el profe Medina que era lo que tenía que considerar antes de ponerme a trabajar, llegamos a la conclusión de que en lugar de enfocarme en la estetica de como iba a tener que verse el login (frontend), tenía que enfocarme y trabajar en la parte mas complicada, la cual era el servidor que iba a almacenar los datos de todos los usarios que se regisrtaban(backend). Tras investigar en internet sobre como era el procedimineto para trabajar encontré un video que me explicaba paso por paso cuales eran las cosas que tenía que hacer.
+
+ Lo primero fue habilitar el phyton e instalar django en vscode ( django es el lugar donde iba a crear el servidor que almacenara todos los datos de usuario). Sin embargo al momento de querer utilizar el django previo a su descarga me salto un <span style="color: red;">error</span> el cual me indicaba que no se podía utilizar django debido a que no estaba en mi entorno "PATH", lo cual termine solucionando al incluir la ruta en los ajustes avanzados de mi computadora. Sin embargo, previo a ese problema se me presento otra situacion la cual no supe como resolver. Este mismo día, mi compañero Lautaro se encargo de crear un servidor Django en su computadora para poder almacenar los datos de todos los tags RFID que detectaban las antenas, el problema era que nuestra idea es trabajar con todos los datos en un mismo servidor y los pasos que estaba siguiendo yo en el video me hacían crear un servidor nuevo, de hacerlo iba a generar un problema de servidores ya que ibamos a tener 2 diferentes para almacenar diferentes cosas cuando realmente solo necesitamos uno. A todo esto, el profe Medina ya se había ido de la escuela lo que significo en que no tenga nadie a quien poder consultarle por ayuda y que me trabe en ese problema de no usar el servidor de mi compañero. 
 
 
 
