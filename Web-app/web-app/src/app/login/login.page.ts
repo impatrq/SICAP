@@ -8,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
+  animacionTerminada: boolean = false;
+
+
   constructor() { }
+
+  onAnimationComplete() {
+    this.animacionTerminada = true; 
+  }
 
   ngOnInit() {
   }
