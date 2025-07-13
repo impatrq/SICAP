@@ -1,24 +1,25 @@
-<ion-header [translucent]="true">
-  
+<ion-header [translucent]="true" *ngIf="animacionTerminada">
   <ion-toolbar>
     <img src="/Pagina Web/images/Logo transparente.png" alt="Logo SICAP" class="header-logo" />
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="login-container">
+<ion-content [fullscreen]="true">
 
+  <div *ngIf="!animacionTerminada" class="splash-container">
+    <lottie-player
+      src="assets/Animaciones/animacion-login.json"
+      background="darkblue"
+      speed="1"
+      style="width: 300px; height: 300px;"
+      autoplay
+      (complete)="onAnimationComplete()"> 
+    </lottie-player>
+  </div>
+
+  <div *ngIf="animacionTerminada" class="login-container">
     <ion-card>
       <ion-card-header class="ion-text-center">
-        
-        <lottie-player
-          src="assets/Animaciones/animacion-login.json" background="transparent"
-          speed="1"
-          style="width: 200px; height: 200px; margin: auto;"
-          loop
-          autoplay>
-        </lottie-player>
-
         <ion-icon name="shield-checkmark-outline" color="primary" class="login-icon"></ion-icon>
         <ion-card-title>S.I.C.A.P.</ion-card-title>
         <ion-card-subtitle>Sistema Integral de Control Automatizado del Pañol</ion-card-subtitle>
@@ -26,14 +27,11 @@
 
       <ion-card-content>
         <form action="/Web-app/web-app/src/app/home/home.page.html" method="POST">
-
           <ion-item>
             <ion-icon name="person-outline" slot="start" color="medium"></ion-icon>
             <ion-label position="floating">Usuario</ion-label>
             <ion-input type="text"></ion-input>
           </ion-item>
-
-
 
           <ion-item>
             <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
@@ -49,6 +47,7 @@
         </form>
       </ion-card-content>
     </ion-card>
-
   </div>
+
 </ion-content>
+
