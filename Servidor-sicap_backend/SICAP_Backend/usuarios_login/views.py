@@ -11,19 +11,18 @@ import json
 class ProgrammerViewSet(viewsets.ModelViewSet):
     queryset = Programmer.objects.all()
     serializer_class = ProgrammerSerializer
-    
-    @csrf_exempt
-    def login_view(request):
-        if request.method == 'POST':
-            data = json.loads(request.body)
+
+@csrf_exempt
+def login_view(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
         username = data.get('username')
         password = data.get('password')
-        # Aquí deberías validar el usuario y contraseña con tu modelo
-        if username == "sicap" and password == "1234":  # Ejemplo simple
+        if username == "sicap" and password == "1234":
             return JsonResponse({'success': True, 'message': 'Login correcto'})
         else:
             return JsonResponse({'success': False, 'message': 'Credenciales incorrectas'})
-        return JsonResponse({'error': 'Método no permitido'}, status=405)
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
     
 def register_view(request):
     if request.method == 'GET':

@@ -8,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class LoginPage implements OnInit {
+  username: string = '';
+  password: string = '';
+  animacionTerminada: boolean = false; // Si usás esta variable en el HTML
 
   constructor() { }
 
