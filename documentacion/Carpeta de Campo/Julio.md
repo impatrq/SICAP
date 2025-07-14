@@ -67,3 +67,11 @@ Tras consultar con el profe Medina que era lo que tenía que considerar antes de
 Facu Ledesma:
 
 Me dediqué a trabajar en el armado de la presentación oficial del proyecto SICAP. Fue una jornada bastante productiva en la que pude ordenar las ideas, definir los ejes principales y pensar en cómo transmitir de la mejor manera todo lo que venimos construyendo con este proyecto. La presentación busca ser clara, visual y didáctica, para que cualquier persona que la vea pueda entender de qué se trata SICAP, cuáles son nuestros objetivos, los avances que logramos hasta el momento y hacia dónde queremos seguir creciendo. Me concentré en organizar los contenidos en secciones que tengan coherencia entre sí, incluyendo tanto la parte técnica como la parte humana del proyecto, ya que para nosotros es fundamental mostrar el trabajo en equipo, el compromiso y la innovación que nos caracterizan. También estuve seleccionando recursos visuales, gráficos e imágenes que acompañen cada sección y ayuden a reforzar el mensaje. Además, colaboré en el desarrollo de la animación para el intro de la web app, buscando que tenga un diseño atractivo, moderno y representativo de nuestra identidad visual. En los próximos días seguiré puliendo detalles para que la presentación y la animación queden lo más completas y profesionales posible, y así poder mostrar todo el laburo que venimos haciendo con tanto esfuerzo.
+
+Facu S:
+
+La jornada se centró en la investigación e implementación de animaciones para la aplicación web, con el objetivo de enriquecer la interfaz y mejorar la experiencia de usuario.
+
+Se evaluaron diferentes métodos y librerías, seleccionando finalmente la tecnología LottieFiles debido a su eficiencia para renderizar animaciones vectoriales de alta calidad con bajo impacto en el rendimiento.
+
+La fase de implementación requirió un proceso intensivo de prueba y error para integrar correctamente la librería en el proyecto. Después de resolver varios conflictos de ejecución y depurar el código, se alcanzó el objetivo propuesto. Como resultado concreto, se logró implementar con éxito una "Splash Screen" animada en la pantalla de inicio de sesión (Login), representando la primera mejora visual dinámica de la plataforma.
