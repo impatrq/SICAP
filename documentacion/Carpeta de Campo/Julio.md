@@ -75,3 +75,9 @@ La jornada se centró en la investigación e implementación de animaciones para
 Se evaluaron diferentes métodos y librerías, seleccionando finalmente la tecnología LottieFiles debido a su eficiencia para renderizar animaciones vectoriales de alta calidad con bajo impacto en el rendimiento.
 
 La fase de implementación requirió un proceso intensivo de prueba y error para integrar correctamente la librería en el proyecto. Después de resolver varios conflictos de ejecución y depurar el código, se alcanzó el objetivo propuesto. Como resultado concreto, se logró implementar con éxito una "Splash Screen" animada en la pantalla de inicio de sesión (Login), representando la primera mejora visual dinámica de la plataforma.
+
+<h2>Lunes 14/07/2025</h2>
+
+Facu S:
+
+Estuve desarrollando todo lo relacionado a el curso de Sistemas Embebidos y su programación, pudiendo configurar algunas tareas con FreeRTOS.
