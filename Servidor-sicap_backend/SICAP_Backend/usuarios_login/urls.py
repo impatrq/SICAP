@@ -6,5 +6,7 @@ router= routers.DefaultRouter()
 router.register(r'programmers', views.ProgrammerViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),  # Incluye las rutas del router 
+    path('', include(router.urls)),  # Incluye las rutas del router
+    path('api/authenticate', views.authenticate, name='authenticate'),
+    path('login/', views.login_view, name='login'),
 ]
