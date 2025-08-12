@@ -1,42 +1,38 @@
-<ion-header [translucent]="true" *ngIf="animacionTerminada">
-  <ion-toolbar>
-    <img src="/Pagina Web/images/Logo transparente.png" alt="Logo SICAP" class="header-logo" />
-  </ion-toolbar>
-</ion-header>
+<div *ngIf="!animacionTerminada" class="splash-container">
+  <lottie-player
+    src="assets/Animaciones/animacion.login.json"
+    background="transparent"
+    speed="1"
+    autoplay
+    (complete)="onAnimationComplete()">
+  </lottie-player>
+</div>
 
-<ion-content [fullscreen]="true">
-
-  <div *ngIf="!animacionTerminada" class="splash-container">
-    <lottie-player
-      src="assets/Animaciones/animacion-login.json"
-      background="transparente"
-      speed="1"
-      autoplay
-      (complete)="onAnimationComplete()"> 
-    </lottie-player>
+<div *ngIf="animacionTerminada" class="login-content ion-padding">
+  
+  <div class="logo-container">
+    <img src="assets/Images/Logo-chiquito.png" alt="Logo SICAP" />
   </div>
 
-  <div *ngIf="animacionTerminada" class="login-container">
-    <ion-card>
-      <ion-card-header class="ion-text-center">
-        <ion-icon name="shield-checkmark-outline" color="primary" class="login-icon"></ion-icon>
-        <ion-card-title>S.I.C.A.P.</ion-card-title>
-        <ion-card-subtitle>Sistema Integral de Control Automatizado del Pañol</ion-card-subtitle>
-      </ion-card-header>
+  <ion-card>
+    <ion-card-header class="ion-text-center">
+      <ion-card-title>S.I.C.A.P.</ion-card-title>
+      <ion-card-subtitle>Control Automatizado del Pañol</ion-card-subtitle>
+    </ion-card-header>
 
-      <ion-card-content>
-        <form action="/Web-app/web-app/src/app/home/home.page.html" method="POST">
-          <ion-item>
-            <ion-icon name="person-outline" slot="start" color="medium"></ion-icon>
-            <ion-label position="floating">Usuario</ion-label>
-            <ion-input type="text" [(ngModel)]="username" name="username"></ion-input>
-          </ion-item>
+<ion-card-content>
+      <form>
+        <ion-item>
+          <ion-icon name="person-outline" slot="start" color="medium"></ion-icon>
+          <ion-label position="floating">Usuario</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
 
-          <ion-item>
-            <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
-            <ion-label position="floating">Contraseña</ion-label>
-            <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
-          </ion-item>
+        <ion-item>
+          <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input type="password"></ion-input>
+        </ion-item>
           
           <br>
 
@@ -47,6 +43,3 @@
       </ion-card-content>
     </ion-card>
   </div>
-
-</ion-content>
-

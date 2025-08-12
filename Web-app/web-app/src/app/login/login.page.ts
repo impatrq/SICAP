@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -6,19 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.page.scss'],
   standalone: false,
 })
+export class LoginPage {
 
-export class LoginPage implements OnInit {
-  username: string = '';
-  password: string = '';
-  animacionTerminada: boolean = false; // Si usás esta variable en el HTML
+  animacionTerminada: boolean = false;
 
-  constructor() { }
+  username = '';
+  password = '';
+
+  constructor(private navCtrl: NavController) { }
 
   onAnimationComplete() {
-    this.animacionTerminada = true; 
+    this.animacionTerminada = true;
   }
-
-  ngOnInit() {}
 
   async login() {
     const response = await fetch('http://127.0.0.1:8000/usuarios_login/v1/login/', {
@@ -28,11 +28,9 @@ export class LoginPage implements OnInit {
     });
     const data = await response.json();
     if (data.success) {
-      alert('Login correcto');
-      // Aquí podés redirigir al home si querés
+      this.navCtrl.navigateForward('/home');
     } else {
       alert('Credenciales incorrectas');
     }
   }
-
 }

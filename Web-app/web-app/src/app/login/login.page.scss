@@ -2,20 +2,52 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
-    background-color: var( transparent); 
-
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--ion-background-color, #fff);
 
     lottie-player {
-    width: 100%; 
-    height: 100%; 
+    width: 80vw;
+    max-width: 450px;
     }
 }
 
-.login-container {
+// Contenedor para el contenido del login (con efecto de aparición)
+.login-content {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
     height: 100%;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+// Contenedor para el logo estático
+.logo-container {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    img {
+    height: 50px; // Ajustá el tamaño de tu logo
+    }
+}
+
+// Animación para el efecto de aparición
+@keyframes fadeIn {
+    from {
+    opacity: 0;
+    }
+    to {
+    opacity: 1;
+    }
+}
+// Estilos extra para que el resto se vea bien
+.header-logo {
+    height: 35px;
+    margin: auto;
+    display: block;
+}
+
+ion-card {
+    width: 100%;
+    max-width: 400px;
 }
