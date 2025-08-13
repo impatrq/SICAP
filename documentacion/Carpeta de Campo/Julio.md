@@ -81,3 +81,11 @@ La fase de implementación requirió un proceso intensivo de prueba y error para
 Facu S:
 
 Estuve desarrollando todo lo relacionado a el curso de Sistemas Embebidos y su programación, pudiendo configurar algunas tareas con FreeRTOS.
+
+<h2>Miercoles 16/07/2025</h2>
+
+Curso UTN y Desarrollo Frontend
+Se continuó con el desarrollo del trabajo práctico final para la materia "Sistemas Embebidos", avanzando en los requerimientos del mismo.
+
+La jornada se centró en la investigación e implementación inicial de una animación de inicio (Splash Screen) para la aplicación web. Se evaluaron tecnologías, seleccionando LottieFiles por su eficiencia. Se iniciaron las primeras pruebas, instalando el paquete @lottiefiles/lottie-player y comenzando la configuración de los módulos en Angular (login.page.module.ts y main.ts) para permitir el uso del componente lottie-player. Paralelamente, se realizaron ajustes visuales menores en la página de login para preparar el terreno para la nueva animación.
+

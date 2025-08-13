@@ -6,7 +6,6 @@ El día de hoy comenzamos trabajando en conjunto todo el grupo  con como iba a s
 
 ![alt text](<Imagen de WhatsApp 2025-08-06 a las 14.07.13_792f4d94.jpg>)
 
-## 6/08/2025
 
 **Lautaro Santolucito:**
 
