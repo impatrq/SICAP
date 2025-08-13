@@ -7,9 +7,7 @@ router.register(r'programmers', views.ProgrammerViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('authenticate/', views.authenticate, name='authenticate'),
     path('login/', views.login_view, name='login'),
     
-    
-    path('admin/create-user/', views.UserCreateAPIView.as_view(), name='create-user'),
+    path('crear-usuario/', views.UserCreateAPIView.as_view(), name='create-user'),
 ]
