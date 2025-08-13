@@ -14,3 +14,11 @@ Durante la jornada de hoy estuvimos definiendo con el grupo cómo iba a ser el d
 Además, me puse a revisar y corregir algunos detalles del backend que habíamos dejado pendientes, y organicé parte de la estructura de carpetas para dejar todo más ordenado de cara a las próximas pruebas del sistema. También estuve coordinando con Pablo cómo encarar el armado del prototipo físico que vamos a llevar a la feria, tomando decisiones sobre materiales y pasos a seguir.
 Hoy respondi las preguntas con la primera version que le vamos a mostrar al jefe de area.
 
+Facundo Spagnoletta:
+
+Desarrollo Frontend: Se continuó trabajando en la página de inicio de sesión (Login). El foco estuvo en refinar los estilos CSS (login.page.scss) para mejorar la estética visual y la experiencia de usuario, asegurando que la disposición de los elementos fuera limpia y profesional. Se realizaron ajustes finos en los componentes de Ionic para lograr una apariencia cohesiva.
+
+Investigación Backend: Se realizó una investigación exhaustiva sobre la implementación de APIs en Django utilizando Django REST Framework. El objetivo fue definir la mejor estrategia para crear un endpoint privado y seguro que permitiera la creación de usuarios nuevos solo por administradores, sentando las bases teóricas para el desarrollo de los días siguientes.
+
+
+
