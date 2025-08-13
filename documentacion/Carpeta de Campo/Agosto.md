@@ -1,4 +1,4 @@
-<h2>6/08/2025</h2>
+<h2>Miercoles 6/08/2025</h2>
 
 Tiziano Patella:
 
@@ -20,7 +20,9 @@ Desarrollo Frontend: Se continuó trabajando en la página de inicio de sesión 
 
 Investigación Backend: Se realizó una investigación exhaustiva sobre la implementación de APIs en Django utilizando Django REST Framework. El objetivo fue definir la mejor estrategia para crear un endpoint privado y seguro que permitiera la creación de usuarios nuevos solo por administradores, sentando las bases teóricas para el desarrollo de los días siguientes.
 
-<h2>12/08/2025</h2>
+<h2>Martes 12/08/2025</h2>
+
+Facundo Spagnoletta:
 
 Basado en la investigación previa, se comenzó la construcción de la API de creación de usuarios.
 
@@ -29,5 +31,18 @@ Instalación y Configuración: Se instaló y configuró formalmente Django REST 
 Creación de Serializers: Se creó el archivo serializers.py y se definió el UserCreateSerializer, el componente encargado de validar los datos y gestionar la creación del usuario y su contraseña segura.
 
 Definición de la Vista y Rutas: Se creó la estructura inicial de la vista UserCreateAPIView en views.py y se configuraron las URLs para establecer la ruta de acceso al nuevo endpoint (/usuarios/crear-usuario/).
+
+
+<h2>Miercoles 13/08/2025</h2>
+
+Facundo Spagnoletta:
+
+La jornada se dedicó a completar y probar rigurosamente la API.
+
+Implementación de Seguridad: Se añadió la regla de permisos permission_classes = [IsAdminUser] a la vista, restringiendo el acceso únicamente a los administradores autenticados.
+
+Pruebas Exhaustivas: Se utilizó la herramienta Postman para una verificación completa del endpoint. Se creó un superusuario en Django para obtener las credenciales necesarias, y se realizaron múltiples pruebas de creación de usuarios para confirmar el correcto funcionamiento de la API y asegurar que los datos se almacenaban correctamente en la base de datos.
+
+Como resultado, la API quedó 100% funcional.
 
 
