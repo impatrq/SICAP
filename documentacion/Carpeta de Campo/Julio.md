@@ -81,3 +81,30 @@ La fase de implementación requirió un proceso intensivo de prueba y error para
 Facu S:
 
 Estuve desarrollando todo lo relacionado a el curso de Sistemas Embebidos y su programación, pudiendo configurar algunas tareas con FreeRTOS.
+
+<h2>Miercoles 16/07/2025</h2>
+
+Facundo Spagnoletta:
+
+Curso UTN y Desarrollo Frontend
+Se continuó con el desarrollo del trabajo práctico final para la materia "Sistemas Embebidos", avanzando en los requerimientos del mismo.
+
+La jornada se centró en la investigación e implementación inicial de una animación de inicio (Splash Screen) para la aplicación web. Se evaluaron tecnologías, seleccionando LottieFiles por su eficiencia. Se iniciaron las primeras pruebas, instalando el paquete @lottiefiles/lottie-player y comenzando la configuración de los módulos en Angular (login.page.module.ts y main.ts) para permitir el uso del componente lottie-player. Paralelamente, se realizaron ajustes visuales menores en la página de login para preparar el terreno para la nueva animación.
+
+<h2>Viernes 18/07/2025</h2>
+
+Facundo Spagnoletta:
+
+Se finalizó y entregó con éxito el trabajo práctico correspondiente a la materia "Sistemas Embebidos".
+
+Se completó exitosamente la implementación de la Splash Screen animada. El trabajo consistió en:
+
+Se creó una variable booleana (animacionTerminada) en login.page.ts para actuar como interruptor.
+
+Manejo de Eventos: Se utilizó el evento (complete) del componente <lottie-player> para llamar a una función que cambia el estado de dicha variable al finalizar la animación.
+
+Renderizado Condicional: Se implementó la directiva *ngIf en el archivo HTML para mostrar la animación al inicio y, una vez completada, ocultarla y mostrar el formulario de login.
+
+Estilos Finales: Se aplicaron estilos CSS en login.page.scss para asegurar que la animación se muestre a pantalla completa y que el contenido del login aparezca centrado y con una transición suave.
+
+El resultado es una animación de inicio completamente funcional que mejora la experiencia de usuario desde el primer momento de uso de la aplicación.
