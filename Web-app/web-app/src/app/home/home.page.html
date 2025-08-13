@@ -2,6 +2,8 @@
 <div class="vertical-toolbar">
   <ion-button>Opción 1</ion-button>
   <ion-button>Opción 2</ion-button>
+  <ion-button *ngFor="let boton of botones">{{ boton }}</ion-button>
+  <ion-button class="Agregar-espacio" (click)="agregarBoton()">Agregar espacio</ion-button>
 </div>
 
 <ion-content [fullscreen]="true">

@@ -7,7 +7,11 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class HomePage {
+  botones: string[] = ['Opción 1', 'Opción 2'];
 
   constructor() {}
 
+  agregarBoton() {
+    this.botones.push('Nuevo espacio');
+  }
 }
