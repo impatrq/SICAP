@@ -1,13 +1,13 @@
 from django.http import JsonResponse
 from rest_framework import viewsets
-from .serializer import ProgrammerSerializer
+from serializer.py import ProgrammerSerializer
 from .models import Programmer
 import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAdminUser 
-from .serializer import UserCreateSerializer
+from rest_framework.permissions import IsAdminUser # Para proteger la ruta
+from .serializers import UserCreateSerializer # El nuevo serializer que creamos
 from django.views.decorators.csrf import csrf_exempt 
 
 
@@ -23,7 +23,8 @@ def login_view(request):
         data = json.loads(request.body)
         username = data.get('username')
         password = data.get('password')
-
+        # ADVERTENCIA: Este método de login es muy inseguro.
+        # En el futuro, deberías usar el sistema de autenticación de Django.
         if username == "sicap" and password == "1234":
             return JsonResponse({'success': True, 'message': 'Login correcto'})
         else:

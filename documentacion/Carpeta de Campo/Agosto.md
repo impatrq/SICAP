@@ -46,3 +46,15 @@ Pruebas Exhaustivas: Se utilizó la herramienta Postman para una verificación c
 Como resultado, la API quedó 100% funcional.
 
 
+Miércoles 13/08/2025 – Lautaro
+
+Puse a andar el sistema y dejamos una pantalla de ingreso con usuario y contraseña.
+
+Al iniciar sesión te lleva a un panel donde se ven los registros de tags más recientes.
+
+Ordene y limpie cosas que estaban trabando el arranque (rutas y configuración).
+
+Probe de punta a punta: entrar, ver los registros y cerrar sesión.
+
+Quedó listo para que el equipo del frontend se conecte y siga trabajando sin tocar nada más del lado del servidor.
+
