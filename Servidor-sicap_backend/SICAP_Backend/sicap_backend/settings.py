@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'registros',
     'rest_framework',
     'usuarios_login',
-'corsheaders',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -130,11 +130,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",   # Vite
-    "http://localhost:3000",   # Next.js (si lo usan)
+    "http://localhost:3000",
+    "http://localhost:4200",   # Next.js (si lo usan)
 ]
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:3000",
+    "http://localhost:4200",
 ]
 
 # Para dev: que la cookie funcione entre el front (5173/3000) y el back (8000)
