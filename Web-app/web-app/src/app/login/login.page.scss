@@ -1,53 +1,115 @@
+// -------------------------------------------------------------------
+// Estilos para el Contenido Principal de la Página
+// -------------------------------------------------------------------
+
+ion-content {
+  // Define el color de fondo para toda la página.
+  // --ion-background-color es una variable de Ionic que se adapta al tema claro/oscuro.
+    background: var(--ion-background-color, #2d1263);
+}
+
+
+// -------------------------------------------------------------------
+// Estilos para la Animación de Inicio (Splash Screen)
+// -------------------------------------------------------------------
+
 .splash-container {
+  // Ocupa toda la pantalla y centra la animación en el medio.
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     width: 100vw;
-    background-color: var(--ion-background-color, #fff);
 
     lottie-player {
+    // Define el tamaño de la animación para que se vea bien en todos los dispositivos.
     width: 80vw;
     max-width: 450px;
-    }
+}
 }
 
-// Contenedor para el contenido del login (con efecto de aparición)
+
+// -------------------------------------------------------------------
+// Estilos para el Contenido del Login (Cuando la animación termina)
+// -------------------------------------------------------------------
+
 .login-content {
+  // Ocupa toda la pantalla y centra el logo y el formulario verticalmente.
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    
+  // Agrega una suave animación de aparición.
     animation: fadeIn 0.5s ease-in-out;
 }
 
-// Contenedor para el logo estático
+
+// -------------------------------------------------------------------
+// Estilos para el Logo Estático
+// -------------------------------------------------------------------
+
 .logo-container {
+  // Centra la imagen y le da un espacio antes del formulario.
     text-align: center;
     margin-bottom: 2rem;
 
     img {
-    height: 50px; // Ajustá el tamaño de tu logo
+    // Define la altura del logo. Puedes ajustar este valor.
+    height: 80px
     }
 }
 
-// Animación para el efecto de aparición
+
+// -------------------------------------------------------------------
+// Estilos para la Tarjeta del Formulario
+// -------------------------------------------------------------------
+
+ion-card {
+  // Evita que la tarjeta se pegue a los bordes en pantallas chicas.
+    background: #0d2c54; // Azul oscuro
+    color: #ffffff;
+
+    width: 90%;
+    max-width: 380px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ion-item {
+  // Quita el fondo por defecto del item para que se vea el azul de la tarjeta.
+    --background: transparent;
+  // Define el color del borde inferior del campo.
+    --border-color: rgba(255, 255, 255, 0.2);
+
+  // Estilo para los iconos (candado, persona)
+    ion-icon {
+    color: #ffffff;
+    }
+
+  // Estilo para las etiquetas (Usuario, Contraseña)
+    ion-label {
+    color: #ffffff;
+}
+
+  // Estilo para el texto que el usuario escribe
+    ion-input {
+    --color: #ffffff;
+}
+}
+
+// -------------------------------------------------------------------
+// Definición de la Animación de Aparición
+// -------------------------------------------------------------------
+
 @keyframes fadeIn {
     from {
     opacity: 0;
+    transform: translateY(10px);
     }
     to {
     opacity: 1;
+    transform: translateY(0);
     }
-}
-// Estilos extra para que el resto se vea bien
-.header-logo {
-    height: 35px;
-    margin: auto;
-    display: block;
-}
-
-ion-card {
-    width: 100%;
-    max-width: 400px;
 }
