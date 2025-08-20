@@ -8,6 +8,18 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
+  botones: any[] = [];
+
   constructor() {}
+
+
+  agregarBoton() {
+    const nuevoNumero = this.botones.length + 1;
+    const nuevoBoton = {
+      nombre: `Espacio ${nuevoNumero}`
+    };
+    this.botones.push(nuevoBoton);
+    console.log('Se agregó un nuevo botón:', nuevoBoton);
+  }
 
 }
