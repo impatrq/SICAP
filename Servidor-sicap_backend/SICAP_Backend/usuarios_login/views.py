@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from rest_framework import viewsets
-from .serializer import ProgrammerSerializer, UserCreateSerializer # 👈 1. IMPORTACIÓN CORREGIDA
+from .serializer import ProgrammerSerializer, UserCreateSerializer 
 from .models import Programmer
 import json
 from rest_framework.views import APIView
@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate # 👈 2. IMPORTACIÓN NECESARIA
+from django.contrib.auth import authenticate 
+from django.http import JsonResponse
 
 class ProgrammerViewSet(viewsets.ModelViewSet):
     queryset = Programmer.objects.all()
@@ -42,3 +43,6 @@ class UserCreateAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def test_view(request):
+    return JsonResponse({"mensaje": "¡La ruta de prueba funciona!"})
