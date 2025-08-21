@@ -44,12 +44,12 @@ class UserCreateAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class MisPañolesAPIView(APIView):
+class MenúAPIView(APIView):
     
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         
-        panoles = Pañol.objects.filter(usuario=request.user)
-        serializer = PañolSerializer(panoles, many=True)
+        pañoles = Pañol.objects.filter(usuario=request.user)
+        serializer = PañolSerializer(pañoles, many=True)
         return Response(serializer.data)

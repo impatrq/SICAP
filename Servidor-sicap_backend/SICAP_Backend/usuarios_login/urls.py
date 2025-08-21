@@ -7,5 +7,5 @@ urlpatterns = [
     
     path('crear-usuario/', views.UserCreateAPIView.as_view(), name='create-user'),
     
-    path('mis-pañoles/', views.MisPañolesAPIView.as_view(), name='mis-pañoles'),
+    path('menú/', views.MenúAPIView.as_view(), name='menú'),
 ]
