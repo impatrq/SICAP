@@ -49,7 +49,7 @@ export class LoginPage {
       const data = await response.json();
       
       if (data.success) {
-        this.navCtrl.navigateForward('/home');
+        this.navCtrl.navigateForward('/menu');
       } else {
         
         this.mostrarAlerta('Error de Login', data.message || 'Credenciales incorrectas.');
