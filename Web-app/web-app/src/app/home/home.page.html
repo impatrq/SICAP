@@ -1,7 +1,9 @@
 
 <!-- En home.page.html -->
 <div class="vertical-toolbar">
-  <ion-button *ngFor="let boton of botones">{{ boton }}</ion-button>
+  <div class="botones-container"> 
+    <ion-button *ngFor="let boton of botones">{{ boton }}</ion-button>
+  </div>
   <ion-button class="Agregar-espacio" (click)="agregarBoton()">Agregar espacio</ion-button>
 </div>
 

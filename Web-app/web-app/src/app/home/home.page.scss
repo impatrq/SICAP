@@ -29,13 +29,19 @@
 .vertical-toolbar {
   display: flex;
   flex-direction: column;
-  width: 100px;
+  justify-content: space-between; // Esto empuja el botón al fondo
+  width: 25%;
   position: fixed;
   left: 0;
   top: 0;
   height: 100vh;
-  background-color: red;
+  background-color: grey;
   border-right: 1px solid black;
   padding: 10px 0;
   z-index: 1000;
+}
+.botones-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; // Espacio entre botones
 }
