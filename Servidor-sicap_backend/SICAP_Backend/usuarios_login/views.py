@@ -1,15 +1,15 @@
 from django.http import JsonResponse
-from rest_framework import viewsets
-from .serializer import ProgrammerSerializer, UserCreateSerializer 
-from .models import Programmer
+from rest_framework import viewsets, status
+from .serializer import ProgrammerSerializer, UserCreateSerializer, PañolSerializer
+from .models import Programmer, Pañol
 import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate 
-from django.http import JsonResponse
+from rest_framework.permissions import IsAuthenticated 
+
 
 class ProgrammerViewSet(viewsets.ModelViewSet):
     queryset = Programmer.objects.all()
@@ -44,5 +44,12 @@ class UserCreateAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-def test_view(request):
-    return JsonResponse({"mensaje": "¡La ruta de prueba funciona!"})
+class MisPañolesAPIView(APIView):
+    
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        
+        panoles = Pañol.objects.filter(usuario=request.user)
+        serializer = PañolSerializer(panoles, many=True)
+        return Response(serializer.data)

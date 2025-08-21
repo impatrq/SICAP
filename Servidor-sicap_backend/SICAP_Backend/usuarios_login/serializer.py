@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 import secrets
 from .models import Programmer
-
+from .models import Pañol
 
 class ProgrammerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -32,3 +32,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
         print(f"IMPORTANTE: Usuario '{user.username}' creado con la contraseña: {password}")
         
         return user
+    
+class PañolSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pañol
+        fields = ('id', 'nombre')
