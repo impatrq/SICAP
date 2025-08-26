@@ -1,5 +1,19 @@
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    Manage Profiles
-  </ion-header>
+  <div class="selector-container">
+    <ion-text color="light">
+      <h1>Manage Profiles</h1>
+    </ion-text>
+
+    <div class="profiles-container">
+      
+      <div *ngFor="let panol of panoles" class="profile" (click)="seleccionarPanol(panol)">
+        <div class="profile-icon">
+          <ion-icon name="grid-outline"></ion-icon>
+        </div>
+        <ion-text color="medium">
+          <p>{{ panol.nombre }}</p>
+        </ion-text>
+      </div>
+    </div>
+  </div>
 </ion-content>
