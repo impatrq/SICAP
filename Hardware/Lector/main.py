@@ -32,7 +32,7 @@ while True:
         # ✅ Mandar al servidor (cambiar IP si hace falta)
         try:
             response = urequests.post("http://192.168.111.250:8000/api/recibir/",
-                                      json={"tag": tag})
+                                    json={"tag": tag})
             response.close()
         except Exception as e:
             print("Error al enviar:", e)
