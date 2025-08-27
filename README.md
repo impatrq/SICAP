@@ -42,11 +42,11 @@ Observamos que muchos entornos técnicos carecen de un sistema eficiente para co
 
 ## Integrantes
 
-- Patella Tiziano  
-- Lautaro Santolucito  
-- Facundo Spagnoletta  
-- Facundo Ledesma  
-- Pablo Osores  
+- Patella Tiziano    📧 Correo: tizianopatella40@gmail.com    
+- Lautaro Santolucito    📧 Correo: lauty.santolucito@icloud.com
+- Facundo Spagnoletta    📧 Correo: facu.spagnoleta@gmail.com
+- Facundo Ledesma    📧 Correo: facundoledesma140@gmail.com
+- Pablo Osores    📧 Correo: pablooosores@gmail.com
 
 ---
 
