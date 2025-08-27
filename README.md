@@ -42,11 +42,11 @@ Observamos que muchos entornos técnicos carecen de un sistema eficiente para co
 
 ## Integrantes
 
-- Patella Tiziano  
-- Lautaro Santolucito  
-- Facundo Spagnoletta  
-- Facundo Ledesma  
-- Pablo Osores  
+- Patella Tiziano    📧 Correo: tizianopatella40@gmail.com    [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tizianopatella/)
+- Lautaro Santolucito    📧 Correo: lauty.santolucito@icloud.com    [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lautarosantolucito/)
+- Facundo Spagnoletta    📧 Correo: facu.spagnoleta@gmail.com    [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fspagnoletta/)
+- Facundo Ledesma    📧 Correo: facundoledesma140@gmail.com    [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ffaculedesma/)
+- Pablo Osores    📧 Correo: pablooosores@gmail.com    [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pabloosores/)
 
 ---
 
