@@ -42,7 +42,7 @@ Observamos que muchos entornos técnicos carecen de un sistema eficiente para co
 
 ## Integrantes
 
-- Patella Tiziano    📧 Correo: tizianopatella40@gmail.com    
+- Patella Tiziano    📧 Correo: tizianopatella40@gmail.com    Linkedin: [Tiziano Patella] (https://www.linkedin.com/in/tizianopatella/)
 - Lautaro Santolucito    📧 Correo: lauty.santolucito@icloud.com
 - Facundo Spagnoletta    📧 Correo: facu.spagnoleta@gmail.com
 - Facundo Ledesma    📧 Correo: facundoledesma140@gmail.com
