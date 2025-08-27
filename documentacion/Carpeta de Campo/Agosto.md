@@ -20,6 +20,18 @@ Desarrollo Frontend: Se continuó trabajando en la página de inicio de sesión 
 
 Investigación Backend: Se realizó una investigación exhaustiva sobre la implementación de APIs en Django utilizando Django REST Framework. El objetivo fue definir la mejor estrategia para crear un endpoint privado y seguro que permitiera la creación de usuarios nuevos solo por administradores, sentando las bases teóricas para el desarrollo de los días siguientes.
 
+Pablo Osores:
+
+Me encargué de conseguir los materiales para la estructura del portal para el prototipo del sistema SICAP la cual estaba en desuso en el pañol de aviónica. El armado del portal nos sirvió para tomar dimensión de como hacer los soportes de antenas y lectores, además de toda la electrónica y poder pensar con algo físico la forma de distribución de cables y antenas de forma que quede lo mejor posible.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/583ba720-f0cb-418a-8af8-36f7f3f5a0b9" alt="imagen 1" width="300" style="display:inline-block; margin-right:10px;"/>
+  <img src="https://github.com/user-attachments/assets/31849460-ce5b-4433-bcb3-dc7b8458f14d" alt="imagen 2" width="300" style="display:inline-block;"/>
+</p>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/39772eca-234c-411c-b6ec-0c228841d412" alt="imagen 3" width="600"/>
+</p>
+
 <h2>Martes 12/08/2025</h2>
 
 Facundo Spagnoletta:
