@@ -16,9 +16,9 @@ export class MenuPage implements OnInit {
   ngOnInit() {
     
     this.panoles = [
-      { id: 1, nombre: 'Pañol de Mecánica' },
-      { id: 2, nombre: 'Pañol de Electricidad' },
-      { id: 3, nombre: 'Pañol Principal' },
+      { id: 1, nombre: 'Quilmes' },
+      { id: 2, nombre: 'Ezpeleta' },
+      { id: 3, nombre: 'Villa La Florida' },
     ];
   }
 

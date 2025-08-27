@@ -1,12 +1,19 @@
 // -------------------------------------------------------------------
 // Estilos para el Contenido Principal de la Página
 // -------------------------------------------------------------------
-
 ion-content {
-  // Define el color de fondo para toda la página.
-  // --ion-background-color es una variable de Ionic que se adapta al tema claro/oscuro.
-    background: var(--ion-background-color, #2d1263);
-}
+--background: none;
+
+  background-image: url('../../assets/images/Fondo-login.jpg');
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+      filter: brightness(0.7);
+      z-index: -1;
+    }
+
+
 
 
 // -------------------------------------------------------------------
@@ -34,13 +41,12 @@ ion-content {
 // -------------------------------------------------------------------
 
 .login-content {
-  // Ocupa toda la pantalla y centra el logo y el formulario verticalmente.
+  
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
     
-  // Agrega una suave animación de aparición.
     animation: fadeIn 0.5s ease-in-out;
 }
 
@@ -56,7 +62,7 @@ ion-content {
 
     img {
     // Define la altura del logo. Puedes ajustar este valor.
-    height: 80px
+    height: 200px
     }
 }
 
@@ -79,7 +85,7 @@ ion-card {
 }
 
 ion-item {
-  // Quita el fondo por defecto del item para que se vea el azul de la tarjeta.
+  
     --background: transparent;
   // Define el color del borde inferior del campo.
     --border-color: rgba(255, 255, 255, 0.2);
