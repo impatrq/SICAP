@@ -81,5 +81,5 @@ Pablo Osores: Este día hice reformas a los perfiles de aluminio que teníamos p
   <img src="https://github.com/user-attachments/assets/f3c0296b-01a8-43fc-af2b-07cca5703b6e" width="250" alt="imagen 3" width="300">
 </p>
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/1904855b-cd63-4a4d-9fe9-9238f2194567" alt="imagen 4" width="600"/>
+  <img src="https://github.com/user-attachments/assets/1904855b-cd63-4a4d-9fe9-9238f2194567" width="760" alt="imagen 4" width="600"/>
 </p>
