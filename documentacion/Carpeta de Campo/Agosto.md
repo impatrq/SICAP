@@ -70,3 +70,16 @@ Probe de punta a punta: entrar, ver los registros y cerrar sesión.
 
 Quedó listo para que el equipo del frontend se conecte y siga trabajando sin tocar nada más del lado del servidor.
 
+
+<h2>Miercoles 27/08/2025</h2>
+
+Pablo Osores: Este día hice reformas a los perfiles de aluminio que teníamos para poder tener 4 perfiles de una medida específica para poder continuar con el armado del portal, en estos perfiles fabricados van a estar los soportes para las antenas los cuales van a estar impresos en 3d con PLA o en PETG. La idea es que los soportes sean regulables en altura y dirección para poder acomodar las antenas en caso de necesitarlo.
+
+<p align="center" style="margin-bottom:10px;">
+  <img src="https://github.com/user-attachments/assets/9fc02ee7-90c2-4edb-a52d-185ffe1ed057" width="250" alt="imagen 1" width="300">
+  <img src="https://github.com/user-attachments/assets/40c4e655-ce94-49d1-b5bc-5413b92c5d1f" width="250" alt="imagen 2" width="300">
+  <img src="https://github.com/user-attachments/assets/f3c0296b-01a8-43fc-af2b-07cca5703b6e" width="250" alt="imagen 3" width="300">
+</p>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/1904855b-cd63-4a4d-9fe9-9238f2194567" alt="imagen 4" width="600"/>
+</p>
