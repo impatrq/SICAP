@@ -19,7 +19,7 @@ def login_api(request):
         if user is None:
             return JsonResponse({"ok": False, "error": "Credenciales inválidas"}, status=401)
         login(request, user)
-        return JsonResponse({"ok": True, "user": {"id": user.id, "username": user.username}})
+        return JsonResponse({"ok": True, "user": {"id": user, "username": user.username}})
     except Exception as e:
         return JsonResponse({"ok": False, "error": str(e)}, status=400)
 
