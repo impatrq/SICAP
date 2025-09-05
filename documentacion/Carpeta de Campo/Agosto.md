@@ -83,3 +83,10 @@ Pablo Osores: Este día hice reformas a los perfiles de aluminio que teníamos p
 <p align="center">
   <img src="https://github.com/user-attachments/assets/1904855b-cd63-4a4d-9fe9-9238f2194567" width="760" alt="imagen 4" width="600"/>
 </p>
+ 
+ Facundo Ledesma:
+ Para la creación del banner destinado a las ONIET, utilicé la plataforma Canva, aplicando todos los conocimientos adquiridos previamente sobre diseño gráfico y comunicación visual. En el proceso tuve en cuenta aspectos fundamentales como la elección de colores, tipografías y distribución de los elementos, de manera que el resultado transmitiera un mensaje claro, atractivo y profesional.
+
+Primero trabajé en la paleta cromática, seleccionando tonos que representaran la identidad del evento y que, al mismo tiempo, generaran contraste para facilitar la lectura. Luego, apliqué tipografías legibles y acordes al estilo institucional, cuidando jerarquías entre títulos, subtítulos y textos secundarios. También consideré la importancia del equilibrio visual, organizando los elementos de forma armoniosa y evitando la sobrecarga de información.
+
+Además, recurrí al uso de imágenes y formas gráficas que reforzaran el propósito del banner, procurando que cada componente tuviera una función dentro del diseño. Este trabajo me permitió poner en práctica conocimientos de composición, teoría del color y principios de comunicación visual, logrando un producto que no solo cumple con su objetivo informativo, sino que también resulta atractivo para el público al que está dirigido.
