@@ -3,5 +3,5 @@ from .views import recibir_tag
 
 urlpatterns = [
     
-    path('recibir/', recibir_tag),
+    path('registrotag/', recibir_tag),
 ]
