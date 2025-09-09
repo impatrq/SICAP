@@ -1,9 +1,9 @@
 import network
 import time
 
-def conectar():
-    ssid = "Cooperadora Profesores"
-    password = "Profes_IMPA_2022"
+def conectar(ssid, password):
+    ssid = "SICAP"
+    password = "graciasamigo"
 
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
@@ -22,4 +22,3 @@ def conectar():
     else:
         print("❌ No se pudo conectar a la red.")
         return False
-
