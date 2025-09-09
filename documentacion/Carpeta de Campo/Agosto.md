@@ -91,6 +91,13 @@ Redirección automática a la interfaz correspondiente en caso de validación po
 
 Con esta mejora, el sistema consolida la integración entre el login y la base de datos, garantizando un control más seguro y eficiente del acceso de los usuario
 
+<h2>Martes 26/08/2025 </h2>
+
+Facu Spagnoletta:
+
+Se desarrolló la URL correspondiente al módulo de Menú, al cual se le aplicó un estilo visual inspirado en interfaces modernas de streaming (similar a Netflix), priorizando la claridad y facilidad de navegación.
+
+Además, se implementó una primera definición del apartado “Pañol”, con el objetivo de organizar y estructurar los distintos perfiles de usuario. A cada apartado se le asignó un estilo propio básico, lo que permitirá en futuras etapas personalizar aún más la experiencia y mejorar la usabilidad general del sistema.
 
 <h2>Miercoles 27/08/2025</h2>
 
