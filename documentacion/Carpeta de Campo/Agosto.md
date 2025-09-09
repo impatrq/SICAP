@@ -77,6 +77,20 @@ Durante la jornada trabajé en la interfaz de usuario del sistema. En primer lug
 
 Posteriormente, avancé en la sección Home, incorporando nuevas funcionalidades y optimizando su estructura para mejorar la navegabilidad y la experiencia de usuario. Estos cambios permitirán que el sistema tenga una interfaz más clara, adaptable y preparada para futuras integraciones.
 
+<h2>Jueves 21/08/2025 </h2>
+
+Se implementó la API de gestión de usuarios vinculada al módulo de login. La misma quedó operativa al 100%, permitiendo:
+
+Creación de usuarios mediante la API.
+
+Registro automático de dichos usuarios en la base de datos del backend.
+
+Verificación en tiempo real de la existencia del usuario al momento de iniciar sesión.
+
+Redirección automática a la interfaz correspondiente en caso de validación positiva.
+
+Con esta mejora, el sistema consolida la integración entre el login y la base de datos, garantizando un control más seguro y eficiente del acceso de los usuario
+
 
 <h2>Miercoles 27/08/2025</h2>
 
@@ -90,3 +104,10 @@ Pablo Osores: Este día hice reformas a los perfiles de aluminio que teníamos p
 <p align="center">
   <img src="https://github.com/user-attachments/assets/1904855b-cd63-4a4d-9fe9-9238f2194567" width="760" alt="imagen 4" width="600"/>
 </p>
+
+Facundo Ledesma:
+ Para la creación del banner destinado a las ONIET, utilicé la plataforma Canva, aplicando todos los conocimientos adquiridos previamente sobre diseño gráfico y comunicación visual. En el proceso tuve en cuenta aspectos fundamentales como la elección de colores, tipografías y distribución de los elementos, de manera que el resultado transmitiera un mensaje claro, atractivo y profesional.
+
+Primero trabajé en la paleta cromática, seleccionando tonos que representaran la identidad del evento y que, al mismo tiempo, generaran contraste para facilitar la lectura. Luego, apliqué tipografías legibles y acordes al estilo institucional, cuidando jerarquías entre títulos, subtítulos y textos secundarios. También consideré la importancia del equilibrio visual, organizando los elementos de forma armoniosa y evitando la sobrecarga de información.
+
+Además, recurrí al uso de imágenes y formas gráficas que reforzaran el propósito del banner, procurando que cada componente tuviera una función dentro del diseño. Este trabajo me permitió poner en práctica conocimientos de composición, teoría del color y principios de comunicación visual, logrando un producto que no solo cumple con su objetivo informativo, sino que también resulta atractivo para el público al que está dirigido.
