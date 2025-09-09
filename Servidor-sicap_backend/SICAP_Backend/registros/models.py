@@ -5,4 +5,4 @@ class RegistroTag(models.Model):
     fecha_hora = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.tag_id} - {self.fecha_hora}"
+        return f"{self.tag} - {self.fecha_hora}"
