@@ -10,7 +10,7 @@ def recibir_tag(request):
             data = json.loads(request.body)
             tag = data.get('tag')
             if tag:
-                RegistroTag.objects.create(tag_id=tag)
+                RegistroTag.objects.create(tag=tag)
                 return JsonResponse({'status': 'ok'})
             else:
                 return JsonResponse({'error': 'tag faltante'}, status=400)
