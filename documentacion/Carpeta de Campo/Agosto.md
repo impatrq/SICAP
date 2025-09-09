@@ -57,8 +57,7 @@ Pruebas Exhaustivas: Se utilizó la herramienta Postman para una verificación c
 
 Como resultado, la API quedó 100% funcional.
 
-
-Miércoles 13/08/2025 – Lautaro
+Lautaro:
 
 Puse a andar el sistema y dejamos una pantalla de ingreso con usuario y contraseña.
 
@@ -69,6 +68,14 @@ Ordene y limpie cosas que estaban trabando el arranque (rutas y configuración).
 Probe de punta a punta: entrar, ver los registros y cerrar sesión.
 
 Quedó listo para que el equipo del frontend se conecte y siga trabajando sin tocar nada más del lado del servidor.
+
+<h2>Miercoles 20/08/2025</h2>
+
+Facu Spagnoletta:
+
+Durante la jornada trabajé en la interfaz de usuario del sistema. En primer lugar, finalicé el diseño estético y funcional del módulo de login, otorgándole un estilo más profesional y consistente con la identidad general del proyecto.
+
+Posteriormente, avancé en la sección Home, incorporando nuevas funcionalidades y optimizando su estructura para mejorar la navegabilidad y la experiencia de usuario. Estos cambios permitirán que el sistema tenga una interfaz más clara, adaptable y preparada para futuras integraciones.
 
 
 <h2>Miercoles 27/08/2025</h2>
@@ -83,10 +90,3 @@ Pablo Osores: Este día hice reformas a los perfiles de aluminio que teníamos p
 <p align="center">
   <img src="https://github.com/user-attachments/assets/1904855b-cd63-4a4d-9fe9-9238f2194567" width="760" alt="imagen 4" width="600"/>
 </p>
- 
- Facundo Ledesma:
- Para la creación del banner destinado a las ONIET, utilicé la plataforma Canva, aplicando todos los conocimientos adquiridos previamente sobre diseño gráfico y comunicación visual. En el proceso tuve en cuenta aspectos fundamentales como la elección de colores, tipografías y distribución de los elementos, de manera que el resultado transmitiera un mensaje claro, atractivo y profesional.
-
-Primero trabajé en la paleta cromática, seleccionando tonos que representaran la identidad del evento y que, al mismo tiempo, generaran contraste para facilitar la lectura. Luego, apliqué tipografías legibles y acordes al estilo institucional, cuidando jerarquías entre títulos, subtítulos y textos secundarios. También consideré la importancia del equilibrio visual, organizando los elementos de forma armoniosa y evitando la sobrecarga de información.
-
-Además, recurrí al uso de imágenes y formas gráficas que reforzaran el propósito del banner, procurando que cada componente tuviera una función dentro del diseño. Este trabajo me permitió poner en práctica conocimientos de composición, teoría del color y principios de comunicación visual, logrando un producto que no solo cumple con su objetivo informativo, sino que también resulta atractivo para el público al que está dirigido.
