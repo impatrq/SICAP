@@ -118,3 +118,9 @@ Facundo Ledesma:
 Primero trabajé en la paleta cromática, seleccionando tonos que representaran la identidad del evento y que, al mismo tiempo, generaran contraste para facilitar la lectura. Luego, apliqué tipografías legibles y acordes al estilo institucional, cuidando jerarquías entre títulos, subtítulos y textos secundarios. También consideré la importancia del equilibrio visual, organizando los elementos de forma armoniosa y evitando la sobrecarga de información.
 
 Además, recurrí al uso de imágenes y formas gráficas que reforzaran el propósito del banner, procurando que cada componente tuviera una función dentro del diseño. Este trabajo me permitió poner en práctica conocimientos de composición, teoría del color y principios de comunicación visual, logrando un producto que no solo cumple con su objetivo informativo, sino que también resulta atractivo para el público al que está dirigido.
+
+Facu Spagnoletta:
+
+Se realizó un rediseño integral del Home, incorporando nuevas funciones y mejorando el estilo visual respecto a la versión anterior. El rediseño incluyó la implementación de fondos personalizados y ajustes en la disposición de los elementos, logrando una interfaz más clara y profesional.
+
+Adicionalmente, se integraron diseños y fondos desarrollados por Facu Ledesma, los cuales aportaron un toque más personal y estilizado a la Web-App, consolidando así una estética moderna y consistente con la identidad del proyecto.
