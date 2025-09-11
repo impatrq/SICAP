@@ -7,3 +7,8 @@ Junto con Titi nos enfocamos en la comunicación entre el servidor en la Raspber
 Durante este período surgieron algunos inconvenientes técnicos, entre ellos la falla del módulo WiFi del ESP32, lo que nos obligó a reemplazarlo por un nuevo dispositivo para poder continuar con las pruebas.
 
 A pesar de estas dificultades, seguimos trabajando en la configuración y depuración del sistema de comunicación, ya que constituye un paso esencial para avanzar con el desarrollo completo de la plataforma.
+
+<h2> Miercoles 10/09/2025 </h2>
+ 
+ Facundo Ledesma:
+ Hoy arranqué con la creación de las pulseras para SICAP, usando AutoCAD. Estas pulseras van a estar pensadas para el registro de personas dentro del sistema, así que estuve trabajando en las primeras medidas y el diseño inicial.
