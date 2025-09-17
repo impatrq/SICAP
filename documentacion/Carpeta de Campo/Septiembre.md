@@ -37,7 +37,16 @@ A pesar de estas dificultades, seguimos trabajando en la configuración y depura
 
 Patella Tiziano: El día de hoy, le pedimos ayuda a fabri ya que tras haber arreglado todos los problemas que estabamos teniendo con la raspberry para poder ver internamente el funcionamiento del servidor desde el ssh, resulto que de acuerdo con nuestras sospechas, el servidor funciona correctamente pero a pesar de eso no detectaba los tags que se ingresaban. Tras haber estado revisando con detalle los archivos internos de la raspberry fabri nos dijo que el problema que podia llegar a estar causando era que nos faltaba un SQL (una base de datos en donde se almacenaran todos los datos que se ingresaban), sin embargo nos pusimos a revisar con Facu Spagno y nos percatamos de que ya teniamos una base de datos la cual era la que se creaba por defecto con el Django. Fabri nos dijo que entonces lo que nos faltba era un Modelo para el SQL y configurar bien su funcionamiento para definir de manera correcta cual era su funcion y que tipo de datos tenía que guardar y donde tenía que almacenarlos. Revisamos que era lo que teniamos que hacer y notamos que lauty ya se habia encargado de crear ese modelo por lo que quedamos en la incognita de que cual era el causante de nuestro problema.  
 
+Facu Spagno:
+
+Revisamos la tabla de SQL creada en DJANGO y demas para seguir buscando el problema que nos pasaba.
+
+
  <h2>Martes 16/09/2025</h2>
+
+ Facu Spagno:
+
+ Colaboré con titi y Fabri para resolver el problema del backend. Corregimos también unas ruutas y otros errores.
 
  Patella Tiziano:
 
