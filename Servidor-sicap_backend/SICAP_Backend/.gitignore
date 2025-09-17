@@ -1,0 +1,5 @@
+.env
+registros/__pycache__
+registros/migrations
+usuarios_login/migrations
+sicap_backend/__pytcache__
