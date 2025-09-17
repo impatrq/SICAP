@@ -1,3 +1,23 @@
+<h2>Martes 02/09/2025</h2>
+
+Patella Tiziano: 
+
+El día de hoy teniamos planeado ponernos a trabajar con el codigo del ESP que dejo de funcionar en los ultimos días. Nuestro plan era encontrar el error en el codigo para poder probar el envio de las tags al servidor. Sin embargo, mientras trabajamos nos percatamos de que al ejecutar el codigo, en lugar de tirarnos un error sobre el codigo como hacia siempre, la terminal de thonny se colapsaba tirandonos un monton de datos que no sabiamos de donde venian. Ante este nuevo error el cual no sabiamos porque podia estar sucediendo decidimos ir con fabri para comentarle nuestra situacion y ver si el podia llegar a tener una idea de que podia llegar a estar pasando. Sin embargo, a pesar de haber de arrglado el codigo de thonny que fue el causante de nuestros problemas desde un principio, el error de que se colapsara la terminal continuo, por lo que no tuvimos respuestas claras de que era lo que estaba fallando y como podiamos solucionarlo.
+
+<h2>Miercoles 3/09/2025</h2>
+
+Patella Tiziano:
+
+El día de hoy comenzamos temprano para así aprovechar a mayor cantidad de tiempo y poder encontrar el error que estaba causando que nuesto codigo del ESP32 no funcionace. Lo primero que comenenzamos por hacer fue probar el ESP32 con el codigo viejo que tenía para ver si con las instruccionas mas basicas posbiles se seguía presentando el mismo error. Tras probrablo y ver que el problema seguía se comprobo definitivamente que era un problema del ESP32 y no del codigo. Tras eso decidmos llevarle nuestro problema al profe Medina diciendole que nuestro problema se residia en nuestro ESP y no en nuestro codigo. Tras revisarlo, Medina tampoco puedo encontrar una pista concreta de que podia estar causando el mal funcionamiento del ESP. Su hipotesis fue que posiblemente se pudo haber descompuesto el modulo wifi del ESP por lo que teniamos que conseguir un ESP32 nuevo. Ese mismo día decidimos ir a compar el nuevo componente a la salida de la escuela para poder seguir trabajando lo antes posible. 
+
+![alt text](<Imagen de WhatsApp 2025-09-05 a las 11.13.44_b2337438.jpg>)
+
+<h2>Jueves 4/09/2025</h2>
+
+Patella Tiziano:
+
+El día de hoy nos propusimos a hacer funcionar el codigo de thonny junto al nuevo ESP32 que habiamos comprado. Tras probar un codigo bien basico y comprobar que este nuevo ESP si funcionaba nos pusimos a trabajar con el codigo para poder definir cual es el codigo que debemos usar para los tags(esto debido a que continuamente estabamos cambiando el codigo y ya no sabiamos cual fue el codigo original que funciono en primer lugar). Así que una vez que conseguimos el codigo definitivo lo subimos al github para tenerlo guardado y dejar de equivocarnos. A la par, decidimos probar el nuevo codigo y las antenas junto al nuevo cable que nos hizo pablo para las antenas y verificar que todo funcionace con exito en conjunto lo que por suerte fue lo que obtuvimos.  
+
 <h2> Martes 09/09/2025 </h2>
 
 Del 27/08 a principios de Septiembre
