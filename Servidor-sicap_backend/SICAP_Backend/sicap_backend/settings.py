@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-q178fi8jps&dvi*5n)ecr@*1pq2q6=+%kp@w#xwbbq^m40s9%e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.111.218', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -132,11 +132,13 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",   # Vite
     "http://localhost:3000",
     "http://localhost:4200",   # Next.js (si lo usan)
+    "http://192.168.111.101:8000"
 ]
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:3000",
     "http://localhost:4200",
+    "http://192.168.111.101:8000",
 ]
 
 # Para dev: que la cookie funcione entre el front (5173/3000) y el back (8000)
