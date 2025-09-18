@@ -1,3 +1,17 @@
+<h2>Viernes 1/08/2025</h2>
+
+Lautaro Santolucito:
+
+Hoy recibimos el router privado donado para SICAP. Hice la configuración inicial: acceso al panel, actualización de firmware, reseteo a valores de fábrica y creación de un usuario administrativo. Dejé documentado el plan para usarlo como red cerrada del proyecto.
+
+---
+
+<h2>Lunes 4/08/2025</h2>
+
+Lautaro Santolucito:
+
+Me enfoqué en endurecer el servidor: configuré `ALLOWED_HOSTS`, activé logs de request/response y documenté variables de entorno (secret, base de datos, debug).
+
 <h2>Miercoles 6/08/2025</h2>
 
 Tiziano Patella:
@@ -7,7 +21,7 @@ El día de hoy comenzamos trabajando en conjunto todo el grupo  con como iba a s
 ![alt text](<Imagen de WhatsApp 2025-08-06 a las 14.07.13_792f4d94.jpg>)
 
 
-**Lautaro Santolucito:**
+Lautaro Santolucito:
 
 Durante la jornada de hoy estuvimos definiendo con el grupo cómo iba a ser el diseño general de la app-web, discutiendo qué funciones debería tener y cómo se iba a ver. Ayudé a bajar todas las ideas en papel para que Tiziano y Facu S puedan después programar con una base clara.
 
@@ -31,6 +45,23 @@ Me encargué de conseguir los materiales para la estructura del portal para el p
 <p align="center">
   <img src="https://github.com/user-attachments/assets/39772eca-234c-411c-b6ec-0c228841d412" alt="imagen 3" width="600"/>
 </p>
+
+
+<h2>Viernes 8/08/2025</h2>
+
+Lautaro Santolucito:
+
+Avancé con la red dedicada de SICAP en el router: definí SSID y clave, desactivé WPS, ajusté DHCP con reservas de IP y probé conectividad básica con notebook/telefonía. El objetivo fue preparar el entorno para que el ESP32 se conecte de forma estable en las próximas pruebas.
+
+---
+
+<h2>Lunes 11/08/2025</h2>
+
+Lautaro Santolucito:
+
+Confirme el funcionamiento de todo el proyecto accediendo al administrador de Django. Con usuario y contraseña de admin.
+
+---
 
 <h2>Martes 12/08/2025</h2>
 
@@ -69,6 +100,21 @@ Probe de punta a punta: entrar, ver los registros y cerrar sesión.
 
 Quedó listo para que el equipo del frontend se conecte y siga trabajando sin tocar nada más del lado del servidor.
 
+<h2>Viernes 15/08/2025</h2>
+
+Lautaro Santolucito:
+
+Hice primeras pruebas en red cerrada: validé que el ESP32 obtenga IP del router privado y resuelva correctamente rutas internas.   
+---
+
+<h2>Lunes 18/08/2025</h2>
+
+Lautaro Santolucito:
+
+Incorporé la Raspberry Pi 4 al proyecto. Instalé Raspberry Pi OS, habilité SSH, actualicé paquetes y preparé el entorno de Python/Django. Cloné el repo del backend y dejé configuradas variables de entorno básicas (SECRET_KEY, DEBUG, base de datos). Objetivo: migrar el servidor desde mi compu a la Pi.
+
+---
+
 <h2>Miercoles 20/08/2025</h2>
 
 Facu Spagnoletta:
@@ -90,6 +136,22 @@ Verificación en tiempo real de la existencia del usuario al momento de iniciar 
 Redirección automática a la interfaz correspondiente en caso de validación positiva.
 
 Con esta mejora, el sistema consolida la integración entre el login y la base de datos, garantizando un control más seguro y eficiente del acceso de los usuario
+
+<h2>Viernes 22/08/2025</h2>
+
+Lautaro Santolucito:
+
+Hice pruebas combinadas Router + Raspberry. Asigné IP fija a la Pi, ajusté ALLOWED_HOSTS y verifiqué respuestas 200 OK desde equipos de la red privada. Ensayé el flujo lector → ESP32 → router → API Django (en la Pi) para alinear con el trabajo de los chicos en login y API de usuarios.
+
+---
+
+<h2>Lunes 25/08/2025</h2>
+
+Lautaro Santolucito:
+
+Afiné el despliegue del backend en la Raspberry: creé entorno virtual, apliqué migraciones, generé un superusuario y dejé un script de arranque. Probé acceso al admin y lectura de registros recientes para que el Home del frontend pueda mostrarlos sin tocar nada del servidor.
+
+---
 
 <h2>Martes 26/08/2025 </h2>
 
@@ -123,4 +185,10 @@ Facu Spagnoletta:
 
 Se realizó un rediseño integral del Home, incorporando nuevas funciones y mejorando el estilo visual respecto a la versión anterior. El rediseño incluyó la implementación de fondos personalizados y ajustes en la disposición de los elementos, logrando una interfaz más clara y profesional.
 
-Adicionalmente, se integraron diseños y fondos desarrollados por Facu Ledesma, los cuales aportaron un toque más personal y estilizado a la Web-App, consolidando así una estética moderna y consistente con la identidad del proyecto.
+Adicionalmente, se integraron diseños y fondos desarrollados por Facu Ledesma, los cuales aportaron un toque más personal y estilizado a la Web-App, consolidando así una estética moderna y consistente con la identidad del proyecto.</file>
+
+<h2>Viernes 29/08/2025</h2>
+
+Lautaro Santolucito:
+
+Cerré la implementación completa del stack: Router dedicado + Raspberry Pi como servidor. Configuré auto-arranque del backend al energizar (servicio del sistema) y validé con power-cycle que, al conectar a 220 V, el servidor levanta solo y la red queda operativa. Documenté evidencias (capturas de admin, ping/latencia y pruebas de endpoints) para la carpeta de campo y la demo.

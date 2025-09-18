@@ -108,3 +108,24 @@ Renderizado Condicional: Se implementó la directiva *ngIf en el archivo HTML pa
 Estilos Finales: Se aplicaron estilos CSS en login.page.scss para asegurar que la animación se muestre a pantalla completa y que el contenido del login aparezca centrado y con una transición suave.
 
 El resultado es una animación de inicio completamente funcional que mejora la experiencia de usuario desde el primer momento de uso de la aplicación.
+
+
+<h2>Miércoles 23/07/2025</h2>
+
+**Lautaro Santolucito:**
+
+Hoy me dediqué a hacer **pruebas adicionales con el ESP32 y el lector RFID**. El objetivo fue verificar la estabilidad de la conexión con el servidor Django en diferentes redes. 
+
+<h2>Viernes 25/07/2025</h2>
+
+**Lautaro Santolucito:**
+
+En esta jornada avancé con la **organización del repositorio en GitHub**. Subí las últimas versiones del backend y del código del ESP32, asegurándome de que todo esté documentado con README y comentarios claros en los archivos principales. También aproveché para planificar junto al equipo cómo presentar la arquitectura completa en la feria, diagramando un esquema del flujo de datos
+
+---
+
+<h2>Miércoles 30/07/2025</h2>
+
+**Lautaro Santolucito:**
+
+Me enfoqué en el **diseño de la presentación técnica** que vamos a usar en la feria. Preparé un documento con capturas de consola mostrando los tags leídos, los registros guardados en la base de datos y el funcionamiento del endpoint `/api/recibir/`.
