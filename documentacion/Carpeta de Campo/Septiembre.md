@@ -63,3 +63,6 @@ Revisamos la tabla de SQL creada en DJANGO y demas para seguir buscando el probl
 
  Hoy volví a editar el banner, esta vez siguiendo todas las indicaciones que me pasó Tobi Pagano. Me puse a revisar punto por punto lo que me marcó y la verdad es que le cambió bastante la onda. Ajusté colores, acomodé un par de detalles que no estaban tan finos y le di una repasada general para que quedara más limpio.
 
+Facu Spagno:
+
+Me dediqué a resolver problemas de configuración en la Raspberry Pi. Principalmente trabajé en la instalación de GitHub CLI y en la puesta en marcha del servidor local, ya que presentaba inconvenientes al intentar ejecutarlo. El objetivo fue dejar operativo el entorno de desarrollo para continuar con la integración del sistema.
