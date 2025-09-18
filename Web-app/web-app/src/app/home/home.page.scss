@@ -18,3 +18,21 @@ ion-accordion-group {
   max-width: 700px;
   width: 90%;
 }
+.vertical-toolbar {
+  position: fixed;
+  left: 0;
+  top: 56px; // Altura del header
+  width: 220px;
+  height: calc(100vh - 56px);
+  background: #888;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.visual-content {
+  margin-left: 220px; // Deja espacio para la barra lateral
+  padding: 20px;
+}
+
