@@ -66,3 +66,9 @@ Revisamos la tabla de SQL creada en DJANGO y demas para seguir buscando el probl
 Facu Spagno:
 
 Me dediqué a resolver problemas de configuración en la Raspberry Pi. Principalmente trabajé en la instalación de GitHub CLI y en la puesta en marcha del servidor local, ya que presentaba inconvenientes al intentar ejecutarlo. El objetivo fue dejar operativo el entorno de desarrollo para continuar con la integración del sistema.
+
+<h2>Jueves 18/09/2025</h2>
+
+Patella Tiziano:
+
+El día de hoy me puse a preparar la interfaz visual de la web-app para cuando ya tengamos en funcinamiento el detector de tags con su respectivo codigo con el servidor. Lo que cambié fue la manera en la que se veían las opciones del menu, en nuestra vesión anterior todas las opciones la cuales iba a poder elegir el usuario se mostraban como menus desplegables (lo cual hacia incomodo la vista debido a la gran cantidad de opciones). Debido a eso opté por cambiarlos por botones y agregar la funcion de que al seleccionar cualquier opcion se libere toda la pantalla del menu y despliegue el resto de opciones hacia un costado, simulando la interfaz visual que queremos tener en la version final de la app.
