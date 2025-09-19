@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, require_GET
 import json
 from .models import RegistroTag
 
@@ -19,3 +19,11 @@ def recibir_tag(request):
 			return JsonResponse({'error': str(e)}, status=500)
 
 	return JsonResponse({'error': 'método no permitido'}, status=405)
+
+@require_GET
+def listar_tags(request):
+    data = list(
+        RegistroTag.objects.order_by('-created_at')
+        .values('id', 'tag', 'created_at')[:200]
+    )
+    return JsonResponse(data, safe=False)

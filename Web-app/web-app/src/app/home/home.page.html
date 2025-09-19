@@ -29,5 +29,28 @@
   <!-- Pantalla libre para la interfaz visual -->
   <div *ngIf="mostrarToolbarVisual" class="visual-content">
     <h2>Interfaz Visual</h2>
+
+    <!-- Controles -->
+    <div class="ion-margin-bottom">
+      <ion-button size="small" (click)="cargarRegistros()">Actualizar</ion-button>
+    </div>
+
+    <!-- Estados de carga / error -->
+    <ion-spinner *ngIf="loading"></ion-spinner>
+    <ion-text color="danger" *ngIf="error">{{ error }}</ion-text>
+
+    <!-- Lista de registros -->
+    <ion-list *ngIf="!loading && registros?.length">
+      <ion-item *ngFor="let r of registros">
+        <ion-label>
+          <h2>{{ r.tag }}</h2>
+          <p>{{ r.created_at | date:'short' }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-text *ngIf="!loading && !registros?.length">
+      Sin registros todavía
+    </ion-text>
   </div>
 </ion-content>
