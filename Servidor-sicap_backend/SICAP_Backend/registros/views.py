@@ -24,7 +24,9 @@ def recibir_tag(request):
 @require_GET
 def listar_tags(request):
     data = list(
-        RegistroTag.objects.order_by('-created_at')
-        .values('id', 'tag', 'created_at')[:200]
+        RegistroTag.objects.order_by('-fecha_hora')
+        .values('id', 'tag')
+				.annotate(created_at=F('fecha_hora'))
+				[:200]
     )
     return JsonResponse(data, safe=False)
