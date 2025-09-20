@@ -128,17 +128,19 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",   # Vite
     "http://localhost:3000",
-    "http://localhost:4200",   # Next.js (si lo usan)
+    "http://localhost:4200",
+		"http://127.0.0.1:4200",   # Next.js (si lo usan)
     "http://192.168.111.101:8000"
 ]
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:3000",
     "http://localhost:4200",
+	  "http://127.0.0.1:4200",
     "http://192.168.111.101:8000",
 ]
 
@@ -155,4 +157,5 @@ REST_FRAMEWORK = {
 
 LOGIN_REDIRECT_URL = '/admin/'
 LOGOUT_REDIRECT_URL = '/login/'
+
 
