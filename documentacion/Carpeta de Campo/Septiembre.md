@@ -72,3 +72,13 @@ Me dediqué a resolver problemas de configuración en la Raspberry Pi. Principal
 Patella Tiziano:
 
 El día de hoy me puse a preparar la interfaz visual de la web-app para cuando ya tengamos en funcinamiento el detector de tags con su respectivo codigo con el servidor. Lo que cambié fue la manera en la que se veían las opciones del menu, en nuestra vesión anterior todas las opciones la cuales iba a poder elegir el usuario se mostraban como menus desplegables (lo cual hacia incomodo la vista debido a la gran cantidad de opciones). Debido a eso opté por cambiarlos por botones y agregar la funcion de que al seleccionar cualquier opcion se libere toda la pantalla del menu y despliegue el resto de opciones hacia un costado, simulando la interfaz visual que queremos tener en la version final de la app.
+
+<h2>Viernes 19/09/2025</h2>
+
+Santolucito Lautaro:
+
+El día de hoy, junto con todos los chicos probamos el funcionamiento de los distintos componentes del sistema, incluyendo el servidor al momento de registrar las etiquetas. Todas las pruebas resultaron satisfactorias y el sistema funcionó correctamente.  
+
+Detectamos un único inconveniente en el lector: al inicio presentaba fallas que, tras nuestro análisis, concluimos que se debían a la temperatura interna del dispositivo en su primer arranque. Esta, sumada a la carga de los componentes necesarios para su correcto funcionamiento, ocasionaba un arranque defectuoso que luego se normalizaba al cabo de unos minutos.  
+
+Pasado el mediodía, con Pablo comenzamos la elaboración de la carpeta técnica del proyecto, tarea en la que trabajamos durante toda la tarde. En paralelo, coordinamos con Facu Ledesma el diseño de las carátulas y hojas correspondientes, avanzando de manera conjunta en la documentación y presentación formal del proyecto.  
