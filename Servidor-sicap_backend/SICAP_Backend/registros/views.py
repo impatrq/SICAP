@@ -5,7 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.db.models import F
 from .models import Panol
-from .serializers import PanolSerializer
+from .serializer import PanolSerializer
 import json
 from .models import RegistroTag
 
