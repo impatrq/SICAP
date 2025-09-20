@@ -4,13 +4,10 @@ from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.db.models import F
-from .models import Panol
-from .serializer import PanolSerializer
+from .serializer import PanolSerializer, RegistroSerializer
 import json
-from .models import RegistroTag
+from .models import RegistroTag, Panol
 from rest_framework import viewsets
-from .models import Registro
-from .serializer import RegistroSerializer
 
 @csrf_exempt
 def recibir_tag(request):
@@ -47,8 +44,11 @@ def listar_tags(request):
 class PanolViewSet(ModelViewSet):
     queryset = Panol.objects.all().order_by('nombre')
     serializer_class = PanolSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class RegistroViewSet(ModelViewSet):
+    
+    queryset = RegistroTag.objects.all().order_by('-fecha_hora')
+    serializer_class = RegistroSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]	
 
-class RegistroViewSet(viewsets.ModelViewSet):
-    queryset = Registro.objects.all()
-    serializer_class = RegistroSerializer
