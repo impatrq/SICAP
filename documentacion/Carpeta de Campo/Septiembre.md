@@ -82,3 +82,9 @@ El día de hoy, junto con todos los chicos probamos el funcionamiento de los dis
 Detectamos un único inconveniente en el lector: al inicio presentaba fallas que, tras nuestro análisis, concluimos que se debían a la temperatura interna del dispositivo en su primer arranque. Esta, sumada a la carga de los componentes necesarios para su correcto funcionamiento, ocasionaba un arranque defectuoso que luego se normalizaba al cabo de unos minutos.  
 
 Pasado el mediodía, con Pablo comenzamos la elaboración de la carpeta técnica del proyecto, tarea en la que trabajamos durante toda la tarde. En paralelo, coordinamos con Facu Ledesma el diseño de las carátulas y hojas correspondientes, avanzando de manera conjunta en la documentación y presentación formal del proyecto.  
+
+Patella Tiziano:
+
+El día de hoy nos pusimos a trabajar con las ultimas pruebas de la conexion del servidor (BACKEND) con la web-app (FRONTEND). Al momento de comenzar a trabajar nos tomamos con un problema que ya veniamos teniendo desde ya hace unos cuantos meses y nunca nos habiamos parado a solucionarlo, al momento de conectar los lectores no salta una luz roja la cual nos anuniaba que el aparato no funcionaba como deberia, usualmente lo solucionabamos desconectandolo y volviendolo a conectar pero esta bien al intentarlo no funciono por lo que optamos por ver cual podia llegar a ser el problema. Tras haber sido solucionado el problema por parte de mis compañeros, conectamos todo con Facu Spagno y nos pusimos a trabajar en los ultimos detaller que nos quedaban para el funcionamiento total de la app. Tras un par de horas de indagar en detalles los cuales no faltaban por pulir logramos conectar de forma exitosa el servidor y la aplicacion, cumpliendo la mision del proyecto y habiendo armado un prototipo muy provisorio. 
+
+<video controls src="Video de WhatsApp 2025-09-22 a las 13.38.11_5c685a5c.mp4" title="Title"></video>
