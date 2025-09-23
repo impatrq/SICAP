@@ -15,7 +15,8 @@
   <ion-button expand="block" color="medium" (click)="volverAlMenuCentral()">Volver</ion-button>
 </div>
 
-<ion-content [fullscreen]="true">  <div *ngIf="!mostrarToolbarVisual" class="botones-menu-central">
+<ion-content [fullscreen]="true" [class.visual-mode]="mostrarToolbarVisual">
+    <div *ngIf="!mostrarToolbarVisual" class="botones-menu-central">
     <ion-button expand="block" (click)="activarInterfazVisual()">Interfaz Visual</ion-button>
     <ion-button expand="block" (click)="activarInterfazVisual()">Registros y Movimientos</ion-button>
     <ion-button expand="block" (click)="activarInterfazVisual()">Reportes</ion-button>
@@ -24,44 +25,40 @@
     <ion-button expand="block" (click)="activarInterfazVisual()">Gestión de Pañol 3</ion-button>
   </div>
 
-  <!-- Pantalla libre para la interfaz visual -->
+  <!-- interfaz visual -->
   <div *ngIf="mostrarToolbarVisual" class="visual-content">
-
-    <div class="tabla-container">
-    <ion-grid>
-      <ion-row class="tabla-header">
-        <ion-col size="2">ID</ion-col>
-        <ion-col size="6">Tag</ion-col>
-        <ion-col size="4">Fecha</ion-col>
-      </ion-row>
-
-      <ion-row *ngFor="let r of registros" class="tabla-row">
-        <ion-col size="2">{{ r.id }}</ion-col>
-        <ion-col size="4">{{ r.created_at | date:'short' }}</ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-
-    <div class="ion-margin-bottom">
+    <div class="header-line">
+      <h2>Registros</h2>
+      <div class="grow"></div>
       <ion-button size="small" (click)="cargarRegistros()">Actualizar</ion-button>
     </div>
 
-    <!-- Estados de carga / error -->
-    <ion-spinner *ngIf="loading"></ion-spinner>
-    <ion-text color="danger" *ngIf="error">{{ error }}</ion-text>
+    <div class="stats-row">
+      <ion-chip color="primary">Total: {{ registros.length }}</ion-chip>
+      <ion-chip color="success">Último: {{ registros.length > 0 ? (registros[0].created_at | date:'short') : '—' }}</ion-chip>
+    </div>
 
-    <!-- Lista de registros -->
-    <ion-list *ngIf="!loading && registros?.length">
-      <ion-item *ngFor="let r of registros">
-        <ion-label>
-          <h2>{{ r.tag }}</h2>
-          <p>{{ r.created_at | date:'short' }}</p>
-        </ion-label>
-      </ion-item>
-    </ion-list>
+    <!-- Cards -->
+    <div class="cards-scroll">
+      <ion-card *ngFor="let r of registros" class="reg-card">
+        <ion-card-header>
+          <ion-card-title class="mono">Tag: {{ r.tag }}</ion-card-title>
+          <ion-card-subtitle class="muted">
+            ID #{{ r.id }} · {{ r.created_at | date:'short' }}
+          </ion-card-subtitle>
+        </ion-card-header>
 
-    <ion-text *ngIf="!loading && !registros?.length">
-      Sin registros todavía
-    </ion-text>
+        <ion-card-content>
+          <div class="row">
+            <ion-badge color="tertiary">Válido</ion-badge>
+          </div>  
+        </ion-card-content>
+      </ion-card>
+
+      <div class="center" *ngIf="loading"><ion-spinner></ion-spinner></div>
+      <ion-text color="danger" *ngIf="error">{{ error }}</ion-text>
+      <ion-text *ngIf="!loading && !registros?.length">Sin registros todavía</ion-text>
+    </div>
   </div>
 </ion-content>
+
