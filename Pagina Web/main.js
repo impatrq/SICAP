@@ -1,3 +1,34 @@
+import { animate, text, stagger } from 'https://cdn.jsdelivr.net/npm/animejs/+esm';
+
+const { chars } = text.split('.titulo', {
+chars: { wrap: 'clip' },
+});
+
+animate(chars, {
+y: [
+    { to: ['100%', '0%'] },
+    ],
+duration: 750,
+ease: 'out(3)',
+delay: stagger(50),
+loop: false,
+});
+
+
+const { words } = text.split('p', {
+words: { wrap: 'clip' },
+})
+
+animate(words, {
+y: [
+{ to: ['100%', '0%'] },
+],
+duration: 750,
+ease: 'out(3)',
+delay: stagger(100),
+loop: false,
+});
+
 const nav = document.querySelector("nav");
     window.addEventListener("scroll", function() {
         nav.classList.toggle("active", window.scrollY > 0);
