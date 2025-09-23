@@ -1,19 +1,33 @@
 import { animate, text, stagger } from 'https://cdn.jsdelivr.net/npm/animejs/+esm';
 
-text.split('.titulo', {
-lines: { wrap: 'clip' },
-})
-.addEffect(({ lines }) => animate(lines, {
+const { chars } = text.split('.titulo', {
+chars: { wrap: 'clip' },
+});
+
+animate(chars, {
 y: [
     { to: ['100%', '0%'] },
-    { to: '-100%', delay: 750, ease: 'in(3)' }
+    ],
+duration: 750,
+ease: 'out(3)',
+delay: stagger(50),
+loop: false,
+});
+
+
+const { words } = text.split('p', {
+words: { wrap: 'clip' },
+})
+
+animate(words, {
+y: [
+{ to: ['100%', '0%'] },
 ],
 duration: 750,
 ease: 'out(3)',
-delay: stagger(200),
-loop: true,
-loopDelay: 500,
-}));
+delay: stagger(100),
+loop: false,
+});
 
 const nav = document.querySelector("nav");
     window.addEventListener("scroll", function() {
