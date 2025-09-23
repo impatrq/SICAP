@@ -1,3 +1,20 @@
+import { animate, text, stagger } from 'https://cdn.jsdelivr.net/npm/animejs/+esm';
+
+text.split('.titulo', {
+lines: { wrap: 'clip' },
+})
+.addEffect(({ lines }) => animate(lines, {
+y: [
+    { to: ['100%', '0%'] },
+    { to: '-100%', delay: 750, ease: 'in(3)' }
+],
+duration: 750,
+ease: 'out(3)',
+delay: stagger(200),
+loop: true,
+loopDelay: 500,
+}));
+
 const nav = document.querySelector("nav");
     window.addEventListener("scroll", function() {
         nav.classList.toggle("active", window.scrollY > 0);
