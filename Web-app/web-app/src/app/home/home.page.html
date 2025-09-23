@@ -15,9 +15,7 @@
   <ion-button expand="block" color="medium" (click)="volverAlMenuCentral()">Volver</ion-button>
 </div>
 
-<ion-content [fullscreen]="true">
-  <!-- Menú central solo si NO está activa la Interfaz Visual -->
-  <div *ngIf="!mostrarToolbarVisual" class="botones-menu-central">
+<ion-content [fullscreen]="true">  <div *ngIf="!mostrarToolbarVisual" class="botones-menu-central">
     <ion-button expand="block" (click)="activarInterfazVisual()">Interfaz Visual</ion-button>
     <ion-button expand="block" (click)="activarInterfazVisual()">Registros y Movimientos</ion-button>
     <ion-button expand="block" (click)="activarInterfazVisual()">Reportes</ion-button>
@@ -28,9 +26,22 @@
 
   <!-- Pantalla libre para la interfaz visual -->
   <div *ngIf="mostrarToolbarVisual" class="visual-content">
-    <h2>Interfaz Visual</h2>
 
-    <!-- Controles -->
+    <div class="tabla-container">
+    <ion-grid>
+      <ion-row class="tabla-header">
+        <ion-col size="2">ID</ion-col>
+        <ion-col size="6">Tag</ion-col>
+        <ion-col size="4">Fecha</ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let r of registros" class="tabla-row">
+        <ion-col size="2">{{ r.id }}</ion-col>
+        <ion-col size="4">{{ r.created_at | date:'short' }}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
     <div class="ion-margin-bottom">
       <ion-button size="small" (click)="cargarRegistros()">Actualizar</ion-button>
     </div>

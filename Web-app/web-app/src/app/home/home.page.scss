@@ -36,3 +36,13 @@ ion-accordion-group {
   padding: 20px;
 }
 
+.tabla-container {
+  max-height: 60%;
+  width: 90%;
+  overflow-y: auto;
+  margin: auto;
+}
+
+.ion-margin-bottom {
+  align-items: center;
+}
