@@ -59,20 +59,49 @@ export class HomePage implements OnInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
+tagsTaller: Registro[] = [];
+tagsFuera: Registro[] = [];
+tagsEstado: { [tag: string]: 'taller' | 'fuera' } = {};
 
-  cargarRegistros() {
-    this.loading = true;
-    this.error = undefined; // ← limpia error previo
-
-  this.http.get<Registro[]>(this.API).subscribe({
-      next: (rows) => {
-        this.registros = rows;
-        this.loading = false;
-      },
-      error: (e) => {
-        this.error = 'No pude cargar los registros';
-        this.loading = false;
-      }
-    });
+procesarRegistro(nuevo: Registro) {
+  const tag = nuevo.tag;
+  if (!(tag in this.tagsEstado)) {
+    // Primera vez: va al taller
+    this.tagsTaller.unshift(nuevo);
+    this.tagsEstado[tag] = 'taller';
+  } else if (this.tagsEstado[tag] === 'taller') {
+    // Estaba en taller, va fuera
+    this.tagsTaller = this.tagsTaller.filter(t => t.tag !== tag);
+    this.tagsFuera.unshift(nuevo);
+    this.tagsEstado[tag] = 'fuera';
+  } else {
+    // Estaba fuera, vuelve al taller
+    this.tagsFuera = this.tagsFuera.filter(t => t.tag !== tag);
+    this.tagsTaller.unshift(nuevo);
+    this.tagsEstado[tag] = 'taller';
   }
 }
+
+// Llamá a esto cada vez que llegan nuevos registros:
+cargarRegistros() {
+  this.loading = true;
+  this.error = undefined;
+  this.http.get<Registro[]>(this.API).subscribe({
+    next: (rows) => {
+      // Solo procesar los nuevos
+      rows.forEach(reg => {
+        if (
+          !this.tagsTaller.some(t => t.id === reg.id) &&
+          !this.tagsFuera.some(t => t.id === reg.id)
+        ) {
+          this.procesarRegistro(reg);
+        }
+      });
+      this.loading = false;
+    },
+    error: (e) => {
+      this.error = 'No pude cargar los registros';
+      this.loading = false;
+    }
+  });
+}}
