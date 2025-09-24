@@ -6,3 +6,10 @@ class RegistroTag(models.Model):
 
     def __str__(self):
         return f"{self.tag} - {self.fecha_hora}"
+    
+class Panol(models.Model):
+    nombre = models.CharField(max_length=100)
+    icono = models.CharField(max_length=50, default='cube')  
+
+def __str__(self):
+    return self.nombre
