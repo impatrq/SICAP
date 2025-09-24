@@ -12,16 +12,15 @@ type Registro = { id: number; tag: string; created_at: string };
   standalone: false,
 })
 export class HomePage implements OnInit, OnDestroy {
-  mostrarToolbarVisual = false;
+  seccionActiva: string | null = null;
 
   opcionesMenu: string[] = [
     'Interfaz Visual',
-    'Registros y Movimientos',
-    'Reportes',
-    'Gestión de Pañol 1',
-    'Gestión de Pañol 2',
-    'Gestión de Pañol 3'
+    'Invenatario',
+    'Empleados',
+    'Personalización'
   ];
+  
 
   registros: Registro[] = [];
   loading = false;
@@ -40,26 +39,32 @@ export class HomePage implements OnInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
-  activarInterfazVisual() {
-    this.mostrarToolbarVisual = true;
-    this.cargarRegistros();
+  activarSeccion(nombre: string) {
+    this.seccionActiva = nombre;
 
-    // Evitar múltiples intervalos
-    if (!this.sub || this.sub.closed) {
-      this.sub = interval(3000).subscribe(() => this.cargarRegistros());
+    
+    if (nombre === 'Interfaz Visual') {
+      this.cargarRegistros();
+      if (!this.sub || this.sub.closed) {
+        this.sub = interval(3000).subscribe(() => this.cargarRegistros());
+      }
+    } else {
+      // Si cambiás de sección, detené el intervalo
+      this.sub?.unsubscribe();
     }
   }
 
   volverAlMenuCentral() {
-    this.mostrarToolbarVisual = false;
+    this.seccionActiva = null;
     this.sub?.unsubscribe();
   }
+
 
   cargarRegistros() {
     this.loading = true;
     this.error = undefined; // ← limpia error previo
 
-    this.http.get<Registro[]>(this.API).subscribe({
+  this.http.get<Registro[]>(this.API).subscribe({
       next: (rows) => {
         this.registros = rows;
         this.loading = false;
@@ -67,7 +72,6 @@ export class HomePage implements OnInit, OnDestroy {
       error: (e) => {
         this.error = 'No pude cargar los registros';
         this.loading = false;
-        // console.error(e);
       }
     });
   }

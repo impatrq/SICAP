@@ -8,23 +8,24 @@
 </ion-header>
 
 <!-- Toolbar lateral solo si está activa la Interfaz Visual -->
-<div *ngIf="mostrarToolbarVisual" class="vertical-toolbar">
-  <ion-button *ngFor="let opcion of opcionesMenu" expand="block" [disabled]="opcion === 'Interfaz Visual'">
+<div *ngIf="seccionActiva" class="vertical-toolbar">
+  <ion-button *ngFor="let opcion of opcionesMenu" expand="block" [disabled]="opcion === 'seccionActiva'">
     {{ opcion }}
   </ion-button>
   <ion-button expand="block" color="medium" (click)="volverAlMenuCentral()">Volver</ion-button>
 </div>
 
-<ion-content [fullscreen]="true" [class.visual-mode]="mostrarToolbarVisual">
-    <div *ngIf="!mostrarToolbarVisual" class="botones-menu-central">
-    <ion-button expand="block" (click)="activarInterfazVisual()">Interfaz Visual</ion-button>
-    <ion-button expand="block" (click)="activarInterfazVisual()">Inventario</ion-button>
-    <ion-button expand="block" (click)="activarInterfazVisual()">Empleados</ion-button>
-    <ion-button expand="block" (click)="activarInterfazVisual()">Personalización</ion-button>
+<ion-content [fullscreen]="true">
+  <!-- Menú central solo si NO hay sección activa -->
+  <div *ngIf="!seccionActiva" class="botones-menu-central">
+    <ion-button expand="block" (click)="activarSeccion('Interfaz Visual')">Interfaz Visual</ion-button>
+    <ion-button expand="block" (click)="activarSeccion('Invenatario')">Invenatario</ion-button>
+    <ion-button expand="block" (click)="activarSeccion('Empleados')">Empleados</ion-button>
+    <ion-button expand="block" (click)="activarSeccion('Personalización')">Personalización</ion-button>
   </div>
 
-  <!-- interfaz visual -->
-  <div *ngIf="mostrarToolbarVisual" class="visual-content">
+  <!-- Espacio para Interfaz Visual -->
+  <div *ngIf="seccionActiva === 'Interfaz Visual'" class="visual-content">
     <div class="header-line">
       <h2>Registros</h2>
       <div class="grow"></div>
@@ -58,5 +59,22 @@
       <ion-text *ngIf="!loading && !registros?.length">Sin registros todavía</ion-text>
     </div>
   </div>
-</ion-content>
 
+  <!-- Espacio para Invenatario -->
+  <div *ngIf="seccionActiva === 'Invenatario'" class="visual-content">
+    <h2>Invenatario</h2>
+    <!-- Aquí tu contenido de inventario -->
+  </div>
+
+  <!-- Espacio para Empleados -->
+  <div *ngIf="seccionActiva === 'Empleados'" class="visual-content">
+    <h2>Empleados</h2>
+    <!-- Aquí tu contenido de empleados -->
+  </div>
+
+  <!-- Espacio para Personalización -->
+  <div *ngIf="seccionActiva === 'Personalización'" class="visual-content">
+    <h2>Personalización</h2>
+    <!-- Aquí tu contenido de personalización -->
+  </div>
+</ion-content>
