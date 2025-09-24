@@ -93,10 +93,28 @@ El día de hoy nos pusimos a trabajar con las ultimas pruebas de la conexion del
 
 <video controls src="Video de WhatsApp 2025-09-22 a las 13.38.11_5c685a5c.mp4" title="Title"></video>
 
-<h2>Martes 23/09/2025</h2>
+<h2>Lunes 22/09/2025</h2>  
+**Santolucito Lautaro:**  
+Durante la mañana, aunque debía ingresar más tarde, asistí en el horario habitual para aprovechar el tiempo revisando las carpetas del proyecto. En este espacio individual, avancé en la lectura y organización de los documentos ya elaborados, evaluando posibles ajustes y mejoras.
+
+Por la tarde, retomamos el trabajo grupal, aunque en un ritmo más relajado debido a que era lunes. Si bien la jornada no resultó del todo productiva en términos de avances concretos, se mantuvo el compromiso con el proyecto y se sostuvo la continuidad de la tarea.
+
+<h2>Martes 23/09/2025</h2>  
+**Santolucito Lautaro:**  
+
+En esta jornada me dediqué principalmente a realizar correcciones sobre la carpeta técnica del proyecto, ajustando apartados que necesitaban mayor claridad y precisión.
+
+A su vez, identifiqué que el contenido originalmente destinado a la sección “Instalaciones” debía reubicarse, correspondiendo en realidad a un futuro manual de usuario. Esta observación permitió ordenar mejor la estructura de la documentación y definir qué elementos se desarrollarán en cada apartado.
 
 Facu Spagno:
 
 Durante la jornada me enfoqué en perfeccionar la interfaz visual de la Web-App, mejorando la organización general de los elementos y puliendo detalles de diseño para lograr una apariencia más profesional y consistente.
 
 Se aplicaron ajustes en la distribución, tipografía y fondos, tomando como base el trabajo previo de rediseño del Home y los aportes gráficos ya integrados. Con estas mejoras, la interfaz quedó en mejores condiciones, facilitando la usabilidad, la navegación y la proyección de futuras funciones dentro del sistema.
+
+<h2>Miércoles 24/09/2025</h2>  
+**Santolucito Lautaro:**  
+
+Comencé a planificar la elaboración de un manual de usuario, complementario a la carpeta técnica, con el objetivo de detallar el uso práctico del sistema SICAP de manera clara y accesible.
+
+Además, evalué la posibilidad de trabajar con LaTeX para dar un formato más profesional y organizado tanto a la documentación técnica como al manual. Este análisis abre la puerta a optimizar la presentación final del proyecto, garantizando prolijidad y consistencia en todos los documentos entregables.
