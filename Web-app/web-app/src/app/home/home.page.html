@@ -26,40 +26,50 @@
 
   <!-- Espacio para Interfaz Visual -->
   <div *ngIf="seccionActiva === 'Interfaz Visual'" class="visual-content">
-    <div class="header-line">
-      <h2>Registros</h2>
-      <div class="grow"></div>
-      <ion-button size="small" (click)="cargarRegistros()">Actualizar</ion-button>
-    </div>
-
-    <div class="stats-row">
-      <ion-chip color="primary">Total: {{ registros.length }}</ion-chip>
-      <ion-chip color="success">Último: {{ registros.length > 0 ? (registros[0].created_at | date:'short') : '—' }}</ion-chip>
-    </div>
-
-    <!-- Cards -->
-    <div class="cards-scroll">
-      <ion-card *ngFor="let r of registros" class="reg-card">
+    <div class="cajas-tags">
+  <!-- Caja Taller -->
+  <div class="caja-tags">
+    <h3>En Taller</h3>
+    <div *ngFor="let r of tagsTaller">
+      <ion-card class="reg-card">
         <ion-card-header>
           <ion-card-title class="mono">Tag: {{ r.tag }}</ion-card-title>
           <ion-card-subtitle class="muted">
             ID #{{ r.id }} · {{ r.created_at | date:'short' }}
           </ion-card-subtitle>
         </ion-card-header>
-
         <ion-card-content>
           <div class="row">
             <ion-badge color="tertiary">Válido</ion-badge>
-          </div>  
+          </div>
         </ion-card-content>
       </ion-card>
-
-      <div class="center" *ngIf="loading"><ion-spinner></ion-spinner></div>
-      <ion-text color="danger" *ngIf="error">{{ error }}</ion-text>
-      <ion-text *ngIf="!loading && !registros?.length">Sin registros todavía</ion-text>
     </div>
+    <ion-text *ngIf="!tagsTaller.length">Sin tags en taller</ion-text>
   </div>
 
+  <!-- Caja Fuera del Taller -->
+  <div class="caja-tags">
+    <h3>Fuera del Taller</h3>
+    <div *ngFor="let r of tagsFuera">
+      <ion-card class="reg-card">
+        <ion-card-header>
+          <ion-card-title class="mono">Tag: {{ r.tag }}</ion-card-title>
+          <ion-card-subtitle class="muted">
+            ID #{{ r.id }} · {{ r.created_at | date:'short' }}
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="row">
+            <ion-badge color="tertiary">Válido</ion-badge>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <ion-text *ngIf="!tagsFuera.length">Sin tags fuera del taller</ion-text>
+  </div>
+</div>
+</div>
   <!-- Espacio para Invenatario -->
   <div *ngIf="seccionActiva === 'Invenatario'" class="visual-content">
     <h2>Invenatario</h2>
