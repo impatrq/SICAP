@@ -1,3 +1,4 @@
+import { AlertController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { interval, Subscription } from 'rxjs';
@@ -31,8 +32,54 @@ export class HomePage implements OnInit, OnDestroy {
   private API = 'http://192.168.111.218:5000/api/v1/register/tag/list/';
   // private API = `${environment.apiBase}/registros/register/tag/list/`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private alertCtrl: AlertController) {}
 
+  async abrirEdicion(reg: Registro) {
+  const alert = await this.alertCtrl.create({
+    header: 'Editar Tag',
+    inputs: [
+      {
+        name: 'tag',
+        type: 'text',
+        value: reg.tag,
+        placeholder: 'Nuevo tag'
+      },
+      {
+        name: 'id',
+        type: 'text',
+        value: reg.id,
+        placeholder: 'Nuevo ID o nombre'
+      }
+    ],
+    buttons: [
+      { text: 'Cancelar', role: 'cancel' },
+      {
+        text: 'Guardar',
+        handler: (data) => {
+          this.editarTag(reg, data.tag, data.id);
+        }
+      }
+    ]
+  });
+  await alert.present();
+}
+
+editarTag(reg: Registro, nuevoTag: string, nuevoId: string) {
+  // Suponiendo que tu backend acepta PATCH en /api/v1/register/tag/{reg.id}/
+  this.http.patch(`${this.API}${reg.id}/`, { tag: nuevoTag, id: nuevoId }).subscribe({
+    next: (resp) => {
+      // Actualizá localmente
+      reg.tag = nuevoTag;
+      reg.id = Number(nuevoId);
+      // Si querés, recargá los registros del servidor
+      // this.cargarRegistros();
+    },
+    error: () => {
+      // Mostrá un error si falla
+      alert('No se pudo guardar el cambio');
+    }
+  });
+}
   ngOnInit() {}
 
   ngOnDestroy() {
@@ -88,6 +135,7 @@ cargarRegistros() {
   this.error = undefined;
   this.http.get<Registro[]>(this.API).subscribe({
     next: (rows) => {
+      this.registros = rows;
       // Solo procesar los nuevos
       rows.forEach(reg => {
         if (

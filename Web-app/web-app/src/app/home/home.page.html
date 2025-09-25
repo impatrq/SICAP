@@ -78,18 +78,23 @@
 </div>
   <!-- Espacio para Invenatario -->
   <div *ngIf="seccionActiva === 'Invenatario'" class="visual-content">
-    <h2>Invenatario</h2>
-    <!-- Aquí tu contenido de inventario -->
+    <h2>Inventario</h2>
     <ion-grid>
     <ion-row>
       <ion-col><b>Tag</b></ion-col>
       <ion-col><b>ID</b></ion-col>
       <ion-col><b>Última detección</b></ion-col>
+      <ion-col><b>Editar</b></ion-col>
     </ion-row>
     <ion-row *ngFor="let reg of tagsUnicos">
       <ion-col>{{ reg.tag }}</ion-col>
       <ion-col>{{ reg.id }}</ion-col>
       <ion-col>{{ reg.created_at | date:'short' }}</ion-col>
+      <ion-col>
+        <ion-button size="small" (click)="abrirEdicion(reg)">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
     </ion-row>
   </ion-grid>
   <ion-text *ngIf="tagsUnicos.length === 0">No hay tags registrados.</ion-text>
