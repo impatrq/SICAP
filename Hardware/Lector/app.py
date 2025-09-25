@@ -3,60 +3,73 @@ from Reader import RFIDReader
 import urequests
 import wifi
 
-ssid = "SICAP"
-password = "graciasamigo"
-SERVER_IP = "192.168.111.218"  # La IP de la PC con el servidor Django
-API_URL = f"http://{SERVER_IP}:8000/admin/registros/registrotag/"
-TIMEOUT_TAG = 2.0  
+SSID = "SICAP"
+PASSWORD = "graciasamigo"
+SERVER_IP = "192.168.111.218"  
+API_URL = f"http://{SERVER_IP}:5000/api/v1/register/tag/"
 
+
+LOOP_DELAY_MS = 50          
+STABLE_READS = 3            
+ABSENCE_MS = 600            
 
 lector = RFIDReader(tx=17, rx=16)
-ultimo_tag_enviado = None
-tiempo_ultimo_envio = 0
+
+
+current_tag = None    
+stable_tag = None        
+stable_count = 0            
+last_seen_ms = time.ticks_ms() 
 
 print("Iniciando programa...")
-
-# Conectamos al WiFi
-if not wifi.conectar(ssid, password):
-    print("Error crítico de Wi-Fi. El programa se detendrá.")
-    
-    while True:
-        time.sleep(1)
-
+wifi.connect_to(SSID, PASSWORD)
 print("\nListo. Esperando tags...")
 
+def send_tag(tag_val):
+    try:
+        
+        payload = {"tag": tag_val}
+        resp = urequests.post(API_URL, json=payload)
+        status = resp.status_code
+        body = ""
+        try:
+            body = resp.text
+        except Exception:
+            pass
+        resp.close()
+        if 200 <= status < 300:
+            print("✅ Servidor respondió: Tag registrado.")
+        else:
+            print(f"❌ Error del servidor: {status} {body}")
+    except Exception as e:
+        print("❌ Error de conexión al enviar el tag:", e)
 
 while True:
-    tag_detectado = lector.read_tag()
-
+    now = time.ticks_ms()
+    tag_detectado = lector.read_tag()  
     if tag_detectado:
-        tiempo_actual = time.time()
-        print ("tag detectado")
         
-        # Lógica para evitar enviar el mismo tag repetidamente
-        if tag_detectado != ultimo_tag_enviado or (tiempo_actual - tiempo_ultimo_envio) > TIMEOUT_TAG:
-            print(f"Tag detectado: {tag_detectado}. Enviando al servidor...")
+        last_seen_ms = now
+
+        
+        if tag_detectado == stable_tag:
+            stable_count += 1
+        else:
+            stable_tag = tag_detectado
+            stable_count = 1
+
+       
+        if current_tag is None and stable_count >= STABLE_READS:
+            print(f"Tag detectado estable: {stable_tag}. Enviando al servidor…")
+            send_tag(stable_tag)
+            current_tag = stable_tag  
+    else:
+        
+        if current_tag is not None and time.ticks_diff(now, last_seen_ms) > ABSENCE_MS:
             
-            try:
-                # Preparamos el JSON con la clave correcta "tag_id"
-                json_data = {"tag": tag_detectado}
-                response = urequests.post(API_URL, json=json_data)
-                
-                if response.status_code >= 200 and response.status_code > 300:
-                    print("✅ Servidor respondió: Tag registrado.")
-                else:
-                    print(f"❌ Error del servidor: {response.status_code} {response.text}")
-                
-                response.close()
-                
-                # Actualizamos el estado para no volver a enviarlo inmediatamente
-                ultimo_tag_enviado = tag_detectado
-                tiempo_ultimo_envio = tiempo_actual
-                
-            except Exception as e:
-                print("❌ Error de conexión al enviar el tag:", e)
-        
-        
-    
-    # Pausa breve para no saturar el procesador
-    time.sleep(0.1)
+            print("Tag retirado. Listo para próximo registro.")
+            current_tag = None
+            stable_tag = None
+            stable_count = 0
+
+    time.sleep_ms(LOOP_DELAY_MS)
