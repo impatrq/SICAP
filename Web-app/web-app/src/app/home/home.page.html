@@ -9,9 +9,13 @@
 
 <!-- Toolbar lateral solo si está activa la Interfaz Visual -->
 <div *ngIf="seccionActiva" class="vertical-toolbar">
-  <ion-button *ngFor="let opcion of opcionesMenu" expand="block" [disabled]="opcion === 'seccionActiva'">
-    {{ opcion }}
-  </ion-button>
+<ion-button
+  *ngFor="let opcion of opcionesMenu"
+  expand="block"
+  [disabled]="opcion === seccionActiva"
+  (click)="activarSeccion(opcion)">
+  {{ opcion }}
+</ion-button>
   <ion-button expand="block" color="medium" (click)="volverAlMenuCentral()">Volver</ion-button>
 </div>
 
