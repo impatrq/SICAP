@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.db.models import F
@@ -25,6 +25,11 @@ def recibir_tag(request):
 			return JsonResponse({'error': str(e)}, status=500)
 
 	return JsonResponse({'error': 'método no permitido'}, status=405)
+
+@ensure_csrf_cookie
+def csrf_ping(request):
+    
+    return JsonResponse({"detail": "ok"})
 
 @require_GET
 def listar_tags(request):

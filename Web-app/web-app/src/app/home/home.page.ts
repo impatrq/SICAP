@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { interval, Subscription } from 'rxjs';
-// import { environment } from '../../environments/environment'; // ← si usás env
+import { ActivatedRoute } from '@angular/router';
 
 type Registro = { id: number; tag: string; created_at: string };
 
@@ -12,8 +12,9 @@ type Registro = { id: number; tag: string; created_at: string };
   standalone: false,
 })
 export class HomePage implements OnInit, OnDestroy {
+  panolId?: number;
   seccionActiva: string | null = null;
-
+  
   opcionesMenu: string[] = [
     'Interfaz Visual',
     'Invenatario',
@@ -31,9 +32,15 @@ export class HomePage implements OnInit, OnDestroy {
   private API = 'http://192.168.111.218:5000/api/v1/register/tag/list/';
   // private API = `${environment.apiBase}/registros/register/tag/list/`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
-  ngOnInit() {}
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(p => {
+    this.panolId = +(p.get('panolId') || 0) || undefined;
+    
+  });
+  }
 
   ngOnDestroy() {
     this.sub?.unsubscribe();

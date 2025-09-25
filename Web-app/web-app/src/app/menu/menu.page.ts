@@ -1,33 +1,108 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+
+type Panol = { id?: number; nombre: string; icono: string };
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
   styleUrls: ['./menu.page.scss'],
-  standalone: false, 
+  standalone: false,
 })
 export class MenuPage implements OnInit {
   
-  panoles: any[] = [];
+  private API_BASE = 'http://192.168.111.218:5000/api/v1';
+  private PANOLES_URL = `${this.API_BASE}/panoles/`;
+  private CSRF_PING_URL = `${this.API_BASE}/auth/csrf/`;
 
-  constructor(private navCtrl: NavController) { }
+  panoles: Panol[] = [];
+  loading = false;
+  error?: string;
+
+  modalOpen = false;
+  editId?: number;
+  form: Panol = { nombre: '', icono: 'cube' };
+
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
-    
-    this.panoles = [
-      { id: 1, nombre: 'Quilmes' },
-      { id: 2, nombre: 'Ezpeleta' },
-      { id: 3, nombre: 'Abril Club de Campo' },
-    ];
-    
+
+    this.http.get(this.CSRF_PING_URL).subscribe({
+      next: () => this.cargar(),
+      error: () => this.cargar(), 
+    });
   }
 
-  
-  seleccionarPanol(panol: any) {
-    console.log('Pañol seleccionado:', panol);
-    
-    this.navCtrl.navigateForward('/home');
+
+  cargar() {
+    this.loading = true;
+    this.error = undefined;
+
+    this.http.get<any>(this.PANOLES_URL).subscribe({
+      next: (res) => {
+        
+        this.panoles = Array.isArray(res) ? res : (res?.results ?? []);
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'No pude cargar los pañoles';
+        this.loading = false;
+      },
+    });
+  }
+
+  abrirCrear() {
+    this.editId = undefined;
+    this.form = { nombre: '', icono: 'cube' };
+    this.modalOpen = true;
+  }
+
+  editar(p: Panol) {
+    this.editId = p.id;
+    this.form = { ...p };
+    this.modalOpen = true;
+  }
+
+  cerrarModal() {
+    this.modalOpen = false;
+  }
+
+  guardar() {
+    if (!this.form.nombre?.trim()) {
+      this.error = 'El nombre es requerido';
+      return;
+    }
+
+    const req = this.editId
+      ? this.http.patch<Panol>(`${this.PANOLES_URL}${this.editId}/`, this.form)
+      : this.http.post<Panol>(this.PANOLES_URL, this.form);
+
+    req.subscribe({
+      next: () => {
+        this.cerrarModal();
+        this.cargar();
+      },
+      error: () => {
+        this.error = 'No pude guardar el pañol';
+      },
+    });
+  }
+
+  eliminar(p: Panol) {
+    if (!p.id) return;
+    if (!confirm(`¿Eliminar "${p.nombre}"?`)) return;
+
+    this.http.delete(`${this.PANOLES_URL}${p.id}/`).subscribe({
+      next: () => this.cargar(),
+      error: () => {
+        this.error = 'No pude eliminar el pañol';
+      },
+    });
+  }
+
+  abrirPanol(p: Panol) {
+    if (!p.id) return;
+    this.router.navigate(['/home', p.id]); 
   }
 }
