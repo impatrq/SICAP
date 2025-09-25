@@ -8,6 +8,9 @@ from .models import Panol
 from .serializer import PanolSerializer
 import json
 from .models import RegistroTag
+from rest_framework import viewsets
+from .models import Registro
+from .serializer import RegistroSerializer
 
 @csrf_exempt
 def recibir_tag(request):
@@ -45,3 +48,7 @@ class PanolViewSet(ModelViewSet):
     queryset = Panol.objects.all().order_by('nombre')
     serializer_class = PanolSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]	
+
+class RegistroViewSet(viewsets.ModelViewSet):
+    queryset = Registro.objects.all()
+    serializer_class = RegistroSerializer

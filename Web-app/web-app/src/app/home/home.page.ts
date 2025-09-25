@@ -1,3 +1,4 @@
+import { AlertController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { interval, Subscription } from 'rxjs';
@@ -32,15 +33,56 @@ export class HomePage implements OnInit, OnDestroy {
   private API = 'http://192.168.111.218:5000/api/v1/register/tag/list/';
   // private API = `${environment.apiBase}/registros/register/tag/list/`;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
-
-
-  ngOnInit() {
-    this.route.paramMap.subscribe(p => {
+constructor(private http: HttpClient, private alertCtrl: AlertController, private route: ActivatedRoute) {
+  this.route.paramMap.subscribe(p => {
     this.panolId = +(p.get('panolId') || 0) || undefined;
-    
   });
-  }
+}
+
+async abrirEdicion(reg: Registro) {
+  const alert = await this.alertCtrl.create({
+    header: 'Editar Tag',
+    inputs: [
+      {
+        name: 'tag',
+        type: 'text',
+        value: reg.tag,
+        placeholder: 'Nuevo tag'
+      },
+      {
+        name: 'id',
+        type: 'text',
+        value: reg.id,
+        placeholder: 'Nuevo ID o nombre'
+      }
+    ],
+    buttons: [
+      { text: 'Cancelar', role: 'cancel' },
+      {
+        text: 'Guardar',
+        handler: (data) => {
+          this.editarTag(reg, data.tag, data.id);
+        }
+      }
+    ]
+  });
+  await alert.present();
+}
+
+editarTag(reg: Registro, nuevoTag: string, nuevoId: string) {
+  this.http.patch(`${this.API}${reg.id}/`, { tag: nuevoTag, id: nuevoId }).subscribe({
+    next: (resp) => {
+      reg.tag = nuevoTag;
+      reg.id = Number(nuevoId);
+      // this.cargarRegistros();
+    },
+    error: () => {
+      alert('No se pudo guardar el cambio');
+    }
+  });
+}
+
+ngOnInit() {}
 
   ngOnDestroy() {
     this.sub?.unsubscribe();
@@ -95,6 +137,7 @@ cargarRegistros() {
   this.error = undefined;
   this.http.get<Registro[]>(this.API).subscribe({
     next: (rows) => {
+      this.registros = rows;
       // Solo procesar los nuevos
       rows.forEach(reg => {
         if (
