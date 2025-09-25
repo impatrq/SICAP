@@ -1,43 +1,39 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Manage Profile</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="abrirCrear()">Nuevo pañol</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="page">
+  <div class="wrapper">
 
-<ion-content class="ion-padding">
-  <ion-text color="danger" *ngIf="error">{{ error }}</ion-text>
+    <section class="grid">
 
-  <div class="grid">
-    <div class="card" *ngFor="let p of panoles">
-      <button class="poster" (click)="abrirPanol(p)">
-        <ion-icon [name]="p.icono" color="primary" size="large"></ion-icon>
-      </button>
-      <div class="name">{{ p.nombre }}</div>
-      <div class="row">
-        <ion-button size="small" fill="outline" (click)="editar(p)">Editar</ion-button>
-        <ion-button size="small" color="danger" (click)="eliminar(p)">Eliminar</ion-button>
+      <article class="card new" (click)="abrirCrear()">
+        <div class="poster plus">+</div>
+        <div class="name">Nuevo pañol</div>
+      </article>
+
+      <!-- Tarjetas de pañoles -->
+      <article class="card" *ngFor="let p of panoles">
+        <button class="poster" (click)="abrirPanol(p)">
+          <ion-icon [name]="p.icono" size="large"></ion-icon>
+        </button>
+        <div class="name">{{ p.nombre }}</div>
+        <div class="row">
+          <ion-button size="small" fill="outline" (click)="editar(p)">Editar</ion-button>
+          <ion-button size="small" color="danger" (click)="eliminar(p)">Eliminar</ion-button>
+        </div>
+      </article>
+
+      <div class="center" *ngIf="loading"><ion-spinner></ion-spinner></div>
+      <ion-text color="danger" *ngIf="error" class="error">{{ error }}</ion-text>
+    </section>
+
+    <aside class="side" *ngIf="formVisible">
+      <div class="side-header">
+        <h2>{{ editId ? 'Editar pañol' : 'Nuevo pañol' }}</h2>
       </div>
-    </div>
-  </div>
 
-  <div class="center" *ngIf="loading"><ion-spinner></ion-spinner></div>
-
-  <ion-modal [isOpen]="modalOpen" (didDismiss)="cerrarModal()">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>{{ editId ? 'Editar pañol' : 'Nuevo pañol' }}</ion-title>
-          <ion-buttons slot="end"><ion-button (click)="cerrarModal()">Cerrar</ion-button></ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-
-      <ion-content class="ion-padding">
+      <div class="side-body">
         <ion-item>
           <ion-input label="Nombre" labelPlacement="floating" [(ngModel)]="form.nombre"></ion-input>
         </ion-item>
+
         <ion-item>
           <ion-select label="Ícono" labelPlacement="floating" [(ngModel)]="form.icono">
             <ion-select-option value="cube">cube</ion-select-option>
@@ -51,12 +47,16 @@
           </ion-select>
         </ion-item>
 
-        <div class="row mt8">
-          <ion-button (click)="guardar()">{{ editId ? 'Guardar cambios' : 'Crear' }}</ion-button>
+        <div class="actions">
+          <ion-button [disabled]="saving" (click)="guardar()">
+            {{ editId ? 'Guardar cambios' : 'Crear' }}
+          </ion-button>
+          <ion-button fill="clear" (click)="cancelar()">Limpiar</ion-button>
         </div>
 
         <ion-text color="danger" *ngIf="error">{{ error }}</ion-text>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
+      </div>
+    </aside>
+
+  </div>
 </ion-content>

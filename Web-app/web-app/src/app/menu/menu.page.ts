@@ -11,7 +11,6 @@ type Panol = { id?: number; nombre: string; icono: string };
   standalone: false,
 })
 export class MenuPage implements OnInit {
-  
   private API_BASE = 'http://192.168.111.218:5000/api/v1';
   private PANOLES_URL = `${this.API_BASE}/panoles/`;
   private CSRF_PING_URL = `${this.API_BASE}/auth/csrf/`;
@@ -20,84 +19,69 @@ export class MenuPage implements OnInit {
   loading = false;
   error?: string;
 
-  modalOpen = false;
+
+  formVisible = true;    
   editId?: number;
   form: Panol = { nombre: '', icono: 'cube' };
+  saving = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
-
-    this.http.get(this.CSRF_PING_URL).subscribe({
+    
+    this.http.get(this.CSRF_PING_URL, { withCredentials: true }).subscribe({
       next: () => this.cargar(),
-      error: () => this.cargar(), 
+      error: () => this.cargar(),
     });
   }
 
-
   cargar() {
-    this.loading = true;
-    this.error = undefined;
-
-    this.http.get<any>(this.PANOLES_URL).subscribe({
+    this.loading = true; this.error = undefined;
+    this.http.get<any>(this.PANOLES_URL, { withCredentials: true }).subscribe({
       next: (res) => {
-        
         this.panoles = Array.isArray(res) ? res : (res?.results ?? []);
         this.loading = false;
       },
-      error: () => {
-        this.error = 'No pude cargar los pañoles';
-        this.loading = false;
-      },
+      error: () => { this.error = 'No pude cargar los pañoles'; this.loading = false; }
     });
   }
 
   abrirCrear() {
     this.editId = undefined;
     this.form = { nombre: '', icono: 'cube' };
-    this.modalOpen = true;
+    this.formVisible = true;
   }
 
   editar(p: Panol) {
     this.editId = p.id;
     this.form = { ...p };
-    this.modalOpen = true;
+    this.formVisible = true;
   }
 
-  cerrarModal() {
-    this.modalOpen = false;
+  cancelar() {
+    this.editId = undefined;
+    this.form = { nombre: '', icono: 'cube' };
   }
 
   guardar() {
-    if (!this.form.nombre?.trim()) {
-      this.error = 'El nombre es requerido';
-      return;
-    }
-
+    if (!this.form.nombre?.trim()) { this.error = 'El nombre es requerido'; return; }
+    this.saving = true;
     const req = this.editId
-      ? this.http.patch<Panol>(`${this.PANOLES_URL}${this.editId}/`, this.form)
-      : this.http.post<Panol>(this.PANOLES_URL, this.form);
+      ? this.http.patch<Panol>(`${this.PANOLES_URL}${this.editId}/`, this.form, { withCredentials: true })
+      : this.http.post<Panol>(this.PANOLES_URL, this.form, { withCredentials: true });
 
     req.subscribe({
-      next: () => {
-        this.cerrarModal();
-        this.cargar();
-      },
-      error: () => {
-        this.error = 'No pude guardar el pañol';
-      },
+      next: () => { this.saving = false; this.cancelar(); this.cargar(); },
+      error: () => { this.saving = false; this.error = 'No pude guardar el pañol'; }
     });
   }
 
   eliminar(p: Panol) {
     if (!p.id) return;
     if (!confirm(`¿Eliminar "${p.nombre}"?`)) return;
-
-    this.http.delete(`${this.PANOLES_URL}${p.id}/`).subscribe({
+    this.http.delete(`${this.PANOLES_URL}${p.id}/`, { withCredentials: true }).subscribe({
       next: () => this.cargar(),
-      error: () => {
-        this.error = 'No pude eliminar el pañol';
-      },
+      error: () => { this.error = 'No pude eliminar el pañol'; }
     });
   }
 
