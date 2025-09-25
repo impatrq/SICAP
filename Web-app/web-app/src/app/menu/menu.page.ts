@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-type Panol = { id?: number; nombre: string; icono: string };
+type Panol = { id?: number; nombre: string; icono?: string };
 
 @Component({
   selector: 'app-menu',
@@ -11,6 +11,7 @@ type Panol = { id?: number; nombre: string; icono: string };
   standalone: false,
 })
 export class MenuPage implements OnInit {
+  // ⚠️ sin barra al final
   private API_BASE = 'http://192.168.111.218:5000/api/v1';
   private PANOLES_URL = `${this.API_BASE}/panoles/`;
   private CSRF_PING_URL = `${this.API_BASE}/auth/csrf/`;
@@ -19,74 +20,75 @@ export class MenuPage implements OnInit {
   loading = false;
   error?: string;
 
-
-  formVisible = true;    
-  editId?: number;
-  form: Panol = { nombre: '', icono: 'cube' };
+  creating = false;
+  nombreNuevo = '';
   saving = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
-    
+    // 1) Plantar cookie CSRF y luego cargar pañoles
     this.http.get(this.CSRF_PING_URL, { withCredentials: true }).subscribe({
       next: () => this.cargar(),
-      error: () => this.cargar(),
+      error: () => this.cargar(), // aunque falle, intento cargar
     });
   }
 
   cargar() {
-    this.loading = true; this.error = undefined;
+    this.loading = true;
+    this.error = undefined;
+
     this.http.get<any>(this.PANOLES_URL, { withCredentials: true }).subscribe({
       next: (res) => {
         this.panoles = Array.isArray(res) ? res : (res?.results ?? []);
         this.loading = false;
       },
-      error: () => { this.error = 'No pude cargar los pañoles'; this.loading = false; }
+      error: () => {
+        this.error = 'No pude cargar los pañoles';
+        this.loading = false;
+      },
     });
   }
 
   abrirCrear() {
-    this.editId = undefined;
-    this.form = { nombre: '', icono: 'cube' };
-    this.formVisible = true;
+    this.nombreNuevo = '';
+    this.creating = true;
   }
 
-  editar(p: Panol) {
-    this.editId = p.id;
-    this.form = { ...p };
-    this.formVisible = true;
+  cancelarCrear() {
+    this.creating = false;
+    this.nombreNuevo = '';
   }
 
-  cancelar() {
-    this.editId = undefined;
-    this.form = { nombre: '', icono: 'cube' };
-  }
+  crear() {
+    const nombre = this.nombreNuevo.trim();
+    if (!nombre) return;
 
-  guardar() {
-    if (!this.form.nombre?.trim()) { this.error = 'El nombre es requerido'; return; }
     this.saving = true;
-    const req = this.editId
-      ? this.http.patch<Panol>(`${this.PANOLES_URL}${this.editId}/`, this.form, { withCredentials: true })
-      : this.http.post<Panol>(this.PANOLES_URL, this.form, { withCredentials: true });
 
-    req.subscribe({
-      next: () => { this.saving = false; this.cancelar(); this.cargar(); },
-      error: () => { this.saving = false; this.error = 'No pude guardar el pañol'; }
-    });
-  }
-
-  eliminar(p: Panol) {
-    if (!p.id) return;
-    if (!confirm(`¿Eliminar "${p.nombre}"?`)) return;
-    this.http.delete(`${this.PANOLES_URL}${p.id}/`, { withCredentials: true }).subscribe({
-      next: () => this.cargar(),
-      error: () => { this.error = 'No pude eliminar el pañol'; }
-    });
+    this.http
+      .post<Panol>(
+        this.PANOLES_URL,
+        { nombre, icono: 'cube' },
+        { withCredentials: true }
+      )
+      .subscribe({
+        next: (p) => {
+          this.saving = false;
+          this.creating = false;
+          this.nombreNuevo = '';
+          // lo muestro al toque
+          this.panoles.unshift(p);
+        },
+        error: () => {
+          this.saving = false;
+          this.error = 'No pude crear el pañol';
+        },
+      });
   }
 
   abrirPanol(p: Panol) {
     if (!p.id) return;
-    this.router.navigate(['/home', p.id]); 
+    this.router.navigate(['/home', p.id]);
   }
 }

@@ -4,15 +4,16 @@ ion-content.page {
     color: #eaeaea;
 }
 
-.wrapper {
-    display: grid;
-  grid-template-columns: 1fr 320px; 
-    gap: 16px;
-    padding: 16px;
+.wrap {
     min-height: 100%;
+    display: grid;
+    place-items: center; 
+    padding: 16px;
 }
+.center { display: flex; justify-content: center; align-items: center; }
 
 .grid {
+    width: min(1200px, 96vw);
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 14px;
@@ -36,58 +37,18 @@ ion-content.page {
     border-radius: 12px;
     background: rgba(255,255,255,0.08);
     display: flex; align-items: center; justify-content: center;
-    border: none;
-    cursor: pointer;
+    border: none; cursor: pointer;
 
-    ion-icon { font-size: 38px; color: #9ec1ff; }
+    ion-icon { font-size: 40px; color: #9ec1ff; }
 }
 
 .card.new .poster.plus {
-    font-size: 48px;
+    font-size: 56px;
     color: #9ec1ff;
-    font-weight: 700;
+    font-weight: 800;
 }
 
 .name { margin-top: 10px; font-weight: 600; }
-.row  { display: flex; gap: 8px; justify-content: center; margin-top: 8px; }
-.center { display: flex; justify-content: center; padding: 12px; }
-.error { display: block; margin-top: 8px; }
 
-.side {
-    position: sticky;
-    top: 0;
-    align-self: start;
-    height: fit-content;
-
-    background: rgba(255,255,255,0.06);
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,.18);
-    overflow: hidden;
-}
-
-.side-header {
-    padding: 14px 16px;
-    background: rgba(255,255,255,0.08);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    h2 { margin: 0; font-size: 16px; font-weight: 700; }
-}
-
-.side-body {
-    padding: 12px 12px 16px;
-    display: grid;
-    gap: 10px;
-}
-
-.actions {
-    display: flex; gap: 8px; align-items: center; justify-content: flex-start;
-}
-
-
-@media (max-width: 960px) {
-    .wrapper {
-    grid-template-columns: 1fr;
-    }
-    .side {
-    order: 2;
-    }
-}
+.row { display: flex; gap: 8px; align-items: center; }
+.mt { margin-top: 12px; }
