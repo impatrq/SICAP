@@ -104,4 +104,18 @@ cargarRegistros() {
       this.loading = false;
     }
   });
-}}
+}
+get tagsUnicos(): Registro[] {
+  const vistos = new Set<string>();
+  const unicos: Registro[] = [];
+  // Recorre de atrás para adelante para que el más reciente quede primero
+  for (let i = this.registros.length - 1; i >= 0; i--) {
+    const reg = this.registros[i];
+    if (!vistos.has(reg.tag)) {
+      vistos.add(reg.tag);
+      unicos.unshift(reg);
+    }
+  }
+  return unicos;
+}
+}
