@@ -8,24 +8,26 @@
 </ion-header>
 
 <!-- Toolbar lateral solo si está activa la Interfaz Visual -->
-<div *ngIf="seccionActiva" class="vertical-toolbar">
-<ion-button
-  *ngFor="let opcion of opcionesMenu"
-  expand="block"
-  [disabled]="opcion === seccionActiva"
-  (click)="activarSeccion(opcion)">
-  {{ opcion }}
-</ion-button>
+<div class="vertical-toolbar"
+  [class.activa]="seccionActiva"
+  [style.pointer-events]="seccionActiva ? 'auto' : 'none'">
+  <ion-button
+    *ngFor="let opcion of opcionesMenu"
+    expand="block"
+    [disabled]="opcion === seccionActiva"
+    (click)="activarSeccion(opcion)">
+    {{ opcion }}
+  </ion-button>
   <ion-button expand="block" color="medium" (click)="volverAlMenuCentral()">Volver</ion-button>
 </div>
 
 <ion-content [fullscreen]="true">
   <!-- Menú central solo si NO hay sección activa -->
   <div *ngIf="!seccionActiva" class="botones-menu-central">
-    <ion-button expand="block" (click)="activarSeccion('Interfaz Visual')">Interfaz Visual</ion-button>
-    <ion-button expand="block" (click)="activarSeccion('Invenatario')">Invenatario</ion-button>
-    <ion-button expand="block" (click)="activarSeccion('Empleados')">Empleados</ion-button>
-    <ion-button expand="block" (click)="activarSeccion('Personalización')">Personalización</ion-button>
+    <ion-button expand="block" (click)="activarSeccion('Interfaz Visual')"class="menu-animado">Interfaz Visual</ion-button>
+    <ion-button expand="block" (click)="activarSeccion('Invenatario')"class="menu-animado">Invenatario</ion-button>
+    <ion-button expand="block" (click)="activarSeccion('Empleados')"class="menu-animado">Empleados</ion-button>
+    <ion-button expand="block" (click)="activarSeccion('Personalización')"class="menu-animado">Personalización</ion-button>
   </div>
 
   <!-- Espacio para Interfaz Visual -->
