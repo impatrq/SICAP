@@ -1,19 +1,62 @@
-<ion-content [fullscreen]="true">
-  <div class="selector-container">
-    <ion-text color="light">
-      <h1>Manage Profiles</h1>
-    </ion-text>
+<ion-content [fullscreen]="true" class="page">
+  <div class="wrapper">
 
-    <div class="profiles-container">
-      
-      <div *ngFor="let panol of panoles" class="profile" (click)="seleccionarPanol(panol)">
-        <div class="profile-icon">
-          <ion-icon name="grid-outline"></ion-icon>
+    <section class="grid">
+
+      <article class="card new" (click)="abrirCrear()">
+        <div class="poster plus">+</div>
+        <div class="name">Nuevo pañol</div>
+      </article>
+
+      <!-- Tarjetas de pañoles -->
+      <article class="card" *ngFor="let p of panoles">
+        <button class="poster" (click)="abrirPanol(p)">
+          <ion-icon [name]="p.icono" size="large"></ion-icon>
+        </button>
+        <div class="name">{{ p.nombre }}</div>
+        <div class="row">
+          <ion-button size="small" fill="outline" (click)="editar(p)">Editar</ion-button>
+          <ion-button size="small" color="danger" (click)="eliminar(p)">Eliminar</ion-button>
         </div>
-        <ion-text color="medium">
-          <p>{{ panol.nombre }}</p>
-        </ion-text>
+      </article>
+
+      <div class="center" *ngIf="loading"><ion-spinner></ion-spinner></div>
+      <ion-text color="danger" *ngIf="error" class="error">{{ error }}</ion-text>
+    </section>
+
+    <aside class="side" *ngIf="formVisible">
+      <div class="side-header">
+        <h2>{{ editId ? 'Editar pañol' : 'Nuevo pañol' }}</h2>
       </div>
-    </div>
+
+      <div class="side-body">
+        <ion-item>
+          <ion-input label="Nombre" labelPlacement="floating" [(ngModel)]="form.nombre"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-select label="Ícono" labelPlacement="floating" [(ngModel)]="form.icono">
+            <ion-select-option value="cube">cube</ion-select-option>
+            <ion-select-option value="construct">construct</ion-select-option>
+            <ion-select-option value="hardware-chip">hardware-chip</ion-select-option>
+            <ion-select-option value="briefcase">briefcase</ion-select-option>
+            <ion-select-option value="hammer">hammer</ion-select-option>
+            <ion-select-option value="people">people</ion-select-option>
+            <ion-select-option value="folder">folder</ion-select-option>
+            <ion-select-option value="archive">archive</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <div class="actions">
+          <ion-button [disabled]="saving" (click)="guardar()">
+            {{ editId ? 'Guardar cambios' : 'Crear' }}
+          </ion-button>
+          <ion-button fill="clear" (click)="cancelar()">Limpiar</ion-button>
+        </div>
+
+        <ion-text color="danger" *ngIf="error">{{ error }}</ion-text>
+      </div>
+    </aside>
+
   </div>
 </ion-content>
