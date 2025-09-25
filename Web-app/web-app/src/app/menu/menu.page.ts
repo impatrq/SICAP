@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -18,8 +19,9 @@ export class MenuPage implements OnInit {
     this.panoles = [
       { id: 1, nombre: 'Quilmes' },
       { id: 2, nombre: 'Ezpeleta' },
-      { id: 3, nombre: 'Villa La Florida' },
+      { id: 3, nombre: 'Abril Club de Campo' },
     ];
+    
   }
 
   
