@@ -1,7 +1,11 @@
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.db.models import F
+from .models import Panol
+from .serializers import PanolSerializer
 import json
 from .models import RegistroTag
 
@@ -31,3 +35,8 @@ def listar_tags(request):
 				[:200]
     )
     return JsonResponse(data, safe=False)
+
+class PanolViewSet(ModelViewSet):
+    queryset = Panol.objects.all().order_by('nombre')
+    serializer_class = PanolSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]	
