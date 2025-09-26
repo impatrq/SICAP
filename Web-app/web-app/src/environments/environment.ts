@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false
+  API_BASE: 'http://raspberrypi.local:5000/api/v1/'
 };
 
 /*

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 
 type Panol = { id?: number; nombre: string; icono?: string };
@@ -11,8 +12,8 @@ type Panol = { id?: number; nombre: string; icono?: string };
   standalone: false,
 })
 export class MenuPage implements OnInit {
-  // ⚠️ sin barra al final
-  private API_BASE = 'http://192.168.111.218:5000/api/v1';
+  
+  private API_BASE = environment.API_BASE;
   private PANOLES_URL = `${this.API_BASE}/panoles/`;
   private CSRF_PING_URL = `${this.API_BASE}/auth/csrf/`;
 
