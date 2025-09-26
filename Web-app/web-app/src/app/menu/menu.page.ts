@@ -39,6 +39,8 @@ export class MenuPage implements OnInit {
     this.loading = true;
     this.error = undefined;
 
+    console.log('👉 PANOLES_URL =', this.PANOLES_URL); 
+
     this.http.get<any>(this.PANOLES_URL, { withCredentials: true }).subscribe({
       next: (res) => {
         this.panoles = Array.isArray(res) ? res : (res?.results ?? []);
