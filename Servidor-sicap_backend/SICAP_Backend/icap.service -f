@@ -1,0 +1,6 @@
+● sicap.service - Servidor Django SICAP Backend (Gunicorn)
+     Loaded: loaded (]8;;file://raspberrypi/etc/systemd/system/sicap.service/etc/systemd/system/sicap.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: activating (auto-restart) (Result: exit-code) since Fri 2025-09-26 20:11:38 -03; 1s ago
+    Process: 812 ExecStart=/home/pi/SICAP/Servidor-sicap_backend/SICAP_Backend/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:5000 sicap_backend.wsgi:application [0;1;31m(code=exited, status=217/USER)[0m
+   Main PID: 812 (code=exited, status=217/USER)
+        CPU: 0
