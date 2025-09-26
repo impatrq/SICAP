@@ -16,6 +16,12 @@ ion-content::part(scroll) {
 .botones-menu-central {
   width: 30%;
   margin: auto;
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;      // Ocupa casi toda la altura de la pantalla
+  gap: 15px;   
 }
 .menu-animado {
   width: 100%;
