@@ -1,8 +1,9 @@
 from django.db import models
+from django.utils import timezone
 
 class RegistroTag(models.Model):
     tag = models.CharField(max_length=100)
-    fecha_hora  = models.DateTimeField(auto_now_add=True)
+    fecha_hora  = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"{self.tag} - {self.fecha_hora}"
