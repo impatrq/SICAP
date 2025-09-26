@@ -2,11 +2,11 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.db.models import F
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from .models import RegistroTag, Panol
-from .serializer import PanolSerializer, RegistroSerializer
+from .serializer import PanolSerializer, RegistroTagSerializer
 import json
 
 @csrf_exempt
@@ -46,9 +46,9 @@ class PanolViewSet(ModelViewSet):
     serializer_class = PanolSerializer
     permission_classes = [AllowAny]
 
-class RegistroViewSet(ModelViewSet):
+class RegistroTagViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,viewsets.GenericViewSet):
     
     queryset = RegistroTag.objects.all().order_by('-fecha_hora')
-    serializer_class = RegistroSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]	
+    serializer_class = RegistroTagSerializer
+    permission_classes = [AllowAny]	
 

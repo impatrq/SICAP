@@ -14,8 +14,8 @@ type Panol = { id?: number; nombre: string; icono?: string };
 export class MenuPage implements OnInit {
   
   private API_BASE = environment.API_BASE;
-  private PANOLES_URL = `${this.API_BASE}/panoles/`;
-  private CSRF_PING_URL = `${this.API_BASE}/auth/csrf/`;
+  private PANOLES_URL = `${this.API_BASE}panoles/`;
+  private CSRF_PING_URL = `${this.API_BASE}auth/csrf/`;
 
   panoles: Panol[] = [];
   loading = false;
