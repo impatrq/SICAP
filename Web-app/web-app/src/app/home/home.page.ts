@@ -32,6 +32,7 @@ export class HomePage implements OnInit, OnDestroy {
   // 🔹 Endpoint de Django (podés moverlo a environment.apiBase)
   private API = 'http://192.168.111.218:5000/api/v1/register/tag/list/';
   // private API = `${environment.apiBase}/registros/register/tag/list/`;
+  private API_EDIT = 'http://192.168.111.218:5000/api/v1/register/tag/';
 
 constructor(private http: HttpClient, private alertCtrl: AlertController, private route: ActivatedRoute) {
   this.route.paramMap.subscribe(p => {
@@ -70,7 +71,7 @@ async abrirEdicion(reg: Registro) {
 }
 
 editarTag(reg: Registro, nuevoTag: string, nuevoId: string) {
-  this.http.patch(`${this.API}${reg.id}/`, { tag: nuevoTag, id: nuevoId }).subscribe({
+  this.http.post(`${this.API_EDIT}${reg.id}/`, { tag: nuevoTag, id: nuevoId }).subscribe({
     next: (resp) => {
       reg.tag = nuevoTag;
       reg.id = Number(nuevoId);
@@ -167,5 +168,11 @@ get tagsUnicos(): Registro[] {
     }
   }
   return unicos;
+}
+limpiarTags() {
+  this.tagsTaller = [];
+  this.tagsFuera = [];
+  this.tagsEstado = {};
+  this.registros = [];
 }
 }

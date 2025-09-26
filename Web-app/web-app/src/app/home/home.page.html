@@ -34,6 +34,9 @@
   <div *ngIf="seccionActiva === 'Interfaz Visual'" class="visual-content">
     <div class="cajas-tags">
   <!-- Caja Taller -->
+    <ion-button color="danger" (click)="limpiarTags()" expand="block" style="margin-bottom: 16px;">
+    Limpiar interfaz
+  </ion-button>
   <div class="caja-tags">
     <h3>En Taller</h3>
     <div *ngFor="let r of tagsTaller">
@@ -79,6 +82,9 @@
   <!-- Espacio para Invenatario -->
   <div *ngIf="seccionActiva === 'Invenatario'" class="visual-content">
     <h2>Inventario</h2>
+      <ion-button color="danger" (click)="limpiarTags()" expand="block" style="margin-bottom: 16px;">
+    Limpiar inventario
+  </ion-button>
     <ion-grid>
     <ion-row>
       <ion-col><b>Tag</b></ion-col>

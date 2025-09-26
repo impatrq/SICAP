@@ -13,6 +13,6 @@ router.register(r'registros', RegistroViewSet, basename='registros')
 urlpatterns = [
     path('auth/csrf/', csrf_ping),
     path('', include (router.urls)),
-    path('register/tag/', recibir_tag),
+    path('register/tag/<int:id>', recibir_tag),
     path('register/tag/list/', listar_tags),  
 ]
