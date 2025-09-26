@@ -1,15 +1,14 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-
 from rest_framework import routers
 from .views import RegistroViewSet
 
 
-from .views import recibir_tag, listar_tags, PanolViewSet, csrf_ping
+from .views import recibir_tag, listar_tags, PanolViewSet, csrf_ping, RegistroViewSet
 
 router = DefaultRouter()
 router.register(r'panoles', PanolViewSet, basename='panoles')
-router.register(r'register/tag', RegistroViewSet, basename='register-tag')
+router.register(r'registros', RegistroViewSet, basename='registros')
 
 urlpatterns = [
     path('auth/csrf/', csrf_ping),
