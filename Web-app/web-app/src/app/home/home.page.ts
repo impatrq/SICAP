@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { interval, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
-type Registro = { id: number; tag: string; created_at: string };
+type Registro = { id: number; tag: string; fecha_hora?: string | null; created_at?: string | null; };
 
 @Component({
   selector: 'app-home',

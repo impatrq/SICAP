@@ -11,4 +11,4 @@ class PanolSerializer(serializers.ModelSerializer):
 class RegistroTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegistroTag
-        fields = ['id', 'tag', 'fecha_hora']
+        fields = ['id', 'tag', 'fecha_hora', 'created_at']
