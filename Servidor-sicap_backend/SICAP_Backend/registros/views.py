@@ -1,13 +1,13 @@
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.db.models import F
+from rest_framework import viewsets
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+from .models import RegistroTag, Panol
 from .serializer import PanolSerializer, RegistroSerializer
 import json
-from .models import RegistroTag, Panol
-from rest_framework import viewsets
 
 @csrf_exempt
 def recibir_tag(request):
@@ -44,7 +44,7 @@ def listar_tags(request):
 class PanolViewSet(ModelViewSet):
     queryset = Panol.objects.all().order_by('nombre')
     serializer_class = PanolSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
 class RegistroViewSet(ModelViewSet):
     

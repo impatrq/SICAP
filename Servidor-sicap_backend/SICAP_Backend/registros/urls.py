@@ -8,11 +8,12 @@ from .views import recibir_tag, listar_tags, PanolViewSet, csrf_ping, RegistroVi
 
 router = DefaultRouter()
 router.register(r'panoles', PanolViewSet, basename='panoles')
-router.register(r'registros', RegistroViewSet, basename='registros')
+router.register(r'register/tag/', RegistroViewSet, basename='register-tag')
 
 urlpatterns = [
     path('auth/csrf/', csrf_ping),
     path('', include (router.urls)),
     path('register/tag/<int:id>', recibir_tag),
+    #  path('register/tag/', recibir_tag),
     path('register/tag/list/', listar_tags),  
 ]
