@@ -31,10 +31,17 @@ def recibir_tag(request):
 def editar_tag(request, id):
     if request.method == 'PUT':
         tag_obj = get_object_or_404(RegistroTag, pk=id)
-        data = json.loads(request.body)
-        tag_obj.nombre = data.get('nombre', tag_obj.nombre)
+        data = json.loads(request.body or "{}")
+
+        if 'nombre' in data:
+            tag_obj.nombre = data['nombre']
+
         tag_obj.save()
-        return JsonResponse({'status': 'ok', 'nombre': tag_obj.nombre})
+        return JsonResponse({
+            'status': 'ok',
+            'id': tag_obj.id,
+            'nombre': tag_obj.nombre,
+        })
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 @ensure_csrf_cookie

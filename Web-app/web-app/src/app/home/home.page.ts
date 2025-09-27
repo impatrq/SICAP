@@ -32,7 +32,7 @@ export class HomePage implements OnInit, OnDestroy {
   // 🔹 Endpoint de Django (podés moverlo a environment.apiBase)
   private API = 'http://192.168.111.218:5000/api/v1/register/tag/list/';
   // private API = `${environment.apiBase}/registros/register/tag/list/`;
-  private API_EDIT = 'http://192.168.111.218:5000/api/v1/register/tag/';
+  private API_EDIT = 'http://192.168.111.218:5000/api/v1/register/tag';
 
 constructor(private http: HttpClient, private alertCtrl: AlertController, private route: ActivatedRoute) {
   this.route.paramMap.subscribe(p => {
@@ -65,14 +65,11 @@ async abrirEdicion(reg: Registro) {
 }
 
 editarTag(reg: Registro, nuevoNombre: string) {
-  this.http.put(`${this.API_EDIT}${reg.id}/editar`, { nombre: nuevoNombre}).subscribe({
-    next: (resp) => {
-      reg.nombre = nuevoNombre;
-      // this.cargarRegistros();
-    },
-    error: () => {
-      alert('No se pudo guardar el cambio');
-    }
+  const url = `${this.API_EDIT}/${reg.id}/editar/`;             // <- arma bien y con barra final
+  console.log('EDIT URL =', url);
+  this.http.put(url, { nombre: nuevoNombre }).subscribe({
+    next: () => { reg.nombre = nuevoNombre; },
+    error: (err) => { console.error(err); alert('No se pudo guardar el cambio'); }
   });
 }
 
