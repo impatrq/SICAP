@@ -8,7 +8,6 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from .models import RegistroTag, Panol
 from django.shortcuts import get_object_or_404
 from .serializer import PanolSerializer, RegistroTagSerializer
-from .models import Registro
 import json
 
 @csrf_exempt
@@ -31,10 +30,10 @@ def recibir_tag(request):
 @csrf_exempt
 def editar_tag(request, id):
     if request.method == 'PUT':
-        tag_obj = get_object_or_404(Registro, pk=id)
+        tag_obj = get_object_or_404(RegistroTag, pk=id)
         data = json.loads(request.body)
         tag_obj.tag = data.get('tag', tag_obj.tag)
-        # Si querés permitir editar otros campos, agregalos aquí
+
         tag_obj.save()
         return JsonResponse({'status': 'ok', 'tag': tag_obj.tag})
     return JsonResponse({'error': 'Método no permitido'}, status=405)

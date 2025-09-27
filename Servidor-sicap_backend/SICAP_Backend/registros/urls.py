@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework import routers
-from .views import recibir_tag, listar_tags, PanolViewSet, csrf_ping, RegistroTagViewSet
+from .views import recibir_tag, listar_tags, PanolViewSet, csrf_ping, RegistroTagViewSet, editar_tag
 
 router = DefaultRouter()
 router.register(r'panoles', PanolViewSet, basename='panoles')
