@@ -140,3 +140,9 @@ El día de hoy tenia planeado seguir trabajando con la pagina web pero surgio un
 Patella Tiziano:
 
 El día de hoy comenzamos bien temprano a trabajar para aprovechar el maximo tiempo posible en trabajar en la app previo a la examinacion que nos iban a hacer los profes el día de mañana. Lo primero  que comence a hacer fue permitir que se pueda navegar dentro de la toolbar lo cual me habia quedado pendiente de ayer. Previo a eso me encargue de armas la interfaz de Control de Stock/Inventario, en esta interfaz se tenian que ver todos los tags que eran detectados en la interfaz visual del pañol y acomodarse en una lista para poder ver todos los materiales de los que dispone el usuario. Una vez armada la zona de stock me propuse en trabajar en una de las funciones mas importantes de la app la cual era la opcion de poder editar los datos de los tags de manera personalizada. Para mi sorpresa, resulto ser una tarea mucho mas complicada de lo que imaginaba ya que ademas de agregar un boton para editar el tag tenia  que enviar la nueva informacion del tag al servidor backend para que sobresciba la info del tag y para que cada vez que lo detecte lo haga con los datos que yo lo encargue. Esa parte resulto ser la mas dificil por lo que le dediqué la tarde completa. A pesar de todo no logre hacer que funcionase la respuesta del backend por lo que quedó como una tarea que iba a terminar el viernes. Ademas de eso implemente unas cuntas animaciones dentro de la app para hacerla mucho mas dinamica. 
+
+Facu Spagno:
+
+Continué trabajando en el Menú, ajustando las rutas en el backend y probando diferentes variantes de implementación. Logré generar un primer prototipo del Menú que integraba la validación CSRF, aunque no funcionó como esperaba.
+
+Realicé iteraciones con distintos estilos de Menú y, tras varios intentos, seleccioné el tercer diseño, por ser el más claro y adaptable a las necesidades del sistema.
