@@ -123,6 +123,14 @@ Comencé a planificar la elaboración de un manual de usuario, complementario a 
 
 Además, evalué la posibilidad de trabajar con LaTeX para dar un formato más profesional y organizado tanto a la documentación técnica como al manual. Este análisis abre la puerta a optimizar la presentación final del proyecto, garantizando prolijidad y consistencia en todos los documentos entregables.
 
+Facu Spagno:
+
+Me dediqué al desarrollo del módulo de Menú. En esta etapa implementé un modelo para Pañol, con el objetivo de permitir la creación de pañoles independientes, cada uno con su propio Home, evitando depender de un único entorno centralizado.
+
+Para lograrlo, integré tecnología CSRF mediante cookies y configuré nuevas rutas en Django.
+Este esquema con DefaultRouter permitió manejar las solicitudes al backend de manera más estructurada, generando endpoints dinámicos para los pañoles.
+En paralelo, adapté el frontend en TypeScript, incorporando modales necesarios para la creación de los pañoles. Sin embargo, en esta instancia no logré que funcionara correctamente.
+
 Patella Tiziano:
 
 El día de hoy tenia planeado seguir trabajando con la pagina web pero surgio un inconveniente que provoco que tengamos que hacer un cambio de prioridades urgente. La situacion fue que los profes a cargo de nuestros proyectos nos llamaron para informarnos de una situacion que habia con la competencia ZIZAP de la ONIET. La sitauacion era que para la competencia de ZIZAP solo se podian inscribir 2 proyectos por escuela y en el IMPA habia 3 proyectos que se querian inscribir por lo que unos de los proyectos no iba a poder participar. Nos dijeron que el Viernes iban a hacer una evaluacion de las 3 aplicaciones y que dependiendo de que tan avanzadas esten iban a seleccionar cuales iban a participar y cual no. Ante esta nueva cuenta regresiva nos dividimos las tareas de la app con Facu S y nos pusimos a adelantar la mayor cantidad de cosas en el menor tiempo posible. Lo primero en lo que comence a trabajar fue en armar la interfaz visual en donde se iban a mostrar que herramientas estaban dentro y fuera del pañol. Una vez que finalice la interfaz visual( una no muy compleja que cumplía su funcion y que iba a ser mejorada previo a nuestra aprobacion en ZIZAP) me puse a trabajar en mejorar la navegacion dentro de la app. Antes todos los botones que teniamos nos enviaban a la interfaz visual ya que no habiamos definido una zona de trabajo para cada una de las opciones, por lo que puse a trabajar en definir cada zona para poder trabajar despues en  detalle en cada una de ellas.
