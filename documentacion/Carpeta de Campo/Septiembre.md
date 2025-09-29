@@ -153,3 +153,8 @@ En esta jornada me enfoqué en la configuración horaria del servidor. Detecté 
 
 Ajusté la configuración para establecer la zona horaria de Argentina (GMT-3), lo que permitió que los datos se registraran con la hora local correcta.
 Con este cambio, y junto a las mejoras previas, el Menú quedó funcional, integrando tanto la gestión de pañoles como la correcta sincronización horaria del sistema.
+
+<h2>Lunes 29/09/2025 </h2>
+
+Me dediqué a perfeccionar la tarjeta de creación de Pañol dentro del Menú. Corrigí diversos errores y optimicé su diseño visual, logrando una versión más estable, clara y profesional.
+Con este avance, la funcionalidad de creación de pañoles quedó en condiciones óptimas para su uso dentro de la Web-App.
