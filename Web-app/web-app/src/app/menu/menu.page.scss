@@ -17,7 +17,7 @@ ion-content.page {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 14px;
-    align-content: start;
+    align-content: center;
 }
 
 .card {
@@ -42,10 +42,24 @@ ion-content.page {
     ion-icon { font-size: 40px; color: #9ec1ff; }
 }
 
-.card.new .poster.plus {
-    font-size: 56px;
-    color: #9ec1ff;
-    font-weight: 800;
+.grid .card.new .name {
+    margin-top: 10px;
+    font-weight: 700;
+    letter-spacing: .6px;
+    color: #a6d9ec;
+    text-transform: uppercase;
+}
+
+.card .name {
+    color: #a6d9ec;
+}
+
+.grid .card.new .name {
+    margin-top: 10px;
+    font-weight: 700;
+    letter-spacing: .6px;
+    color: #a6d9ec;
+    text-transform: uppercase;
 }
 
 .name { margin-top: 10px; font-weight: 600; }

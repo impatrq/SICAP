@@ -8,7 +8,7 @@
 
       <article class="card new" (click)="abrirCrear()">
         <div class="poster plus">+</div>
-        <div class="name">Nuevo pañol</div>
+        <div class="name">Crear Pañol</div>
       </article>
 
       <article class="card" *ngFor="let p of panoles">
@@ -19,12 +19,12 @@
       </article>
     </section>
 
-    <ion-modal [isOpen]="creating" (didDismiss)="cancelarCrear()">
+    <ion-modal class="tarjeta-modal" [isOpen]="creating" (didDismiss)="cancelarCrear()">
       <ng-template>
         <ion-header>
           <ion-toolbar>
-            <ion-title>Nuevo pañol</ion-title>
-            <ion-buttons slot="end"><ion-button (click)="cancelarCrear()">Cerrar</ion-button></ion-buttons>
+            <ion-title>Personalizar</ion-title>
+            <ion-buttons slot="end"><ion-button (click)="cancelarCrear()">X</ion-button></ion-buttons>
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
