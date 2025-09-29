@@ -146,3 +146,10 @@ Facu Spagno:
 Continué trabajando en el Menú, ajustando las rutas en el backend y probando diferentes variantes de implementación. Logré generar un primer prototipo del Menú que integraba la validación CSRF, aunque no funcionó como esperaba.
 
 Realicé iteraciones con distintos estilos de Menú y, tras varios intentos, seleccioné el tercer diseño, por ser el más claro y adaptable a las necesidades del sistema.
+
+<h2>Viernes 25/09/2025 </h2>
+
+En esta jornada me enfoqué en la configuración horaria del servidor. Detecté que los registros de tags se almacenaban con horarios incorrectos, debido a que la Raspberry Pi estaba configurada con zona horaria de Inglaterra.
+
+Ajusté la configuración para establecer la zona horaria de Argentina (GMT-3), lo que permitió que los datos se registraran con la hora local correcta.
+Con este cambio, y junto a las mejoras previas, el Menú quedó funcional, integrando tanto la gestión de pañoles como la correcta sincronización horaria del sistema.
