@@ -19,12 +19,16 @@
       </article>
     </section>
 
-    <ion-modal class="tarjeta-modal" [isOpen]="creating" (didDismiss)="cancelarCrear()">
+    <ion-modal mode="md" cssClass="tarjeta-modal" [isOpen]="creating" (didDismiss)="cancelarCrear()"  [presentingElement]="null">
       <ng-template>
         <ion-header>
           <ion-toolbar>
             <ion-title>Personalizar</ion-title>
-            <ion-buttons slot="end"><ion-button (click)="cancelarCrear()">X</ion-button></ion-buttons>
+              <ion-buttons slot="end">
+                <ion-button (click)="cancelarCrear()" class="btn-close">
+                  <ion-icon name="close-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
