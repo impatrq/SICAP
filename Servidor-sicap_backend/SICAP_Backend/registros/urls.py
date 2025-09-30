@@ -12,6 +12,7 @@ urlpatterns = [
     path('', include (router.urls)),
     path('register/tag/', recibir_tag, name= "recibir-tag"),
     path('register/tag/list/', listar_tags, name="listar-tags"),  
+    path('register/tag/<int:id>/editar/', editar_tag, name="editar-tag"),
 ]
 
 urlpatterns += router.urls

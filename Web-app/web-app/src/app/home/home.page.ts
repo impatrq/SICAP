@@ -71,7 +71,7 @@ async abrirEdicion(reg: Registro) {
 }
 
 editarTag(reg: Registro, nuevoTag: string, nuevoId: string) {
-  this.http.post(`${this.API_EDIT}${reg.id}/`, { tag: nuevoTag, id: nuevoId }).subscribe({
+  this.http.post(`${this.API_EDIT}${reg.id}/editar`, { tag: nuevoTag, id: nuevoId }).subscribe({
     next: (resp) => {
       reg.tag = nuevoTag;
       reg.id = Number(nuevoId);

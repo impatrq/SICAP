@@ -6,7 +6,9 @@ from rest_framework import viewsets, mixins
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from .models import RegistroTag, Panol
+from django.shortcuts import get_object_or_404
 from .serializer import PanolSerializer, RegistroTagSerializer
+from .models import Registro
 import json
 
 @csrf_exempt
@@ -25,6 +27,17 @@ def recibir_tag(request):
 			return JsonResponse({'error': str(e)}, status=500)
 
 	return JsonResponse({'error': 'método no permitido'}, status=405)
+
+@csrf_exempt
+def editar_tag(request, id):
+    if request.method == 'PUT':
+        tag_obj = get_object_or_404(Registro, pk=id)
+        data = json.loads(request.body)
+        tag_obj.tag = data.get('tag', tag_obj.tag)
+        # Si querés permitir editar otros campos, agregalos aquí
+        tag_obj.save()
+        return JsonResponse({'status': 'ok', 'tag': tag_obj.tag})
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 @ensure_csrf_cookie
 def csrf_ping(request):
