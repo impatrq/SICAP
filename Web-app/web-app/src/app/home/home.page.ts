@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { interval, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
-type Registro = { id: number; tag: string; fecha_hora?: string | null; created_at?: string | null; };
+type Registro = { id: number; tag: string; nombre?: string | null; fecha_hora?: string | null; created_at?: string | null; };
 
 @Component({
   selector: 'app-home',
@@ -45,16 +45,10 @@ async abrirEdicion(reg: Registro) {
     header: 'Editar Tag',
     inputs: [
       {
-        name: 'tag',
-        type: 'text',
-        value: reg.tag,
-        placeholder: 'Nuevo tag'
-      },
-      {
-        name: 'id',
+        name: 'nombre',
         type: 'text',
         value: reg.id,
-        placeholder: 'Nuevo ID o nombre'
+        placeholder: 'Nombre a la persona o al insumo'
       }
     ],
     buttons: [
@@ -62,7 +56,7 @@ async abrirEdicion(reg: Registro) {
       {
         text: 'Guardar',
         handler: (data) => {
-          this.editarTag(reg, data.tag, data.id);
+          this.editarTag(reg, data.nombre);
         }
       }
     ]
@@ -70,11 +64,10 @@ async abrirEdicion(reg: Registro) {
   await alert.present();
 }
 
-editarTag(reg: Registro, nuevoTag: string, nuevoId: string) {
-  this.http.post(`${this.API_EDIT}${reg.id}/editar`, { tag: nuevoTag, id: nuevoId }).subscribe({
+editarTag(reg: Registro, nuevoNombre: string) {
+  this.http.post(`${this.API_EDIT}${reg.id}/editar`, { nombre: nuevoNombre}).subscribe({
     next: (resp) => {
-      reg.tag = nuevoTag;
-      reg.id = Number(nuevoId);
+      reg.nombre = nuevoNombre;
       // this.cargarRegistros();
     },
     error: () => {
