@@ -7,6 +7,14 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-content [fullscreen]="true" class="has-video-bg">
+
+    <video autoplay preload="auto" loop muted playsinline id="bg-video">
+  <source src="assets/Animaciones/animacion_sicap.mp4" type="video/mp4">
+  No carga animación
+</video>
+
+<div class=""bg-overlay></div>
 <!-- Toolbar lateral solo si está activa la Interfaz Visual -->
 <div class="vertical-toolbar"
   [class.activa]="seccionActiva"
@@ -21,11 +29,11 @@
   <ion-button expand="block" color="medium" (click)="volverAlMenuCentral()">Volver</ion-button>
 </div>
 
-<ion-content [fullscreen]="true">
+
   <!-- Menú central solo si NO hay sección activa -->
   <div *ngIf="!seccionActiva" class="botones-menu-central">
     <ion-button expand="block" (click)="activarSeccion('Interfaz Visual')"class="menu-animado">Interfaz Visual</ion-button>
-    <ion-button expand="block" (click)="activarSeccion('Invenatario')"class="menu-animado">Inventario</ion-button>
+    <ion-button expand="block" (click)="activarSeccion('Inventario')"class="menu-animado">Inventario</ion-button>
     <ion-button expand="block" (click)="activarSeccion('Empleados')"class="menu-animado">Empleados</ion-button>
     <ion-button expand="block" (click)="activarSeccion('Personalización')"class="menu-animado">Personalización</ion-button>
   </div>
