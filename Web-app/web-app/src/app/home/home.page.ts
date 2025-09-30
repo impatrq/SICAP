@@ -47,7 +47,7 @@ async abrirEdicion(reg: Registro) {
       {
         name: 'nombre',
         type: 'text',
-        value: reg.id,
+        value: reg.nombre,
         placeholder: 'Nombre a la persona o al insumo'
       }
     ],
@@ -65,7 +65,7 @@ async abrirEdicion(reg: Registro) {
 }
 
 editarTag(reg: Registro, nuevoNombre: string) {
-  this.http.post(`${this.API_EDIT}${reg.id}/editar`, { nombre: nuevoNombre}).subscribe({
+  this.http.put(`${this.API_EDIT}${reg.id}/editar`, { nombre: nuevoNombre}).subscribe({
     next: (resp) => {
       reg.nombre = nuevoNombre;
       // this.cargarRegistros();

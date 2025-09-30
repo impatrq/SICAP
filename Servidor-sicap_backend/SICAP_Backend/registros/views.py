@@ -32,10 +32,9 @@ def editar_tag(request, id):
     if request.method == 'PUT':
         tag_obj = get_object_or_404(RegistroTag, pk=id)
         data = json.loads(request.body)
-        tag_obj.tag = data.get('tag', tag_obj.tag)
-
+        tag_obj.nombre = data.get('nombre', tag_obj.nombre)
         tag_obj.save()
-        return JsonResponse({'status': 'ok', 'tag': tag_obj.tag})
+        return JsonResponse({'status': 'ok', 'nombre': tag_obj.nombre})
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 @ensure_csrf_cookie
