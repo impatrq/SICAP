@@ -319,7 +319,7 @@ nav.active a:hover{
     width:250px;
     height:300px;
     border: none;
-    background-image: url("/Pagina Web/images/newfacul.jpg") !important;
+    background-image: url("images/newfacul.jpg") !important;
     background-size: cover !important; 
     background-position:center !important; 
     border-radius: 10px;
@@ -413,7 +413,7 @@ nav.active a:hover{
     width:250px;
     height:300px;
     border: none;
-    background-image: url("/Pagina Web/images/newtiti.jpg") !important;
+    background-image: url("images/newtiti.jpg") !important;
     background-size: cover !important; 
     background-position:center !important; 
     border-radius: 10px;
@@ -427,7 +427,7 @@ nav.active a:hover{
     width:250px;
     height:300px;
     border: none;
-    background-image: url("/Pagina Web/images/newfacus.jpg") !important;
+    background-image: url("images/newfacus.jpg") !important;
     background-size: cover !important; 
     background-position:center !important; 
     border-radius: 10px;
@@ -441,7 +441,7 @@ nav.active a:hover{
     width:250px;
     height:300px;
     border: none;
-    background-image: url("/Pagina Web/images/newpablo.jpg") !important;
+    background-image: url("images/newpablo.jpg") !important;
     background-size: cover !important; 
     background-position:center !important; 
     border-radius: 10px;
@@ -455,7 +455,7 @@ nav.active a:hover{
     width:250px;
     height:300px;
     border: none;
-    background-image: url("/Pagina Web/images/newlauty.jpg") !important;
+    background-image: url("images/newlauty.jpg") !important;
     background-size: cover !important; 
     background-position:center !important; 
     border-radius: 10px;
@@ -2528,7 +2528,7 @@ button.alt:hover,
 #header {
     position: relative;
     margin: 0;
-    background-image:url(/Pagina\ Web/images/newcollage.jpg);
+    background-image:url(/images/newcollage.jpg);
     background-attachment: fixed;
     background-size: cover;
     background-position: top left, center center;
