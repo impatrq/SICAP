@@ -14,7 +14,9 @@ El día de hoy comenzamos temprano para así aprovechar a mayor cantidad de tiem
 
 
 Pablo Osores: 
-Diseñé la parte del soporte para las antenas que se agarra del portal para poder imprimirla en 3d. El programa que usé para el modelado fue SolidWorks, tomé todas las medidas con un calibre y me centre en que el soporte tenga la suficiente resistencia como para poder aguantar el peso de dos antenas para tener un buen margen. La idea del soporte es que una vez puesta la antena se pueda regular en angulo de 180º de forma vertical mediante agarre tipo gopro, lo hice en 2 partes para que se pueda ajustar a la estructura y ademas quería que los tornillos y las tuercas esten al mismo nivel de la impresión.
+
+Diseñé las primeras partes del soporte para antenas en SolidWorks. La idea de este soporte es que una vez instalada la antena con aflojar un tornillo se pueda regular 180º en el eje vertical, por eso decidí usar un soporte tipo "gopro". Intenté diseñarlo de tal forma que pueda sostener el peso de dos antenas para poder tener un margen apropiado en cuanto a la resistencia mecánica, ademas de esto intente que estéticamente quede prolijo, motivo por el cual tome la desicion de poner los alojamientos para que las dos tuercas y los tornillos queden al ras de la impresión.
+
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/9182ecc4-c61f-4736-a851-d73588a5f35f" width="200"/>
