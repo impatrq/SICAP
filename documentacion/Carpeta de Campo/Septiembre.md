@@ -167,12 +167,8 @@ Con este avance, la funcionalidad de creación de pañoles quedó en condiciones
 
 Facu Spagno:
 
-La jornada estuvo dedicada a resolver los problemas del apartado de personalización, que hasta el momento no funcionaba correctamente. Para ello, trabajé tanto en el frontend como en el backend, revisando el HomePage.ts, el settings.py y el views.py, donde encontré contradicciones en las listas y ausencia de la variable nombre.
+Durante la jornada me enfoqué en dos aspectos centrales del proyecto. Por un lado, trabajé sobre la interfaz visual de la Web-App, incorporando un fondo animado diseñado por Facu Ledesma en el Home, con el objetivo de darle una estética más profesional y personalizada.
 
-En el backend detecté que en las views se estaba utilizando un método PATCH cuando en realidad era necesario un PUT para permitir la edición completa de los registros. Corregí esta lógica y también solucioné errores en las rutas (urls.py) que estaban interfiriendo con el funcionamiento esperado.
+Por otro lado, avancé en la puesta en marcha automática del servidor en la Raspberry Pi. Para esto configuré Gunicorn como servidor WSGI en modo producción y lo integré con systemd, de manera que el backend se levante automáticamente al encender la Raspberry y se mantenga en funcionamiento de forma estable sin necesidad de ingresar por SSH.
 
-En paralelo, realicé los ajustes necesarios en el código TypeScript, unificando las implementaciones y corrigiendo variables para que la comunicación con el backend fuera consistente. Con estas modificaciones logré que el sistema reconozca y gestione la variable nombre, dejando operativo al 100% el módulo de personalización.
-
-De esta manera, la página web ahora permite editar la configuración de personalización y asociar un nombre, garantizando su correcto funcionamiento dentro de la plataforma.
-
-Al finalizar esta tarea, retomé el trabajo sobre la configuración horaria del servidor, ya que volvió a desajustarse y no registraba correctamente la hora local. Sin embargo, por cuestiones de tiempo no logré resolverlo completamente en esta jornada, quedando pendiente para continuar mañana.
+Finalmente, comencé a analizar los problemas relacionados con la personalización de tags en las funciones que estaba desarrollando Titi, aunque el trabajo quedó pendiente de continuidad.
