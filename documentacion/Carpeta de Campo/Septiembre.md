@@ -140,6 +140,18 @@ Patella Tiziano:
 
 El día comence con el proceso de mejora de la pagina web para la ONIET. Mi idea era mejorar la pagina para hacerla mucho mas dinamica y fluida por lo que comence por impementar animaciones. Lo priemro fue conectar la libre de animejs la cual es una pagina de donde queria sacar todas las animaciones con nuestra pagina web, hacer esa conexion tomo un rato pero al final pude hacerlo. Tras haberlos conectado comence haciendo pruebas para entender como es que funcionaban estas nuevas animaciones implementandoles en cosas pequeñas que no afecten tanto a la pagina(titulo principal y subtitulo).
 
+Pablo Osores:
+
+Ese dia seguí trabajando con el portal, una de las cosas que me interesaba mucho era poder hacer algo que para una exposicion sea práctico y estéticamente llamativo, por lo que para poner la lectora, el esp32 y la placa conversora decidí reutilizar una parte de la estructura con la cual arme el portal. Para esto tuve que cortarla a la medida que necesitba y que la chapa quede integrada con la estructura, ademas al tener bisagras va a ser una pieza móvil la cual se puede abrir para que las personas vean una parte de la electrónica que compone al proyecto.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/2b2b1d3d-e4df-409c-8e64-de3e90d0e978" width="200"/>
+  <img src="https://github.com/user-attachments/assets/37a53093-a126-409c-ac90-dc56df7d9ee4" width="200"/>
+  <br/>
+  <img src="https://github.com/user-attachments/assets/d1ed4650-a1a9-4242-9e36-8d44a7422b9c" width="400"/>
+</p>
+
+
 <h2>Miércoles 24/09/2025</h2>  
 **Santolucito Lautaro:**  
 
