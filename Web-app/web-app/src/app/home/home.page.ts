@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { interval, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
-type Registro = { id: number; tag: string; nombre?: string | null; fecha_hora?: string | null; created_at?: string | null; };
+type Registro = { id: number; tag: string; nombre?: string; categoría?: string | null; fecha_hora?: string | null; created_at?: string | null; };
 
 @Component({
   selector: 'app-home',
@@ -64,7 +64,7 @@ async abrirEdicion(reg: Registro) {
           this.editarTag(reg, data.nombre, data.categoría);
         }
       }
-    ]
+    ],
   });
   await alert.present();
 }
