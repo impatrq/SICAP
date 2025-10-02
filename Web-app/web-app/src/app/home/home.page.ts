@@ -49,14 +49,19 @@ async abrirEdicion(reg: Registro) {
         type: 'text',
         value: reg.nombre,
         placeholder: 'Nombre a la persona o al insumo'
-      }
+      },
+			{
+        name: 'categoría',
+        type: 'text',
+        value: reg.categoría,
+        placeholder: 'Categoría correspondiente'
     ],
     buttons: [
       { text: 'Cancelar', role: 'cancel' },
       {
         text: 'Guardar',
         handler: (data) => {
-          this.editarTag(reg, data.nombre);
+          this.editarTag(reg, data.nombre, data.categoría);
         }
       }
     ]
@@ -64,11 +69,17 @@ async abrirEdicion(reg: Registro) {
   await alert.present();
 }
 
-editarTag(reg: Registro, nuevoNombre: string) {
-  const url = `${this.API_EDIT}/${reg.id}/editar/`;             // <- arma bien y con barra final
-  console.log('EDIT URL =', url);
-  this.http.put(url, { nombre: nuevoNombre }).subscribe({
-    next: () => { reg.nombre = nuevoNombre; },
+editarTag(reg: Registro, nuevoNombre: string, nuevaCategoría: string) {
+  const url = `${this.API_EDIT}/${reg.id}/editar/`;            
+  
+  this.http.put(url, { 
+    nombre: nuevoNombre,
+    categoría: nuevaCategoría    
+  }).subscribe({
+    next: () => { 
+      reg.nombre = nuevoNombre; 
+      reg.categoría = nuevaCategoría;
+    },
     error: (err) => { console.error(err); alert('No se pudo guardar el cambio'); }
   });
 }

@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.db.models import F
+from django.utils.timezone import localtime
 from rest_framework import viewsets, mixins
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
@@ -36,11 +37,15 @@ def editar_tag(request, id):
         if 'nombre' in data:
             tag_obj.nombre = data['nombre']
 
+        if 'categoría' in data:
+            tag_obj.categoría = data['categoría']
+
         tag_obj.save()
         return JsonResponse({
             'status': 'ok',
             'id': tag_obj.id,
             'nombre': tag_obj.nombre,
+            'categoría': tag_obj.categoría,
         })
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
@@ -51,13 +56,16 @@ def csrf_ping(request):
 
 @require_GET
 def listar_tags(request):
-    data = list(
-        RegistroTag.objects.order_by('-fecha_hora')
-        .values('id', 'tag')
-				.annotate(created_at=F('fecha_hora'))
-				[:200]
+    rows = list(
+        RegistroTag.objects
+        .order_by("-fecha_hora")
+        .values("id", "tag", "nombre", "fecha_hora", "categoría")[:200]
     )
-    return JsonResponse(data, safe=False)
+    for r in rows:
+        r["created_at"] = localtime(r["fecha_hora"]).strftime("%Y-%m-%d %H:%M:%S")
+        del r["fecha_hora"]
+
+    return JsonResponse(rows, safe=False)
 
 class PanolViewSet(ModelViewSet):
     queryset = Panol.objects.all().order_by('nombre')
