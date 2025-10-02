@@ -207,6 +207,10 @@ Facu Spagno:
 Me dediqué a perfeccionar la tarjeta de creación de Pañol dentro del Menú. Corrigí diversos errores y optimicé su diseño visual, logrando una versión más estable, clara y profesional.
 Con este avance, la funcionalidad de creación de pañoles quedó en condiciones óptimas para su uso dentro de la Web-App.
 
+Pablo Osores:
+
+Arreglé los errores del soporte para las antenas.
+
 <h2>Martes 30/09/2025 </h2>
 
 Facu Spagno:
