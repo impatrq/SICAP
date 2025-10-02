@@ -37,15 +37,15 @@ def editar_tag(request, id):
         if 'nombre' in data:
             tag_obj.nombre = data['nombre']
 
-        if 'categoría' in data:
-            tag_obj.categoría = data['categoría']
+        if 'categoria' in data:
+            tag_obj.categoria = data['categoria']
 
         tag_obj.save()
         return JsonResponse({
             'status': 'ok',
             'id': tag_obj.id,
             'nombre': tag_obj.nombre,
-            'categoría': tag_obj.categoría,
+            'categoria': tag_obj.categoria,
         })
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
@@ -59,7 +59,7 @@ def listar_tags(request):
     rows = list(
         RegistroTag.objects
         .order_by("-fecha_hora")
-        .values("id", "tag", "nombre", "fecha_hora", "categoría")[:200]
+        .values("id", "tag", "nombre", "fecha_hora", "categoria")[:200]
     )
     for r in rows:
         r["created_at"] = localtime(r["fecha_hora"]).strftime("%Y-%m-%d %H:%M:%S")
