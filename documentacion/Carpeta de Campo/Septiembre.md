@@ -80,6 +80,17 @@ Facu Spagno:
 
 Me dediqué a resolver problemas de configuración en la Raspberry Pi. Principalmente trabajé en la instalación de GitHub CLI y en la puesta en marcha del servidor local, ya que presentaba inconvenientes al intentar ejecutarlo. El objetivo fue dejar operativo el entorno de desarrollo para continuar con la integración del sistema.
 
+Pablo Osores: 
+
+Imprimí las dos partes del soporte en PLA y vi 2 errores claves para poder mejorar el diseño y poder tener una versión definitiva. El primer error fué que a la hora de ingresar las medidas puse directamente los 24 mm del perfil de aluminio del portal, entonces el soporte hacia tope con el mismo y no apretaba el perfil haciendo que el soporte "baile" y no quede fijo (para probar si el resto del prototipo era funcional rebajé unos milimetros con la piedra para eliminar el material sobrante que impedía el ajuste). El otro error es que no me dí cuenta de que la "tapa" del soporte(pieza donde van las tuercas) estaba diseñado de tal forma que en vez de poder regular de forma vertical se podia regular de forma horizontal.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8bdf5eb6-816f-4f3b-a262-90c7659833c3" width="200"/>
+  <img src="https://github.com/user-attachments/assets/0ba23e8c-20a8-46bc-9689-cac4d892cebb" width="200"/>
+  <img src="https://github.com/user-attachments/assets/05fb4274-482b-49e7-b29f-272f770920ef" width="200"/>
+</p>
+
+
 <h2>Jueves 18/09/2025</h2>
 
 Patella Tiziano:
