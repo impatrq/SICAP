@@ -161,6 +161,14 @@ El día de hoy tenia planeado seguir trabajando con la pagina web pero surgio un
 
 <h2>Jueves 25/09/2025</h2>
 
+Lautaro Santolucito:
+
+El día de hoy me puse a trabajar con la Raspberry Pi, donde encontré un problema: al acceder desde el puerto 8000 solamente se mostraba el HTML pelado de la página administrativa, sin los estilos ni el funcionamiento esperado. Como no pude terminar de resolver este inconveniente en el momento, decidí avanzar con otra parte del proyecto para aprovechar el tiempo.
+
+Me enfoqué entonces en el ESP32, revisando y modificando el código cargado en el microcontrolador para mejorar la calidad de lectura y optimizar el envío de información hacia el servidor. Estos ajustes permitieron que el dispositivo registrara con mayor precisión los tags y transmitiera los datos de forma más estable.
+
+El trabajo en la Raspberry quedó pendiente de revisión, mientras que en el ESP32 se lograron avances importantes en el rendimiento general del sistema.
+
 Patella Tiziano:
 
 El día de hoy comenzamos bien temprano a trabajar para aprovechar el maximo tiempo posible en trabajar en la app previo a la examinacion que nos iban a hacer los profes el día de mañana. Lo primero  que comence a hacer fue permitir que se pueda navegar dentro de la toolbar lo cual me habia quedado pendiente de ayer. Previo a eso me encargue de armas la interfaz de Control de Stock/Inventario, en esta interfaz se tenian que ver todos los tags que eran detectados en la interfaz visual del pañol y acomodarse en una lista para poder ver todos los materiales de los que dispone el usuario. Una vez armada la zona de stock me propuse en trabajar en una de las funciones mas importantes de la app la cual era la opcion de poder editar los datos de los tags de manera personalizada. Para mi sorpresa, resulto ser una tarea mucho mas complicada de lo que imaginaba ya que ademas de agregar un boton para editar el tag tenia  que enviar la nueva informacion del tag al servidor backend para que sobresciba la info del tag y para que cada vez que lo detecte lo haga con los datos que yo lo encargue. Esa parte resulto ser la mas dificil por lo que le dediqué la tarde completa. A pesar de todo no logre hacer que funcionase la respuesta del backend por lo que quedó como una tarea que iba a terminar el viernes. Ademas de eso implemente unas cuntas animaciones dentro de la app para hacerla mucho mas dinamica. 
