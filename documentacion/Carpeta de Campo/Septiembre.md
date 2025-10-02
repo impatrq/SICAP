@@ -139,7 +139,7 @@ El día de hoy tenia planeado seguir trabajando con la pagina web pero surgio un
 
 Patella Tiziano:
 
-El día de hoy comenzamos bien temprano a trabajar para aprovechar el maximo tiempo posible en trabajar en la app previo a la examinacion que nos iban a hacer los profes el día de mañana. Lo primero  que comence a hacer fue permitir que se pueda navegar dentro de la toolbar lo cual me habia quedado pendiente de ayer. Previo a eso me encargue de armas la interfaz de Control de Stock/Inventario, en esta interfaz se tenian que ver todos los tags que eran detectados en la interfaz visual del pañol y acomodarse en una lista para poder ver todos los materiales de los que dispone el usuario. Una vez armada la zona de stock me propuse en trabajar en una de las funciones mas importantes de la app la cual era la opcion de poder editar los datos de los tags de manera personalizada. Para mi sorpresa, resulto ser una tarea mucho mas complicada de lo que imaginaba ya que ademas de agregar un boton para editar el tag tenia  que enviar la nueva informacion del tag al servidor backend para que sobresciba la info del tag y para que cada vez que lo detecte lo haga con los datos que yo lo encargue. Esa parte resulto ser la mas dificil por lo que le dediqué la tarde completa. A pesar de todo no logre hacer que funcionase la respuesta del backend por lo que quedó como una tarea que iba a terminar el viernes. Ademas de eso implemente unas cuntas animaciones dentro de la app para hacerla mucho mas dinamica. 
+El día de hoy comenzamos bien temprano a trabajar para aprovechar el maximo tiempo posible en trabajar en la app previo a la examinacion que nos iban a hacer los profes el día de mañana. Lo primero  que comence a hacer fue permitir que se pueda navegar dentro de la toolbar lo cual me habia quedado pendiente de ayer. Previo a eso me encargue de armar la interfaz de Control de Stock/Inventario, en esta interfaz se tenian que ver todos los tags que eran detectados en la interfaz visual del pañol y acomodarse en una lista para poder ver todos los materiales de los que dispone el usuario. Una vez armada la zona de stock me propuse en trabajar en una de las funciones mas importantes de la app la cual era la opcion de poder editar los datos de los tags de manera personalizada. Para mi sorpresa, resulto ser una tarea mucho mas complicada de lo que imaginaba ya que ademas de agregar un boton para editar el tag tenia  que enviar la nueva informacion del tag al servidor backend para que sobresciba la info del tag y para que cada vez que lo detecte lo haga con los datos que yo lo encargue. Esa parte resulto ser la mas dificil por lo que le dediqué la tarde completa. A pesar de todo no logre hacer que funcionase la respuesta del backend por lo que quedó como una tarea que iba a terminar el viernes. Ademas de eso implemente unas cuntas animaciones dentro de la app para hacerla mucho mas dinamica. 
 
 Facu Spagno:
 
@@ -155,6 +155,10 @@ En esta jornada me enfoqué en la configuración horaria del servidor. Detecté 
 
 Ajusté la configuración para establecer la zona horaria de Argentina (GMT-3), lo que permitió que los datos se registraran con la hora local correcta.
 Con este cambio, y junto a las mejoras previas, el Menú quedó funcional, integrando tanto la gestión de pañoles como la correcta sincronización horaria del sistema.
+
+Tiziano Patella:
+
+El día de hoy era la presentacion de la web-app para ver si eramos selecionados para la competencia de SISAP por lo que me debía asegurar de conretar la mayor cantidad de cosas para que quede presentable. Lo primero con lo que comence a trabajar fue en diseñar la logica para la edicion de los nombres de los tags, esto funcionaba modificando la categoria de tag de cada una de las etiquetas(nombre "fisico" del tag). Sin embargo al realizar las pruebas esto no funciono por lo que en lugar de seguir invirtiendo tiempo preferí modificar la estetica de la app para que a los profes les guste mas. Cree la intefaz de Empleados(la cual muestra lo mismo que la de Invertario por el momento) e hice modificaciones esteticas. Tras ser llamados para la evaluacion terminamos siendo de los equipos seleccionados para participar en la competencia. 
 
 <h2>Lunes 29/09/2025 </h2>
 
@@ -176,3 +180,10 @@ En paralelo, realicé los ajustes necesarios en el código TypeScript, unificand
 De esta manera, la página web ahora permite editar la configuración de personalización y asociar un nombre, garantizando su correcto funcionamiento dentro de la plataforma.
 
 Al finalizar esta tarea, retomé el trabajo sobre la configuración horaria del servidor, ya que volvió a desajustarse y no registraba correctamente la hora local. Sin embargo, por cuestiones de tiempo no logré resolverlo completamente en esta jornada, quedando pendiente para continuar mañana.
+
+
+Patella Tiziano:
+
+El día de hoy seguí trabajando con la personalizacion de los tags con el backend. Al ir al preguntarle al profe Fabri sobre si es que estaba haciendo todo de manera correcta me corrigio e indico que la manera en la cual estaba queriendo editar los tags no era correcta y que nunca iba a funcionar. Yo estaba queriendo editar la categoria de tag que viene por defecto con el tag, sin embargo si modifica ese parametro iba a ser imposible para el servidor vovler a indentificar el tag por lo que debia dejar esa categoria como estaba y crear una nueva para poder asignarles nombres de manera segura. Tras crear toda la logica de nueva identifacion pobre el codigo para ver si funcioaba, pero a pesar de que la codigo era el correcto habia unos problemas con la comunacion con el servidor por lo que con facu S nos propusimos que quedaba pendiente arreglar los problemas que faltaban con el servidor. 
+
+
