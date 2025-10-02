@@ -12,6 +12,19 @@ El día de hoy comenzamos temprano para así aprovechar a mayor cantidad de tiem
 
 ![alt text](<Imagen de WhatsApp 2025-09-05 a las 11.13.44_b2337438.jpg>)
 
+
+Pablo Osores: 
+
+Diseñé las primeras partes del soporte para antenas en SolidWorks. La idea de este soporte es que una vez instalada la antena con aflojar un tornillo se pueda regular 180º en el eje vertical, por eso decidí usar un soporte tipo "gopro". Intenté diseñarlo de tal forma que pueda sostener el peso de dos antenas para poder tener un margen apropiado en cuanto a la resistencia mecánica, ademas de esto intente que estéticamente quede prolijo, motivo por el cual tome la desicion de poner los alojamientos para que las dos tuercas y los tornillos queden al ras de la impresión.
+
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9182ecc4-c61f-4736-a851-d73588a5f35f" width="200"/>
+  <img src="https://github.com/user-attachments/assets/31ec92f2-8a75-473a-bf31-a328201a1fa4" width="200"/>
+  <img src="https://github.com/user-attachments/assets/3ed087a2-8bd7-484e-982e-d887aa2ff05a" width="200"/>
+</p>
+
+
 <h2>Jueves 4/09/2025</h2>
 
 Patella Tiziano:
@@ -67,6 +80,17 @@ Facu Spagno:
 
 Me dediqué a resolver problemas de configuración en la Raspberry Pi. Principalmente trabajé en la instalación de GitHub CLI y en la puesta en marcha del servidor local, ya que presentaba inconvenientes al intentar ejecutarlo. El objetivo fue dejar operativo el entorno de desarrollo para continuar con la integración del sistema.
 
+Pablo Osores: 
+
+Imprimí las dos partes del soporte en PLA y vi 2 errores claves para poder mejorar el diseño y poder tener una versión definitiva. El primer error fué que a la hora de ingresar las medidas puse directamente los 24 mm del perfil de aluminio del portal, entonces el soporte hacia tope con el mismo y no apretaba el perfil haciendo que el soporte "baile" y no quede fijo (para probar si el resto del prototipo era funcional rebajé unos milimetros con la piedra para eliminar el material sobrante que impedía el ajuste). El otro error es que no me dí cuenta de que la "tapa" del soporte(pieza donde van las tuercas) estaba diseñado de tal forma que en vez de poder regular de forma vertical se podia regular de forma horizontal.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8bdf5eb6-816f-4f3b-a262-90c7659833c3" width="200"/>
+  <img src="https://github.com/user-attachments/assets/0ba23e8c-20a8-46bc-9689-cac4d892cebb" width="200"/>
+  <img src="https://github.com/user-attachments/assets/05fb4274-482b-49e7-b29f-272f770920ef" width="200"/>
+</p>
+
+
 <h2>Jueves 18/09/2025</h2>
 
 Patella Tiziano:
@@ -116,6 +140,18 @@ Patella Tiziano:
 
 El día comence con el proceso de mejora de la pagina web para la ONIET. Mi idea era mejorar la pagina para hacerla mucho mas dinamica y fluida por lo que comence por impementar animaciones. Lo priemro fue conectar la libre de animejs la cual es una pagina de donde queria sacar todas las animaciones con nuestra pagina web, hacer esa conexion tomo un rato pero al final pude hacerlo. Tras haberlos conectado comence haciendo pruebas para entender como es que funcionaban estas nuevas animaciones implementandoles en cosas pequeñas que no afecten tanto a la pagina(titulo principal y subtitulo).
 
+Pablo Osores:
+
+Ese dia seguí trabajando con el portal, una de las cosas que me interesaba mucho era poder hacer algo que para una exposicion sea práctico y estéticamente llamativo, por lo que para poner la lectora, el esp32 y la placa conversora decidí reutilizar una parte de la estructura con la cual arme el portal. Para esto tuve que cortarla a la medida que necesitba y que la chapa quede integrada con la estructura, ademas al tener bisagras va a ser una pieza móvil la cual se puede abrir para que las personas vean una parte de la electrónica que compone al proyecto.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/2b2b1d3d-e4df-409c-8e64-de3e90d0e978" width="200"/>
+  <img src="https://github.com/user-attachments/assets/37a53093-a126-409c-ac90-dc56df7d9ee4" width="200"/>
+  <br/>
+  <img src="https://github.com/user-attachments/assets/d1ed4650-a1a9-4242-9e36-8d44a7422b9c" width="400"/>
+</p>
+
+
 <h2>Miércoles 24/09/2025</h2>  
 **Santolucito Lautaro:**  
 
@@ -136,6 +172,14 @@ Patella Tiziano:
 El día de hoy tenia planeado seguir trabajando con la pagina web pero surgio un inconveniente que provoco que tengamos que hacer un cambio de prioridades urgente. La situacion fue que los profes a cargo de nuestros proyectos nos llamaron para informarnos de una situacion que habia con la competencia ZIZAP de la ONIET. La sitauacion era que para la competencia de ZIZAP solo se podian inscribir 2 proyectos por escuela y en el IMPA habia 3 proyectos que se querian inscribir por lo que unos de los proyectos no iba a poder participar. Nos dijeron que el Viernes iban a hacer una evaluacion de las 3 aplicaciones y que dependiendo de que tan avanzadas esten iban a seleccionar cuales iban a participar y cual no. Ante esta nueva cuenta regresiva nos dividimos las tareas de la app con Facu S y nos pusimos a adelantar la mayor cantidad de cosas en el menor tiempo posible. Lo primero en lo que comence a trabajar fue en armar la interfaz visual en donde se iban a mostrar que herramientas estaban dentro y fuera del pañol. Una vez que finalice la interfaz visual( una no muy compleja que cumplía su funcion y que iba a ser mejorada previo a nuestra aprobacion en ZIZAP) me puse a trabajar en mejorar la navegacion dentro de la app. Antes todos los botones que teniamos nos enviaban a la interfaz visual ya que no habiamos definido una zona de trabajo para cada una de las opciones, por lo que puse a trabajar en definir cada zona para poder trabajar despues en  detalle en cada una de ellas.
 
 <h2>Jueves 25/09/2025</h2>
+
+Lautaro Santolucito:
+
+El día de hoy me puse a trabajar con la Raspberry Pi, donde encontré un problema: al acceder desde el puerto 8000 solamente se mostraba el HTML pelado de la página administrativa, sin los estilos ni el funcionamiento esperado. Como no pude terminar de resolver este inconveniente en el momento, decidí avanzar con otra parte del proyecto para aprovechar el tiempo.
+
+Me enfoqué entonces en el ESP32, revisando y modificando el código cargado en el microcontrolador para mejorar la calidad de lectura y optimizar el envío de información hacia el servidor. Estos ajustes permitieron que el dispositivo registrara con mayor precisión los tags y transmitiera los datos de forma más estable.
+
+El trabajo en la Raspberry quedó pendiente de revisión, mientras que en el ESP32 se lograron avances importantes en el rendimiento general del sistema.
 
 Patella Tiziano:
 
@@ -167,13 +211,17 @@ Facu Spagno:
 Me dediqué a perfeccionar la tarjeta de creación de Pañol dentro del Menú. Corrigí diversos errores y optimicé su diseño visual, logrando una versión más estable, clara y profesional.
 Con este avance, la funcionalidad de creación de pañoles quedó en condiciones óptimas para su uso dentro de la Web-App.
 
+Pablo Osores:
+
+Arreglé los errores del soporte para las antenas.
+
 <h2>Martes 30/09/2025 </h2>
 
 Facu Spagno:
 
-La jornada estuvo dedicada a resolver los problemas del apartado de personalización, que hasta el momento no funcionaba correctamente. Para ello, trabajé tanto en el frontend como en el backend, revisando el HomePage.ts, el settings.py y el views.py, donde encontré contradicciones en las listas y ausencia de la variable nombre.
+Durante la jornada me enfoqué en dos aspectos centrales del proyecto. Por un lado, trabajé sobre la interfaz visual de la Web-App, incorporando un fondo animado diseñado por Facu Ledesma en el Home, con el objetivo de darle una estética más profesional y personalizada.
 
-En el backend detecté que en las views se estaba utilizando un método PATCH cuando en realidad era necesario un PUT para permitir la edición completa de los registros. Corregí esta lógica y también solucioné errores en las rutas (urls.py) que estaban interfiriendo con el funcionamiento esperado.
+Por otro lado, avancé en la puesta en marcha automática del servidor en la Raspberry Pi. Para esto configuré Gunicorn como servidor WSGI en modo producción y lo integré con systemd, de manera que el backend se levante automáticamente al encender la Raspberry y se mantenga en funcionamiento de forma estable sin necesidad de ingresar por SSH.
 
 En paralelo, realicé los ajustes necesarios en el código TypeScript, unificando las implementaciones y corrigiendo variables para que la comunicación con el backend fuera consistente. Con estas modificaciones logré que el sistema reconozca y gestione la variable nombre, dejando operativo al 100% el módulo de personalización.
 
@@ -181,9 +229,12 @@ De esta manera, la página web ahora permite editar la configuración de persona
 
 Al finalizar esta tarea, retomé el trabajo sobre la configuración horaria del servidor, ya que volvió a desajustarse y no registraba correctamente la hora local. Sin embargo, por cuestiones de tiempo no logré resolverlo completamente en esta jornada, quedando pendiente para continuar mañana.
 
+Finalmente, comencé a analizar los problemas relacionados con la personalización de tags en las funciones que estaba desarrollando Titi, aunque el trabajo quedó pendiente de continuidad.
+
 
 Patella Tiziano:
 
 El día de hoy seguí trabajando con la personalizacion de los tags con el backend. Al ir al preguntarle al profe Fabri sobre si es que estaba haciendo todo de manera correcta me corrigio e indico que la manera en la cual estaba queriendo editar los tags no era correcta y que nunca iba a funcionar. Yo estaba queriendo editar la categoria de tag que viene por defecto con el tag, sin embargo si modifica ese parametro iba a ser imposible para el servidor vovler a indentificar el tag por lo que debia dejar esa categoria como estaba y crear una nueva para poder asignarles nombres de manera segura. Tras crear toda la logica de nueva identifacion pobre el codigo para ver si funcioaba, pero a pesar de que la codigo era el correcto habia unos problemas con la comunacion con el servidor por lo que con facu S nos propusimos que quedaba pendiente arreglar los problemas que faltaban con el servidor. 
+
 
 
