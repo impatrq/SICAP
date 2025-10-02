@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { interval, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
-type Registro = { id: number; tag: string; nombre?: string; categoría?: string | null; fecha_hora?: string | null; created_at?: string | null; };
+type Registro = { id: number; tag: string; nombre?: string; categoria?: string | null; fecha_hora?: string | null; created_at?: string | null; };
 
 @Component({
   selector: 'app-home',
@@ -51,17 +51,18 @@ async abrirEdicion(reg: Registro) {
         placeholder: 'Nombre a la persona o al insumo'
       },
 			{
-        name: 'categoría',
+        name: 'categoria',
         type: 'text',
-        value: reg.categoría,
+        value: reg.categoria,
         placeholder: 'Categoría correspondiente'
+      }
     ],
     buttons: [
       { text: 'Cancelar', role: 'cancel' },
       {
         text: 'Guardar',
         handler: (data) => {
-          this.editarTag(reg, data.nombre, data.categoría);
+          this.editarTag(reg, data.nombre, data.categoria);
         }
       }
     ],
@@ -69,16 +70,16 @@ async abrirEdicion(reg: Registro) {
   await alert.present();
 }
 
-editarTag(reg: Registro, nuevoNombre: string, nuevaCategoría: string) {
+editarTag(reg: Registro, nuevoNombre: string, nuevaCategoria: string) {
   const url = `${this.API_EDIT}/${reg.id}/editar/`;            
   
   this.http.put(url, { 
     nombre: nuevoNombre,
-    categoría: nuevaCategoría    
+    categoria: nuevaCategoria    
   }).subscribe({
     next: () => { 
       reg.nombre = nuevoNombre; 
-      reg.categoría = nuevaCategoría;
+      reg.categoria = nuevaCategoria;
     },
     error: (err) => { console.error(err); alert('No se pudo guardar el cambio'); }
   });

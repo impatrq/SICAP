@@ -53,6 +53,7 @@
           <ion-card-title class="mono">Tag: {{ r.tag }}</ion-card-title>
           <ion-card-subtitle class="muted">
             <b>Nombre:</b> {{ r.nombre || '-' }}<br>
+            <b>Categoria:</b> {{ r.categoria || '-' }}<br>
             ID #{{ r.id }} · {{ r.fecha_hora | date:'dd/MM/yyyy HH:mm' }}
           </ion-card-subtitle>
         </ion-card-header>
@@ -74,6 +75,8 @@
         <ion-card-header>
           <ion-card-title class="mono">Tag: {{ r.tag }}</ion-card-title>
           <ion-card-subtitle class="muted">
+            <b>Nombre:</b> {{ r.nombre || '-' }}<br>
+            <b>Categoria:</b> {{ r.categoria || '-' }}<br>
             ID #{{ r.id }} · {{ r.created_at | date:'short' }}
           </ion-card-subtitle>
         </ion-card-header>
@@ -97,6 +100,7 @@
     <ion-grid>
     <ion-row>
       <ion-col><b>Nombre</b></ion-col>
+      <ion-col><b>Categoria</b></ion-col>
       <ion-col><b>Herramienta</b></ion-col>
       <ion-col><b>ID</b></ion-col>
       <ion-col><b>Última detección</b></ion-col>
@@ -104,6 +108,7 @@
     </ion-row>
     <ion-row *ngFor="let reg of tagsUnicos">
       <ion-col>{{ reg.nombre || '-' }}</ion-col>
+      <ion-col>{{ reg.categoria || '-' }}</ion-col>
       <ion-col>{{ reg.tag }}</ion-col>
       <ion-col>{{ reg.id }}</ion-col>
       <ion-col>{{ reg.created_at | date:'short' }}</ion-col>
