@@ -12,6 +12,17 @@ El día de hoy comenzamos temprano para así aprovechar a mayor cantidad de tiem
 
 ![alt text](<Imagen de WhatsApp 2025-09-05 a las 11.13.44_b2337438.jpg>)
 
+
+Pablo Osores: 
+Diseñé la parte del soporte para las antenas que se agarra del portal para poder imprimirla en 3d. El programa que usé para el modelado fue SolidWorks, tomé todas las medidas con un calibre y me centre en que el soporte tenga la suficiente resistencia como para poder aguantar el peso de dos antenas para tener un buen margen. La idea del soporte es que una vez puesta la antena se pueda regular en angulo de 180º de forma vertical mediante agarre tipo gopro, lo hice en 2 partes para que se pueda ajustar a la estructura y ademas quería que los tornillos y las tuercas esten al mismo nivel de la impresión.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9182ecc4-c61f-4736-a851-d73588a5f35f" width="200"/>
+  <img src="https://github.com/user-attachments/assets/31ec92f2-8a75-473a-bf31-a328201a1fa4" width="200"/>
+  <img src="https://github.com/user-attachments/assets/3ed087a2-8bd7-484e-982e-d887aa2ff05a" width="200"/>
+</p>
+
+
 <h2>Jueves 4/09/2025</h2>
 
 Patella Tiziano:
