@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { interval, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+// import RegistroTag from '../../../Servidor-sicap_backend/SICAP_Backend/registros/registro_tag.model';
 
 type Registro = { id: number; tag: string; nombre?: string; categoria?: string | null; fecha_hora?: string | null; created_at?: string | null; };
 
@@ -18,16 +19,86 @@ export class HomePage implements OnInit, OnDestroy {
   
   opcionesMenu: string[] = [
     'Interfaz Visual',
-    'Invenatario',
+    'Inventario',
     'Empleados',
     'Personalización'
   ];
   
 
   registros: Registro[] = [];
+  tagsTaller: Registro[] = [];
+  tagsFuera: Registro[] = [];
+  tagsEstado: { [tag: string]: 'taller' | 'fuera' } = {};
+
   loading = false;
   error?: string;
   private sub?: Subscription;
+
+  private STORAGE_KEY = 'sicap_ui_estado';
+
+  private saveState() {
+  
+  const snapshot = {
+    tagsEstado: this.tagsEstado,
+    lastSeen: this.lastSeen,
+    
+    ultimoRegistroPorTag: this.buildUltimoRegistroPorTag(),
+  };
+  localStorage.setItem(this.STORAGE_KEY, JSON.stringify(snapshot));
+  }
+  private loadState() {
+  const raw = localStorage.getItem(this.STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const s = JSON.parse(raw);
+    this.tagsEstado = s.tagsEstado || {};
+    this.lastSeen = s.lastSeen || {};
+    
+    this.tagsTaller = [];
+    this.tagsFuera = [];
+    const mapa: Record<string, Registro> = s.ultimoRegistroPorTag || {};
+    for (const tag of Object.keys(this.tagsEstado)) {
+      const reg = mapa[tag];
+      if (!reg) continue;
+      if (this.tagsEstado[tag] === 'taller') this.tagsTaller.push(reg);
+      else this.tagsFuera.push(reg);
+    }
+  } catch {
+    
+  }
+}
+
+private buildUltimoRegistroPorTag(): Record<string, Registro> {
+  const out: Record<string, Registro> = {};
+  
+  const fuente = [...(this.registros || []), ...this.tagsTaller, ...this.tagsFuera];
+  
+  fuente.sort((a, b) => this.parseTS(a) - this.parseTS(b));
+  for (const r of fuente) out[r.tag] = r;
+  return out;
+}
+
+  private lastSeen: Record<string, { id: number; ts: number }> = {};
+
+  private parseTS(r: Registro): number {
+    return r?.fecha_hora ? new Date(r.fecha_hora).getTime() : 0;
+  }
+
+  private esMasNuevo(nuevo: Registro): boolean {
+    const ts = this.parseTS(nuevo);
+    const prev = this.lastSeen[nuevo.tag];
+    if (!prev) return true;
+    if (ts && ts !== prev.ts) return ts > prev.ts;
+    if (typeof nuevo.id === 'number' && typeof prev.id === 'number') {
+      return nuevo.id > prev.id;
+    }
+    return false;
+  }
+
+  private marcarVisto(r: Registro) {
+    this.lastSeen[r.tag] = { id: Number(r.id) || 0, ts: this.parseTS(r) };
+  }
+
 
   // 🔹 Endpoint de Django (podés moverlo a environment.apiBase)
   private API = 'http://192.168.111.218:5000/api/v1/register/tag/list/';
@@ -85,11 +156,13 @@ editarTag(reg: Registro, nuevoNombre: string, nuevaCategoria: string) {
   });
 }
 
-ngOnInit() {}
+ngOnInit() {
+  this.loadState();
+}
 
-  ngOnDestroy() {
-    this.sub?.unsubscribe();
-  }
+ngOnDestroy() {
+  this.sub?.unsubscribe();
+}
 
   activarSeccion(nombre: string) {
     this.seccionActiva = nombre;
@@ -98,7 +171,7 @@ ngOnInit() {}
     if (nombre === 'Interfaz Visual') {
       this.cargarRegistros();
       if (!this.sub || this.sub.closed) {
-        this.sub = interval(3000).subscribe(() => this.cargarRegistros());
+        this.sub = interval(500).subscribe(() => this.cargarRegistros());
       }
     } else {
       // Si cambiás de sección, detené el intervalo
@@ -111,53 +184,49 @@ ngOnInit() {}
     this.sub?.unsubscribe();
   }
 
-tagsTaller: Registro[] = [];
-tagsFuera: Registro[] = [];
-tagsEstado: { [tag: string]: 'taller' | 'fuera' } = {};
+
 
 procesarRegistro(nuevo: Registro) {
-  const tag = nuevo.tag;
-  if (!(tag in this.tagsEstado)) {
-    // Primera vez: va al taller
-    this.tagsTaller.unshift(nuevo);
-    this.tagsEstado[tag] = 'taller';
-  } else if (this.tagsEstado[tag] === 'taller') {
-    // Estaba en taller, va fuera
-    this.tagsTaller = this.tagsTaller.filter(t => t.tag !== tag);
-    this.tagsFuera.unshift(nuevo);
-    this.tagsEstado[tag] = 'fuera';
-  } else {
-    // Estaba fuera, vuelve al taller
-    this.tagsFuera = this.tagsFuera.filter(t => t.tag !== tag);
-    this.tagsTaller.unshift(nuevo);
-    this.tagsEstado[tag] = 'taller';
+    if (!this.esMasNuevo(nuevo)) return;
+
+    const tag = nuevo.tag;
+    if (!(tag in this.tagsEstado)) {
+      this.tagsTaller = [nuevo, ...this.tagsTaller.filter(t => t.tag !== tag)];
+      this.tagsEstado[tag] = 'taller';
+    } else if (this.tagsEstado[tag] === 'taller') {
+      this.tagsTaller = this.tagsTaller.filter(t => t.tag !== tag);
+      this.tagsFuera = [nuevo, ...this.tagsFuera.filter(t => t.tag !== tag)];
+      this.tagsEstado[tag] = 'fuera';
+    } else {
+      this.tagsFuera = this.tagsFuera.filter(t => t.tag !== tag);
+      this.tagsTaller = [nuevo, ...this.tagsTaller.filter(t => t.tag !== tag)];
+      this.tagsEstado[tag] = 'taller';
+    }
+
+    this.marcarVisto(nuevo);
+    this.saveState();
   }
-}
 
 // Llamá a esto cada vez que llegan nuevos registros:
 cargarRegistros() {
-  this.loading = true;
-  this.error = undefined;
-  this.http.get<Registro[]>(this.API).subscribe({
-    next: (rows) => {
-      this.registros = rows;
-      // Solo procesar los nuevos
-      rows.forEach(reg => {
-        if (
-          !this.tagsTaller.some(t => t.id === reg.id) &&
-          !this.tagsFuera.some(t => t.id === reg.id)
-        ) {
-          this.procesarRegistro(reg);
+    this.loading = true;
+    this.error = undefined;
+    this.http.get<Registro[]>(this.API).subscribe({
+      next: (rows) => {
+        this.registros = rows;
+        const ordenados = [...rows].sort((a, b) => this.parseTS(a) - this.parseTS(b));
+        for (const reg of ordenados) {
+          if (this.esMasNuevo(reg)) this.procesarRegistro(reg);
         }
-      });
-      this.loading = false;
-    },
-    error: (e) => {
-      this.error = 'No pude cargar los registros';
-      this.loading = false;
-    }
-  });
-}
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'No pude cargar los registros';
+        this.loading = false;
+      }
+    });
+  }
+
 get tagsUnicos(): Registro[] {
   const vistos = new Set<string>();
   const unicos: Registro[] = [];
@@ -176,5 +245,14 @@ limpiarTags() {
   this.tagsFuera = [];
   this.tagsEstado = {};
   this.registros = [];
+  this.lastSeen = {};
+  localStorage.removeItem(this.STORAGE_KEY);
+}
+trackById(index: number, item: any) {
+  return item?.id ?? item?.tag ?? index;
+}
+
+trackByTexto(index: number, item: string) {
+  return item;
 }
 }

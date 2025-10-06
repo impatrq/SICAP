@@ -9,18 +9,18 @@
 
 <ion-content [fullscreen]="true" class="has-video-bg">
 
-    <video autoplay preload="auto" loop muted playsinline id="bg-video">
+    <video autoplay preload="auto" loop muted playsinline id="bg-video" style="pointer-events:none;">
   <source src="assets/Animaciones/animacion_sicap.mp4" type="video/mp4">
   No carga animación
 </video>
 
-<div class=""bg-overlay></div>
+<div class="bg-overlay"></div>
 <!-- Toolbar lateral solo si está activa la Interfaz Visual -->
 <div class="vertical-toolbar"
   [class.activa]="seccionActiva"
   [style.pointer-events]="seccionActiva ? 'auto' : 'none'">
   <ion-button
-    *ngFor="let opcion of opcionesMenu"
+    *ngFor="let opcion of opcionesMenu; trackBy: trackByTexto"
     expand="block"
     [disabled]="opcion === seccionActiva"
     (click)="activarSeccion(opcion)">
@@ -47,19 +47,20 @@
   </ion-button>
   <div class="caja-tags">
     <h3>En Taller</h3>
-    <div *ngFor="let r of tagsTaller">
+    <div *ngFor="let r of tagsTaller; trackBy: trackById">
       <ion-card class="reg-card">
         <ion-card-header>
-          <ion-card-title class="mono">Tag: {{ r.tag }}</ion-card-title>
+          <ion-card-title class="mono"><b>Nombre:</b>{{ r.nombre || '-' }}</ion-card-title>
           <ion-card-subtitle class="muted">
-            <b>Nombre:</b> {{ r.nombre || '-' }}<br>
             <b>Categoria:</b> {{ r.categoria || '-' }}<br>
-            ID #{{ r.id }} · {{ r.fecha_hora | date:'dd/MM/yyyy HH:mm' }}
+            {{ (r.fecha_hora || r.created_at) | date:'dd/MM/yyyy HH:mm' }}
           </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
           <div class="row">
-            <ion-badge color="tertiary">Válido</ion-badge>
+            <ion-button size="small" (click)="abrirEdicion(r)" style="float:right; margin-top:8px;">
+              <ion-icon name="create-outline">Editar</ion-icon> 
+            </ion-button>
           </div>
         </ion-card-content>
       </ion-card>
@@ -70,19 +71,20 @@
   <!-- Caja Fuera del Taller -->
   <div class="caja-tags">
     <h3>Fuera del Taller</h3>
-    <div *ngFor="let r of tagsFuera">
+    <div *ngFor="let r of tagsFuera; trackBy: trackById">
       <ion-card class="reg-card">
         <ion-card-header>
-          <ion-card-title class="mono">Tag: {{ r.tag }}</ion-card-title>
+          <ion-card-title class="mono"><b>Nombre:</b> {{ r.nombre || '-' }}</ion-card-title>
           <ion-card-subtitle class="muted">
-            <b>Nombre:</b> {{ r.nombre || '-' }}<br>
             <b>Categoria:</b> {{ r.categoria || '-' }}<br>
-            ID #{{ r.id }} · {{ r.created_at | date:'short' }}
+            {{ (r.fecha_hora || r.created_at) | date:'dd/MM/yyyy HH:mm' }}
           </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
           <div class="row">
-            <ion-badge color="tertiary">Válido</ion-badge>
+            <ion-button size="small" (click)="abrirEdicion(r)" style="float:right; margin-top:8px;">
+              <ion-icon name="create-outline">Editar</ion-icon> 
+            </ion-button>
           </div>
         </ion-card-content>
       </ion-card>
@@ -91,8 +93,8 @@
   </div>
 </div>
 </div>
-  <!-- Espacio para Invenatario -->
-  <div *ngIf="seccionActiva === 'Invenatario'" class="visual-content">
+  <!-- Espacio para Inventario -->
+  <div *ngIf="seccionActiva === 'Inventario'" class="visual-content">
     <h2>Inventario</h2>
       <ion-button color="danger" (click)="limpiarTags()" expand="block" style="margin-bottom: 16px;">
     Limpiar inventario
@@ -106,7 +108,7 @@
       <ion-col><b>Última detección</b></ion-col>
       <ion-col><b>Editar</b></ion-col>
     </ion-row>
-    <ion-row *ngFor="let reg of tagsUnicos">
+    <ion-row *ngFor="let reg of tagsUnicos; trackBy: trackById">
       <ion-col>{{ reg.nombre || '-' }}</ion-col>
       <ion-col>{{ reg.categoria || '-' }}</ion-col>
       <ion-col>{{ reg.tag }}</ion-col>
