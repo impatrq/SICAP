@@ -11,5 +11,5 @@ class PanolSerializer(serializers.ModelSerializer):
 class RegistroTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegistroTag
-        categoria = serializer.ChoiceField(choices=['persona','insumo'], allow_null = True, required = False)
+        categoria = serializers.ChoiceField(choices=['persona','insumo'], allow_null = True, required = False)
         fields = ['nombre','categoria','id', 'tag', 'fecha_hora', 'created_at']
