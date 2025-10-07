@@ -30,12 +30,12 @@
 </div>
 
 <!-- Botón de basurita -->
-<ion-fab vertical="bottom" horizontal="end" slot="fixed"
+<!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed"
          *ngIf="seccionActiva === 'Interfaz Visual' || seccionActiva === 'Inventario' || seccionActiva === 'Empleados'">
   <ion-fab-button size="small" (click)="limpiarTags()" aria-label="Limpiar">
     <ion-icon name="trash-outline"></ion-icon>
   </ion-fab-button>
-</ion-fab>
+</ion-fab> -->
 
   <!-- Menú entral solo si NO hay sección activa -->
   <div *ngIf="!seccionActiva" class="botones-menu-central">
@@ -146,7 +146,7 @@
       <ion-col><b>Editar</b></ion-col>
     </ion-row>
     <ion-row *ngFor="let reg of tagsUnicos">
-      <ion-col>{{ reg.tag }}</ion-col>
+      <ion-col>{{ reg.nombre }}</ion-col>
       <ion-col>{{ reg.id }}</ion-col>
       <ion-col>{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
       <ion-col>
