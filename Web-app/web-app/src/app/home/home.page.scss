@@ -10,6 +10,7 @@
 //   background-repeat: no-repeat;
 // }
 
+//Video de fondo
 #bg-video {
   position: fixed;
   width: 100%;
@@ -21,28 +22,34 @@
 
 }
 
+//Capa oscura sobre el video
 .bg-overlay {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: rgba(0,0,0,.25);
+  background:
+    radial-gradient(80rem 80rem at 10% -10%, rgba(var(--indigo-rgb), .25), transparent 60%),
+    radial-gradient(70rem 70rem at 110% 10%, rgba(var(--paynes-rgb), .25), transparent 50%),
+    linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35));
   pointer-events: none;
 }
 
+//Hacer que el contenido esté por encima del video y la capa oscura
 .visual-content, .vertical-toolbar, .botones-menu-central {
   position: relative;
   z-index: 1;
-  color: black;
+  color: var(--platinum);
 }
 
+// Estilos para ion-content
 ion-content::part(scroll) {
   display: block !important;
-  color: black;
   align-items: unset;
   justify-content:unset !important;
   height: auto !important;
 }
 
+// Estilos para el menú central
 .botones-menu-central {
   width: 30%;
   margin: auto;
@@ -53,6 +60,8 @@ ion-content::part(scroll) {
   height: 80vh;      // Ocupa casi toda la altura de la pantalla
   gap: 15px;   
 }
+
+//Transiciones suaves para los botones del menú
 .menu-animado {
   width: 100%;
   transition-property: background-color, transform;
@@ -60,27 +69,53 @@ ion-content::part(scroll) {
   transition-timing-function: ease;
 }
 
+//efecto hover y focus para los botones del menú
 .menu-animado:hover,
 .menu-animado:focus {
   transform: scale(1.08);
-  background-color: cornflowerblue !important;
-  color: #fff !important;
+  background-color: rgba(var(--indigo-rgb), .85) !important;
+  color: var(--platinum) !important;
 }
+
+// Estilos para ion-accordion-group
 ion-accordion-group {
 
   max-width: 700px;
   width: 90%;
 }
+
+//Boton de la basurita
+ion-fab-button {
+  --background: rgba(var(--indigo-rgb), 0.4);
+  --background-activated: rgba(var(--indigo-rgb), 0.55);
+  --color: var(--platinum);
+  border: 1px solid rgba(var(--platinum-rgb), 0.15);
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+ion-fab-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+}
+
+ion-fab-button ion-icon {
+  font-size: 1.3rem;
+}
+
+//Toolbar 
 .vertical-toolbar {
   position: fixed;
   left: 0;
   top: 56px;
   width: 220px;
   height: calc(100vh - 56px);
-  background: rgba(80, 80, 80, 0.55); // ¡Muy claro!
+  background: rgba(var(--paynes-rgb), .18);
   backdrop-filter: blur(12px) saturate(160%);
   -webkit-backdrop-filter: blur(12px) saturate(160%);
-  border-right: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-right: 1px solid rgba(var(--platinum-rgb), .18);
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -89,13 +124,14 @@ ion-accordion-group {
   transform: translateX(-100%);
   opacity: 0;
   pointer-events: none;
-  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.12);
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
 }
 .vertical-toolbar.activa {
   transform: translateX(0);
   opacity: 1;
   pointer-events: auto;
 }
+
 
 .visual-content {
   margin-left: 220px; 
@@ -121,7 +157,7 @@ ion-accordion-group {
 }
 
 .cards-scroll {
-  max-height: 60vh;
+  max-height: 72vh;
   overflow-y: auto;
   padding-right: 6px;
 }
@@ -166,11 +202,13 @@ ion-accordion-group {
 }
 
 .caja-tags {
-  background: #f4f4f4;
-  border-radius: 12px;
+  background: rgba(var(--indigo-rgb), .12);
+  border: 1px solid rgba(var(--platinum-rgb), .12);
+  border-radius: 16px;
   padding: 16px;
-  min-width: 300px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
 }
 
 .caja-tags h3 {
@@ -178,18 +216,66 @@ ion-accordion-group {
   margin-bottom: 12px;
 }
 ion-grid {
-  background: #fff;
-  border-radius: 8px;
+  background: rgba(var(--indigo-rgb), .10);
+  border: 1px solid rgba(var(--platinum-rgb), .10);
+  border-radius: 16px;
   padding: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
   margin-top: 16px;
 }
+
 ion-row {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(var(--platinum-rgb), .10);
 }
+
 ion-row:last-child {
   border-bottom: none;
 }
 ion-col {
   padding: 8px 4px;
+}
+
+.reg-card {
+  background: linear-gradient(
+    135deg,
+    rgba(var(--indigo-rgb), 0.25) 0%,
+    rgba(var(--paynes-rgb), 0.25) 100%
+  );
+  border: 1px solid rgba(var(--platinum-rgb), 0.18);
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.reg-card:hover {
+  transform: translateY(-4px);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--indigo-rgb), 0.35) 0%,
+    rgba(var(--paynes-rgb), 0.35) 100%
+  );
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+// Títulos y subtítulos dentro de la card 
+.reg-card ion-card-title {
+  color: var(--platinum);
+  font-weight: 600;
+}
+
+.reg-card ion-card-subtitle {
+  color: rgba(var(--platinum-rgb), 0.8);
+}
+
+.reg-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  pointer-events: none;
 }

@@ -29,8 +29,15 @@
   <ion-button expand="block" color="medium" (click)="volverAlMenuCentral()">Volver</ion-button>
 </div>
 
+<!-- Botón de basurita -->
+<ion-fab vertical="bottom" horizontal="end" slot="fixed"
+         *ngIf="seccionActiva === 'Interfaz Visual' || seccionActiva === 'Inventario' || seccionActiva === 'Empleados'">
+  <ion-fab-button size="small" (click)="limpiarTags()" aria-label="Limpiar">
+    <ion-icon name="trash-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 
-  <!-- Menú central solo si NO hay sección activa -->
+  <!-- Menú entral solo si NO hay sección activa -->
   <div *ngIf="!seccionActiva" class="botones-menu-central">
     <ion-button expand="block" (click)="activarSeccion('Interfaz Visual')"class="menu-animado">Interfaz Visual</ion-button>
     <ion-button expand="block" (click)="activarSeccion('Inventario')"class="menu-animado">Inventario</ion-button>
@@ -42,9 +49,9 @@
   <div *ngIf="seccionActiva === 'Interfaz Visual'" class="visual-content">
     <div class="cajas-tags">
   <!-- Caja Taller -->
-    <ion-button color="danger" (click)="limpiarTags()" expand="block" style="margin-bottom: 16px;">
-    Limpiar interfaz
-  </ion-button>
+    <!-- <ion-button color="danger" (click)="limpiarTags()" expand="block" style="margin-bottom: 16px;">
+    Limpiar interfaz -->
+  <!-- </ion-button> -->
   <div class="caja-tags">
     <h3>En Taller</h3>
     <div *ngFor="let r of tagsTaller; trackBy: trackById">
@@ -96,9 +103,9 @@
   <!-- Espacio para Inventario -->
   <div *ngIf="seccionActiva === 'Inventario'" class="visual-content">
     <h2>Inventario</h2>
-      <ion-button color="danger" (click)="limpiarTags()" expand="block" style="margin-bottom: 16px;">
-    Limpiar inventario
-  </ion-button>
+      <!-- <ion-button color="danger" (click)="limpiarTags()" expand="block" style="margin-bottom: 16px;">
+    Limpiar inventario -->
+  <!-- </ion-button>  -->
     <ion-grid>
     <ion-row>
       <ion-col><b>Nombre</b></ion-col>
@@ -113,7 +120,7 @@
       <ion-col>{{ reg.categoria || '-' }}</ion-col>
       <ion-col>{{ reg.tag }}</ion-col>
       <ion-col>{{ reg.id }}</ion-col>
-      <ion-col>{{ reg.created_at | date:'short' }}</ion-col>
+      <ion-col>{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
       <ion-col>
         <ion-button size="small" (click)="abrirEdicion(reg)">
           <ion-icon name="create-outline"></ion-icon>
@@ -128,9 +135,9 @@
   <div *ngIf="seccionActiva === 'Empleados'" class="visual-content">
     <h2>Empleados</h2>
     <!-- Aquí tu contenido de empleados -->
-    <ion-button color="danger" (click)="limpiarTags()" expand="block" style="margin-bottom: 16px;">
+    <!-- <ion-button color="danger" (click)="limpiarTags()" expand="block" style="margin-bottom: 16px;">
     Limpiar registro
-  </ion-button>
+  </ion-button> -->
     <ion-grid>
     <ion-row>
       <ion-col><b>Empleado</b></ion-col>
@@ -141,7 +148,7 @@
     <ion-row *ngFor="let reg of tagsUnicos">
       <ion-col>{{ reg.tag }}</ion-col>
       <ion-col>{{ reg.id }}</ion-col>
-      <ion-col>{{ reg.created_at | date:'short' }}</ion-col>
+      <ion-col>{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
       <ion-col>
         <ion-button size="small" (click)="abrirEdicion(reg)">
           <ion-icon name="create-outline"></ion-icon>

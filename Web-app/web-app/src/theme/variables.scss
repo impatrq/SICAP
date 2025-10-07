@@ -2,6 +2,17 @@
 // http://ionicframework.com/docs/theming/
 
 :root {
+
+  //Paleta SICAP
+  --platinum:   #DCDCDD;  /* rgb(220,220,221) */
+  --french:     #C5C3C6;  /* rgb(197,195,198) */
+  --outer:      #46494C;  /* rgb(70,73,76)   */
+  --paynes:     #4C5C68;  /* rgb(76,92,104)  */
+  --indigo:     #284B63;  /* rgb(40,75,99)   */
+
+  --ion-background-color: linear-gradient(180deg, #26292c 0%, #1f2428 100%); 
+  --ion-text-color: var(--platinum);
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
