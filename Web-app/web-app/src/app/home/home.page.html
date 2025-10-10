@@ -59,7 +59,7 @@
         <ion-card-header>
           <ion-card-title class="mono"><b>Nombre:</b>{{ r.nombre || '-' }}</ion-card-title>
           <ion-card-subtitle class="muted">
-            <b>Categoria:</b> {{ r.categoria || '-' }}<br>
+            <b>Categoria:</b>  {{ friendlyCategoria(r.categoria) }}<br>
             {{ (r.fecha_hora || r.created_at) | date:'dd/MM/yyyy HH:mm' }}
           </ion-card-subtitle>
         </ion-card-header>
@@ -83,7 +83,7 @@
         <ion-card-header>
           <ion-card-title class="mono"><b>Nombre:</b> {{ r.nombre || '-' }}</ion-card-title>
           <ion-card-subtitle class="muted">
-            <b>Categoria:</b> {{ r.categoria || '-' }}<br>
+            <b>Categoria:</b>  {{ friendlyCategoria(r.categoria) }}<br>
             {{ (r.fecha_hora || r.created_at) | date:'dd/MM/yyyy HH:mm' }}
           </ion-card-subtitle>
         </ion-card-header>
@@ -116,15 +116,7 @@
       <ion-col><b>Editar</b></ion-col>
     </ion-row>
     <ion-row *ngFor="let reg of tagsUnicos; trackBy: trackById">
-      <ion-col>
-        <ion-select
-            interface="popover"
-            [value]="(reg.categoria || 'insumo') | lowercase"
-            (ionChange)="cambiarCategoria(reg, $event.detail.value)">
-            <ion-select-option value="persona">Persona</ion-select-option>
-            <ion-select-option value="objeto">Insumo</ion-select-option>
-          </ion-select>
-      </ion-col>
+      <ion-col>{{ friendlyCategoria(reg.categoria) }}</ion-col>
 
       <ion-col>{{ reg.categoria || '-' }}</ion-col>
 
@@ -153,29 +145,21 @@
       <ion-col><b>Empleado</b></ion-col>
       <ion-col><b>ID</b></ion-col>
       <ion-col><b>Última detección</b></ion-col>
+      <ion-col><b>Categoria</b></ion-col>
       <ion-col><b>Editar</b></ion-col>
     </ion-row>
     <ion-row *ngFor="let reg of tagsUnicos">
       <ion-col>{{ reg.nombre }}</ion-col>
       <ion-col>{{ reg.id }}</ion-col>
       <ion-col>{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
-      
-      <ion-col>
-          <ion-select
-            interface="popover"
-            [value]="(reg.categoria || 'objeto') | lowercase"
-            (ionChange)="cambiarCategoria(reg, $event.detail.value)">
-            <ion-select-option value="persona">Persona</ion-select-option>
-            <ion-select-option value="objeto">Objeto</ion-select-option>
-          </ion-select>
-        </ion-col>
+      <ion-col>{{ friendlyCategoria(reg.categoria) }}</ion-col>
 
       <ion-col>
         <ion-button size="small" (click)="abrirEdicion(reg)">
           <ion-icon name="create-outline"></ion-icon>
         </ion-button>
       </ion-col>
-      
+
     </ion-row>
   </ion-grid>
   <ion-text *ngIf="tagsUnicos.length === 0">No se  han registrado empleados.</ion-text>
@@ -184,6 +168,37 @@
   <!-- Espacio para Personalización -->
   <div *ngIf="seccionActiva === 'Personalización'" class="visual-content">
     <h2>Personalización</h2>
-    <!-- Aquí tu contenido de personalización -->
   </div>
+
+  <ion-modal [isOpen]="editOpen" (didDismiss)="editOpen = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Editar registro</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="editOpen = false">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-input [(ngModel)]="modeloEdicion.nombre" placeholder="Escribí el nombre..."></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Categoría</ion-label>
+          <ion-select [(ngModel)]="modeloEdicion.categoria" interface="popover">
+            <ion-select-option value="persona">Persona</ion-select-option>
+            <ion-select-option value="insumo">Insumo</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button expand="block" class="ion-margin-top" (click)="guardarEdicion()">
+          Guardar
+        </ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

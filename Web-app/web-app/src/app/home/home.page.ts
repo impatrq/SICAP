@@ -55,6 +55,11 @@ export class HomePage implements OnInit, OnDestroy {
   private lastSeen: Record<string, { id: number; ts: number }> = {};
   private STORAGE_KEY = 'sicap_ui_estado';
 
+  editOpen = false;
+  modeloEdicion: { id: number|null; nombre: string; categoria: 'persona'|'insumo' } = {
+    id: null, nombre: '', categoria: 'insumo'
+  };
+
   constructor(
     private http: HttpClient,
     private alertCtrl: AlertController,
@@ -63,6 +68,12 @@ export class HomePage implements OnInit, OnDestroy {
     this.route.paramMap.subscribe(p => {
       this.panolId = +(p.get('panolId') || 0) || undefined;
     });
+  }
+
+  friendlyCategoria(cat: string | null | undefined): string {
+    const v = (cat || 'insumo').toLowerCase();
+    return v === 'persona' ? 'Persona' : 'Insumo';
+  
   }
 
   private saveState() {
@@ -141,70 +152,56 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
 
-  async abrirEdicion(reg: Registro) {
-    const alert = await this.alertCtrl.create({
-      header: 'Editar Tag',
-      inputs: [
-        {
-          name: 'nombre',
-          type: 'text',
-          value: reg.nombre,
-          placeholder: 'Nombre a la persona o al insumo'
-        },
-        {
-          name: 'categoria',
-          type: 'text',
-          value: reg.categoria || '',
-          placeholder: 'Categoría correspondiente'
-        }
-      ],
-      buttons: [
-        { text: 'Cancelar', role: 'cancel' },
-        {
-          text: 'Guardar',
-          handler: (data) => {
-            this.editarTag(reg, data.nombre, data.categoria);
-          }
-        }
-      ],
-    });
-    await alert.present();
-  }
-
-  editarTag(reg: Registro, nuevoNombre: string, nuevaCategoria: string) {
-    const tag = reg.tag;
-
-    const m: TagMeta = this.tagMeta[tag] ?? {
-      lastTs: this.ts(reg),
-      lastId: reg.id,
-      estado: this.tagsEstado[tag] ?? 'taller'
+  abrirEdicion(reg: Registro) {
+    this.modeloEdicion = {
+      id: reg.id,
+      nombre: reg.nombre || '',
+      categoria: (reg.categoria as any) === 'persona' ? 'persona' : 'insumo'
     };
-    m.nombre    = (nuevoNombre ?? '').trim() || undefined;
-    m.categoria = (nuevaCategoria ?? '').trim() || null;
-    this.tagMeta[tag] = m;
-
-    const aplicar = (x: Registro) =>
-      x.tag === tag ? { ...x, nombre: m.nombre, categoria: m.categoria } : x;
-
-    this.tagsTaller = this.tagsTaller.map(aplicar);
-    this.tagsFuera  = this.tagsFuera.map(aplicar);
-    this.registros  = this.registros.map(aplicar);
-
-    this.saveState();
-
-    const url = `${this.API_EDIT}/${reg.id}/editar/`;
-    this.http.put(url, { nombre: m.nombre, categoria: m.categoria }).subscribe({
-      next: () => {},
-      error: (err) => { console.error(err); alert('No se pudo guardar el cambio'); }
-    });
+    this.editOpen = true;
   }
-  
-  cambiarCategoria(reg: any, categoria: 'persona'|'objeto') {
-  const url = `/api/v1/register/tag/${reg.id}/editar/`; // ajustá al path real
-  this.http.put(url, { categoria }).subscribe({
-    next: () => reg.categoria = categoria,
-    error: err => console.error('No se pudo actualizar categoría', err)
-  });
+
+  guardarEdicion() {
+    if (this.modeloEdicion.id == null) return;
+    const id = this.modeloEdicion.id;
+    const payload = {
+      nombre: this.modeloEdicion.nombre,
+      categoria: this.modeloEdicion.categoria 
+    };
+    const url = `${this.API_EDIT}/${id}/editar/`;
+
+    this.http.put(url, payload).subscribe({
+      next: () => {
+        const actualizar = (arr: Registro[]) => {
+          const i = arr?.findIndex(x => x.id === id);
+          if (i >= 0) {
+            arr[i] = {
+              ...arr[i],
+              nombre: this.modeloEdicion.nombre,
+              categoria: this.modeloEdicion.categoria
+            };
+          }
+        };
+        actualizar(this.registros);
+        actualizar(this.tagsTaller);
+        actualizar(this.tagsFuera);
+
+        const tagEntry = [...this.registros, ...this.tagsTaller, ...this.tagsFuera].find(x => x.id === id);
+        if (tagEntry) {
+          const t = tagEntry.tag;
+          const m = this.tagMeta[t] ?? { lastTs: this.ts(tagEntry), lastId: id, estado: this.tagsEstado[t] ?? 'taller' };
+          m.nombre = this.modeloEdicion.nombre || undefined;
+          m.categoria = this.modeloEdicion.categoria || null;
+          this.tagMeta[t] = m;
+          this.saveState();
+        }
+
+        this.editOpen = false;
+      },
+      error: (err) => {
+        console.error('No se pudo guardar', err);
+      }
+    });
 }
 
 

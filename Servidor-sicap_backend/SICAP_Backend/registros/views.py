@@ -39,7 +39,7 @@ def editar_tag(request, id):
 
         if 'categoria' in data:
             categoria =str(data['categoria']).lower().strip()
-            if categoria not in ['perosona','insumo']:
+            if categoria not in ['persona','insumo']:
              return JsonResponse({
                   'error': 'valor de categoría inválido. Debe ser "persona" o "insumo".'
              }, status =400)
