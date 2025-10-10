@@ -116,8 +116,18 @@
       <ion-col><b>Editar</b></ion-col>
     </ion-row>
     <ion-row *ngFor="let reg of tagsUnicos; trackBy: trackById">
-      <ion-col>{{ reg.nombre || '-' }}</ion-col>
+      <ion-col>
+        <ion-select
+            interface="popover"
+            [value]="(reg.categoria || 'insumo') | lowercase"
+            (ionChange)="cambiarCategoria(reg, $event.detail.value)">
+            <ion-select-option value="persona">Persona</ion-select-option>
+            <ion-select-option value="objeto">Insumo</ion-select-option>
+          </ion-select>
+      </ion-col>
+
       <ion-col>{{ reg.categoria || '-' }}</ion-col>
+
       <ion-col>{{ reg.tag }}</ion-col>
       <ion-col>{{ reg.id }}</ion-col>
       <ion-col>{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
@@ -149,11 +159,23 @@
       <ion-col>{{ reg.nombre }}</ion-col>
       <ion-col>{{ reg.id }}</ion-col>
       <ion-col>{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
+      
+      <ion-col>
+          <ion-select
+            interface="popover"
+            [value]="(reg.categoria || 'objeto') | lowercase"
+            (ionChange)="cambiarCategoria(reg, $event.detail.value)">
+            <ion-select-option value="persona">Persona</ion-select-option>
+            <ion-select-option value="objeto">Objeto</ion-select-option>
+          </ion-select>
+        </ion-col>
+
       <ion-col>
         <ion-button size="small" (click)="abrirEdicion(reg)">
           <ion-icon name="create-outline"></ion-icon>
         </ion-button>
       </ion-col>
+      
     </ion-row>
   </ion-grid>
   <ion-text *ngIf="tagsUnicos.length === 0">No se  han registrado empleados.</ion-text>

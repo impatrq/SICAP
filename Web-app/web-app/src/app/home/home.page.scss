@@ -85,29 +85,29 @@ ion-accordion-group {
 }
 
 //Boton de la basurita
-ion-fab-button {
-  --background: rgba(var(--indigo-rgb), 0.4);
-  --background-activated: rgba(var(--indigo-rgb), 0.55);
-  --color: var(--platinum);
-  border: 1px solid rgba(var(--platinum-rgb), 0.15);
-  backdrop-filter: blur(10px) saturate(130%);
-  -webkit-backdrop-filter: blur(10px) saturate(130%);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+// ion-fab-button {
+//   --background: rgba(var(--indigo-rgb), 0.4);
+//   --background-activated: rgba(var(--indigo-rgb), 0.55);
+//   --color: var(--platinum);
+//   border: 1px solid rgba(var(--platinum-rgb), 0.15);
+//   backdrop-filter: blur(10px) saturate(130%);
+//   -webkit-backdrop-filter: blur(10px) saturate(130%);
+//   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+//   transition: transform 0.2s ease, box-shadow 0.2s ease;
+// }
 
-ion-fab-button:hover {
-  transform: scale(1.1);
-  --background: rgba(var(--indigo-rgb, 40,75,99), 0.9);
-  --background-activated: rgba(var(--indigo-rgb, 40,75,99), 1);
-  --color: var(--platinum);
-  border: 1px solid rgba(var(--platinum-rgb, 220,220,221), 0.18);
-  box-shadow: 0 12px 30px rgba(40,75,99,.55), 0 0 0 5px rgba(40,75,99,.25);
-}
+// ion-fab-button:hover {
+//   transform: scale(1.1);
+//   --background: rgba(var(--indigo-rgb, 40,75,99), 0.9);
+//   --background-activated: rgba(var(--indigo-rgb, 40,75,99), 1);
+//   --color: var(--platinum);
+//   border: 1px solid rgba(var(--platinum-rgb, 220,220,221), 0.18);
+//   box-shadow: 0 12px 30px rgba(40,75,99,.55), 0 0 0 5px rgba(40,75,99,.25);
+// }
 
-ion-fab-button ion-icon {
-  font-size: 1.3rem;
-}
+// ion-fab-button ion-icon {
+//   font-size: 1.3rem;
+// }
 
 //Toolbar 
 .vertical-toolbar {

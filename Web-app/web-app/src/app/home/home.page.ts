@@ -198,6 +198,14 @@ export class HomePage implements OnInit, OnDestroy {
       error: (err) => { console.error(err); alert('No se pudo guardar el cambio'); }
     });
   }
+  
+  cambiarCategoria(reg: any, categoria: 'persona'|'objeto') {
+  const url = `/api/v1/register/tag/${reg.id}/editar/`; // ajustá al path real
+  this.http.put(url, { categoria }).subscribe({
+    next: () => reg.categoria = categoria,
+    error: err => console.error('No se pudo actualizar categoría', err)
+  });
+}
 
 
   ngOnInit() {
