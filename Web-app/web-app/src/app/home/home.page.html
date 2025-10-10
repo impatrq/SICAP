@@ -115,11 +115,9 @@
       <ion-col><b>Última detección</b></ion-col>
       <ion-col><b>Editar</b></ion-col>
     </ion-row>
-    <ion-row *ngFor="let reg of tagsUnicos; trackBy: trackById">
+    <ion-row *ngFor="let reg of inventarioItems; trackBy: trackById">
+      <ion-col>{{ reg.nombre || '-' }}</ion-col>
       <ion-col>{{ friendlyCategoria(reg.categoria) }}</ion-col>
-
-      <ion-col>{{ reg.categoria || '-' }}</ion-col>
-
       <ion-col>{{ reg.tag }}</ion-col>
       <ion-col>{{ reg.id }}</ion-col>
       <ion-col>{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
@@ -148,12 +146,11 @@
       <ion-col><b>Categoria</b></ion-col>
       <ion-col><b>Editar</b></ion-col>
     </ion-row>
-    <ion-row *ngFor="let reg of tagsUnicos">
-      <ion-col>{{ reg.nombre }}</ion-col>
+    <ion-row *ngFor="let reg of empleadosItems; trackBy: trackById">
+      <ion-col>{{ reg.nombre || reg.tag }}</ion-col>
       <ion-col>{{ reg.id }}</ion-col>
       <ion-col>{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
       <ion-col>{{ friendlyCategoria(reg.categoria) }}</ion-col>
-
       <ion-col>
         <ion-button size="small" (click)="abrirEdicion(reg)">
           <ion-icon name="create-outline"></ion-icon>

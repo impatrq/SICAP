@@ -56,9 +56,30 @@ export class HomePage implements OnInit, OnDestroy {
   private STORAGE_KEY = 'sicap_ui_estado';
 
   editOpen = false;
-  modeloEdicion: { id: number|null; nombre: string; categoria: 'persona'|'insumo' } = {
-    id: null, nombre: '', categoria: 'insumo'
+  modeloEdicion: { id: number|null; nombre: string; categoria: 'persona'|'insumo'|'' } = {
+    id: null, nombre: '', categoria: ''
   };
+
+  setCategoria(reg: Registro, categoria: 'persona'|'insumo'|null) {
+  const url = `${this.API_EDIT}/${reg.id}/editar/`;
+  this.http.put(url, { categoria }).subscribe({
+    next: () => {
+      const aplicar = (arr: Registro[]) => {
+        const i = arr.findIndex(x => x.id === reg.id);
+        if (i >= 0) arr[i] = { ...arr[i], categoria: categoria as any };
+      };
+      aplicar(this.registros);
+      aplicar(this.tagsTaller);
+      aplicar(this.tagsFuera);
+
+      const t = reg.tag;
+      const m = this.tagMeta[t] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[t] ?? 'taller' };
+      m.categoria = categoria as any;
+      this.tagMeta[t] = m;
+      this.saveState();
+    }
+  });
+}
 
   constructor(
     private http: HttpClient,
@@ -71,9 +92,9 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   friendlyCategoria(cat: string | null | undefined): string {
-    const v = (cat || 'insumo').toLowerCase();
-    return v === 'persona' ? 'Persona' : 'Insumo';
-  
+  if (!cat) return '—';
+  const v = (cat || '').toLowerCase();
+  return v === 'persona' ? 'Persona' : v === 'insumo' ? 'Insumo' : '—';
   }
 
   private saveState() {
@@ -156,52 +177,53 @@ export class HomePage implements OnInit, OnDestroy {
     this.modeloEdicion = {
       id: reg.id,
       nombre: reg.nombre || '',
-      categoria: (reg.categoria as any) === 'persona' ? 'persona' : 'insumo'
+      categoria: reg.categoria === 'persona' ? 'persona' : reg.categoria === 'insumo' ? 'insumo' : ''
     };
     this.editOpen = true;
   }
 
   guardarEdicion() {
-    if (this.modeloEdicion.id == null) return;
-    const id = this.modeloEdicion.id;
-    const payload = {
-      nombre: this.modeloEdicion.nombre,
-      categoria: this.modeloEdicion.categoria 
-    };
-    const url = `${this.API_EDIT}/${id}/editar/`;
+  if (this.modeloEdicion.id == null) return;
+  const id = this.modeloEdicion.id;
 
-    this.http.put(url, payload).subscribe({
-      next: () => {
-        const actualizar = (arr: Registro[]) => {
-          const i = arr?.findIndex(x => x.id === id);
-          if (i >= 0) {
-            arr[i] = {
-              ...arr[i],
-              nombre: this.modeloEdicion.nombre,
-              categoria: this.modeloEdicion.categoria
-            };
-          }
-        };
-        actualizar(this.registros);
-        actualizar(this.tagsTaller);
-        actualizar(this.tagsFuera);
+  const categoriaPayload = this.modeloEdicion.categoria === '' ? null : this.modeloEdicion.categoria;
 
-        const tagEntry = [...this.registros, ...this.tagsTaller, ...this.tagsFuera].find(x => x.id === id);
-        if (tagEntry) {
-          const t = tagEntry.tag;
-          const m = this.tagMeta[t] ?? { lastTs: this.ts(tagEntry), lastId: id, estado: this.tagsEstado[t] ?? 'taller' };
-          m.nombre = this.modeloEdicion.nombre || undefined;
-          m.categoria = this.modeloEdicion.categoria || null;
-          this.tagMeta[t] = m;
-          this.saveState();
+  const payload = {
+    nombre: this.modeloEdicion.nombre,
+    categoria: categoriaPayload
+  };
+  const url = `${this.API_EDIT}/${id}/editar/`;
+
+  this.http.put(url, payload).subscribe({
+    next: () => {
+      const aplicar = (arr: Registro[]) => {
+        const i = arr.findIndex(x => x.id === id);
+        if (i >= 0) {
+          arr[i] = {
+            ...arr[i],
+            nombre: this.modeloEdicion.nombre,
+            categoria: categoriaPayload as any
+          };
         }
+      };
+      aplicar(this.registros);
+      aplicar(this.tagsTaller);
+      aplicar(this.tagsFuera);
 
-        this.editOpen = false;
-      },
-      error: (err) => {
-        console.error('No se pudo guardar', err);
+      const row = [...this.registros, ...this.tagsTaller, ...this.tagsFuera].find(x => x.id === id);
+      if (row) {
+        const t = row.tag;
+        const m = this.tagMeta[t] ?? { lastTs: this.ts(row), lastId: id, estado: this.tagsEstado[t] ?? 'taller' };
+        m.nombre = this.modeloEdicion.nombre || undefined;
+        m.categoria = (categoriaPayload ?? null);
+        this.tagMeta[t] = m;
+        this.saveState();
       }
-    });
+
+      this.editOpen = false;
+    },
+    error: (err) => console.error('No se pudo guardar', err)
+  });
 }
 
 
@@ -307,6 +329,17 @@ export class HomePage implements OnInit, OnDestroy {
     lista.sort((a, b) => this.ts(b) - this.ts(a) || (b.id - a.id));
     return lista;
   }
+
+  get inventarioItems(): Registro[] {
+  return this.tagsUnicos.filter(r => (r.categoria || '').toLowerCase() === 'insumo');
+  }
+  get empleadosItems(): Registro[] {
+    return this.tagsUnicos.filter(r => (r.categoria || '').toLowerCase() === 'persona');
+  }
+  get sinCategoriaItems(): Registro[] {
+    return this.tagsUnicos.filter(r => !r.categoria); 
+  }
+
   limpiarTags() {
     this.tagsTaller = [];
     this.tagsFuera  = [];
