@@ -86,31 +86,65 @@ def listar_tags(request):
 @permission_classes([AllowAny])
 def assignments_auto(request):
     data = request.data or {}
-    ptag  = str(data.get('persona_tag', '')).strip()
-    pnom  = (data.get('persona_nombre') or '').strip() or None
+    persona_tag = str(data.get('persona_tag', '')).strip()
+    persona_nombre = (data.get('persona_nombre') or '').strip() or None
     items = data.get('items') or []
 
-    if not ptag or not items:
+    if not persona_tag or not items:
         return Response({'error': 'persona_tag e items son obligatorios'}, status=400)
 
-    creadas = []
+    asignados, devueltos = []
+
     for it in items:
-        t = str((it or {}).get('tag', '')).strip()
-        if not t:
-            continue
-        nom = ((it or {}).get('nombre') or '').strip() or None
-
-        if Asignacion.objects.filter(persona_tag=ptag, item_tag=t, activo=True).exists():
+        item_tag = str((it or {}).get('tag', '')).strip()
+        item_nombre = ((it or {}).get('nombre') or '').strip() or None
+        if not item_tag:
             continue
 
-        a = Asignacion.objects.create(
-            persona_tag=ptag, persona_nombre=pnom,
-            item_tag=t, item_nombre=nom
-        )
-        creadas.append(a)
+        
+        a = Asignacion.objects.filter(persona_tag=persona_tag, item_tag=item_tag, activo=True).first()
 
-    ser = AsignacionSerializer(creadas, many=True)
-    return Response(ser.data, status=201)
+        if a:
+            
+            a.activo = False
+            a.devuelto_en = timezone.now()
+            a.save(update_fields=['activo', 'devuelto_en'])
+            devueltos.append({
+                'id': a.id,
+                'item_tag': item_tag,
+                'item_nombre': item_nombre or a.item_nombre,
+                'devuelto_en': a.devuelto_en,
+            })
+        else:
+            Asignacion.objects.filter(item_tag=item_tag, activo=True).update(
+                activo=False,
+                devuelto_en=timezone.now()
+            )
+
+            a = Asignacion.objects.create(
+                persona_tag=persona_tag,
+                persona_nombre=persona_nombre,
+                item_tag=item_tag,
+                item_nombre=item_nombre,
+                asignado_en=timezone.now(),
+                activo=True
+            )
+            asignados.append({
+                'id': a.id,
+                'item_tag': item_tag,
+                'item_nombre': item_nombre,
+                'asignado_en': a.asignado_en,
+            })
+
+    return Response({
+        'status': 'ok',
+        'persona_tag': persona_tag,
+        'persona_nombre': persona_nombre,
+        'asignados': asignados,
+        'devueltos': devueltos,
+        'total_asignados': len(asignados),
+        'total_devueltos': len(devueltos),
+    }, status=200)
 
 
 @api_view(['GET'])
