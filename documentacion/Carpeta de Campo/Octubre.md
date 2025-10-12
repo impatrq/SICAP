@@ -43,3 +43,9 @@ Durante la jornada realicé cambios en el backend con el objetivo de optimizar l
 Además, corregí la lógica de los pasajes en la interfaz visual, ya que los datos no se transferían correctamente entre los listados y, en algunos casos, el campo de nombre se borraba al mover un registro de un lado al otro. Con las modificaciones aplicadas, la comunicación entre la interfaz y el backend quedó más estable y funcional.
 
 <h2> Martes 07/10/25 </h2>
+
+Facu Spagno:
+
+Me dediqué principalmente a los aspectos estéticos de la Web-App, realizando un rediseño visual del Home. Definí una paleta de colores propia para unificar el estilo general de la plataforma y mejorar su presentación.
+
+Durante esta tarea también eliminé el botón destinado a borrar tags, ya que no cumplía una función relevante dentro del flujo del sistema. Con este rediseño, quedó establecido el estilo visual final del Home, logrando una interfaz más moderna, limpia y coherente con la identidad del proyecto.
