@@ -13,3 +13,12 @@ class RegistroTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegistroTag
         fields = ['nombre','categoria','id', 'tag', 'fecha_hora', 'created_at']
+
+class AsignacionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Asignacion
+        fields = [
+            'id', 'persona_tag', 'persona_nombre',
+            'item_tag', 'item_nombre',
+            'asignado_en', 'devuelto_en', 'activo'
+        ]
