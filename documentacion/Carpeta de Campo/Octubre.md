@@ -34,3 +34,12 @@ Se realizaron pruebas de validación tanto desde la API como desde la base de da
 Como mejora adicional, se propuso la incorporación de una nueva columna llamada categoría en el modelo de registros, que podrá editarse de la misma manera que el nombre. Para ello, se planificaron los pasos necesarios para implementar la modificación en futuras jornadas.
 
 Finalmente, se comprobó que el servidor continúa funcionando de manera estable en la Raspberry Pi bajo la gestión de servicios del sistema, lo que asegura que el backend se mantenga en ejecución y se inicie automáticamente tras cada reinicio.
+
+<h2> Lunes 06/10/25 </h2>
+
+Facu Spagno:
+Durante la jornada realicé cambios en el backend con el objetivo de optimizar la gestión de categorías dentro del sistema. Creé un nuevo apartado para categorizar los tags, permitiendo distinguir entre personas e insumos. Anteriormente, la categoría debía escribirse manualmente, lo que generaba inconsistencias; por eso, implementé un sistema con opciones predefinidas que facilita la selección y evita errores.
+
+Además, corregí la lógica de los pasajes en la interfaz visual, ya que los datos no se transferían correctamente entre los listados y, en algunos casos, el campo de nombre se borraba al mover un registro de un lado al otro. Con las modificaciones aplicadas, la comunicación entre la interfaz y el backend quedó más estable y funcional.
+
+<h2> Martes 07/10/25 </h2>
