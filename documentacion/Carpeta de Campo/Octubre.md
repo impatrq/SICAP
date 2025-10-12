@@ -49,3 +49,11 @@ Facu Spagno:
 Me dediqué principalmente a los aspectos estéticos de la Web-App, realizando un rediseño visual del Home. Definí una paleta de colores propia para unificar el estilo general de la plataforma y mejorar su presentación.
 
 Durante esta tarea también eliminé el botón destinado a borrar tags, ya que no cumplía una función relevante dentro del flujo del sistema. Con este rediseño, quedó establecido el estilo visual final del Home, logrando una interfaz más moderna, limpia y coherente con la identidad del proyecto.
+
+<h2> Miercoles 08/10/25 </h2>
+
+Facu Spagno:
+
+Durante la jornada me dediqué a la elaboración de la documentación técnica del proyecto, en el marco de la presentación requerida por las categorías de Prototipos y SysApp del evento ONIET.
+
+El trabajo consistió en la creación de informes descriptivos detallados sobre los componentes de software y hardware del sistema S.I.C.A.P., abarcando su funcionamiento, arquitectura y objetivos principales. El propósito fue presentar una documentación completa, clara y profesional que refleje la solidez técnica del proyecto y aumente las posibilidades de obtener un buen desempeño en la instancia de Córdoba.
