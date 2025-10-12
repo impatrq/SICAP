@@ -23,6 +23,17 @@ interface TagMeta {
   estado: EstadoTag;
 }
 
+type Asignacion = {
+  id: number;
+  persona_tag: string;
+  persona_nombre?: string | null;
+  item_tag: string;
+  item_nombre?: string | null;
+  asignado_en: string;
+  devuelto_en?: string | null;
+  activo: boolean;
+};
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -51,6 +62,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   private API = 'http://192.168.111.218:5000/api/v1/register/tag/list/';
   private API_EDIT = 'http://192.168.111.218:5000/api/v1/register/tag';
+  private API_ASSIGN = 'http://192.168.111.218:5000/api/v1/assignments';
 
   private tagMeta: Record<string, TagMeta> = {};
   private lastSeen: Record<string, { id: number; ts: number }> = {};
@@ -67,6 +79,10 @@ export class HomePage implements OnInit, OnDestroy {
     return '';
   }
 
+  expanded: Set<string> = new Set();
+  asigCache: Record<string, Asignacion[]> = {};
+  asigLoading: Record<string, boolean> = {};
+  asigError: Record<string, string | undefined> = {};
 
   isPersona(cat: string | null | undefined)      { return this.normCat(cat) === 'persona'; }
   isInsumo(cat: string | null | undefined)       { return this.normCat(cat) === 'insumo'; }
@@ -112,6 +128,9 @@ export class HomePage implements OnInit, OnDestroy {
       this.saveState();
 
       if (categoria === 'persona') this.seccionActiva = 'Empleados';
+      if (categoria === 'persona' && this.expanded.has(reg.tag)) {
+        this.cargarAsignacionesPersona(reg.tag);
+      }
       if (categoria === 'insumo')  this.seccionActiva = 'Inventario';
     },
     error: (e) => console.error(e)
@@ -196,6 +215,49 @@ onAsignarCategoria(reg: Registro, ev: any) {
   });
 }
 
+  private cargarAsignacionesPersona(tag: string) {
+  this.asigLoading[tag] = true;
+  this.asigError[tag] = undefined;
+
+  this.http
+    .get<Asignacion[]>(`${this.API_ASSIGN}/?activo=1&persona_tag=${encodeURIComponent(tag)}`)
+    .subscribe({
+      next: rows => {
+        this.asigCache[tag] = rows || [];
+        this.asigLoading[tag] = false;
+      },
+      error: err => {
+        console.error(err);
+        this.asigError[tag] = 'No pude cargar asignaciones';
+        this.asigLoading[tag] = false;
+      },
+    });
+}
+
+toggleAsignados(reg: Registro, ev?: Event) {
+  ev?.stopPropagation();
+  const tag = reg.tag;
+
+  if (this.expanded.has(tag)) {
+    this.expanded.delete(tag);
+  } else {
+    this.expanded.add(tag);
+    if (!this.asigCache[tag]) this.cargarAsignacionesPersona(tag);
+  }
+}
+
+devolverAsignacion(a: Asignacion) {
+  this.http.put<Asignacion>(`${this.API_ASSIGN}/${a.id}/devolver/`, {}).subscribe({
+    next: () => {
+      // Quitamos del cache local
+      const list = this.asigCache[a.persona_tag] || [];
+      this.asigCache[a.persona_tag] = list.filter(x => x.id !== a.id);
+      this.ok('Devuelto');
+    },
+    error: e => console.error('No se pudo devolver', e),
+  });
+}
+
   private ts(r: Registro): number {
     const f = r.fecha_hora || r.created_at;
     return f ? new Date(f).getTime() : 0;
@@ -271,7 +333,7 @@ onAsignarCategoria(reg: Registro, ev: any) {
     categoria: categoriaPayload
   }).subscribe({
     next: () => {
-      
+
       const row = [...this.registros, ...this.tagsTaller, ...this.tagsFuera].find(x => x.id === id);
       const tag = row?.tag;
 
@@ -293,6 +355,11 @@ onAsignarCategoria(reg: Registro, ev: any) {
       else                                     this.seccionActiva = 'Personalización';
 
       this.editOpen = false;
+
+      const persona = [...this.registros, ...this.tagsTaller, ...this.tagsFuera].find(x => x.id === id);
+      if (persona && this.isPersona(categoriaPayload) && this.expanded.has(persona.tag)) {
+        this.cargarAsignacionesPersona(persona.tag);
+    }
     },
     error: (err) => console.error('No se pudo guardar', err)
   });

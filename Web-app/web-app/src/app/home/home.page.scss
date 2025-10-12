@@ -382,6 +382,29 @@ ion-select-popover ion-item[button]:hover {
   text-underline-offset: 2px; 
 }
 
+.asig-panel {
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--indigo-rgb, 40,75,99), .45),
+    rgba(var(--paynes-rgb, 76,92,104), .45)
+  );
+  border: 1px solid rgba(var(--platinum-rgb, 220,220,221), .18);
+  backdrop-filter: blur(6px) saturate(125%);
+  -webkit-backdrop-filter: blur(6px) saturate(125%);
+  color: var(--platinum);
+}
+
+.subrow {
+  width: 100%;
+}
+
+.ml-1 { 
+  margin-left: .25rem; 
+}
+
 @media (max-width: 992px) {
   .visual-content { 
     margin-left: 0; 
