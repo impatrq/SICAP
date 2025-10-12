@@ -1,14 +1,19 @@
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
+from rest_framework.decorators import api_view, permission_classes
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.db.models import F
 from django.utils.timezone import localtime
-from rest_framework import viewsets, mixins
+from django.utils import timezone
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import viewsets, mixins, status
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
-from .models import RegistroTag, Panol
+from .models import RegistroTag, Panol, Asignacion
 from django.shortcuts import get_object_or_404
-from .serializer import PanolSerializer, RegistroTagSerializer
+from .serializer import PanolSerializer, RegistroTagSerializer, AsignacionSerializer
 import json
 
 @csrf_exempt
@@ -75,6 +80,65 @@ def listar_tags(request):
         del r["fecha_hora"]
 
     return JsonResponse(rows, safe=False)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def assignments_auto(request):
+    data = request.data or {}
+    ptag  = str(data.get('persona_tag', '')).strip()
+    pnom  = (data.get('persona_nombre') or '').strip() or None
+    items = data.get('items') or []
+
+    if not ptag or not items:
+        return Response({'error': 'persona_tag e items son obligatorios'}, status=400)
+
+    creadas = []
+    for it in items:
+        t = str((it or {}).get('tag', '')).strip()
+        if not t:
+            continue
+        nom = ((it or {}).get('nombre') or '').strip() or None
+
+        if Asignacion.objects.filter(persona_tag=ptag, item_tag=t, activo=True).exists():
+            continue
+
+        a = Asignacion.objects.create(
+            persona_tag=ptag, persona_nombre=pnom,
+            item_tag=t, item_nombre=nom
+        )
+        creadas.append(a)
+
+    ser = AsignacionSerializer(creadas, many=True)
+    return Response(ser.data, status=201)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def assignments_list(request):
+    qs = Asignacion.objects.all().order_by('-asignado_en')
+    activo = request.GET.get('activo')
+    if activo is not None:
+        qs = qs.filter(activo=(str(activo).lower() in ['1','true','t','yes','y']))
+    persona_tag = request.GET.get('persona_tag')
+    if persona_tag:
+        qs = qs.filter(persona_tag=persona_tag)
+    ser = AsignacionSerializer(qs, many=True)
+    return Response(ser.data)
+
+
+@api_view(['PUT'])
+@permission_classes([AllowAny])
+def assignments_devolver(request, pk: int):
+    a = Asignacion.objects.filter(pk=pk, activo=True).first()
+    if not a:
+        return Response({'error': 'asignación no encontrada o ya devuelta'}, status=404)
+    a.activo = False
+    a.devuelto_en = timezone.now()
+    a.save()
+    return Response(AsignacionSerializer(a).data)
+
+
 
 class PanolViewSet(ModelViewSet):
     queryset = Panol.objects.all().order_by('nombre')
