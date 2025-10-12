@@ -57,3 +57,15 @@ Facu Spagno:
 Durante la jornada me dediqué a la elaboración de la documentación técnica del proyecto, en el marco de la presentación requerida por las categorías de Prototipos y SysApp del evento ONIET.
 
 El trabajo consistió en la creación de informes descriptivos detallados sobre los componentes de software y hardware del sistema S.I.C.A.P., abarcando su funcionamiento, arquitectura y objetivos principales. El propósito fue presentar una documentación completa, clara y profesional que refleje la solidez técnica del proyecto y aumente las posibilidades de obtener un buen desempeño en la instancia de Córdoba.
+
+<h2> Viernes 10/10/25 </h2>
+
+Facu Spagno:
+
+Durante la jornada me dediqué al desarrollo completo del apartado de personalización, el cual hasta el momento se encontraba vacío debido a que no habíamos finalizado su implementación.
+
+Creé este módulo desde cero, incluyendo la tabla correspondiente y la lógica de funcionamiento. El objetivo fue que en este apartado se agrupen todos los tags sin categoría asignada, de modo que el usuario pueda ingresar, asignarles su nombre y categoría, y definir su destino dentro del sistema.
+
+Una vez que se asigna la categoría, el sistema filtra automáticamente los registros y los redirige a su sección correspondiente: si el tag pertenece a una persona, se envía al módulo de Empleados; si corresponde a un insumo, pasa al Inventario.
+
+Para lograrlo, implementé un filtro de categorización que gestiona el traspaso dinámico entre secciones y asegura que cada tag quede correctamente clasificado. Con esta función finalizada, el Home y las metas de categorización quedaron completamente operativas, consolidando una parte clave del flujo de trabajo del sistema.
