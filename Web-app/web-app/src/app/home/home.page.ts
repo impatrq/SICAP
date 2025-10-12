@@ -1,6 +1,7 @@
 import { AlertController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ToastController } from '@ionic/angular';
 import { interval, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
@@ -54,11 +55,50 @@ export class HomePage implements OnInit, OnDestroy {
   private tagMeta: Record<string, TagMeta> = {};
   private lastSeen: Record<string, { id: number; ts: number }> = {};
   private STORAGE_KEY = 'sicap_ui_estado';
+  
+  private catKey(cat: string | null | undefined): string {
+  return (cat ?? '').toString().trim().toLowerCase();
+  }
+
+  private normCat(cat: string | null | undefined): ''|'persona'|'insumo' {
+    const k = (cat ?? '').toString().trim().toLowerCase();
+    if (k === 'objeto') return 'insumo';
+    if (k === 'persona' || k === 'insumo') return k;
+    return '';
+  }
+
+
+  isPersona(cat: string | null | undefined)      { return this.normCat(cat) === 'persona'; }
+  isInsumo(cat: string | null | undefined)       { return this.normCat(cat) === 'insumo'; }
+  isSinCategoria(cat: string | null | undefined) { return this.normCat(cat) === ''; }
 
   editOpen = false;
   modeloEdicion: { id: number|null; nombre: string; categoria: 'persona'|'insumo'|'' } = {
     id: null, nombre: '', categoria: ''
   };
+
+  constructor(
+    private toast: ToastController,
+    private http: HttpClient,
+    private alertCtrl: AlertController,
+    private route: ActivatedRoute
+  ) {
+    this.route.paramMap.subscribe(p => {
+      this.panolId = +(p.get('panolId') || 0) || undefined;
+    });
+  }
+
+  friendlyCategoria(cat: string | null | undefined): string {
+    const n = this.normCat(cat);
+    if (n === 'persona') return 'Persona';
+    if (n === 'insumo')  return 'Insumo';
+    return '—';
+  }
+  
+  get inventarioItems()   { return this.tagsUnicos.filter(r => this.isInsumo(r.categoria)); }
+  get empleadosItems()    { return this.tagsUnicos.filter(r => this.isPersona(r.categoria)); }
+  get sinCategoriaItems() { return this.tagsUnicos.filter(r => this.isSinCategoria(r.categoria)); }
+
 
   setCategoria(reg: Registro, categoria: 'persona'|'insumo'|null) {
   const url = `${this.API_EDIT}/${reg.id}/editar/`;
@@ -72,30 +112,25 @@ export class HomePage implements OnInit, OnDestroy {
       aplicar(this.tagsTaller);
       aplicar(this.tagsFuera);
 
+      // persistencia opcional
       const t = reg.tag;
       const m = this.tagMeta[t] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[t] ?? 'taller' };
       m.categoria = categoria as any;
       this.tagMeta[t] = m;
       this.saveState();
-    }
+
+      // (Opcional) cambiar de pestaña:
+      if (categoria === 'persona') this.seccionActiva = 'Empleados';
+      if (categoria === 'insumo')  this.seccionActiva = 'Inventario';
+    },
+    error: (e) => console.error(e)
   });
 }
 
-  constructor(
-    private http: HttpClient,
-    private alertCtrl: AlertController,
-    private route: ActivatedRoute
-  ) {
-    this.route.paramMap.subscribe(p => {
-      this.panolId = +(p.get('panolId') || 0) || undefined;
-    });
-  }
-
-  friendlyCategoria(cat: string | null | undefined): string {
-  if (!cat) return '—';
-  const v = (cat || '').toLowerCase();
-  return v === 'persona' ? 'Persona' : v === 'insumo' ? 'Insumo' : '—';
-  }
+onAsignarCategoria(reg: Registro, ev: any) {
+  const value = (ev?.detail?.value ?? '').toString();
+  this.setCategoria(reg, value);
+}
 
   private saveState() {
     const snapshot = {
@@ -141,14 +176,21 @@ export class HomePage implements OnInit, OnDestroy {
     return f ? new Date(f).getTime() : 0;
   }
 
+  private async ok(msg: string) {
+  const toast = await this.toast.create({
+    message: msg,
+    duration: 1800,
+    color: 'success',
+    position: 'bottom'
+  });
+  await toast.present();
+}
+
   private aplicarMeta(r: Registro): Registro {
     const m = this.tagMeta[r.tag];
-    if (!m) return r;
-    return {
-      ...r,
-      nombre: r.nombre ?? m.nombre ?? undefined,
-      categoria: r.categoria ?? m.categoria ?? null,
-    };
+    const nombre = r.nombre ?? m?.nombre ?? undefined;
+    const catNorm = this.normCat(r.categoria ?? m?.categoria ?? null) || null;
+    return { ...r, nombre, categoria: catNorm };
   }
 
   private esMasNuevo(nuevo: Registro): boolean {
@@ -173,11 +215,12 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
 
-  abrirEdicion(reg: Registro) {
+  abrirEdicion(reg: Registro, ev?: Event) {
+    ev?.stopPropagation(); 
     this.modeloEdicion = {
       id: reg.id,
       nombre: reg.nombre || '',
-      categoria: reg.categoria === 'persona' ? 'persona' : reg.categoria === 'insumo' ? 'insumo' : ''
+      categoria: this.normCat(reg.categoria)
     };
     this.editOpen = true;
   }
@@ -185,26 +228,18 @@ export class HomePage implements OnInit, OnDestroy {
   guardarEdicion() {
   if (this.modeloEdicion.id == null) return;
   const id = this.modeloEdicion.id;
-
   const categoriaPayload = this.modeloEdicion.categoria === '' ? null : this.modeloEdicion.categoria;
 
-  const payload = {
+  const url = `${this.API_EDIT}/${id}/editar/`;
+  this.http.put(url, {
     nombre: this.modeloEdicion.nombre,
     categoria: categoriaPayload
-  };
-  const url = `${this.API_EDIT}/${id}/editar/`;
-
-  this.http.put(url, payload).subscribe({
+  }).subscribe({
     next: () => {
+
       const aplicar = (arr: Registro[]) => {
         const i = arr.findIndex(x => x.id === id);
-        if (i >= 0) {
-          arr[i] = {
-            ...arr[i],
-            nombre: this.modeloEdicion.nombre,
-            categoria: categoriaPayload as any
-          };
-        }
+        if (i >= 0) arr[i] = { ...arr[i], nombre: this.modeloEdicion.nombre, categoria: categoriaPayload as any };
       };
       aplicar(this.registros);
       aplicar(this.tagsTaller);
@@ -220,12 +255,15 @@ export class HomePage implements OnInit, OnDestroy {
         this.saveState();
       }
 
+      if (categoriaPayload === 'persona') this.seccionActiva = 'Empleados';
+      else if (categoriaPayload === 'insumo') this.seccionActiva = 'Inventario';
+      else this.seccionActiva = 'Personalización';
+
       this.editOpen = false;
     },
     error: (err) => console.error('No se pudo guardar', err)
   });
 }
-
 
   ngOnInit() {
     this.loadState(); 
@@ -328,16 +366,6 @@ export class HomePage implements OnInit, OnDestroy {
     const lista = Object.values(ultimos).map(r => this.aplicarMeta(r));
     lista.sort((a, b) => this.ts(b) - this.ts(a) || (b.id - a.id));
     return lista;
-  }
-
-  get inventarioItems(): Registro[] {
-  return this.tagsUnicos.filter(r => (r.categoria || '').toLowerCase() === 'insumo');
-  }
-  get empleadosItems(): Registro[] {
-    return this.tagsUnicos.filter(r => (r.categoria || '').toLowerCase() === 'persona');
-  }
-  get sinCategoriaItems(): Registro[] {
-    return this.tagsUnicos.filter(r => !r.categoria); 
   }
 
   limpiarTags() {

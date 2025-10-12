@@ -136,10 +136,37 @@ ion-accordion-group {
   pointer-events: auto;
 }
 
+//Modal de Edición
+ion-modal::part(content) {
+  background: linear-gradient(135deg, rgba(var(--indigo-rgb), .90), rgba(var(--paynes-rgb), .90));
+  color: var(--platinum);
+  border: 1px solid rgba(var(--platinum-rgb), .15);
+  box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  backdrop-filter: blur(12px) saturate(140%);
+}
+
+ion-modal ion-item {
+  --background: transparent;
+  --color: var(--platinum);
+  --border-color: rgba(var(--platinum-rgb), .25);
+}
+ion-modal ion-label { 
+  color: var(--platinum); 
+  opacity: .9; 
+}
+
+ion-modal ion-input,
+ion-modal ion-select {
+  --color: var(--platinum);                
+  --placeholder-color: rgba(220,220,221,.6);
+}
+
+ion-modal ion-select::part(icon) { color: var(--platinum); opacity: .9; }
 
 .visual-content {
   margin-left: 220px; 
   padding: 20px;
+  pointer-events: auto;
 }
 
 .header-line {
@@ -232,10 +259,12 @@ ion-grid {
   -webkit-backdrop-filter: blur(6px) saturate(125%);
   margin-top: 16px;
   color: var(--platinum); 
+  pointer-events: auto;
 }
 
 ion-row {
   border-bottom: 1px solid rgba(var(--platinum-rgb), .12);
+  pointer-events: auto;
 }
 
 ion-row:last-child {
@@ -298,6 +327,50 @@ ion-col {
   border: 1px solid rgba(255, 255, 255, 0.06);
   pointer-events: none;
 }
+
+.personalizacion ion-card {
+  background: linear-gradient(135deg, rgba(var(--indigo-rgb), .75), rgba(var(--paynes-rgb), .75));
+  color: var(--platinum);
+  border: 1px solid rgba(var(--platinum-rgb), .18);
+  box-shadow: 0 14px 36px rgba(0,0,0,.35);
+  backdrop-filter: blur(8px) saturate(125%);
+  -webkit-backdrop-filter: blur(8px) saturate(125%);
+}
+
+.personalizacion ion-card-title,
+.personalizacion ion-card-subtitle,
+.personalizacion ion-label,
+.personalizacion ion-text,
+.personalizacion ion-col,
+.personalizacion ion-row:first-child ion-col b {
+  color: var(--platinum) !important;
+  opacity: 1;
+}
+
+.personalizacion ion-row:first-child {
+  background: linear-gradient(180deg, rgba(var(--indigo-rgb), .55), rgba(var(--paynes-rgb), .55));
+  border-bottom: 1px solid rgba(var(--platinum-rgb), .2);
+}
+
+.personalizacion ion-select::part(text) {
+  color: var(--platinum);
+}
+
+ion-select-popover {
+  --background: rgba(var(--indigo-rgb), .90);
+  color: var(--platinum) !important;
+  border: 1px solid rgba(var(--platinum-rgb), .18);
+  backdrop-filter: blur(8px) saturate(130%);
+}
+ion-select-popover ion-item,
+ion-select-popover ion-label {
+  --background: transparent;
+  color: var(--platinum) !important;
+}
+ion-select-popover ion-item[button]:hover {
+  background: rgba(var(--platinum-rgb), .10);
+}
+
 
 @media (max-width: 992px) {
   .visual-content { 
