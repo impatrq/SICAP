@@ -13,9 +13,9 @@ urlpatterns = [
     path('register/tag/', recibir_tag, name= "recibir-tag"),
     path('register/tag/list/', listar_tags, name="listar-tags"),  
     path('register/tag/<int:id>/editar/', editar_tag, name="editar-tag"),
-    path('api/v1/assignments/', assignments_list, name='assignments_list'),
-    path('api/v1/assignments/auto/', assignments_auto, name='assignments_auto'),
-    path('api/v1/assignments/<int:pk>/devolver/', assignments_devolver, name='assignments_devolver'),
+    path('assignments/', assignments_list, name='assignments_list'),
+    path('assignments/auto/', assignments_auto, name='assignments_auto'),
+    path('assignments/<int:pk>/devolver/', assignments_devolver, name='assignments_devolver'),
 ]
 
 urlpatterns += router.urls
