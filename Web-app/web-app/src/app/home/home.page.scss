@@ -362,15 +362,25 @@ ion-select-popover {
   border: 1px solid rgba(var(--platinum-rgb), .18);
   backdrop-filter: blur(8px) saturate(130%);
 }
+
 ion-select-popover ion-item,
 ion-select-popover ion-label {
   --background: transparent;
   color: var(--platinum) !important;
 }
+
 ion-select-popover ion-item[button]:hover {
   background: rgba(var(--platinum-rgb), .10);
 }
 
+.clickeable { 
+  cursor: pointer; 
+}
+
+.clickablee:hover { 
+  text-decoration: underline; 
+  text-underline-offset: 2px; 
+}
 
 @media (max-width: 992px) {
   .visual-content { 

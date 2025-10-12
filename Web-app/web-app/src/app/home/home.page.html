@@ -182,9 +182,9 @@
         </ion-row>
 
         <ion-row *ngFor="let reg of sinCategoriaItems; let i = index; trackBy: trackById">
-          <ion-col size="4">{{ reg.nombre || '-' }}</ion-col>
+          <ion-col size="4" class="clickeable" (click)="editarNombreInline(reg, $event)">{{ reg.nombre || '-' }}</ion-col>
           <ion-col size="3">{{ reg.tag }}</ion-col>
-          <ion-col size="3">{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
+          <ion-col size="3">{{ (reg.fecha_hora || reg.created_at) | date:'shoSrt' }}</ion-col>
           <ion-col size="2">
             <ion-select
               placeholder="Elegir"

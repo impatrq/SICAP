@@ -104,28 +104,36 @@ export class HomePage implements OnInit, OnDestroy {
   const url = `${this.API_EDIT}/${reg.id}/editar/`;
   this.http.put(url, { categoria }).subscribe({
     next: () => {
-      const aplicar = (arr: Registro[]) => {
-        const i = arr.findIndex(x => x.id === reg.id);
-        if (i >= 0) arr[i] = { ...arr[i], categoria: categoria as any };
-      };
-      aplicar(this.registros);
-      aplicar(this.tagsTaller);
-      aplicar(this.tagsFuera);
+      this.patchEverywhereByTag(reg.tag, { categoria: categoria as any });
 
-      // persistencia opcional
-      const t = reg.tag;
-      const m = this.tagMeta[t] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[t] ?? 'taller' };
+      const m = this.tagMeta[reg.tag] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[reg.tag] ?? 'taller' };
       m.categoria = categoria as any;
-      this.tagMeta[t] = m;
+      this.tagMeta[reg.tag] = m;
       this.saveState();
 
-      // (Opcional) cambiar de pestaña:
       if (categoria === 'persona') this.seccionActiva = 'Empleados';
       if (categoria === 'insumo')  this.seccionActiva = 'Inventario';
     },
     error: (e) => console.error(e)
   });
 }
+
+async editarNombreInline(reg: Registro, ev?: Event) {
+  ev?.stopPropagation();
+  const alert = await this.alertCtrl.create({
+    header: 'Editar nombre',
+    inputs: [{ name: 'nombre', type: 'text', value: reg.nombre || '', placeholder: 'Nombre…' }],
+    buttons: [
+      { text: 'Cancelar', role: 'cancel' },
+      {
+        text: 'Guardar',
+        handler: ({ nombre }) => this.editarSoloNombre(reg, (nombre ?? '').trim())
+      }
+    ]
+  });
+  await alert.present();
+}
+
 
 onAsignarCategoria(reg: Registro, ev: any) {
   const value = (ev?.detail?.value ?? '').toString();
@@ -171,6 +179,23 @@ onAsignarCategoria(reg: Registro, ev: any) {
     }
   }
 
+  private editarSoloNombre(reg: Registro, nuevoNombre: string) {
+  const url = `${this.API_EDIT}/${reg.id}/editar/`;
+  this.http.put(url, { nombre: nuevoNombre || null }).subscribe({
+    next: () => {
+
+      this.patchEverywhereByTag(reg.tag, { nombre: nuevoNombre || undefined });
+
+      const m = this.tagMeta[reg.tag] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[reg.tag] ?? 'taller' };
+      m.nombre = nuevoNombre || undefined;
+      this.tagMeta[reg.tag] = m;
+      this.saveState();
+      this.ok('Nombre actualizado');
+    },
+    error: (e) => console.error('No se pudo actualizar el nombre', e)
+  });
+}
+
   private ts(r: Registro): number {
     const f = r.fecha_hora || r.created_at;
     return f ? new Date(f).getTime() : 0;
@@ -191,6 +216,15 @@ onAsignarCategoria(reg: Registro, ev: any) {
     const nombre = r.nombre ?? m?.nombre ?? undefined;
     const catNorm = this.normCat(r.categoria ?? m?.categoria ?? null) || null;
     return { ...r, nombre, categoria: catNorm };
+  }
+
+  private patchEverywhereByTag(tag: string, patch: Partial<Registro>) {
+    const apply = (arr: Registro[]) =>
+      arr.map(x => x.tag === tag ? ({ ...x, ...patch }) : x);
+
+    this.registros  = apply(this.registros);
+    this.tagsTaller = apply(this.tagsTaller);
+    this.tagsFuera  = apply(this.tagsFuera);
   }
 
   private esMasNuevo(nuevo: Registro): boolean {
@@ -227,6 +261,7 @@ onAsignarCategoria(reg: Registro, ev: any) {
 
   guardarEdicion() {
   if (this.modeloEdicion.id == null) return;
+
   const id = this.modeloEdicion.id;
   const categoriaPayload = this.modeloEdicion.categoria === '' ? null : this.modeloEdicion.categoria;
 
@@ -236,28 +271,26 @@ onAsignarCategoria(reg: Registro, ev: any) {
     categoria: categoriaPayload
   }).subscribe({
     next: () => {
-
-      const aplicar = (arr: Registro[]) => {
-        const i = arr.findIndex(x => x.id === id);
-        if (i >= 0) arr[i] = { ...arr[i], nombre: this.modeloEdicion.nombre, categoria: categoriaPayload as any };
-      };
-      aplicar(this.registros);
-      aplicar(this.tagsTaller);
-      aplicar(this.tagsFuera);
-
+      
       const row = [...this.registros, ...this.tagsTaller, ...this.tagsFuera].find(x => x.id === id);
-      if (row) {
-        const t = row.tag;
-        const m = this.tagMeta[t] ?? { lastTs: this.ts(row), lastId: id, estado: this.tagsEstado[t] ?? 'taller' };
-        m.nombre = this.modeloEdicion.nombre || undefined;
-        m.categoria = (categoriaPayload ?? null);
-        this.tagMeta[t] = m;
+      const tag = row?.tag;
+
+      if (tag) {
+        this.patchEverywhereByTag(tag, {
+          nombre: this.modeloEdicion.nombre,
+          categoria: categoriaPayload as any
+        });
+
+        const meta = this.tagMeta[tag] ?? { lastTs: this.ts(row!), lastId: id, estado: this.tagsEstado[tag] ?? 'taller' };
+        meta.nombre = this.modeloEdicion.nombre || undefined;
+        meta.categoria = (categoriaPayload ?? null);
+        this.tagMeta[tag] = meta;
         this.saveState();
       }
 
-      if (categoriaPayload === 'persona') this.seccionActiva = 'Empleados';
-      else if (categoriaPayload === 'insumo') this.seccionActiva = 'Inventario';
-      else this.seccionActiva = 'Personalización';
+      if (categoriaPayload === 'persona')      this.seccionActiva = 'Empleados';
+      else if (categoriaPayload === 'insumo')  this.seccionActiva = 'Inventario';
+      else                                     this.seccionActiva = 'Personalización';
 
       this.editOpen = false;
     },
