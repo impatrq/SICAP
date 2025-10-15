@@ -269,38 +269,36 @@ def assignments_auto(request):
         'persona_nombre': persona_nombre,
         'asignados': asignados,
         'devueltos': devueltos,
-        'total_asignados': len(asignados),
         'total_devueltos': len(devueltos),
     }, status=200)
 
+@csrf_exempt
 def bulk_delete_uncategorized_tags(request):
-  
-    data = request.data or {}
-    ids = data.get('ids') or []
+
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método no permitido. Usá POST.'}, status=405)
+
+    try:
+        data = json.loads(request.body or "{}")
+    except Exception:
+        return JsonResponse({'error': 'JSON inválido'}, status=400)
+
     tags = data.get('tags') or []
+    if not isinstance(tags, list):
+        return JsonResponse({'error': 'tags debe ser una lista'}, status=400)
 
-    qs = RegistroTag.objects.all()
-    if ids:
-        qs = qs.filter(id__in=ids)
-    if tags:
-        qs = qs.filter(tag__in=tags)
+    tags = [str(t).strip() for t in tags if str(t).strip()]
+    if not tags:
+        return JsonResponse({'status': 'ok', 'borrados': 0})
 
-    qs = qs.filter(categoria__isnull=True)
+    from .models import RegistroTag
 
-    referenciados_persona = set(
-        Asignacion.objects.filter(persona_tag__in=qs.values_list('tag', flat=True)).values_list('persona_tag', flat=True)
-    )
-    referenciados_item = set(
-        Asignacion.objects.filter(item_tag__in=qs.values_list('tag', flat=True)).values_list('item_tag', flat=True)
-    )
-    referenciados = referenciados_persona.union(referenciados_item)
+    borrados, _ = RegistroTag.objects.filter(
+        tag__in=tags,
+        categoria__isnull=True
+    ).delete()
 
-    eliminables = qs.exclude(tag__in=list(referenciados))
-    cant = eliminables.count()
-    eliminables.delete()
-
-    return Response({"status": "ok", "eliminados": cant})
-
+    return JsonResponse({'status': 'ok', 'borrados': borrados})
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
