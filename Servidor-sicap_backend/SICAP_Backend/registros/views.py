@@ -2,7 +2,8 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from rest_framework.decorators import api_view, permission_classes
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
-from django.db.models import F, Max
+from django.db.models import F, Max, Q
+from django.shortcuts import get_object_or_404
 from django.utils.timezone import localtime
 from django.utils import timezone
 from rest_framework.response import Response
@@ -299,6 +300,40 @@ def bulk_delete_uncategorized_tags(request):
     ).delete()
 
     return JsonResponse({'status': 'ok', 'borrados': borrados})
+
+@csrf_exempt
+def eliminar_tag(request, id):
+
+    if request.method not in ('DELETE', 'POST'):
+        return JsonResponse({'error': 'Método no permitido. Usá DELETE o POST.'}, status=405)
+
+    from .models import RegistroTag, Asignacion
+
+    tag_obj = get_object_or_404(RegistroTag, pk=id)
+
+    force = False
+    try:
+        if request.method == 'POST':
+            body = json.loads(request.body or "{}")
+            force = bool(body.get('force', False))
+    except Exception:
+        pass
+    if request.GET.get('force') in ('1', 'true', 'True', 'yes', 'y'):
+        force = True
+
+    tiene_activos = Asignacion.objects.filter(
+        Q(persona_tag=tag_obj.tag) | Q(item_tag=tag_obj.tag),
+        activo=True
+    ).exists()
+
+    if tiene_activos and not force:
+        return JsonResponse(
+            {'error': 'No se puede eliminar: hay asignaciones activas. Usá force=1 para forzar.'},
+            status=409
+        )
+
+    tag_obj.delete()
+    return JsonResponse({'status': 'ok', 'borrados': 1})
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
