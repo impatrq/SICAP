@@ -1,20 +1,58 @@
 from machine import UART
-import time
-
-# Este es el largo de bytes de un tag
-id_bytes = 8
 
 class RFIDReader:
-    
-    def __init__(self, tx=17, rx=16, baudrate=9600):
-        self.uart = UART(2, baudrate=baudrate, tx=tx, rx=rx)
+    def __init__(self, tx=17, rx=16, baudrate=57600, uart_id=2):
+        # Igual que el tester: UART2, 57600, GPIO16/17
+        self.uart = UART(uart_id, baudrate=baudrate, tx=tx, rx=rx,
+                        timeout=100, timeout_char=20)
+        self._buf = ""
+
+    def _extract_first_epc(self, s: str):
+        """
+        Extrae el primer EPC entre 'd:' y ',', ';' o '}'.
+        Devuelve (epc, end_index) o (None, None).
+        end_index es el índice hasta donde se consumió el buffer.
+        """
+        d = s.find("d:")
+        if d == -1:
+            return None, None
+        d += 2
+        end = len(s)
+        for ch in (",", ";", "}"):
+            p = s.find(ch, d)
+            if p != -1 and p < end:
+                end = p
+        if end <= d:
+            return None, None
+
+        epc = s[d:end].strip()
+        # validar HEX
+        for c in epc:
+            if c not in "0123456789ABCDEFabcdef":
+                return None, None
+        return epc.upper(), end  # consumimos hasta end
 
     def read_tag(self):
-        # Si hay datos disponibles...
-        if self.uart.any():
-            raw_data = self.uart.read(id_bytes)
-            
-            # Solo procesamos si recibimos la cantidad exacta de bytes esperada.
-            if raw_data and len(raw_data) == id_bytes:
-                return raw_data.hex().upper()
-            return None
+        """
+        Devuelve UN EPC (str) por llamada, o None si no hay todavía.
+        Misma filosofía que el tester: acumular y extraer por 'd:'.
+        """
+        data = self.uart.read()
+        if data:
+            try:
+                self._buf += data.decode("latin1", "ignore")
+            except:
+                pass
+
+        # si el buffer está muy grande, recortamos del principio
+        if len(self._buf) > 4096:
+            self._buf = self._buf[-512:]
+
+        epc, end = self._extract_first_epc(self._buf)
+        if epc:
+            # consumimos el buffer hasta el fin del EPC encontrado
+            self._buf = self._buf[end:]
+            return epc
+
+        return None
+

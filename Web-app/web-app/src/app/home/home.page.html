@@ -54,7 +54,7 @@
   <!-- </ion-button> -->
   <div class="caja-tags">
     <h3>En Taller</h3>
-    <div *ngFor="let r of tagsTaller; trackBy: trackById">
+    <div *ngFor="let r of tagsTallerSoloInsumo; trackBy: trackById">
       <ion-card class="reg-card">
         <ion-card-header>
           <ion-card-title class="mono"><b>Nombre:</b>{{ r.nombre || '-' }}</ion-card-title>
@@ -78,7 +78,7 @@
   <!-- Caja Fuera del Taller -->
   <div class="caja-tags">
     <h3>Fuera del Taller</h3>
-    <div *ngFor="let r of tagsFuera; trackBy: trackById">
+    <div *ngFor="let r of tagsFueraSoloInsumo; trackBy: trackById">
       <ion-card class="reg-card">
         <ion-card-header>
           <ion-card-title class="mono"><b>Nombre:</b> {{ r.nombre || '-' }}</ion-card-title>

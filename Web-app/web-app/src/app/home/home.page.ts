@@ -14,8 +14,8 @@ type Registro = {
   created_at?: string | null;
 };
 
-type EstadoTag = 'taller' | 'fuera'; 
-interface TagMeta {                  
+type EstadoTag = 'taller' | 'fuera';
+interface TagMeta {
   nombre?: string;
   categoria?: string | null;
   lastId?: number;
@@ -67,9 +67,9 @@ export class HomePage implements OnInit, OnDestroy {
   private tagMeta: Record<string, TagMeta> = {};
   private lastSeen: Record<string, { id: number; ts: number }> = {};
   private STORAGE_KEY = 'sicap_ui_estado';
-  
+
   private catKey(cat: string | null | undefined): string {
-  return (cat ?? '').toString().trim().toLowerCase();
+    return (cat ?? '').toString().trim().toLowerCase();
   }
 
   private normCat(cat: string | null | undefined): ''|'persona'|'insumo' {
@@ -110,60 +110,58 @@ export class HomePage implements OnInit, OnDestroy {
     if (n === 'insumo')  return 'Insumo';
     return '—';
   }
-  
+
   get inventarioItems()   { return this.tagsUnicos.filter(r => this.isInsumo(r.categoria)); }
   get empleadosItems()    { return this.tagsUnicos.filter(r => this.isPersona(r.categoria)); }
   get sinCategoriaItems() { return this.tagsUnicos.filter(r => this.isSinCategoria(r.categoria)); }
 
-
   setCategoria(reg: Registro, categoria: 'persona'|'insumo'|null) {
-  const url = `${this.API_EDIT}/${reg.id}/editar/`;
-  this.http.put(url, { categoria }).subscribe({
-    next: () => {
-      this.patchEverywhereByTag(reg.tag, { categoria: categoria as any });
+    const url = `${this.API_EDIT}/${reg.id}/editar/`;
+    this.http.put(url, { categoria }).subscribe({
+      next: () => {
+        this.patchEverywhereByTag(reg.tag, { categoria: categoria as any });
 
-      const m = this.tagMeta[reg.tag] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[reg.tag] ?? 'taller' };
-      m.categoria = categoria as any;
-      this.tagMeta[reg.tag] = m;
-      this.saveState();
+        const m = this.tagMeta[reg.tag] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[reg.tag] ?? 'taller' };
+        m.categoria = categoria as any;
+        this.tagMeta[reg.tag] = m;
+        this.saveState();
 
-      if (categoria === 'persona') this.seccionActiva = 'Empleados';
-      if (categoria === 'persona' && this.expanded.has(reg.tag)) {
-        this.cargarAsignacionesPersona(reg.tag);
-      }
-      if (categoria === 'insumo')  this.seccionActiva = 'Inventario';
-    },
-    error: (e) => console.error(e)
-  });
-}
+        if (categoria === 'persona') this.seccionActiva = 'Empleados';
+        if (categoria === 'persona' && this.expanded.has(reg.tag)) {
+          this.cargarAsignacionesPersona(reg.tag);
+        }
+        if (categoria === 'insumo')  this.seccionActiva = 'Inventario';
+      },
+      error: (e) => console.error(e)
+    });
+  }
 
-async editarNombreInline(reg: Registro, ev?: Event) {
-  ev?.stopPropagation();
-  const alert = await this.alertCtrl.create({
-    header: 'Editar nombre',
-    inputs: [{ name: 'nombre', type: 'text', value: reg.nombre || '', placeholder: 'Nombre…' }],
-    buttons: [
-      { text: 'Cancelar', role: 'cancel' },
-      {
-        text: 'Guardar',
-        handler: ({ nombre }) => this.editarSoloNombre(reg, (nombre ?? '').trim())
-      }
-    ]
-  });
-  await alert.present();
-}
+  async editarNombreInline(reg: Registro, ev?: Event) {
+    ev?.stopPropagation();
+    const alert = await this.alertCtrl.create({
+      header: 'Editar nombre',
+      inputs: [{ name: 'nombre', type: 'text', value: reg.nombre || '', placeholder: 'Nombre…' }],
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Guardar',
+          handler: ({ nombre }) => this.editarSoloNombre(reg, (nombre ?? '').trim())
+        }
+      ]
+    });
+    await alert.present();
+  }
 
-
-onAsignarCategoria(reg: Registro, ev: any) {
-  const value = (ev?.detail?.value ?? '').toString();
-  this.setCategoria(reg, value);
-}
+  onAsignarCategoria(reg: Registro, ev: any) {
+    const value = (ev?.detail?.value ?? '').toString();
+    this.setCategoria(reg, value);
+  }
 
   private saveState() {
     const snapshot = {
       tagsEstado: this.tagsEstado,
       lastSeen: this.lastSeen,
-      tagMeta: this.tagMeta,        
+      tagMeta: this.tagMeta,
     };
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(snapshot));
   }
@@ -177,86 +175,82 @@ onAsignarCategoria(reg: Registro, ev: any) {
       this.lastSeen   = s.lastSeen   || {};
       this.tagMeta    = s.tagMeta    || {};
 
-      
       this.tagsTaller = [];
       this.tagsFuera  = [];
       for (const [tag, meta] of Object.entries(this.tagMeta)) {
         const base: Registro = {
-          tag,
-          id: meta.lastId ?? 0,
+          tag, id: meta.lastId ?? 0,
           nombre: meta.nombre,
           categoria: meta.categoria,
           fecha_hora: meta.lastTs ? new Date(meta.lastTs).toISOString() : null,
           created_at: null
         };
         const r = this.aplicarMeta(base);
+        if (!this.isInsumo(r.categoria)) continue; // filtrar solo insumos
+
         if (meta.estado === 'taller') this.upsertEnLista(this.tagsTaller, r);
         else                          this.upsertEnLista(this.tagsFuera,  r);
       }
-    } catch {
-      
-    }
+    } catch { /* noop */ }
   }
 
   private editarSoloNombre(reg: Registro, nuevoNombre: string) {
-  const url = `${this.API_EDIT}/${reg.id}/editar/`;
-  this.http.put(url, { nombre: nuevoNombre || null }).subscribe({
-    next: () => {
+    const url = `${this.API_EDIT}/${reg.id}/editar/`;
+    this.http.put(url, { nombre: nuevoNombre || null }).subscribe({
+      next: () => {
+        this.patchEverywhereByTag(reg.tag, { nombre: nuevoNombre || undefined });
 
-      this.patchEverywhereByTag(reg.tag, { nombre: nuevoNombre || undefined });
-
-      const m = this.tagMeta[reg.tag] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[reg.tag] ?? 'taller' };
-      m.nombre = nuevoNombre || undefined;
-      this.tagMeta[reg.tag] = m;
-      this.saveState();
-      this.ok('Nombre actualizado');
-    },
-    error: (e) => console.error('No se pudo actualizar el nombre', e)
-  });
-}
+        const m = this.tagMeta[reg.tag] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[reg.tag] ?? 'taller' };
+        m.nombre = nuevoNombre || undefined;
+        this.tagMeta[reg.tag] = m;
+        this.saveState();
+        this.ok('Nombre actualizado');
+      },
+      error: (e) => console.error('No se pudo actualizar el nombre', e)
+    });
+  }
 
   private cargarAsignacionesPersona(tag: string) {
-  this.asigLoading[tag] = true;
-  this.asigError[tag] = undefined;
+    this.asigLoading[tag] = true;
+    this.asigError[tag] = undefined;
 
-  this.http
-    .get<Asignacion[]>(`${this.API_ASSIGN}/?activo=1&persona_tag=${encodeURIComponent(tag)}`)
-    .subscribe({
-      next: rows => {
-        this.asigCache[tag] = rows || [];
-        this.asigLoading[tag] = false;
-      },
-      error: err => {
-        console.error(err);
-        this.asigError[tag] = 'No pude cargar asignaciones';
-        this.asigLoading[tag] = false;
-      },
-    });
-}
-
-toggleAsignados(reg: Registro, ev?: Event) {
-  ev?.stopPropagation();
-  const tag = reg.tag;
-
-  if (this.expanded.has(tag)) {
-    this.expanded.delete(tag);
-  } else {
-    this.expanded.add(tag);
-    if (!this.asigCache[tag]) this.cargarAsignacionesPersona(tag);
+    this.http
+      .get<Asignacion[]>(`${this.API_ASSIGN}/?activo=1&persona_tag=${encodeURIComponent(tag)}`)
+      .subscribe({
+        next: rows => {
+          this.asigCache[tag] = rows || [];
+          this.asigLoading[tag] = false;
+        },
+        error: err => {
+          console.error(err);
+          this.asigError[tag] = 'No pude cargar asignaciones';
+          this.asigLoading[tag] = false;
+        },
+      });
   }
-}
 
-devolverAsignacion(a: Asignacion) {
-  this.http.put<Asignacion>(`${this.API_ASSIGN}/${a.id}/devolver/`, {}).subscribe({
-    next: () => {
-      // Quitamos del cache local
-      const list = this.asigCache[a.persona_tag] || [];
-      this.asigCache[a.persona_tag] = list.filter(x => x.id !== a.id);
-      this.ok('Devuelto');
-    },
-    error: e => console.error('No se pudo devolver', e),
-  });
-}
+  toggleAsignados(reg: Registro, ev?: Event) {
+    ev?.stopPropagation();
+    const tag = reg.tag;
+
+    if (this.expanded.has(tag)) {
+      this.expanded.delete(tag);
+    } else {
+      this.expanded.add(tag);
+      if (!this.asigCache[tag]) this.cargarAsignacionesPersona(tag);
+    }
+  }
+
+  devolverAsignacion(a: Asignacion) {
+    this.http.put<Asignacion>(`${this.API_ASSIGN}/${a.id}/devolver/`, {}).subscribe({
+      next: () => {
+        const list = this.asigCache[a.persona_tag] || [];
+        this.asigCache[a.persona_tag] = list.filter(x => x.id !== a.id);
+        this.ok('Devuelto');
+      },
+      error: e => console.error('No se pudo devolver', e),
+    });
+  }
 
   private ts(r: Registro): number {
     const f = r.fecha_hora || r.created_at;
@@ -264,14 +258,14 @@ devolverAsignacion(a: Asignacion) {
   }
 
   private async ok(msg: string) {
-  const toast = await this.toast.create({
-    message: msg,
-    duration: 1800,
-    color: 'success',
-    position: 'bottom'
-  });
-  await toast.present();
-}
+    const toast = await this.toast.create({
+      message: msg,
+      duration: 1800,
+      color: 'success',
+      position: 'bottom'
+    });
+    await toast.present();
+  }
 
   private aplicarMeta(r: Registro): Registro {
     const m = this.tagMeta[r.tag];
@@ -289,11 +283,12 @@ devolverAsignacion(a: Asignacion) {
     this.tagsFuera  = apply(this.tagsFuera);
   }
 
-  private esMasNuevo(nuevo: Registro): boolean {
-    const ts = this.ts(nuevo);
+  private esEstrictamenteMasNuevo(nuevo: Registro): boolean {
     const prev = this.lastSeen[nuevo.tag];
-    if (!prev) return true;
-    if (ts && ts !== prev.ts) return ts > prev.ts;
+    const t = this.ts(nuevo);
+
+    if (!prev) return true; // primera vez que vemos el tag
+    if (t && prev.ts) return t > prev.ts;
     if (typeof nuevo.id === 'number' && typeof prev.id === 'number') {
       return nuevo.id > prev.id;
     }
@@ -310,9 +305,8 @@ devolverAsignacion(a: Asignacion) {
     lista.unshift(r);
   }
 
-
   abrirEdicion(reg: Registro, ev?: Event) {
-    ev?.stopPropagation(); 
+    ev?.stopPropagation();
     this.modeloEdicion = {
       id: reg.id,
       nombre: reg.nombre || '',
@@ -322,51 +316,51 @@ devolverAsignacion(a: Asignacion) {
   }
 
   guardarEdicion() {
-  if (this.modeloEdicion.id == null) return;
+    if (this.modeloEdicion.id == null) return;
 
-  const id = this.modeloEdicion.id;
-  const categoriaPayload = this.modeloEdicion.categoria === '' ? null : this.modeloEdicion.categoria;
+    const id = this.modeloEdicion.id;
+    const categoriaPayload = this.modeloEdicion.categoria === '' ? null : this.modeloEdicion.categoria;
 
-  const url = `${this.API_EDIT}/${id}/editar/`;
-  this.http.put(url, {
-    nombre: this.modeloEdicion.nombre,
-    categoria: categoriaPayload
-  }).subscribe({
-    next: () => {
+    const url = `${this.API_EDIT}/${id}/editar/`;
+    this.http.put(url, {
+      nombre: this.modeloEdicion.nombre,
+      categoria: categoriaPayload
+    }).subscribe({
+      next: () => {
+        const row = [...this.registros, ...this.tagsTaller, ...this.tagsFuera].find(x => x.id === id);
+        const tag = row?.tag;
 
-      const row = [...this.registros, ...this.tagsTaller, ...this.tagsFuera].find(x => x.id === id);
-      const tag = row?.tag;
+        if (tag) {
+          this.patchEverywhereByTag(tag, {
+            nombre: this.modeloEdicion.nombre,
+            categoria: categoriaPayload as any
+          });
 
-      if (tag) {
-        this.patchEverywhereByTag(tag, {
-          nombre: this.modeloEdicion.nombre,
-          categoria: categoriaPayload as any
-        });
+          const meta = this.tagMeta[tag] ?? { lastTs: this.ts(row!), lastId: id, estado: this.tagsEstado[tag] ?? 'taller' };
+          meta.nombre = this.modeloEdicion.nombre || undefined;
+          meta.categoria = (categoriaPayload ?? null);
+          this.tagMeta[tag] = meta;
+          this.saveState();
+        }
 
-        const meta = this.tagMeta[tag] ?? { lastTs: this.ts(row!), lastId: id, estado: this.tagsEstado[tag] ?? 'taller' };
-        meta.nombre = this.modeloEdicion.nombre || undefined;
-        meta.categoria = (categoriaPayload ?? null);
-        this.tagMeta[tag] = meta;
-        this.saveState();
-      }
+        if (categoriaPayload === 'persona')      this.seccionActiva = 'Empleados';
+        else if (categoriaPayload === 'insumo')  this.seccionActiva = 'Inventario';
+        else                                     this.seccionActiva = 'Personalización';
 
-      if (categoriaPayload === 'persona')      this.seccionActiva = 'Empleados';
-      else if (categoriaPayload === 'insumo')  this.seccionActiva = 'Inventario';
-      else                                     this.seccionActiva = 'Personalización';
+        this.editOpen = false;
 
-      this.editOpen = false;
-
-      const persona = [...this.registros, ...this.tagsTaller, ...this.tagsFuera].find(x => x.id === id);
-      if (persona && this.isPersona(categoriaPayload) && this.expanded.has(persona.tag)) {
-        this.cargarAsignacionesPersona(persona.tag);
-    }
-    },
-    error: (err) => console.error('No se pudo guardar', err)
-  });
-}
+        const persona = [...this.registros, ...this.tagsTaller, ...this.tagsFuera].find(x => x.id === id);
+        if (persona && this.isPersona(categoriaPayload) && this.expanded.has(persona.tag)) {
+          this.cargarAsignacionesPersona(persona.tag);
+        }
+      },
+      error: (err) => console.error('No se pudo guardar', err)
+    });
+  }
 
   ngOnInit() {
-    this.loadState(); 
+    this.loadState();
+    this.cargarRegistros();
   }
 
   ngOnDestroy() {
@@ -376,15 +370,22 @@ devolverAsignacion(a: Asignacion) {
   activarSeccion(nombre: string) {
     this.seccionActiva = nombre;
 
-    if (nombre === 'Interfaz Visual') {
-      this.cargarRegistros();
-      if (!this.sub || this.sub.closed) {
-        this.sub = interval(1000).subscribe(() => this.cargarRegistros()); 
-      }
-    } else {
-      this.sub?.unsubscribe();
+  const necesitaDatos = (
+    nombre === 'Interfaz Visual' ||
+    nombre === 'Inventario' ||
+    nombre === 'Empleados' ||
+    nombre === 'Personalización'
+  );
+
+  if (necesitaDatos) {
+    this.cargarRegistros();                            // ← pide inmediatamente
+    if (!this.sub || this.sub.closed) {
+      this.sub = interval(1000).subscribe(() => this.cargarRegistros());  // ← sigue pidiendo
     }
+  } else {
+    this.sub?.unsubscribe();
   }
+}
 
   volverAlMenuCentral() {
     this.seccionActiva = null;
@@ -392,18 +393,49 @@ devolverAsignacion(a: Asignacion) {
   }
 
   procesarRegistro(nuevo: Registro) {
-    if (!this.esMasNuevo(nuevo)) return;
-
     const reg = this.aplicarMeta(nuevo);
     const tag = reg.tag;
     const ts  = this.ts(reg);
+    const idNum = Number(reg.id) || 0;
+    const cat = this.normCat(reg.categoria); // '' | 'persona' | 'insumo'
 
+    // Guardá lastSeen de este tag apenas lo procesás
+    this.lastSeen[tag] = { id: idNum, ts };
+
+    // 1) Sin categoría -> sólo meta (para que figure en Personalización)
+    if (this.isSinCategoria(cat)) {
+      const m = this.tagMeta[tag] ?? { lastTs: ts, lastId: idNum, estado: 'taller' as EstadoTag };
+      m.lastTs = ts;
+      m.lastId = idNum;
+      if (reg.nombre) m.nombre = reg.nombre;
+      m.categoria = null;
+      this.tagMeta[tag] = m;
+      this.saveState();
+      return;
+    }
+
+    // 2) Persona -> actualizá meta, no toques IV
+    if (this.isPersona(cat)) {
+      const m = this.tagMeta[tag] ?? { lastTs: ts, lastId: idNum, estado: 'taller' as EstadoTag };
+      m.lastTs = ts;
+      m.lastId = idNum;
+      if (reg.nombre) m.nombre = reg.nombre;
+      m.categoria = 'persona';
+      this.tagMeta[tag] = m;
+      this.saveState();
+      return;
+    }
+
+    // 3) Insumo -> toggle sólo este tag
     if (!this.tagMeta[tag]) {
-      this.tagMeta[tag] = { lastTs: ts, lastId: reg.id, estado: 'taller' };
+      // primera vez como insumo: baseline en 'taller'
+      this.tagMeta[tag] = {
+        lastTs: ts, lastId: idNum, estado: 'taller',
+        nombre: reg.nombre, categoria: 'insumo'
+      };
       this.tagsTaller = this.tagsTaller.filter(x => x.tag !== tag);
       this.upsertEnLista(this.tagsTaller, reg);
       this.tagsEstado[tag] = 'taller';
-      this.marcarVisto(reg);
       this.saveState();
       return;
     }
@@ -422,28 +454,44 @@ devolverAsignacion(a: Asignacion) {
     }
 
     m.lastTs = ts;
-    m.lastId = reg.id;
-    if (reg.nombre)    m.nombre = reg.nombre;
-    if (reg.categoria) m.categoria = reg.categoria;
-
-    this.marcarVisto(reg);
+    m.lastId = idNum;
+    if (reg.nombre) m.nombre = reg.nombre;
+    m.categoria = 'insumo';
     this.saveState();
   }
 
-  
   cargarRegistros() {
     this.loading = true;
     this.error = undefined;
+
     this.http.get<Registro[]>(this.API).subscribe({
       next: (rows) => {
         this.registros = rows;
 
-        
-        const ordenados = [...rows].sort((a, b) => this.ts(a) - this.ts(b));
-
-        for (const reg of ordenados) {
-          if (this.esMasNuevo(reg)) this.procesarRegistro(reg);
+        // 1) Para cada tag, quedate con la fila más nueva
+        const latest: Record<string, Registro> = {};
+        for (const r of rows) {
+          const t = r.tag;
+          const ts = this.ts(r);
+          const prev = latest[t];
+          if (
+            !prev ||
+            ts > this.ts(prev) ||
+            (ts === this.ts(prev) && (Number(r.id) || 0) > (Number(prev.id) || 0))
+          ) {
+            latest[t] = r;
+          }
         }
+
+        // 2) Sólo procesá si es más nuevo que lo que ya vimos para ese tag
+        for (const r of Object.values(latest)) {
+          const ls = this.lastSeen[r.tag];
+          const ts = this.ts(r);
+          const id = Number(r.id) || 0;
+          const isNewer = !ls || ts > ls.ts || (ts === ls.ts && id > ls.id);
+          if (isNewer) this.procesarRegistro(r);
+        }
+
         this.loading = false;
       },
       error: () => {
@@ -454,19 +502,42 @@ devolverAsignacion(a: Asignacion) {
   }
 
   get tagsUnicos(): Registro[] {
-    const ultimos: Record<string, Registro> = {};
-    for (const r of this.registros) {
-      const prev = ultimos[r.tag];
-      if (!prev) ultimos[r.tag] = r;
-      else {
-        const t1 = this.ts(prev), t2 = this.ts(r);
-        if (t2 > t1 || (t2 === t1 && (r.id > prev.id))) ultimos[r.tag] = r;
-      }
+    const ult: Record<string, Registro> = {};
+  for (const r of this.registros) {
+    const t = r.tag;
+    const prev = ult[t];
+    const ts = this.ts(r);
+    if (!prev || ts > this.ts(prev) || (ts === this.ts(prev) && (Number(r.id)||0) > (Number(prev.id)||0))) {
+      ult[t] = r;
     }
-    const lista = Object.values(ultimos).map(r => this.aplicarMeta(r));
-    lista.sort((a, b) => this.ts(b) - this.ts(a) || (b.id - a.id));
-    return lista;
   }
+
+  // B) merge con meta para asegurar que los sin categoría aparezcan
+  for (const [t, m] of Object.entries(this.tagMeta)) {
+    if (!ult[t]) {
+      ult[t] = {
+        id: m.lastId ?? 0,
+        tag: t,
+        nombre: m.nombre,
+        categoria: m.categoria ?? null,
+        fecha_hora: m.lastTs ? new Date(m.lastTs).toISOString() : null,
+        created_at: null
+      };
+    } else {
+      const r = ult[t];
+      if (m.nombre && !r.nombre) r.nombre = m.nombre;
+      r.categoria = (this.normCat(r.categoria ?? m.categoria ?? null) || null);
+    }
+  }
+
+  const lista = Object.values(ult).map(r => this.aplicarMeta(r));
+  lista.sort((a, b) => this.ts(b) - this.ts(a) || ((Number(b.id)||0) - (Number(a.id)||0)));
+  return lista;
+}
+
+
+  get tagsTallerSoloInsumo() { return this.tagsTaller.filter(r => this.isInsumo(r.categoria)); }
+  get tagsFueraSoloInsumo()  { return this.tagsFuera.filter(r => this.isInsumo(r.categoria)); }
 
   limpiarTags() {
     this.tagsTaller = [];
@@ -474,7 +545,7 @@ devolverAsignacion(a: Asignacion) {
     this.tagsEstado = {};
     this.registros  = [];
     this.lastSeen   = {};
-    this.tagMeta    = {}; 
+    this.tagMeta    = {};
     localStorage.removeItem(this.STORAGE_KEY);
   }
 
