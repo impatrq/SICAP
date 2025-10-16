@@ -12,26 +12,25 @@
 
 //Video de fondo
 #bg-video {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  inset: 0; 
-  object-fit: cover;
-  z-index: -1;
-  pointer-events: none;
-
+  position: fixed !important;
+  width: 100% !important;
+  height: 100% !important;
+  inset: 0 !important; 
+  object-fit: cover !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
 }
 
 //Capa oscura sobre el video
 .bg-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
   background:
     radial-gradient(80rem 80rem at 10% -10%, rgba(var(--indigo-rgb, 40,75,99), .25), transparent 60%),
     radial-gradient(70rem 70rem at 110% 10%, rgba(var(--paynes-rgb, 76,92,104), .25), transparent 50%),
-    linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35));
-  pointer-events: none;
+    linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35)) !important;
+  pointer-events: none !important;
 }
 
 //Hacer que el contenido esté por encima del video y la capa oscura
@@ -405,6 +404,12 @@ ion-select-popover ion-item[button]:hover {
   margin-left: .25rem; 
 }
 
+// Ocultar header en todas las pantallas
+.header-desktop,
+ion-header {
+  display: none !important;
+}
+
 @media (max-width: 992px) {
   .visual-content { 
     margin-left: 0; 
@@ -420,5 +425,223 @@ ion-select-popover ion-item[button]:hover {
 @media (max-width: 1100px) {
   .cajas-tags {
     grid-template-columns: 1fr; 
+  }
+}
+
+// Media queries específicos para móviles - NO afectan computadoras
+@media (max-width: 768px) {
+  // Asegurar video de fondo en móviles
+  #bg-video {
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    inset: 0 !important;
+    object-fit: cover !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
+  }
+  
+  .bg-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  // Ocultar header en móviles
+  .header-desktop {
+    display: none !important;
+  }
+  
+  // Ocultar toolbar lateral de desktop en móviles
+  .vertical-toolbar {
+    display: none !important;
+  }
+  
+  // Restaurar botones centrales para la pantalla principal
+  .botones-menu-central {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 85% !important;
+    height: auto !important;
+    min-height: auto !important;
+    gap: 15px !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+  
+  .menu-animado {
+    min-height: 50px !important;
+    font-size: 0.95rem !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  
+  // Mostrar toolbar móvil SOLO cuando hay sección activa
+  .mobile-toolbar {
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 95% !important;
+    max-width: 400px !important;
+    background: linear-gradient(135deg, 
+      rgba(var(--indigo-rgb, 40,75,99), 0.95) 0%,
+      rgba(var(--paynes-rgb, 76,92,104), 0.95) 100%) !important;
+    backdrop-filter: blur(12px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(160%) !important;
+    border: 1px solid rgba(var(--platinum-rgb), .25) !important;
+    border-radius: 20px !important;
+    padding: 12px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,.4) !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important; // 3 columnas para acomodar 5 botones
+    grid-template-rows: repeat(2, 1fr) !important;
+    gap: 6px !important;
+    z-index: 1000 !important;
+  }
+  
+  .toolbar-btn-mobile {
+    min-height: 36px !important;
+    font-size: 0.8rem !important;
+    margin: 0 !important;
+    --border-radius: 10px !important;
+    --padding-start: 6px !important;
+    --padding-end: 6px !important;
+  }
+  
+  // El botón "Volver" ocupa toda la fila inferior
+  .mobile-toolbar ion-button:last-child {
+    grid-column: 1 / -1 !important;
+  }
+  
+  // Eliminar scroll solo cuando está en el menú principal
+  .menu-principal-activo {
+    --overflow: hidden !important;
+  }
+  
+  .menu-principal-activo::part(scroll) {
+    overflow: hidden !important;
+    height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+  
+  // Ajustes para cuando hay sección activa
+  .visual-content {
+    margin-left: 0 !important;
+    padding: 15px !important;
+    padding-bottom: 100px !important; // Espacio para la toolbar cuando hay contenido
+    margin-top: 0 !important;
+  }
+  
+  // Asegurar que las cajas estén lado a lado en móviles también
+  .cajas-tags {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important; // Forzar 2 columnas en móvil
+    gap: 15px !important;
+    margin: 10px auto 0 !important;
+    padding: 0 10px !important;
+  }
+  
+  .caja-tags {
+    min-width: auto !important;
+    width: 100% !important;
+  }
+}
+
+// Ocultar toolbar móvil en desktop
+@media (min-width: 769px) {
+  .mobile-toolbar {
+    display: none !important;
+  }
+}
+
+// Para pantallas muy pequeñas
+@media (max-width: 480px) {
+  // Asegurar video de fondo en pantallas pequeñas
+  #bg-video {
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    inset: 0 !important;
+    object-fit: cover !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
+  }
+  
+  .bg-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  .header-desktop {
+    display: none !important;
+  }
+  
+  .vertical-toolbar {
+    display: none !important;
+  }
+  
+  // Restaurar botones centrales también en pantallas pequeñas
+  .botones-menu-central {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90% !important;
+    height: auto !important;
+    min-height: auto !important;
+    gap: 12px !important;
+    padding: 15px !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  .menu-animado {
+    min-height: 46px !important;
+    font-size: 0.9rem !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  
+  .mobile-toolbar {
+    width: 98% !important;
+    bottom: 15px !important;
+    gap: 6px !important;
+    padding: 10px !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .toolbar-btn-mobile {
+    min-height: 38px !important;
+    font-size: 0.8rem !important;
+    --border-radius: 10px !important;
+  }
+  
+  // Mantener cajas lado a lado incluso en pantallas muy pequeñas
+  .cajas-tags {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 0 5px !important;
+  }
+  
+  .caja-tags h3 {
+    font-size: 0.9rem !important;
+    padding: 6px 8px !important;
   }
 }
