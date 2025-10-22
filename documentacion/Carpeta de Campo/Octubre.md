@@ -62,6 +62,12 @@ Durante la jornada me dediqué a la elaboración de la documentación técnica d
 
 El trabajo consistió en la creación de informes descriptivos detallados sobre los componentes de software y hardware del sistema S.I.C.A.P., abarcando su funcionamiento, arquitectura y objetivos principales. El propósito fue presentar una documentación completa, clara y profesional que refleje la solidez técnica del proyecto y aumente las posibilidades de obtener un buen desempeño en la instancia de Córdoba.
 
+Patella Tiziano:
+
+El día de hoy nos encargamos del armado de la documentacion obligatoria para nuestra presentacion en la ONIET. El trabajo de el que me encargue yo fue de el armado de diagramas visuales sobre la esplicacion del proyecto en profundidad haciendo un paso a paso de todas las etapas por las que pasa el proyecto para poder funcionar.
+
+Previo a la elaboración de los diagramas respectivos me encargue de trabajar en la documentacion de la carpeta tecnica, transformado todas las partes de codigo en una vista mucho mas estetica, acomodada y correcta para el informe descriptivo que estabamos haciendo.
+
 <h2> Viernes 10/10/25 </h2>
 
 Facu Spagno:
