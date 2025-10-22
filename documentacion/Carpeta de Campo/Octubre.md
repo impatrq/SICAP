@@ -148,7 +148,7 @@ Lautaro Santolucito:
 
 El equipo emprendió el viaje a Córdoba para participar en la instancia nacional de las ONIET. Me encargué de trasladar las carpetas impresas, los respaldos digitales y el equipo RFID completo. Durante el trayecto repasamos las presentaciones y coordinamos los últimos detalles de exposición. La preparación previa y las pruebas realizadas permitieron llegar con el sistema estable y la documentación impresa para presentar al jurado.
 
-<h2>Jueves 16/05/2025</h2>
+<h2>Jueves 16/10/2025</h2>
 
 Tiziano Patella:
 
