@@ -16,6 +16,12 @@
 
 ---
 
+## Logros y Reconocimientos
+
+🏅 **Ganadores del 1° puesto en la categoría Prototipos - ONIET 2025** (puntaje: 96/100)  
+🎖️ **4° puesto en SysApp - ONIET 2025** (puntaje: 87/100)  
+📍 Representando a la **E.E.S.T. N°7 “Taller Regional Quilmes”**, Buenos Aires, Argentina
+
 ## Nuestra Propuesta
 
 **SICAP** (Sistema Inteligente de Control de Almacén y Pañol) es una solución automatizada pensada para mejorar la gestión de herramientas, materiales e insumos en talleres, escuelas técnicas y empresas. Utiliza RFID, ESP32 y servidores locales para registrar entradas y salidas de forma confiable.
@@ -40,6 +46,21 @@ Observamos que muchos entornos técnicos carecen de un sistema eficiente para co
 
 ---
 
+## Arquitectura del Sistema
+
+SICAP se compone de tres módulos principales:
+
+1. **Módulo de Lectura RFID (Hardware):**  
+   Basado en un lector UHF SAMSys MP9320 y un microcontrolador **ESP32**, encargado de enviar los datos de las etiquetas detectadas al servidor mediante HTTP.
+
+2. **Servidor Backend (Software):**  
+   Desarrollado en **Django (Python)**, gestiona la base de datos, las peticiones del ESP32 y la administración del sistema.
+
+3. **Interfaz Web (Frontend):**  
+   Programada en **TypeScript con Ionic**, permite visualizar, editar y gestionar los registros de herramientas, empleados e insumos de forma intuitiva.
+
+---
+
 ## Integrantes
 
 ![WhatsApp Image 2025-08-27 at 11 02 59](https://github.com/user-attachments/assets/c0abe7cf-d06f-43c4-8fe5-f88b2cd92b35)
@@ -54,6 +75,11 @@ Observamos que muchos entornos técnicos carecen de un sistema eficiente para co
 
 ---
 
+## Agradecimientos
+
+Agradecemos a nuestros docentes, especialmente al profesor **Medina y Carlassara**, por su acompañamiento constante, y a **Transporte Miloser S.A.; Ledmull; La Populas Hamburguesas; Checkpoint** por su apoyo como sponsor durante la competencia ONIET 2025.
+
+---
 ## Información de Contacto
 
 🌐 Sitio web oficial: [sicap.site](https://sicap.site)  
