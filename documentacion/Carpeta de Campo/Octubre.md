@@ -138,6 +138,12 @@ Además a la salida del colegio antes de la reunion en mi casa, gestioné la imp
 
 <h2>Miércoles 15/10/2025 — Salida hacia ONIET</h2>
 
+Patella Tiziano:
+
+Este día nos juntamos en la casa de Lauty por la mañana para poder hacer funcionar el proyecto previa a nuestra salida. Lo primero que hicimos fue hacer todos los pasos que habiamos hecho con el profe Medina antes y que habia resultado en que el proyecto funcionase. Sin explicacion alguna, al hacer lo que nos dijo el salio todo bien por lo que agarramos eso como ancla y nos pusimos a trabajar a partir de esa esperanza que nos habia dado el codigo viejo. Desde ese codigo me propuse a armar un codigo completamente nuevo el cual en este caso no nos de los problemas que habiamos tenido, a la par de esto lauty se encargo de arreglar los problemas que estaban habiendo con los lectores asiq una vez los lectores funcionaban y probamos todo con mi codigo nuevo y resulto en un gran exito. El proyecto funcionaba como nosotros queríamos y los ibamos a poder presentar para la ONIET.
+
+
+
 Lautaro Santolucito:
 El equipo emprendió el viaje a Córdoba para participar en la instancia nacional de las ONIET. Me encargué de trasladar las carpetas impresas, los respaldos digitales y el equipo RFID completo. Durante el trayecto repasamos las presentaciones y coordinamos los últimos detalles de exposición. La preparación previa y las pruebas realizadas permitieron llegar con el sistema estable y la documentación impresa para presentar al jurado.
 
@@ -156,4 +162,4 @@ Revisamos las conexiones, el anclaje de las antenas y el posicionamiento del lec
 Lautaro Santolucito:
 Durante la jornada continuamos con la puesta a punto del sistema y la organización general del proyecto. Analizamos junto con los chicos las observaciones recibidas en las ONIET, identificando qué aspectos podrían optimizarse para la feria de fin de año.
 Nos enfocamos en planificar pequeñas mejoras de presentación y en definir una distribución más práctica para el espacio de exposición. Con la experiencia adquirida en Córdoba, el grupo mostró mayor coordinación y claridad sobre cómo comunicar el funcionamiento y el impacto del S.I.C.A.P. frente a nuevos evaluadores.
->>>>>>> 95e641ea1d5da48acec28b96b00ca3a66d6f648f
+
