@@ -126,3 +126,8 @@ Lautaro Santolucito:
 Regresamos de la competencia el 18 de octubre luego de una experiencia inolvidable en las ONIET. El proyecto S.I.C.A.P. obtuvo el primer puesto en la categoría Prototipos, con una calificación de 96/100, y el cuarto puesto en SysApp, con una puntuación de 87/100. Estos resultados reflejaron el trabajo constante y la dedicación de todo el equipo a lo largo del año.
 El jurado destacó especialmente la integración entre hardware y software, la estabilidad del sistema y la calidad de la documentación presentada. Ver funcionar cada parte del proyecto —desde las antenas y el lector hasta la web y el backend— fue una gran satisfacción.
 A mi regreso elaboré un informe con las observaciones del jurado y los puntos de mejora sugeridos, que servirán como base para futuras versiones del sistema. Cerramos esta etapa con orgullo y motivación, conscientes de que logramos posicionar a nuestra escuela entre los mejores proyectos del país.
+
+<h2>Martes 21/10/2025</h2>
+Lautaro Santolucito:
+Comenzamos nuevamente con las jornadas de trabajo tras el regreso de las ONIET. Junto con Pablo nos dedicamos a rearmar la estructura del portal del proyecto, que había sido desarmada para el viaje, con el objetivo de dejarla lista para la presentación de la feria de fin de año.
+Revisamos las conexiones, el anclaje de las antenas y el posicionamiento del lector para asegurar estabilidad y buena visibilidad durante la exposición. Además, evaluamos posibles mejoras en el diseño físico del stand, buscando hacerlo más prolijo y atractivo para el público.
