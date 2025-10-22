@@ -145,10 +145,19 @@ Este día nos juntamos en la casa de Lauty por la mañana para poder hacer funci
 
 
 Lautaro Santolucito:
+
 El equipo emprendió el viaje a Córdoba para participar en la instancia nacional de las ONIET. Me encargué de trasladar las carpetas impresas, los respaldos digitales y el equipo RFID completo. Durante el trayecto repasamos las presentaciones y coordinamos los últimos detalles de exposición. La preparación previa y las pruebas realizadas permitieron llegar con el sistema estable y la documentación impresa para presentar al jurado.
 
+<h2>Jueves 16/05/2025</h2>
+
+Tiziano Patella:
+
+El día de hoy nos tocaba exponer Prototipos y SISAPP por lo que antes de la exposicion me propuse a transformar la app para dispositivos moviles. Tras un rato de trabajo logre hacer una version para celulares la cual visualmente se veía muy bien pero sin embargo por alguna razon no mostraba los tags, sin embargo no era porblema porque siemplemente la quería de forma visual. Queda pediente la app para celulares funcional.
+
 <h2>Sábado 18/10/2025 — Regreso y cierre</h2>
+
 Lautaro Santolucito:
+
 Regresamos de la competencia el 18 de octubre luego de una experiencia inolvidable en las ONIET. El proyecto S.I.C.A.P. obtuvo el primer puesto en la categoría Prototipos, con una calificación de 96/100, y el cuarto puesto en SysApp, con una puntuación de 87/100. Estos resultados reflejaron el trabajo constante y la dedicación de todo el equipo a lo largo del año.
 El jurado destacó especialmente la integración entre hardware y software, la estabilidad del sistema y la calidad de la documentación presentada. Ver funcionar cada parte del proyecto —desde las antenas y el lector hasta la web y el backend— fue una gran satisfacción.
 A mi regreso elaboré un informe con las observaciones del jurado y los puntos de mejora sugeridos, que servirán como base para futuras versiones del sistema. Cerramos esta etapa con orgullo y motivación, conscientes de que logramos posicionar a nuestra escuela entre los mejores proyectos del país.
