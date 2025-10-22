@@ -131,3 +131,8 @@ A mi regreso elaboré un informe con las observaciones del jurado y los puntos d
 Lautaro Santolucito:
 Comenzamos nuevamente con las jornadas de trabajo tras el regreso de las ONIET. Junto con Pablo nos dedicamos a rearmar la estructura del portal del proyecto, que había sido desarmada para el viaje, con el objetivo de dejarla lista para la presentación de la feria de fin de año.
 Revisamos las conexiones, el anclaje de las antenas y el posicionamiento del lector para asegurar estabilidad y buena visibilidad durante la exposición. Además, evaluamos posibles mejoras en el diseño físico del stand, buscando hacerlo más prolijo y atractivo para el público.
+
+<h2>Miércoles 22/10/2025</h2>
+Lautaro Santolucito:
+Durante la jornada continuamos con la puesta a punto del sistema y la organización general del proyecto. Analizamos junto con los chicos las observaciones recibidas en las ONIET, identificando qué aspectos podrían optimizarse para la feria de fin de año.
+Nos enfocamos en planificar pequeñas mejoras de presentación y en definir una distribución más práctica para el espacio de exposición. Con la experiencia adquirida en Córdoba, el grupo mostró mayor coordinación y claridad sobre cómo comunicar el funcionamiento y el impacto del S.I.C.A.P. frente a nuevos evaluadores.
