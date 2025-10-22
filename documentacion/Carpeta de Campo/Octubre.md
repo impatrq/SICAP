@@ -35,6 +35,10 @@ Como mejora adicional, se propuso la incorporación de una nueva columna llamada
 
 Finalmente, se comprobó que el servidor continúa funcionando de manera estable en la Raspberry Pi bajo la gestión de servicios del sistema, lo que asegura que el backend se mantenga en ejecución y se inicie automáticamente tras cada reinicio.
 
+Patella  Tiziano:
+
+El día de hoy trabaje en conjunto con facu sobre todos los cambios que hizo sobre la Web-app. Al momento de que el haya implementado la columna de categoría me percaté de que esta no trabajaba de forma correcta debido al nombre que tenia asignado. Al tener un tilde como nombre el codigo no lograba reconocerla bien por lo que tuve que modificar el nombre en todos las secciones en donde era mecionada para así garantizar un funcionamineto correcto.
+
 <h2> Lunes 06/10/25 </h2>
 
 Facu Spagno:
