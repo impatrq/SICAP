@@ -80,8 +80,20 @@ Una vez que se asigna la categoría, el sistema filtra automáticamente los regi
 
 Para lograrlo, implementé un filtro de categorización que gestiona el traspaso dinámico entre secciones y asegura que cada tag quede correctamente clasificado. Con esta función finalizada, el Home y las metas de categorización quedaron completamente operativas, consolidando una parte clave del flujo de trabajo del sistema.
 
-<h2>Lunes de 13/10/25</h2>
+<h2>Lunes 13/10/25</h2>
 
 Tiziano Patella:
 
-El día de hoy, los compañeros termianor el  armado 
+El día de hoy, los compañeros termianor el  armado del portal para presentar en la ONIET por lo que una vez todas las antenas y lectores fueron conectados nos duspusimos a hacer las pruebas finales previo a nuestra competencia. Sin embargo, una vez que comencamos a probar todo pasando los tags como si fueramos empleados nos percatamos de que habia un error que estaba sucediendo el cual estaba arruinando todo el funcionamiento, algunos de los tags que pasabamos por alguna razon se duplicaban. Este fue un error que nos nos había pasado antes por lo que no supe cual podria llegar a ser el causante. Debido a eso decidí quedarme toda la tarde trabajando en ver cual era el problema. Al comienzo consideré que el cuasante podía ser un problema de lectura erronea de bytes por parte de las antenas pero  tras hablar con los profes quedo descartada esa idea. A pesar de que estuve toda la tarde analizando posibles causantes de el problema no logré encontrar una solución por lo que unica opcion era esperar al día de mañana al profe Medina y ver si el me podía llegar a dar una mano. 
+
+<h2>Martes 14/10/25</h2>
+
+Tiziano Patella:
+
+Una vez que llego Medina a la escuela le mostré cual era el problema que estabamos teniendo para ver si el podía llegar a darse cuenta que estaba pasando. Lo primero que nos hizo hacer fue modificar el codigo de el micro para que al detectar el tag nos de una respuesta completa completa en byts de que es lo que obtiene. Una vez que obtuvimos el cifrado de que era lo que detectaba la antena nos hizo separarlo para poder obtener el numero de tag, haciendo eso nos dimos cuenta que el número de tag que nos brindaba antes nuestro codigo era erroneo y no se asimilaba en nada al verdadero identificador, esto estaba causando que al trabajar con números que no eran reales estos se repitieran ocacionalmente. Gracias a las intrucciones de Medina pudimos saber cuales eran los pasos que teniamos que seguir para obtener la información correcta. 
+
+Llegada la tarde, tras haber hecho funcionar el sistema con exito y el tipo de tag real( de un momento para otro y sin explicación alguna) dejo de funcionar todo. Los lectores estaban muy calientes y nos saltaban error y el codigo hecho por Medina que antes funciobana ahora no nos devolvía nada. Esto significo una gran preocupación para nosotros porque Medina ya se había ido de la escuela por lo que ya no podría ayudarnos y al día siguiente nos ibamos a Cordoba por lo que el proyecto tenía que funcionar ese mismo día si o si.
+
+Ante esta problematica de ultimo momento decidimos que la mejor opción era juntarnos en una casa durante la noche para poder arreglar todo y llegar a la ONIET con un proyecto funcional.
+
+
