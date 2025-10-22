@@ -79,3 +79,9 @@ Creé este módulo desde cero, incluyendo la tabla correspondiente y la lógica 
 Una vez que se asigna la categoría, el sistema filtra automáticamente los registros y los redirige a su sección correspondiente: si el tag pertenece a una persona, se envía al módulo de Empleados; si corresponde a un insumo, pasa al Inventario.
 
 Para lograrlo, implementé un filtro de categorización que gestiona el traspaso dinámico entre secciones y asegura que cada tag quede correctamente clasificado. Con esta función finalizada, el Home y las metas de categorización quedaron completamente operativas, consolidando una parte clave del flujo de trabajo del sistema.
+
+<h2>Lunes de 13/10/25</h2>
+
+Tiziano Patella:
+
+El día de hoy, los compañeros termianor el  armado 
