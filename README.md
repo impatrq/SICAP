@@ -64,33 +64,18 @@ SICAP se compone de tres módulos principales:
 ## Integrantes
 
 ![WhatsApp Image 2025-08-27 at 11 02 59](https://github.com/user-attachments/assets/c0abe7cf-d06f-43c4-8fe5-f88b2cd92b35)
+<div align="center">
 
 
-- **Patella Tiziano**    📧 Correo: tizianopatella40@gmail.com    
-  [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tizianopatella/) 
-  [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/titi_patella/) 
-  [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/Tizianopatella)
+| Nombre | Contacto | Redes |
+|:--|:--|:--|
+| **Patella Tiziano** | 📧 tizianopatella40@gmail.com | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tizianopatella/) &nbsp; [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/titi_patella/) &nbsp; [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/Tizianopatella) |
+| **Lautaro Santolucito** | 📧 lauty.santolucito@icloud.com | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lautarosantolucito/) &nbsp; [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/lautii.santolucito/) &nbsp; [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/kicklauti) |
+| **Facundo Spagnoletta** | 📧 facu.spagnoleta@gmail.com | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fspagnoletta/) &nbsp; [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/facuspagno/) &nbsp; [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/facuspagnoletta) |
+| **Facundo Ledesma** | 📧 facundoledesma140@gmail.com | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ffaculedesma/) &nbsp; [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/ffaculedesma/) &nbsp; [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/LedesmaFacu) |
+| **Pablo Osores** | 📧 pablooosores@gmail.com | [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pabloosores/) &nbsp; [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/pablooosores/) &nbsp; [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/pablooosores) |
 
-- **Lautaro Santolucito**    📧 Correo: lauty.santolucito@icloud.com    
-  [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lautarosantolucito/) 
-  [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/lautii.santolucito/) 
-  [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/kicklauti)
-
-- **Facundo Spagnoletta**    📧 Correo: facu.spagnoleta@gmail.com    
-  [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fspagnoletta/) 
-  [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/facuspagno/) 
-  [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/facuspagnoletta)
-
-- **Facundo Ledesma**    📧 Correo: facundoledesma140@gmail.com    
-  [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ffaculedesma/) 
-  [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/ffaculedesma/) 
-  [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/LedesmaFacu)
-
-- **Pablo Osores**    📧 Correo: pablooosores@gmail.com    
-  [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pabloosores/) 
-  [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/pablooosores/) 
-  [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/pablooosores)
-
+</div>
 
 ---
 
