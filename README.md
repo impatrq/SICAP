@@ -19,7 +19,7 @@
 ## Logros y Reconocimientos
 
 🏅 **Ganadores del 1° puesto en la categoría Prototipos - ONIET 2025** (puntaje: 96/100)  
-🎖️ **4° puesto en SysApp - ONIET 2025** (puntaje: 87/100)  
+🎖️ **5° puesto en SysApp - ONIET 2025** (puntaje: 87/100)  
 📍 Representando a la **E.E.S.T. N°7 “Taller Regional Quilmes”**, Buenos Aires, Argentina
 
 ## Nuestra Propuesta
