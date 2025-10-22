@@ -66,18 +66,32 @@ SICAP se compone de tres módulos principales:
 ![WhatsApp Image 2025-08-27 at 11 02 59](https://github.com/user-attachments/assets/c0abe7cf-d06f-43c4-8fe5-f88b2cd92b35)
 
 
-- Patella Tiziano    📧 Correo: tizianopatella40@gmail.com    [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tizianopatella/)
-- Lautaro Santolucito    📧 Correo: lauty.santolucito@icloud.com    [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lautarosantolucito/)
-- Facundo Spagnoletta    📧 Correo: facu.spagnoleta@gmail.com    [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fspagnoletta/)
-- Facundo Ledesma    📧 Correo: facundoledesma140@gmail.com    [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ffaculedesma/)
-- Pablo Osores    📧 Correo: pablooosores@gmail.com    [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pabloosores/)
+- **Patella Tiziano**    📧 Correo: tizianopatella40@gmail.com    
+  [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tizianopatella/) 
+  [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/titi_patella/)
+
+- **Lautaro Santolucito**    📧 Correo: lauty.santolucito@icloud.com    
+  [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lautarosantolucito/) 
+  [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/lautii.santolucito/)
+
+- **Facundo Spagnoletta**    📧 Correo: facu.spagnoleta@gmail.com    
+  [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fspagnoletta/) 
+  [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/facuspagno/)
+
+- **Facundo Ledesma**    📧 Correo: facundoledesma140@gmail.com    
+  [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ffaculedesma/) 
+  [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/ffaculedesma/)
+
+- **Pablo Osores**    📧 Correo: pablooosores@gmail.com    
+  [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pabloosores/) 
+  [![Instagram](https://img.shields.io/badge/Instagram-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/pablooosores/)
 
 
 ---
 
 ## Agradecimientos
 
-Agradecemos a nuestros docentes, especialmente al profesor **Medina y Carlassara**, por su acompañamiento constante, y a **Transporte Miloser S.A.; Ledmull; La Populas Hamburguesas; Checkpoint** por su apoyo como sponsor durante la competencia ONIET 2025.
+Agradecemos a nuestros docentes, especialmente al profesor **Medina y Carlassara**, por su acompañamiento constante, y a **Transporte Miloser S.A.; Ledmull; La Popular Hamburguesas; Checkpoint** por su apoyo como sponsor durante el desarrollo del proyecto.
 
 ---
 ## Información de Contacto
