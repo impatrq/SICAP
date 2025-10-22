@@ -206,6 +206,9 @@ El día de hoy era la presentacion de la web-app para ver si eramos selecionados
 
 <h2>Lunes 29/09/2025 </h2>
 
+Lautaro Santolucito:
+Hoy me dediqué junto con Pablo a tomar medidas precisas para el diseño del portal web del proyecto. Además, realicé pruebas prácticas con la pistola RFID que nos facilitó Checkpoint: comprobé la detección de etiquetas a distintas distancias y angulaciones, registré los valores de señal (RSSI) y anoté las condiciones en las que la lectura era más estable. Coordiné con Facu S. y Titi para ver de desarrollar la idea en un futuro.
+
 Facu Spagno:
 
 Me dediqué a perfeccionar la tarjeta de creación de Pañol dentro del Menú. Corrigí diversos errores y optimicé su diseño visual, logrando una versión más estable, clara y profesional.
@@ -236,5 +239,6 @@ Patella Tiziano:
 
 El día de hoy seguí trabajando con la personalizacion de los tags con el backend. Al ir al preguntarle al profe Fabri sobre si es que estaba haciendo todo de manera correcta me corrigio e indico que la manera en la cual estaba queriendo editar los tags no era correcta y que nunca iba a funcionar. Yo estaba queriendo editar la categoria de tag que viene por defecto con el tag, sin embargo si modifica ese parametro iba a ser imposible para el servidor vovler a indentificar el tag por lo que debia dejar esa categoria como estaba y crear una nueva para poder asignarles nombres de manera segura. Tras crear toda la logica de nueva identifacion pobre el codigo para ver si funcioaba, pero a pesar de que la codigo era el correcto habia unos problemas con la comunacion con el servidor por lo que con facu S nos propusimos que quedaba pendiente arreglar los problemas que faltaban con el servidor. 
 
-
+Lautaro Santolucito:
+Continué con el análisis de las lecturas obtenidas el día anterior. Crucé las mediciones de la pistola RFID con las lecturas que nos envía el ESP32 para identificar discrepancias y posibles fuentes de error (interferencias, orientación del tag, distancia). Pero rapidamente nos dimos cuenta con los chicos que no era viable hacerlo ahora y tambien por una cuestion de rangos
 
