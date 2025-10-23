@@ -39,4 +39,4 @@ Dentro de la app `registros`, hay un modelo llamado `RegistroTag`. Guarda dos co
 
 ---
 
-## Estado: 🟡 En pruebas
+## Estado: 🟡 Funcional pero en pruebas
