@@ -107,6 +107,12 @@ Para lograrlo, implementé un filtro de categorización que gestiona el traspaso
 Lautaro Santolucito:
 Coordiné la preparación final del material documental con el equipo. Revisé y uniformé los textos individuales y propuse elementos para la difusión en ONIET: folletos con QR, banner, y una hoja técnica breve para el jurado. Dejé todo preparado para las últimas revisiones previas al viaje. Además, seguí con pruebas puntuales del lector y recopilé datos de RSSI para comparar con las futuras lecturas del ESP32.
 
+Facundo Ledesma:
+
+Hoy me dediqué a elaborar en Canva los folletos que vamos a presentar en las ONIET en Córdoba. Me enfoqué en crear un diseño prolijo y representativo del proyecto, combinando colores, textos e imágenes que transmitan claramente nuestra idea. La intención fue lograr un material visual atractivo que sirva para explicar de forma sencilla qué es nuestro sistema y cómo funciona. Estos folletos serán una parte importante de la presentación, ya que ayudarán a que el público y el jurado comprendan rápidamente los objetivos, el propósito y el impacto de nuestro trabajo.
+
+También empecé a diseñar las cajas que cubrirán la Raspberry Pi, la ESP32 y la placa conversora RS232 a TTL. Para esto utilicé AutoCAD y Tinkercad, dos programas que me facilitan mucho la elaboración de piezas, ya que cuentan con herramientas 3D que permiten visualizar con precisión cómo quedará cada componente. La idea es crear estructuras seguras, organizadas y estéticamente prolijas que protejan los dispositivos y contribuyan a una mejor presentación del proyecto en las ONIET.
+
 
 <h2>Lunes 13/10/25</h2>
 
