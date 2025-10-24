@@ -6,7 +6,7 @@ from .models import Panol, RegistroTag, Asignacion
 class PanolSerializer(serializers.ModelSerializer):
     class Meta:
         model = Panol
-        fields = ['id', 'nombre', 'icono', 'actualizado']
+        fields = ['id', 'nombre', 'icono']
 
 class RegistroTagSerializer(serializers.ModelSerializer):
     categoria = serializers.ChoiceField(choices=['persona','insumo'], allow_null = True, required = False)

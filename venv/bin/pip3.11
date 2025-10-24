@@ -1,4 +1,4 @@
-#!/home/lautarosantolucito/SICAP/venv/bin/python
+#!/home/lautarosantolucito/SICAP/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
