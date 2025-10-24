@@ -6,7 +6,8 @@ from django.db.models import F
 from django.utils.timezone import localtime
 from django.utils import timezone
 from rest_framework.response import Response
-from rest_framework import viewsets, mixins, status, permissions
+from rest_framework import status
+from rest_framework import viewsets, mixins, status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
@@ -176,8 +177,7 @@ def assignments_devolver(request, pk: int):
 class PanolViewSet(ModelViewSet):
     queryset = Panol.objects.all().order_by('nombre')
     serializer_class = PanolSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    
+    permission_classes = [AllowAny]
 
 class RegistroTagViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,viewsets.GenericViewSet):
     

@@ -18,7 +18,6 @@ class RegistroTag(models.Model):
 class Panol(models.Model):
     nombre = models.CharField(max_length=100)
     icono = models.CharField(max_length=50, default='cube')
-    actualizado = models.DateTimeField(auto_now=True)
 
     def __str__(self):
          return self.nombre
