@@ -18,6 +18,5 @@ El objetivo del área de hardware dentro del proyecto SICAP es **garantizar la c
 | **ESP32 DevKit V1** | Microcontrolador | Ejecuta el firmware y envía datos al servidor. |
 | **Conversor RS232–TTL** | Adaptador de señal | Permite la comunicación entre el lector y el ESP32. |
 | **Antenas UHF** | Módulo lector pasivo | Detectan las etiquetas dentro del área de cobertura. |
-| **Fuente 12V / 5A** | Alimentación | Suministra energía estable a todo el sistema. |
 
 ---
