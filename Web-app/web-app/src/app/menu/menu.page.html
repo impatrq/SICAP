@@ -12,6 +12,15 @@
       </article>
 
       <article class="card" *ngFor="let p of panoles">
+        <div class="actions">
+          <button class="action-btn" title="Renombrar" (click)="abrirRenombrar(p, $event)">
+            <ion-icon name="pencil"></ion-icon>
+          </button>
+          <button class="action-btn danger" title="Eliminar" (click)="confirmarEliminar(p, $event)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </div>
+
         <button class="poster" (click)="abrirPanol(p)">
           <ion-icon [name]="'cube'"></ion-icon>
         </button>
@@ -19,14 +28,14 @@
       </article>
     </section>
 
-    <ion-modal mode="md" cssClass="tarjeta-modal" [isOpen]="creating" (didDismiss)="cancelarCrear()"  [presentingElement]="null">
+    <ion-modal mode="md" cssClass="tarjeta-modal" [isOpen]="creating" (didDismiss)="cancelarCrear()" [presentingElement]="null">
       <ng-template>
         <ion-header>
           <ion-toolbar>
             <ion-title>Personalizar</ion-title>
-              <ion-buttons slot="end">
-                <ion-button (click)="cancelarCrear()" class="btn-close">
-                  <ion-icon name="close-outline"></ion-icon>
+            <ion-buttons slot="end">
+              <ion-button (click)="cancelarCrear()" class="btn-close">
+                <ion-icon name="close-outline"></ion-icon>
               </ion-button>
             </ion-buttons>
           </ion-toolbar>
