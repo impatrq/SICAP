@@ -19,7 +19,6 @@ ion-content.page {
   align-content: center;
 }
 
-/* ===== Tarjetas ===== */
 .card {
   position: relative;
   background: rgba(255,255,255,0.05);
@@ -69,7 +68,6 @@ ion-content.page {
   letter-spacing: .6px;
 }
 
-/* ===== Barra de acciones con íconos medianos ===== */
 .actions-bar {
   position: absolute;
   left: 14px;
@@ -97,7 +95,6 @@ ion-content.page {
   pointer-events: auto;
 }
 
-/* ===== Botones circulares medianos ===== */
 .ab-btn {
   width: 46px;
   height: 46px;
@@ -134,7 +131,6 @@ ion-content.page {
   box-shadow: 0 0 12px rgba(255, 80, 80, 0.45);
 }
 
-/* ===== En móviles ===== */
 @media (max-width: 767px) {
   .actions-bar {
     opacity: 1;
@@ -148,7 +144,6 @@ ion-content.page {
   }
 }
 
-/* ===== Modal (sin tocar) ===== */
 .tarjeta-modal {
   margin:auto;
   width: min(640px, 92vh);

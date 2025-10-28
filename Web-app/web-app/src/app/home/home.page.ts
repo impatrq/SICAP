@@ -58,15 +58,35 @@ export class HomePage implements OnInit, OnDestroy {
 
   loading = false;
   error?: string;
+  qVisual: string = '';
+  qInventario: string = '';
+  qEmpleados: string = '';
+
   private sub?: Subscription;
 
   private API = 'http://192.168.111.218:5000/api/v1/register/tag/list/';
   private API_EDIT = 'http://192.168.111.218:5000/api/v1/register/tag';
   private API_ASSIGN = 'http://192.168.111.218:5000/api/v1/assignments';
 
+  // Estado local/meta
   private tagMeta: Record<string, TagMeta> = {};
   private lastSeen: Record<string, { id: number; ts: number }> = {};
   private STORAGE_KEY = 'sicap_ui_estado';
+
+  private pollingMs = 2000;           
+  private reqInFlight = false;     
+  private visHandler?: () => void;  
+
+  constructor(
+    private toast: ToastController,
+    private http: HttpClient,
+    private alertCtrl: AlertController,
+    private route: ActivatedRoute
+  ) {
+    this.route.paramMap.subscribe(p => {
+      this.panolId = +(p.get('panolId') || 0) || undefined;
+    });
+  }
 
   private catKey(cat: string | null | undefined): string {
     return (cat ?? '').toString().trim().toLowerCase();
@@ -77,6 +97,22 @@ export class HomePage implements OnInit, OnDestroy {
     if (k === 'objeto') return 'insumo';
     if (k === 'persona' || k === 'insumo') return k;
     return '';
+  }
+
+  private normTxt(s?: string | null): string {
+    return (s ?? '').toString().normalize('NFD').replace(/\p{Diacritic}/gu,'').toLowerCase().trim();
+  }
+
+  private matchQuery(reg: Registro, q: string): boolean {
+    const qq = this.normTxt(q);
+    if (!qq) return true;
+    const n = this.normTxt(reg.nombre);
+    const t = this.normTxt(reg.tag);
+    const tokens = qq.split(/\s+/).filter(Boolean);
+    const fields = [n, t];
+    return tokens.every(tok =>
+      fields.some(f => f.split(/\s+/).some(word => word.startsWith(tok)))
+    );
   }
 
   expanded: Set<string> = new Set();
@@ -92,17 +128,6 @@ export class HomePage implements OnInit, OnDestroy {
   modeloEdicion: { id: number|null; nombre: string; categoria: 'persona'|'insumo'|'' } = {
     id: null, nombre: '', categoria: ''
   };
-
-  constructor(
-    private toast: ToastController,
-    private http: HttpClient,
-    private alertCtrl: AlertController,
-    private route: ActivatedRoute
-  ) {
-    this.route.paramMap.subscribe(p => {
-      this.panolId = +(p.get('panolId') || 0) || undefined;
-    });
-  }
 
   friendlyCategoria(cat: string | null | undefined): string {
     const n = this.normCat(cat);
@@ -155,43 +180,6 @@ export class HomePage implements OnInit, OnDestroy {
   onAsignarCategoria(reg: Registro, ev: any) {
     const value = (ev?.detail?.value ?? '').toString();
     this.setCategoria(reg, value);
-  }
-
-  private saveState() {
-    const snapshot = {
-      tagsEstado: this.tagsEstado,
-      lastSeen: this.lastSeen,
-      tagMeta: this.tagMeta,
-    };
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(snapshot));
-  }
-
-  private loadState() {
-    const raw = localStorage.getItem(this.STORAGE_KEY);
-    if (!raw) return;
-    try {
-      const s = JSON.parse(raw);
-      this.tagsEstado = s.tagsEstado || {};
-      this.lastSeen   = s.lastSeen   || {};
-      this.tagMeta    = s.tagMeta    || {};
-
-      this.tagsTaller = [];
-      this.tagsFuera  = [];
-      for (const [tag, meta] of Object.entries(this.tagMeta)) {
-        const base: Registro = {
-          tag, id: meta.lastId ?? 0,
-          nombre: meta.nombre,
-          categoria: meta.categoria,
-          fecha_hora: meta.lastTs ? new Date(meta.lastTs).toISOString() : null,
-          created_at: null
-        };
-        const r = this.aplicarMeta(base);
-        if (!this.isInsumo(r.categoria)) continue; // filtrar solo insumos
-
-        if (meta.estado === 'taller') this.upsertEnLista(this.tagsTaller, r);
-        else                          this.upsertEnLista(this.tagsFuera,  r);
-      }
-    } catch { /* noop */ }
   }
 
   private editarSoloNombre(reg: Registro, nuevoNombre: string) {
@@ -360,32 +348,44 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadState();
-    this.cargarRegistros();
+    this.cargarRegistros(); // primer fetch
+
+    // Pausar/reanudar polling según visibilidad de pestaña
+    this.visHandler = () => {
+      if (document.hidden) {
+        this.sub?.unsubscribe();
+      } else if (this.seccionActiva) {
+        this.sub?.unsubscribe();
+        this.sub = interval(this.pollingMs).subscribe(() => this.cargarRegistros());
+      }
+    };
+    document.addEventListener('visibilitychange', this.visHandler);
   }
 
   ngOnDestroy() {
     this.sub?.unsubscribe();
+    if (this.visHandler) {
+      document.removeEventListener('visibilitychange', this.visHandler);
+    }
   }
 
   activarSeccion(nombre: string) {
     this.seccionActiva = nombre;
 
-  const necesitaDatos = (
-    nombre === 'Interfaz Visual' ||
-    nombre === 'Inventario' ||
-    nombre === 'Empleados' ||
-    nombre === 'Personalización'
-  );
+    const necesitaDatos =
+      nombre === 'Interfaz Visual' ||
+      nombre === 'Inventario' ||
+      nombre === 'Empleados' ||
+      nombre === 'Personalización';
 
-  if (necesitaDatos) {
-    this.cargarRegistros();                            // ← pide inmediatamente
-    if (!this.sub || this.sub.closed) {
-      this.sub = interval(1000).subscribe(() => this.cargarRegistros());  // ← sigue pidiendo
-    }
-  } else {
+    // cortar cualquier polling previo
     this.sub?.unsubscribe();
+
+    if (necesitaDatos) {
+      this.cargarRegistros(); // fetch inmediato
+      this.sub = interval(this.pollingMs).subscribe(() => this.cargarRegistros());
+    }
   }
-}
 
   volverAlMenuCentral() {
     this.seccionActiva = null;
@@ -461,7 +461,13 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   cargarRegistros() {
-    this.loading = true;
+    // evita solapar si hay una request en curso
+    if (this.reqInFlight) return;
+    this.reqInFlight = true;
+
+    // spinner solo si aún no hay data
+    const showSpinner = this.registros.length === 0 && !this.loading;
+    if (showSpinner) this.loading = true;
     this.error = undefined;
 
     this.http.get<Registro[]>(this.API).subscribe({
@@ -493,51 +499,70 @@ export class HomePage implements OnInit, OnDestroy {
         }
 
         this.loading = false;
+        this.reqInFlight = false;
       },
       error: () => {
         this.error = 'No pude cargar los registros';
         this.loading = false;
+        this.reqInFlight = false;
       }
     });
   }
 
   get tagsUnicos(): Registro[] {
     const ult: Record<string, Registro> = {};
-  for (const r of this.registros) {
-    const t = r.tag;
-    const prev = ult[t];
-    const ts = this.ts(r);
-    if (!prev || ts > this.ts(prev) || (ts === this.ts(prev) && (Number(r.id)||0) > (Number(prev.id)||0))) {
-      ult[t] = r;
+    for (const r of this.registros) {
+      const t = r.tag;
+      const prev = ult[t];
+      const ts = this.ts(r);
+      if (!prev || ts > this.ts(prev) || (ts === this.ts(prev) && (Number(r.id)||0) > (Number(prev.id)||0))) {
+        ult[t] = r;
+      }
     }
-  }
 
-  // B) merge con meta para asegurar que los sin categoría aparezcan
-  for (const [t, m] of Object.entries(this.tagMeta)) {
-    if (!ult[t]) {
-      ult[t] = {
-        id: m.lastId ?? 0,
-        tag: t,
-        nombre: m.nombre,
-        categoria: m.categoria ?? null,
-        fecha_hora: m.lastTs ? new Date(m.lastTs).toISOString() : null,
-        created_at: null
-      };
-    } else {
-      const r = ult[t];
-      if (m.nombre && !r.nombre) r.nombre = m.nombre;
-      r.categoria = (this.normCat(r.categoria ?? m.categoria ?? null) || null);
+    // merge con meta para asegurar que los sin categoría aparezcan
+    for (const [t, m] of Object.entries(this.tagMeta)) {
+      if (!ult[t]) {
+        ult[t] = {
+          id: m.lastId ?? 0,
+          tag: t,
+          nombre: m.nombre,
+          categoria: m.categoria ?? null,
+          fecha_hora: m.lastTs ? new Date(m.lastTs).toISOString() : null,
+          created_at: null
+        };
+      } else {
+        const r = ult[t];
+        if (m.nombre && !r.nombre) r.nombre = m.nombre;
+        r.categoria = (this.normCat(r.categoria ?? m.categoria ?? null) || null);
+      }
     }
+
+    const lista = Object.values(ult).map(r => this.aplicarMeta(r));
+    lista.sort((a, b) => this.ts(b) - this.ts(a) || ((Number(b.id)||0) - (Number(a.id)||0)));
+    return lista;
   }
-
-  const lista = Object.values(ult).map(r => this.aplicarMeta(r));
-  lista.sort((a, b) => this.ts(b) - this.ts(a) || ((Number(b.id)||0) - (Number(a.id)||0)));
-  return lista;
-}
-
 
   get tagsTallerSoloInsumo() { return this.tagsTaller.filter(r => this.isInsumo(r.categoria)); }
   get tagsFueraSoloInsumo()  { return this.tagsFuera.filter(r => this.isInsumo(r.categoria)); }
+
+  // Interfaz Visual
+  get tagsTallerFiltrados(): Registro[] {
+    return this.tagsTaller.filter(r => this.matchQuery(r, this.qVisual));
+  }
+  get tagsFueraFiltrados(): Registro[] {
+    return this.tagsFuera.filter(r => this.matchQuery(r, this.qVisual));
+  }
+
+  // Inventario
+  get inventarioFiltrado(): Registro[] {
+    return this.inventarioItems.filter(r => this.matchQuery(r, this.qInventario));
+  }
+
+  // Empleados
+  get empleadosFiltrados(): Registro[] {
+    return this.empleadosItems.filter(r => this.matchQuery(r, this.qEmpleados));
+  }
 
   limpiarTags() {
     this.tagsTaller = [];
@@ -547,6 +572,43 @@ export class HomePage implements OnInit, OnDestroy {
     this.lastSeen   = {};
     this.tagMeta    = {};
     localStorage.removeItem(this.STORAGE_KEY);
+  }
+
+  private saveState() {
+    const snapshot = {
+      tagsEstado: this.tagsEstado,
+      lastSeen: this.lastSeen,
+      tagMeta: this.tagMeta,
+    };
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(snapshot));
+  }
+
+  private loadState() {
+    const raw = localStorage.getItem(this.STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const s = JSON.parse(raw);
+      this.tagsEstado = s.tagsEstado || {};
+      this.lastSeen   = s.lastSeen   || {};
+      this.tagMeta    = s.tagMeta    || {};
+
+      this.tagsTaller = [];
+      this.tagsFuera  = [];
+      for (const [tag, meta] of Object.entries(this.tagMeta)) {
+        const base: Registro = {
+          tag, id: meta.lastId ?? 0,
+          nombre: meta.nombre,
+          categoria: meta.categoria,
+          fecha_hora: meta.lastTs ? new Date(meta.lastTs).toISOString() : null,
+          created_at: null
+        };
+        const r = this.aplicarMeta(base);
+        if (!this.isInsumo(r.categoria)) continue; // filtrar solo insumos
+
+        if (meta.estado === 'taller') this.upsertEnLista(this.tagsTaller, r);
+        else                          this.upsertEnLista(this.tagsFuera,  r);
+      }
+    } catch { /* noop */ }
   }
 
   trackById(index: number, item: any) {
