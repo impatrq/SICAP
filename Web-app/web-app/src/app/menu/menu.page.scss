@@ -14,54 +14,149 @@ ion-content.page {
 .grid {
   width: min(1200px, 96vw);
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 18px;
   align-content: center;
 }
 
+/* ===== Tarjetas ===== */
 .card {
-  position: relative; /* necesario para acciones flotantes */
-  background: rgba(255,255,255,0.06);
-  border-radius: 16px;
+  position: relative;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 18px;
   padding: 12px;
   text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,.18);
-  transition: transform .15s ease, box-shadow .15s ease;
-
-  &:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(0,0,0,.22); }
+  box-shadow: 0 10px 26px rgba(0,0,0,.22);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  padding-bottom: 72px; /* más espacio para barra */
+  overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(0,0,0,.28);
+  border-color: rgba(122, 164, 255, 0.18);
 }
 
 .poster {
   width: 100%;
-  height: 130px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.08);
+  height: 140px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background:
+    radial-gradient(120% 90% at 20% 10%, rgba(126,165,255,0.14), transparent 60%),
+    rgba(255,255,255,0.06);
   display: flex; align-items: center; justify-content: center;
-  border: none; cursor: pointer;
+  cursor: pointer;
 
-  ion-icon { font-size: 40px; color: #9ec1ff; }
+  ion-icon {
+    font-size: 46px;
+    color: #9ec1ff;
+    filter: drop-shadow(0 2px 6px rgba(158,193,255,.25));
+  }
+}
+
+.name {
+  margin-top: 10px;
+  font-weight: 700;
+  color: #cfe2ff;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35);
 }
 
 .grid .card.new .name {
-  margin-top: 10px;
-  font-weight: 700;
-  letter-spacing: .6px;
-  color: #a6d9ec;
   text-transform: uppercase;
-}
-
-.card .name {
   color: #a6d9ec;
+  letter-spacing: .6px;
 }
 
+/* ===== Barra de acciones con íconos medianos ===== */
+.actions-bar {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.05);
+
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.card:hover .actions-bar {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ===== Botones circulares medianos ===== */
+.ab-btn {
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.10);
+  color: #eaeaea;
+  cursor: pointer;
+  transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
+
+  ion-icon { font-size: 22px; transition: transform .15s ease; }
+}
+
+.ab-btn:hover {
+  background: rgba(255,255,255,0.18);
+  transform: translateY(-2px);
+  box-shadow: 0 0 10px rgba(158,193,255,0.35);
+}
+.ab-btn:hover ion-icon {
+  transform: scale(1.1);
+}
+
+.ab-btn:active { transform: scale(0.95); }
+
+.ab-btn.danger {
+  background: rgba(255, 80, 80, 0.18);
+  color: #ffb3b3;
+}
+.ab-btn.danger:hover {
+  background: rgba(255, 80, 80, 0.3);
+  box-shadow: 0 0 12px rgba(255, 80, 80, 0.45);
+}
+
+/* ===== En móviles ===== */
+@media (max-width: 767px) {
+  .actions-bar {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .ab-btn {
+    width: 52px;
+    height: 52px;
+    ion-icon { font-size: 26px; }
+  }
+}
+
+/* ===== Modal (sin tocar) ===== */
 .tarjeta-modal {
   margin:auto;
   width: min(640px, 92vh);
   max-height:82vh;
-  height: auto;
+  height:auto;
   border-radius: 18px;
-  box-shadow: 0 18px 50px rgba(16, 22, 32, 0.55);
-  background: rgba(15, 17, 22, 0.95);
+  box-shadow: 0 18px 50px rgba(16,22,32,.55);
+  background: rgba(15,17,22,.95);
   --ion-background-color: transparent;
 
   &::part(backdrop) {
@@ -72,32 +167,13 @@ ion-content.page {
     backdrop-filter: blur(2px);
   }
 
-  &::part(content){
-    position: static !important;
-    top: auto !important;
-    left: auto !important;
-    transform: none !important;
-  }
-
-  &::part(content)::after {
-    content: "";
-    position: absolute; inset: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.06) 0 1px,
-      transparent 1px 4px
-    );
-    mix-blend-mode: overlay;
-    opacity: .06;
-  }
-
   ion-header, ion-toolbar {
     background: transparent !important;
     color: #eaf6ff;
     border-bottom: 1px solid rgba(255,255,255,0.08);
     backdrop-filter: blur(4px);
   }
+
   ion-title {
     font-weight: 700;
     text-align:center;
@@ -127,7 +203,7 @@ ion-content.page {
     font-weight: 700;
     letter-spacing: .6px;
     text-transform: uppercase;
-    transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+    transition: transform .15s ease, box-shadow .15s ease;
   }
 
   ion-button:not([fill="clear"]):hover {
@@ -141,8 +217,6 @@ ion-content.page {
     letter-spacing: .5px;
     text-transform: uppercase;
   }
-
-  ion-text[color="danger"] { --color: #3580dc; }
 
   .btn-close {
     background: rgba(0,234,255,0.1);
@@ -158,47 +232,5 @@ ion-content.page {
   }
 }
 
-.name { margin-top: 10px; font-weight: 600; }
-
 .row { display: flex; gap: 8px; align-items: center; }
 .mt { margin-top: 12px; }
-
-/* ===== Acciones flotantes (lápiz / tacho) ===== */
-.actions {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  display: flex;
-  gap: 6px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .15s ease;
-}
-.card:hover .actions {
-  opacity: 1;
-  pointer-events: auto;
-}
-.action-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border: none;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.10);
-  backdrop-filter: blur(2px);
-  cursor: pointer;
-
-  ion-icon { font-size: 18px; color: #eaeaea; }
-  &:hover { background: rgba(255,255,255,0.18); }
-}
-.action-btn.danger {
-  background: rgba(255, 80, 80, 0.18);
-  &:hover { background: rgba(255, 80, 80, 0.28); }
-}
-
-/* En mobile no hay hover: mostrarlas siempre */
-@media (max-width: 767px) {
-  .actions { opacity: 1; pointer-events: auto; }
-}

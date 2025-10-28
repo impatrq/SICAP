@@ -11,25 +11,29 @@
     <section class="grid" *ngIf="!loading">
       <article class="card new" (click)="abrirCrear()">
         <div class="poster plus">+</div>
-        <div class="name">Crear Usuario</div>
+        <div class="name">CREAR USUARIO</div>
       </article>
 
       <article class="card" *ngFor="let p of panoles">
-
-      <div class="actions">
-        <button class="action-btn" title="Renombrar" (click)="abrirRenombrar(p, $event)">
-          <ion-icon name="pencil"></ion-icon>
+        <!-- Cubito -->
+        <button class="poster" (click)="abrirPanol(p)">
+          <ion-icon [name]="'cube'"></ion-icon>
         </button>
-        <button class="action-btn danger" title="Eliminar" (click)="confirmarEliminar(p, $event)">
-          <ion-icon name="trash"></ion-icon>
-        </button>
-      </div>
 
-      <button class="poster" (click)="abrirPanol(p)">
-        <ion-icon [name]="'cube'"></ion-icon>
-      </button>
-      <div class="name">{{ p.nombre }}</div>
-    </article>
+        <!-- Barra de acciones: compacta, solo íconos -->
+        <div class="actions-bar icons-only" (click)="$event.stopPropagation()">
+          <button class="icon-btn" title="Renombrar" aria-label="Renombrar"
+                  (click)="abrirRenombrar(p, $event)">
+            <ion-icon name="pencil"></ion-icon>
+          </button>
+          <button class="icon-btn danger" title="Eliminar" aria-label="Eliminar"
+                  (click)="confirmarEliminar(p, $event)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </div>
+
+        <div class="name">{{ p.nombre }}</div>
+      </article>
     </section>
 
     <ion-modal
