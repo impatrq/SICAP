@@ -1,34 +1,44 @@
 <ion-content [fullscreen]="true" class="page">
   <div class="wrap">
+    <div class="center" *ngIf="loading">
+      <ion-spinner></ion-spinner>
+    </div>
 
-    <div class="center" *ngIf="loading"><ion-spinner></ion-spinner></div>
-    <ion-text color="danger" class="center" *ngIf="!loading && error">{{ error }}</ion-text>
+    <ion-text color="danger" class="center" *ngIf="!loading && error">
+      {{ error }}
+    </ion-text>
 
     <section class="grid" *ngIf="!loading">
-
       <article class="card new" (click)="abrirCrear()">
         <div class="poster plus">+</div>
         <div class="name">Crear Usuario</div>
       </article>
 
       <article class="card" *ngFor="let p of panoles">
-        <div class="actions">
-          <button class="action-btn" title="Renombrar" (click)="abrirRenombrar(p, $event)">
-            <ion-icon name="pencil"></ion-icon>
-          </button>
-          <button class="action-btn danger" title="Eliminar" (click)="confirmarEliminar(p, $event)">
-            <ion-icon name="trash"></ion-icon>
-          </button>
-        </div>
 
-        <button class="poster" (click)="abrirPanol(p)">
-          <ion-icon [name]="'cube'"></ion-icon>
+      <div class="actions">
+        <button class="action-btn" title="Renombrar" (click)="abrirRenombrar(p, $event)">
+          <ion-icon name="pencil"></ion-icon>
         </button>
-        <div class="name">{{ p.nombre }}</div>
-      </article>
+        <button class="action-btn danger" title="Eliminar" (click)="confirmarEliminar(p, $event)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </div>
+
+      <button class="poster" (click)="abrirPanol(p)">
+        <ion-icon [name]="'cube'"></ion-icon>
+      </button>
+      <div class="name">{{ p.nombre }}</div>
+    </article>
     </section>
 
-    <ion-modal mode="md" cssClass="tarjeta-modal" [isOpen]="creating" (didDismiss)="cancelarCrear()" [presentingElement]="null">
+    <ion-modal
+      mode="md"
+      cssClass="tarjeta-modal"
+      [isOpen]="creating"
+      (didDismiss)="cancelarCrear()"
+      [presentingElement]="null"
+    >
       <ng-template>
         <ion-header>
           <ion-toolbar>
@@ -40,18 +50,33 @@
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
+
         <ion-content class="ion-padding">
           <ion-item>
-            <ion-input label="Nombre" labelPlacement="floating" [(ngModel)]="nombreNuevo"></ion-input>
+            <ion-input
+              label="Nombre"
+              labelPlacement="floating"
+              [(ngModel)]="nombreNuevo"
+            ></ion-input>
           </ion-item>
+
           <div class="row mt">
-            <ion-button [disabled]="saving || !nombreNuevo.trim()" (click)="crear()">Crear</ion-button>
-            <ion-button fill="clear" (click)="cancelarCrear()">Cancelar</ion-button>
+            <ion-button
+              [disabled]="saving || !nombreNuevo.trim()"
+              (click)="crear()"
+            >
+              Crear
+            </ion-button>
+            <ion-button fill="clear" (click)="cancelarCrear()">
+              Cancelar
+            </ion-button>
           </div>
-          <ion-text color="danger" *ngIf="error">{{ error }}</ion-text>
+
+          <ion-text color="danger" *ngIf="error">
+            {{ error }}
+          </ion-text>
         </ion-content>
       </ng-template>
     </ion-modal>
-
   </div>
 </ion-content>

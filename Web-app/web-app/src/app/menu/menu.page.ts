@@ -34,10 +34,10 @@ export class MenuPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Cookie CSRF y luego cargar pañoles
+    // 1) Plantar cookie CSRF y luego cargar pañoles
     this.http.get(this.CSRF_PING_URL, { withCredentials: true }).subscribe({
       next: () => this.cargar(),
-      error: () => this.cargar(),
+      error: () => this.cargar(), // aunque falle, intento cargar
     });
   }
 
@@ -73,25 +73,25 @@ export class MenuPage implements OnInit {
 
     this.saving = true;
 
-    this.http
-      .post<Panol>(
-        this.PANOLES_URL,
-        { nombre, icono: 'cube' },
-        { withCredentials: true }
-      )
-      .subscribe({
-        next: (p) => {
-          this.saving = false;
-          this.creating = false;
-          this.nombreNuevo = '';
-          this.panoles.unshift(p);
-          this.msg('Creado');
-        },
-        error: () => {
-          this.saving = false;
-          this.error = 'No pude crear el pañol';
-        },
-      });
+    this.http.post<Panol>(
+      this.PANOLES_URL,
+      { nombre },                 
+      { withCredentials: true }
+    ).subscribe({
+      next: (p) => {
+        this.saving = false;
+        this.creating = false;
+        this.nombreNuevo = '';
+        this.panoles.unshift(p);
+        this.msg('Creado');
+      },
+      error: (e) => {
+        this.saving = false;
+        // LOG útil para ver el motivo exacto
+        console.error('POST /panoles/ fallo:', e?.status, e?.error);
+        this.error = 'No pude crear el pañol';
+      },
+    });
   }
 
   abrirPanol(p: Panol) {
@@ -99,8 +99,10 @@ export class MenuPage implements OnInit {
     this.router.navigate(['/home', p.id]);
   }
 
+  private stop(ev?: Event) { ev?.stopPropagation(); ev?.preventDefault(); }
+
   async abrirRenombrar(p: Panol, ev?: Event) {
-    ev?.stopPropagation(); // no abrir el pañol al clickear el lápiz
+    this.stop(ev);
     const alert = await this.alert.create({
       header: 'Renombrar pañol',
       inputs: [{ name: 'nombre', type: 'text', value: p.nombre, placeholder: 'Nuevo nombre' }],
@@ -134,17 +136,13 @@ export class MenuPage implements OnInit {
   }
 
   async confirmarEliminar(p: Panol, ev?: Event) {
-    ev?.stopPropagation();
+    this.stop(ev);
     const alert = await this.alert.create({
       header: 'Eliminar pañol',
       message: `¿Eliminar “${p.nombre}”? Esta acción no se puede deshacer.`,
       buttons: [
         { text: 'Cancelar', role: 'cancel' },
-        {
-          text: 'Eliminar',
-          role: 'destructive',
-          handler: () => this.eliminar(p)
-        }
+        { text: 'Eliminar', role: 'destructive', handler: () => this.eliminar(p) }
       ]
     });
     await alert.present();
@@ -152,23 +150,21 @@ export class MenuPage implements OnInit {
 
   private eliminar(p: Panol) {
     if (!p.id) return;
-    this.http.delete(
-      `${this.PANOLES_URL}${p.id}/`,
-      { withCredentials: true }
-    ).subscribe({
-      next: () => {
-        this.panoles = this.panoles.filter(x => x.id !== p.id);
-        this.msg('Pañol eliminado');
-        // si estabas dentro de ese pañol, salí
-        if (this.router.url.includes(`/home/${p.id}`)) {
-          this.router.navigate(['/home']);
+    this.http.delete(`${this.PANOLES_URL}${p.id}/`, { withCredentials: true })
+      .subscribe({
+        next: () => {
+          this.panoles = this.panoles.filter(x => x.id !== p.id);
+          this.msg('Pañol eliminado');
+          // si estabas dentro de ese pañol, redirigí a un lugar seguro
+          if (this.router.url.includes(`/home/${p.id}`)) {
+            this.router.navigate(['/home']);
+          }
+        },
+        error: (e) => {
+          const detail = e?.error?.detail ? `: ${e.error.detail}` : '';
+          this.msg('No se pudo eliminar' + detail);
         }
-      },
-      error: (e) => {
-        const detail = e?.error?.detail ? `: ${e.error.detail}` : '';
-        this.msg('No se pudo eliminar' + detail);
-      }
-    });
+      });
   }
 
   private async msg(text: string) {
