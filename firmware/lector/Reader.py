@@ -1,8 +1,7 @@
 from machine import UART
 
 class RFIDReader:
-    def __init__(self, tx=17, rx=16, baudrate=57600, uart_id=2):
-        # Igual que el tester: UART2, 57600, GPIO16/17
+    def __init__(self, tx=17, rx=16, baudrate=38400, uart_id=2):
         self.uart = UART(uart_id, baudrate=baudrate, tx=tx, rx=rx,
                         timeout=100, timeout_char=20)
         self._buf = ""
