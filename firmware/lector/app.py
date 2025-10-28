@@ -14,7 +14,7 @@ STABLE_READS = 3            # lecturas consecutivas iguales para considerar "est
 ABSENCE_MS = 600            # cuánto tiempo sin leer nada para considerar que se retiró
 
 # 👉 Igual que el tester: UART2 (GPIO16/17) a 57600
-lector = RFIDReader(tx=17, rx=16, uart_id=2, baudrate=57600)
+lector = RFIDReader(tx=17, rx=16, uart_id=2, baudrate=38400)
 
 # Estado
 current_tag = None          # tag "latched" (enviado y sostenido)
