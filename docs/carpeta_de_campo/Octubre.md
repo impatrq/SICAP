@@ -177,3 +177,8 @@ Nos enfocamos en planificar pequeñas mejoras de presentación y en definir una 
 Lautaro Santolucito:
 
 Durante la jornada me dediqué a reorganizar por completo el repositorio de GitHub del proyecto S.I.C.A.P., siguiendo las indicaciones del profesor Medina. Tenía muchas tareas pendientes y dispersas, por lo que aproveché el día para poner todo al día y dejar el entorno de trabajo ordenado. Reestructuré carpetas, corregí nombres de archivos y organicé los directorios según el nuevo formato solicitado. Con esta organización, el repositorio quedó más claro, coherente y preparado para futuras actualizaciones.
+
+<h2>Viernes 24/10/2025</h2>
+Lautaro Santolucito:
+
+Continué con las tareas relacionadas al control de versiones y la sincronización del proyecto. Durante el día resolvimos un problema crítico en el repositorio de GitHub que había generado conflictos con el servidor. La nominación de carpetas se había roto, lo que impedía que la web se comunicara correctamente con el backend. Tras varias pruebas, logramos restablecer la conexión y dejar el sistema funcionando con normalidad.
