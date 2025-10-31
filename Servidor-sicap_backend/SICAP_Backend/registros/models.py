@@ -21,18 +21,42 @@ class Panol(models.Model):
 
     def __str__(self):
          return self.nombre
-
+    
 class Asignacion(models.Model):
-    persona_tag    = models.CharField(max_length=100)
-    persona_nombre = models.CharField(max_length=100, blank=True, null=True)
+    persona_tag = models.CharField(max_length=64, db_index=True)
+    persona_nombre = models.CharField(max_length=128, null=True, blank=True)
 
-    item_tag       = models.CharField(max_length=100)
-    item_nombre    = models.CharField(max_length=100, blank=True, null=True)
+    item_tag = models.CharField(max_length=64, db_index=True)
+    item_nombre = models.CharField(max_length=128, null=True, blank=True)
 
-    asignado_en    = models.DateTimeField(default=timezone.now)
-    devuelto_en    = models.DateTimeField(blank=True, null=True)
-    activo         = models.BooleanField(default=True)
+    asignado_en = models.DateTimeField(default=timezone.now)
+    devuelto_en = models.DateTimeField(null=True, blank=True)
+    activo = models.BooleanField(default=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['persona_tag', 'activo']),
+            models.Index(fields=['item_tag', 'activo']),
+            models.Index(fields=['asignado_en']),
+        ]
 
     def __str__(self):
-        estado = "activo" if self.activo else "devuelto"
-        return f"{self.persona_tag} <- {self.item_tag} ({estado})"
+        estado = "activo" if self.activo else f"devuelto {self.devuelto_en:%Y-%m-%d %H:%M:%S}" if self.devuelto_en else "inactivo"
+        return f"{self.persona_tag} ← {self.item_tag} ({estado})"
+
+class PersonaSesion(models.Model):
+    persona_tag = models.CharField(max_length=64, db_index=True)
+    persona_nombre = models.CharField(max_length=128, null=True, blank=True)
+    opened_at = models.DateTimeField(default=timezone.now)
+    closed_at = models.DateTimeField(null=True, blank=True)
+    activo = models.BooleanField(default=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['persona_tag', 'activo']),
+            models.Index(fields=['opened_at']),
+        ]
+
+    def __str__(self):
+        estado = "abierta" if self.activo else "cerrada"
+        return f"{self.persona_tag} ({estado}) {self.opened_at:%Y-%m-%d %H:%M:%S}"
