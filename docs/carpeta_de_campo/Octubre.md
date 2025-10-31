@@ -197,3 +197,8 @@ Comenzamos la redacción del Manual de Usuario del sistema S.I.C.A.P. Me encargu
 Lautaro Santolucito:
 
 Durante la jornada grabamos el video de presentación oficial del proyecto para los jurados. Coordiné la preparación del guion, la disposición del equipo y los planos de grabación. También participé en la narración y edición del material audiovisual para que la presentación reflejara claramente el funcionamiento del sistema y la labor del grupo.
+
+<h2>Viernes 31/10/2025</h2>
+Lautaro Santolucito:
+
+Finalizamos la entrega del Manual de Usuario y del video de presentación ante los proyectos. Coordiné la subida del contenido y revisé los últimos detalles de estilo antes de la entrega. Con esta jornada cerramos una etapa clave del proyecto, dejando completa la documentación técnica y audiovisual del S.I.C.A.P.
