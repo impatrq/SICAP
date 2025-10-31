@@ -110,6 +110,16 @@ Coordiné la preparación final del material documental con el equipo. Revisé y
 
 <h2>Lunes 13/10/25</h2>
 
+Facu Spagno:
+
+Durante la jornada desarrollé una de las funcionalidades clave que faltaban en la Web-App para completar los parámetros principales del sistema: la función de asignación de insumos a personas.
+
+Para lograrlo, creé un modelo de asignación en el backend que permite vincular los insumos con los usuarios del sistema. De esta forma, cuando una persona ingresa al pañol y retira herramientas o materiales, el sistema registra automáticamente esos movimientos y los asigna al inventario personal del usuario.
+
+Dentro del apartado de Empleados, incorporé una nueva categoría con un menú expandible que muestra todas las herramientas o insumos que cada persona tiene asignados. Este menú permite visualizar de manera clara qué elementos fueron retirados y cuáles permanecen en su inventario hasta ser devueltos.
+
+Una vez que el usuario devuelve los insumos, el sistema actualiza automáticamente la base de datos, removiendo dichos elementos de su inventario. Con esta función, el sistema logra una trazabilidad completa de los movimientos entre personas e insumos, fortaleciendo el control general y la organización dentro del pañol.
+
 Tiziano Patella:
 
 El día de hoy, los compañeros termianor el  armado del portal para presentar en la ONIET por lo que una vez todas las antenas y lectores fueron conectados nos duspusimos a hacer las pruebas finales previo a nuestra competencia. Sin embargo, una vez que comencamos a probar todo pasando los tags como si fueramos empleados nos percatamos de que habia un error que estaba sucediendo el cual estaba arruinando todo el funcionamiento, algunos de los tags que pasabamos por alguna razon se duplicaban. Este fue un error que nos nos había pasado antes por lo que no supe cual podria llegar a ser el causante. Debido a eso decidí quedarme toda la tarde trabajando en ver cual era el problema. Al comienzo consideré que el cuasante podía ser un problema de lectura erronea de bytes por parte de las antenas pero  tras hablar con los profes quedo descartada esa idea. A pesar de que estuve toda la tarde analizando posibles causantes de el problema no logré encontrar una solución por lo que unica opcion era esperar al día de mañana al profe Medina y ver si el me podía llegar a dar una mano. 
