@@ -172,3 +172,8 @@ Lautaro Santolucito:
 Durante la jornada continuamos con la puesta a punto del sistema y la organización general del proyecto. Analizamos junto con los chicos las observaciones recibidas en las ONIET, identificando qué aspectos podrían optimizarse para la feria de fin de año.
 Nos enfocamos en planificar pequeñas mejoras de presentación y en definir una distribución más práctica para el espacio de exposición. Con la experiencia adquirida en Córdoba, el grupo mostró mayor coordinación y claridad sobre cómo comunicar el funcionamiento y el impacto del S.I.C.A.P. frente a nuevos evaluadores.
 
+<h2>Jueves 23/10/2025</h2>
+
+Lautaro Santolucito:
+
+Durante la jornada me dediqué a reorganizar por completo el repositorio de GitHub del proyecto S.I.C.A.P., siguiendo las indicaciones del profesor Medina. Tenía muchas tareas pendientes y dispersas, por lo que aproveché el día para poner todo al día y dejar el entorno de trabajo ordenado. Reestructuré carpetas, corregí nombres de archivos y organicé los directorios según el nuevo formato solicitado. Con esta organización, el repositorio quedó más claro, coherente y preparado para futuras actualizaciones.
