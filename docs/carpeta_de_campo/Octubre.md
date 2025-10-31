@@ -187,3 +187,8 @@ Continué con las tareas relacionadas al control de versiones y la sincronizaci�
 Lautaro Santolucito:
 
 Dediqué la jornada completa a resolver los problemas del lector RFID. Realicé múltiples pruebas con los distintos lectores y antenas hasta lograr que el equipo que mejor respondía quedara configurado correctamente. Verifiqué las conexiones, la alimentación y la respuesta de lectura desde el ESP32, asegurando la estabilidad del sistema. Este avance fue clave para retomar las mediciones y garantizar el funcionamiento óptimo del hardware.
+
+<h2>Miércoles 29/10/2025</h2>
+Lautaro Santolucito:
+
+Comenzamos la redacción del Manual de Usuario del sistema S.I.C.A.P. Me encargué de definir la estructura general del documento y de redactar las primeras secciones introductorias, como el propósito del sistema, sus objetivos y aplicaciones. También incluí explicaciones técnicas sobre el funcionamiento de los lectores RFID y la comunicación con el servidor, sentando la base para completar el manual de manera profesional.
