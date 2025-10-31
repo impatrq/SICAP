@@ -192,3 +192,8 @@ Dediqué la jornada completa a resolver los problemas del lector RFID. Realicé 
 Lautaro Santolucito:
 
 Comenzamos la redacción del Manual de Usuario del sistema S.I.C.A.P. Me encargué de definir la estructura general del documento y de redactar las primeras secciones introductorias, como el propósito del sistema, sus objetivos y aplicaciones. También incluí explicaciones técnicas sobre el funcionamiento de los lectores RFID y la comunicación con el servidor, sentando la base para completar el manual de manera profesional.
+
+<h2>Jueves 30/10/2025</h2>
+Lautaro Santolucito:
+
+Durante la jornada grabamos el video de presentación oficial del proyecto para los jurados. Coordiné la preparación del guion, la disposición del equipo y los planos de grabación. También participé en la narración y edición del material audiovisual para que la presentación reflejara claramente el funcionamiento del sistema y la labor del grupo.
