@@ -182,3 +182,8 @@ Durante la jornada me dediqué a reorganizar por completo el repositorio de GitH
 Lautaro Santolucito:
 
 Continué con las tareas relacionadas al control de versiones y la sincronización del proyecto. Durante el día resolvimos un problema crítico en el repositorio de GitHub que había generado conflictos con el servidor. La nominación de carpetas se había roto, lo que impedía que la web se comunicara correctamente con el backend. Tras varias pruebas, logramos restablecer la conexión y dejar el sistema funcionando con normalidad.
+
+<h2>Martes 28/10/2025</h2>
+Lautaro Santolucito:
+
+Dediqué la jornada completa a resolver los problemas del lector RFID. Realicé múltiples pruebas con los distintos lectores y antenas hasta lograr que el equipo que mejor respondía quedara configurado correctamente. Verifiqué las conexiones, la alimentación y la respuesta de lectura desde el ESP32, asegurando la estabilidad del sistema. Este avance fue clave para retomar las mediciones y garantizar el funcionamiento óptimo del hardware.
