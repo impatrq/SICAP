@@ -195,6 +195,8 @@ Continué con las tareas relacionadas al control de versiones y la sincronizaci�
 
 <h2>Lunes 27/10/2025</h2>
 
+Facu Spagno:
+
 Luego de la participación y premiación en las ONIET, retomé las tareas del proyecto poniéndome al día con las actividades registradas en Trello y completando aquellas que habían quedado pendientes debido a los días que falté por exámenes en la UTN.
 
 Durante esta jornada me enfoqué en realizar ajustes en el apartado de Menú, específicamente incorporando las funciones necesarias para eliminar y editar pañoles y usuarios dentro del sistema. Estas funcionalidades resultan esenciales para la gestión dinámica de la plataforma, permitiendo mantener la base de datos actualizada y flexible ante cambios de organización.
@@ -202,6 +204,19 @@ Durante esta jornada me enfoqué en realizar ajustes en el apartado de Menú, es
 El proceso presentó cierta complejidad técnica, por lo que, si bien avancé en gran parte de la lógica, el desarrollo me llevó más tiempo de lo previsto y decidí continuar su implementación durante la jornada siguiente.
 
 <h2>Martes 28/10/2025</h2>
+
+Facu Spagno:
+
+Continué el trabajo iniciado el día anterior, finalizando la implementación de la función para editar y eliminar pañoles y usuarios dentro del apartado de Menú.
+
+El sistema quedó completamente funcional, permitiendo que al pasar el cursor sobre cada usuario o pañol se despliegue un menú deslizable con dos opciones principales:
+
+Editar nombre (ícono de lápiz), que permite modificar el nombre del apartado correspondiente.
+
+Eliminar (ícono de tacho de basura), que posibilita remover el usuario o pañol del sistema en caso de ser necesario.
+
+Con esta mejora, el módulo de gestión del Menú alcanzó un nivel de interacción y control total, facilitando la administración de los elementos desde una interfaz visual más dinámica, intuitiva y profesional.
+
 Lautaro Santolucito:
 
 Dediqué la jornada completa a resolver los problemas del lector RFID. Realicé múltiples pruebas con los distintos lectores y antenas hasta lograr que el equipo que mejor respondía quedara configurado correctamente. Verifiqué las conexiones, la alimentación y la respuesta de lectura desde el ESP32, asegurando la estabilidad del sistema. Este avance fue clave para retomar las mediciones y garantizar el funcionamiento óptimo del hardware.
