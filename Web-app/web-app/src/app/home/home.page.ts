@@ -67,15 +67,26 @@ export class HomePage implements OnInit, OnDestroy {
   private API = 'http://192.168.111.218:5000/api/v1/register/tag/list/';
   private API_EDIT = 'http://192.168.111.218:5000/api/v1/register/tag';
   private API_ASSIGN = 'http://192.168.111.218:5000/api/v1/assignments';
+  private API_ASSIGN_AUTO = 'http://192.168.111.218:5000/api/v1/assignments/auto/';
 
   // Estado local/meta
   private tagMeta: Record<string, TagMeta> = {};
   private lastSeen: Record<string, { id: number; ts: number }> = {};
   private STORAGE_KEY = 'sicap_ui_estado';
 
-  private pollingMs = 2000;           
-  private reqInFlight = false;     
-  private visHandler?: () => void;  
+  private pollingMs = 2000;
+  private reqInFlight = false;
+  private visHandler?: () => void;
+
+  // -------- SESIÓN DE PERSONA + CARRITO DE INSUMOS ----------
+  currentPersona: { tag: string; nombre?: string|null } | null = null;
+  carritoSesion = new Map<string, { tag: string; nombre?: string|null; lastTs: number }>();
+  ultimoPingPersonaTs = 0;
+
+  expanded: Set<string> = new Set();
+  asigCache: Record<string, Asignacion[]> = {};
+  asigLoading: Record<string, boolean> = {};
+  asigError: Record<string, string | undefined> = {};
 
   constructor(
     private toast: ToastController,
@@ -114,11 +125,6 @@ export class HomePage implements OnInit, OnDestroy {
       fields.some(f => f.split(/\s+/).some(word => word.startsWith(tok)))
     );
   }
-
-  expanded: Set<string> = new Set();
-  asigCache: Record<string, Asignacion[]> = {};
-  asigLoading: Record<string, boolean> = {};
-  asigError: Record<string, string | undefined> = {};
 
   isPersona(cat: string | null | undefined)      { return this.normCat(cat) === 'persona'; }
   isInsumo(cat: string | null | undefined)       { return this.normCat(cat) === 'insumo'; }
@@ -240,6 +246,65 @@ export class HomePage implements OnInit, OnDestroy {
     });
   }
 
+  private abrirSesionPersona(r: Registro) {
+    this.currentPersona = { tag: r.tag, nombre: r.nombre ?? null };
+    this.carritoSesion.clear();
+    this.ultimoPingPersonaTs = this.ts(r);
+
+    this.seccionActiva = 'Empleados';
+    this.expanded.add(r.tag);
+    this.cargarAsignacionesPersona(r.tag);
+
+    this.ok(`Sesión iniciada: ${r.nombre || r.tag}`);
+  }
+
+  private cerrarSesionPersona() {
+    if (!this.currentPersona) return;
+
+    const persona = this.currentPersona;
+    const items = Array.from(this.carritoSesion.values()).map(x => ({
+      tag: x.tag,
+      nombre: x.nombre ?? null
+    }));
+
+    // limpiamos estado de sesión antes de la request
+    this.currentPersona = null;
+    this.carritoSesion.clear();
+
+    if (!items.length) {
+      return;
+    }
+
+    const payload = {
+      persona_tag: persona.tag,
+      persona_nombre: persona.nombre ?? null,
+      items
+    };
+
+    this.http.post(this.API_ASSIGN_AUTO, payload).subscribe({
+      next: (_resp: any) => {
+        this.ok('Insumos asignados');
+        // refrescar panel si está abierto
+        this.cargarAsignacionesPersona(persona.tag);
+      },
+      error: (e) => {
+        console.error('Fallo asignaciones/auto', e);
+        this.asigError[persona.tag] = 'No se pudieron asignar los insumos';
+      }
+    });
+  }
+
+  private sumarAlCarritoSiCorresponde(r: Registro) {
+    if (!this.currentPersona) return;
+    if (!this.isInsumo(r.categoria)) return;
+
+    this.carritoSesion.set(r.tag, {
+      tag: r.tag,
+      nombre: r.nombre ?? null,
+      lastTs: this.ts(r)
+    });
+  }
+
   private ts(r: Registro): number {
     const f = r.fecha_hora || r.created_at;
     return f ? new Date(f).getTime() : 0;
@@ -348,9 +413,8 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadState();
-    this.cargarRegistros(); // primer fetch
+    this.cargarRegistros(); 
 
-    // Pausar/reanudar polling según visibilidad de pestaña
     this.visHandler = () => {
       if (document.hidden) {
         this.sub?.unsubscribe();
@@ -378,11 +442,10 @@ export class HomePage implements OnInit, OnDestroy {
       nombre === 'Empleados' ||
       nombre === 'Personalización';
 
-    // cortar cualquier polling previo
     this.sub?.unsubscribe();
 
     if (necesitaDatos) {
-      this.cargarRegistros(); // fetch inmediato
+      this.cargarRegistros(); 
       this.sub = interval(this.pollingMs).subscribe(() => this.cargarRegistros());
     }
   }
@@ -399,10 +462,8 @@ export class HomePage implements OnInit, OnDestroy {
     const idNum = Number(reg.id) || 0;
     const cat = this.normCat(reg.categoria); // '' | 'persona' | 'insumo'
 
-    // Guardá lastSeen de este tag apenas lo procesás
     this.lastSeen[tag] = { id: idNum, ts };
 
-    // 1) Sin categoría -> sólo meta (para que figure en Personalización)
     if (this.isSinCategoria(cat)) {
       const m = this.tagMeta[tag] ?? { lastTs: ts, lastId: idNum, estado: 'taller' as EstadoTag };
       m.lastTs = ts;
@@ -414,7 +475,6 @@ export class HomePage implements OnInit, OnDestroy {
       return;
     }
 
-    // 2) Persona -> actualizá meta, no toques IV
     if (this.isPersona(cat)) {
       const m = this.tagMeta[tag] ?? { lastTs: ts, lastId: idNum, estado: 'taller' as EstadoTag };
       m.lastTs = ts;
@@ -423,12 +483,19 @@ export class HomePage implements OnInit, OnDestroy {
       m.categoria = 'persona';
       this.tagMeta[tag] = m;
       this.saveState();
+
+      if (this.currentPersona && this.currentPersona.tag === tag) {
+        this.cerrarSesionPersona();
+      } else {
+        if (this.currentPersona && this.currentPersona.tag !== tag) {
+          this.cerrarSesionPersona();
+        }
+        this.abrirSesionPersona(reg);
+      }
       return;
     }
 
-    // 3) Insumo -> toggle sólo este tag
     if (!this.tagMeta[tag]) {
-      // primera vez como insumo: baseline en 'taller'
       this.tagMeta[tag] = {
         lastTs: ts, lastId: idNum, estado: 'taller',
         nombre: reg.nombre, categoria: 'insumo'
@@ -437,6 +504,8 @@ export class HomePage implements OnInit, OnDestroy {
       this.upsertEnLista(this.tagsTaller, reg);
       this.tagsEstado[tag] = 'taller';
       this.saveState();
+      // sumar al carrito si hay sesión activa
+      this.sumarAlCarritoSiCorresponde(reg);
       return;
     }
 
@@ -458,14 +527,14 @@ export class HomePage implements OnInit, OnDestroy {
     if (reg.nombre) m.nombre = reg.nombre;
     m.categoria = 'insumo';
     this.saveState();
+
+    this.sumarAlCarritoSiCorresponde(reg);
   }
 
   cargarRegistros() {
-    // evita solapar si hay una request en curso
     if (this.reqInFlight) return;
     this.reqInFlight = true;
 
-    // spinner solo si aún no hay data
     const showSpinner = this.registros.length === 0 && !this.loading;
     if (showSpinner) this.loading = true;
     this.error = undefined;
@@ -474,7 +543,7 @@ export class HomePage implements OnInit, OnDestroy {
       next: (rows) => {
         this.registros = rows;
 
-        // 1) Para cada tag, quedate con la fila más nueva
+        // 1) para cada tag, quedate con la fila más nueva
         const latest: Record<string, Registro> = {};
         for (const r of rows) {
           const t = r.tag;
@@ -489,7 +558,7 @@ export class HomePage implements OnInit, OnDestroy {
           }
         }
 
-        // 2) Sólo procesá si es más nuevo que lo que ya vimos para ese tag
+        // 2) procesar sólo si es más nuevo que lo visto
         for (const r of Object.values(latest)) {
           const ls = this.lastSeen[r.tag];
           const ts = this.ts(r);
@@ -608,7 +677,7 @@ export class HomePage implements OnInit, OnDestroy {
         if (meta.estado === 'taller') this.upsertEnLista(this.tagsTaller, r);
         else                          this.upsertEnLista(this.tagsFuera,  r);
       }
-    } catch { /* noop */ }
+    } catch {}
   }
 
   trackById(index: number, item: any) {
