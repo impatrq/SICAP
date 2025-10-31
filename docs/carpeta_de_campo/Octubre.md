@@ -222,6 +222,15 @@ Lautaro Santolucito:
 Dediqué la jornada completa a resolver los problemas del lector RFID. Realicé múltiples pruebas con los distintos lectores y antenas hasta lograr que el equipo que mejor respondía quedara configurado correctamente. Verifiqué las conexiones, la alimentación y la respuesta de lectura desde el ESP32, asegurando la estabilidad del sistema. Este avance fue clave para retomar las mediciones y garantizar el funcionamiento óptimo del hardware.
 
 <h2>Miércoles 29/10/2025</h2>
+
+Facu Spagno:
+
+Durante la jornada me dediqué a realizar los últimos retoques de estilo en los botones del sistema, mejorando su diseño y disposición para lograr una interfaz más uniforme y estética. Con estos ajustes, los elementos visuales del menú y las distintas secciones quedaron consolidados con un estilo coherente y profesional.
+
+Además, desarrollé una nueva función para la Web-App, incorporando una barra de búsqueda en los apartados de Interfaz Visual, Empleados e Inventario. Esta herramienta permite filtrar los registros por palabras clave, facilitando la localización de insumos o herramientas específicas dentro del sistema.
+
+Gracias a esta mejora, ahora es posible encontrar rápidamente un elemento dentro del pañol o verificar cuándo fue registrado por última vez, optimizando el flujo de trabajo y la eficiencia general del sistema.
+
 Lautaro Santolucito:
 
 Comenzamos la redacción del Manual de Usuario del sistema S.I.C.A.P. Me encargué de definir la estructura general del documento y de redactar las primeras secciones introductorias, como el propósito del sistema, sus objetivos y aplicaciones. También incluí explicaciones técnicas sobre el funcionamiento de los lectores RFID y la comunicación con el servidor, sentando la base para completar el manual de manera profesional.
