@@ -236,6 +236,13 @@ Lautaro Santolucito:
 Comenzamos la redacción del Manual de Usuario del sistema S.I.C.A.P. Me encargué de definir la estructura general del documento y de redactar las primeras secciones introductorias, como el propósito del sistema, sus objetivos y aplicaciones. También incluí explicaciones técnicas sobre el funcionamiento de los lectores RFID y la comunicación con el servidor, sentando la base para completar el manual de manera profesional.
 
 <h2>Jueves 30/10/2025</h2>
+
+Facu Spagno:
+
+Durante la jornada nos dedicamos a la grabación de las tomas necesarias para la elaboración del video explicativo del proyecto S.I.C.A.P., el cual formará parte de la documentación oficial y del material de presentación del sistema.
+
+El objetivo de este video es mostrar de manera clara y visual el funcionamiento general del sistema, sus principales características y el proceso de interacción entre hardware y software. Además, se comenzó a trabajar en el desarrollo de detalles para el manual de usuario, definiendo la estructura y los puntos clave que permitirán a futuros usuarios comprender fácilmente el uso y mantenimiento del sistema.
+
 Lautaro Santolucito:
 
 Durante la jornada grabamos el video de presentación oficial del proyecto para los jurados. Coordiné la preparación del guion, la disposición del equipo y los planos de grabación. También participé en la narración y edición del material audiovisual para que la presentación reflejara claramente el funcionamiento del sistema y la labor del grupo.
