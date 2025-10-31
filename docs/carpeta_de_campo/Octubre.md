@@ -193,6 +193,14 @@ Lautaro Santolucito:
 
 Continué con las tareas relacionadas al control de versiones y la sincronización del proyecto. Durante el día resolvimos un problema crítico en el repositorio de GitHub que había generado conflictos con el servidor. La nominación de carpetas se había roto, lo que impedía que la web se comunicara correctamente con el backend. Tras varias pruebas, logramos restablecer la conexión y dejar el sistema funcionando con normalidad.
 
+<h2>Lunes 27/10/2025</h2>
+
+Luego de la participación y premiación en las ONIET, retomé las tareas del proyecto poniéndome al día con las actividades registradas en Trello y completando aquellas que habían quedado pendientes debido a los días que falté por exámenes en la UTN.
+
+Durante esta jornada me enfoqué en realizar ajustes en el apartado de Menú, específicamente incorporando las funciones necesarias para eliminar y editar pañoles y usuarios dentro del sistema. Estas funcionalidades resultan esenciales para la gestión dinámica de la plataforma, permitiendo mantener la base de datos actualizada y flexible ante cambios de organización.
+
+El proceso presentó cierta complejidad técnica, por lo que, si bien avancé en gran parte de la lógica, el desarrollo me llevó más tiempo de lo previsto y decidí continuar su implementación durante la jornada siguiente.
+
 <h2>Martes 28/10/2025</h2>
 Lautaro Santolucito:
 
