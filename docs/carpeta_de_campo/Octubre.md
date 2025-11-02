@@ -248,6 +248,15 @@ Lautaro Santolucito:
 Durante la jornada grabamos el video de presentación oficial del proyecto para los jurados. Coordiné la preparación del guion, la disposición del equipo y los planos de grabación. También participé en la narración y edición del material audiovisual para que la presentación reflejara claramente el funcionamiento del sistema y la labor del grupo.
 
 <h2>Viernes 31/10/2025</h2>
+
+Facu Spagno:
+
+Durante la jornada me enfoqué por completo en el desarrollo de una de las funcionalidades más importantes del sistema S.I.C.A.P.: la asignación automática de insumos a las personas dentro de su inventario personal.
+
+El objetivo de esta función es que, al momento de ingresar al pañol y retirar herramientas o materiales, estos se asignen automáticamente al inventario del usuario, y que, al devolverlos, el sistema los restituya de forma automática, manteniendo así un control preciso de los movimientos de cada persona.
+
+En esta jornada se completó la primera etapa de desarrollo, alcanzando un funcionamiento operativo básico. Si bien la lógica principal está implementada, aún presenta algunos errores menores que se corregirán en la segunda etapa de desarrollo, donde se optimizará la estabilidad y la sincronización de los datos entre el servidor y la interfaz visual.
+
 Lautaro Santolucito:
 
 Finalizamos la entrega del Manual de Usuario y del video de presentación ante los proyectos. Coordiné la subida del contenido y revisé los últimos detalles de estilo antes de la entrega. Con esta jornada cerramos una etapa clave del proyecto, dejando completa la documentación técnica y audiovisual del S.I.C.A.P.
