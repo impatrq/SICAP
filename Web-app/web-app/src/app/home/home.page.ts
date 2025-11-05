@@ -78,7 +78,11 @@ export class HomePage implements OnInit, OnDestroy {
   private reqInFlight = false;
   private visHandler?: () => void;
 
-  // -------- SESIÓN DE PERSONA + CARRITO DE INSUMOS ----------
+  private cooldownPersonaTag: string | null = null;
+  private cooldownHasta = 0;
+  private cooldownMs = 3000; 
+
+  //  SESIÓN DE PERSONA + CARRITO DE INSUMOS
   currentPersona: { tag: string; nombre?: string|null } | null = null;
   carritoSesion = new Map<string, { tag: string; nombre?: string|null; lastTs: number }>();
   ultimoPingPersonaTs = 0;
@@ -124,6 +128,17 @@ export class HomePage implements OnInit, OnDestroy {
     return tokens.every(tok =>
       fields.some(f => f.split(/\s+/).some(word => word.startsWith(tok)))
     );
+  }
+
+  private fetchActivosCount(personaTag: string): Promise<number> {
+    return new Promise((resolve) => {
+      this.http
+        .get<Asignacion[]>(`${this.API_ASSIGN}/?activo=1&persona_tag=${encodeURIComponent(personaTag)}`)
+        .subscribe({
+          next: rows => resolve((rows || []).length),
+          error: _ => resolve(0),
+        });
+    });
   }
 
   isPersona(cat: string | null | undefined)      { return this.normCat(cat) === 'persona'; }
@@ -258,7 +273,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.ok(`Sesión iniciada: ${r.nombre || r.tag}`);
   }
 
-  private cerrarSesionPersona() {
+  private async cerrarSesionPersona(): Promise<void> {
     if (!this.currentPersona) return;
 
     const persona = this.currentPersona;
@@ -267,42 +282,63 @@ export class HomePage implements OnInit, OnDestroy {
       nombre: x.nombre ?? null
     }));
 
-    // limpiamos estado de sesión antes de la request
-    this.currentPersona = null;
-    this.carritoSesion.clear();
-
     if (!items.length) {
+      const activos = await this.fetchActivosCount(persona.tag);
+      if (activos > 0) {
+        // Mantener sesión abierta
+        this.ok(`Aún quedan ${activos} insumo(s) activos: la sesión sigue abierta`);
+        return;
+      }
+      this.currentPersona = null;
+      this.carritoSesion.clear();
+      this.cooldownPersonaTag = persona.tag;
+      this.cooldownHasta = Date.now() + this.cooldownMs;
+      this.ok('Sesión cerrada');
       return;
     }
+  
+     const payload = {
+        persona_tag: persona.tag,
+        persona_nombre: persona.nombre ?? null,
+        items
+      };
 
-    const payload = {
-      persona_tag: persona.tag,
-      persona_nombre: persona.nombre ?? null,
-      items
-    };
-
-    this.http.post(this.API_ASSIGN_AUTO, payload).subscribe({
-      next: (_resp: any) => {
+      try {
+        await this.http.post(this.API_ASSIGN_AUTO, payload).toPromise();
         this.ok('Insumos asignados');
-        // refrescar panel si está abierto
+
         this.cargarAsignacionesPersona(persona.tag);
-      },
-      error: (e) => {
-        console.error('Fallo asignaciones/auto', e);
+
+        this.carritoSesion.clear();
+
+        const restantes = await this.fetchActivosCount(persona.tag);
+        if (restantes > 0) {
+          this.ok(`Quedan ${restantes} activo(s). La sesión sigue abierta.`);
+          return;
+        }
+
+        this.currentPersona = null;
+        this.cooldownPersonaTag = persona.tag;
+        this.cooldownHasta = Date.now() + this.cooldownMs;
+        this.ok('Sesión cerrada');
+      } catch (e) {
+        console.error('Fallo assignments/auto', e);
         this.asigError[persona.tag] = 'No se pudieron asignar los insumos';
       }
-    });
-  }
-
+    }
   private sumarAlCarritoSiCorresponde(r: Registro) {
     if (!this.currentPersona) return;
     if (!this.isInsumo(r.categoria)) return;
 
+    const existia = this.carritoSesion.has(r.tag);
     this.carritoSesion.set(r.tag, {
       tag: r.tag,
       nombre: r.nombre ?? null,
       lastTs: this.ts(r)
     });
+    if (!existia) {
+      this.ok(`+ ${r.nombre || r.tag} agregado a la sesión`);
+    }
   }
 
   private ts(r: Registro): number {
@@ -464,6 +500,12 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.lastSeen[tag] = { id: idNum, ts };
 
+    if (this.isPersona(cat)) {
+      if (this.cooldownPersonaTag === tag && Date.now() < this.cooldownHasta) {
+        return;
+      }
+    }
+
     if (this.isSinCategoria(cat)) {
       const m = this.tagMeta[tag] ?? { lastTs: ts, lastId: idNum, estado: 'taller' as EstadoTag };
       m.lastTs = ts;
@@ -485,11 +527,25 @@ export class HomePage implements OnInit, OnDestroy {
       this.saveState();
 
       if (this.currentPersona && this.currentPersona.tag === tag) {
-        this.cerrarSesionPersona();
-      } else {
-        if (this.currentPersona && this.currentPersona.tag !== tag) {
-          this.cerrarSesionPersona();
-        }
+        this.cerrarSesionPersona(); 
+        return;
+      }
+
+      // si hay otra persona con sesión abierta -> intentar cerrar y luego ver si abrimos esta
+      if (this.currentPersona && this.currentPersona.tag !== tag) {
+        this.cerrarSesionPersona().then(() => {
+          // si la anterior quedó abierta (por activos), no abrir nueva
+          if (this.currentPersona && this.currentPersona.tag !== tag) return;
+          // respetar cooldown antes de abrir
+          if (!(this.cooldownPersonaTag === tag && Date.now() < this.cooldownHasta)) {
+            this.abrirSesionPersona(reg);
+          }
+        });
+        return;
+      }
+
+      // no había sesión abierta: abrir si no está en cooldown
+      if (!(this.cooldownPersonaTag === tag && Date.now() < this.cooldownHasta)) {
         this.abrirSesionPersona(reg);
       }
       return;
@@ -504,7 +560,6 @@ export class HomePage implements OnInit, OnDestroy {
       this.upsertEnLista(this.tagsTaller, reg);
       this.tagsEstado[tag] = 'taller';
       this.saveState();
-      // sumar al carrito si hay sesión activa
       this.sumarAlCarritoSiCorresponde(reg);
       return;
     }
@@ -543,7 +598,6 @@ export class HomePage implements OnInit, OnDestroy {
       next: (rows) => {
         this.registros = rows;
 
-        // 1) para cada tag, quedate con la fila más nueva
         const latest: Record<string, Registro> = {};
         for (const r of rows) {
           const t = r.tag;
@@ -558,7 +612,6 @@ export class HomePage implements OnInit, OnDestroy {
           }
         }
 
-        // 2) procesar sólo si es más nuevo que lo visto
         for (const r of Object.values(latest)) {
           const ls = this.lastSeen[r.tag];
           const ts = this.ts(r);
@@ -589,7 +642,6 @@ export class HomePage implements OnInit, OnDestroy {
       }
     }
 
-    // merge con meta para asegurar que los sin categoría aparezcan
     for (const [t, m] of Object.entries(this.tagMeta)) {
       if (!ult[t]) {
         ult[t] = {
