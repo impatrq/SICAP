@@ -16,6 +16,13 @@ Lautaro Santolucito:
 Con la fecha de las ONIET cada vez más cerca, decidí concentrarme en la organización de toda la documentación del proyecto. Empecé reuniendo los registros de los distintos integrantes, revisando sus avances y unificando los textos para la carpeta de campo. Me enfoqué principalmente en mejorar la redacción y la coherencia general del documento, asegurándome de que cada jornada reflejara correctamente las tareas reales de cada integrante.
 Además, durante esta primera semana nos topamos con un problema recurrente en el lector: sólo leía desde una o dos antenas, lo que nos generó incertidumbre acerca del estado del equipo. Comencé a portar y ordenar los problemas de lectura para analizarlos junto con Pablo y el resto del equipo.
 
+Pablo Osores:
+Diseñé e imprimí la segunda parte del soporte, la cual agarra la antena y me permite 180º de libertad de movimiento. Además limé las imperfecciones propias de los soportes que usé para la impresión.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8fa248f0-a5de-45ca-ac4a-f0a456eaa342" width="200"/>
+  <img src="https://github.com/user-attachments/assets/cfc4ff3b-1ec8-4a48-8746-583ac54dbfb9" width="200"/>
+</p>
 
 Patella Tiziano:
 
