@@ -216,7 +216,12 @@ Con este avance, la funcionalidad de creación de pañoles quedó en condiciones
 
 Pablo Osores:
 
-Arreglé los errores del soporte para las antenas.
+Arreglé los errores que ví en el primer prototipo del soporte para las antenas e imprimí el mk2 con mejoras (en principio seria el definitivo) agregando el logo de Sicap para que no sea simplemente un soporte, sino que agregue algo visual al portal y quede mas "amigable a la vista".
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7e1cc9e0-b5b0-440b-a941-db871c2a083d" width="200"/>
+  <img src="https://github.com/user-attachments/assets/0c03a5af-d692-4e41-bb5d-684ee57af48c" width="200"/>
+</p>
 
 <h2>Martes 30/09/2025 </h2>
 
