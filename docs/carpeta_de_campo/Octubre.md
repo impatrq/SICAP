@@ -16,6 +16,13 @@ Lautaro Santolucito:
 Con la fecha de las ONIET cada vez más cerca, decidí concentrarme en la organización de toda la documentación del proyecto. Empecé reuniendo los registros de los distintos integrantes, revisando sus avances y unificando los textos para la carpeta de campo. Me enfoqué principalmente en mejorar la redacción y la coherencia general del documento, asegurándome de que cada jornada reflejara correctamente las tareas reales de cada integrante.
 Además, durante esta primera semana nos topamos con un problema recurrente en el lector: sólo leía desde una o dos antenas, lo que nos generó incertidumbre acerca del estado del equipo. Comencé a portar y ordenar los problemas de lectura para analizarlos junto con Pablo y el resto del equipo.
 
+Pablo Osores:
+Diseñé e imprimí la segunda parte del soporte, la cual agarra la antena y me permite 180º de libertad de movimiento. Además limé las imperfecciones propias de los soportes que usé para la impresión.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8fa248f0-a5de-45ca-ac4a-f0a456eaa342" width="200"/>
+  <img src="https://github.com/user-attachments/assets/cfc4ff3b-1ec8-4a48-8746-583ac54dbfb9" width="200"/>
+</p>
 
 Patella Tiziano:
 
@@ -42,6 +49,12 @@ Finalmente, se comprobó que el servidor continúa funcionando de manera estable
 Lautaro Santolucito:
 Continué trabajando sobre la carpeta técnica, ajustando los formatos, márgenes y estilos para lograr una presentación más prolija y uniforme. Organicé las secciones según las pautas solicitadas por los profesores, incorporando títulos, fechas y un sistema de numeración que facilite la lectura. Además, elaboré una estructura base para incluir más adelante imágenes, gráficos y descripciones técnicas de los componentes. Paralelamente, seguí recopilando mediciones y anotaciones sobre las lecturas inconsistentes de las antenas para poder comparar con las pruebas de hardware que íbamos a ejecutar.
 
+Pablo Osores:
+Monté todo el portal para ver si había que hacer alguna modificación ya sea en los soportes o en la estructura pero considere que estaba perfecto para poder llevar el proyecto a las oniet. Pensando en las oniet ya fui teniendo en cuenta la gestión de cables, para que quede un prototipo físico lo más prolijo posible.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/21bcdf9c-7c6a-4c9c-b3e1-7203c273bc73" width="200"/>
+</p>
 
 Patella  Tiziano:
 
@@ -76,6 +89,18 @@ Avancé con la elaboración del glosario técnico y la introducción general del
 
 <h2> Miercoles 08/10/25 </h2>
 
+Facundo Ledesma:
+
+me dediqué a diseñar las remeras oficiales del proyecto S.I.C.A.P., con el objetivo de generar una identidad visual unificada para todo el equipo durante las presentaciones y la muestra.
+El diseño lo realicé utilizando Canva e Illustrator, definiendo los colores, tipografías y la disposición del logo del proyecto para mantener coherencia con la estética general de S.I.C.A.P.
+Una vez finalizado el diseño, procedí a enviar las remeras a confeccionar, asegurando una buena calidad de impresión y materiales. Con esta tarea logramos fortalecer la imagen institucional del proyecto, reflejando profesionalismo y cohesión en cada presentación.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f7345b6f-a08e-4741-a95e-439d52949f54" width="200"/>
+  <img src="https://github.com/user-attachments/assets/260be0a8-a364-4572-a4b7-9ce62b2e5207" width="200"/>
+  <img src="https://github.com/user-attachments/assets/397632af-87ea-4377-8717-205c4b3fc74a" width="200"/>
+  <img src="https://github.com/user-attachments/assets/5dee935a-f9b9-46d9-9707-be12761b7486" width="200"/>
+</p>
 
 Facu Spagno:
 
