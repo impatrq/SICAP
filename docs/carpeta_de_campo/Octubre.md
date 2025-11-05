@@ -243,6 +243,11 @@ Durante la jornada nos dedicamos a la grabación de las tomas necesarias para la
 
 El objetivo de este video es mostrar de manera clara y visual el funcionamiento general del sistema, sus principales características y el proceso de interacción entre hardware y software. Además, se comenzó a trabajar en el desarrollo de detalles para el manual de usuario, definiendo la estructura y los puntos clave que permitirán a futuros usuarios comprender fácilmente el uso y mantenimiento del sistema.
 
+Facundo Ledesma
+
+En la jornada de hoy comenzamos con la creación del video de presentación del proyecto. Me encargué de armar el guion y de realizar toda la edición utilizando las aplicaciones Canva y CapCut.
+En Canva organicé la estructura general del video, agregando todos los clips, textos e imágenes necesarias para acompañar la narración. Luego, en CapCut, incorporé los subtítulos, añadí la música de fondo y realicé los cortes necesarios para eliminar las partes que no aportaban al contenido final.
+Todo este trabajo tuvo como objetivo preparar el video para su publicación en YouTube, de modo que los profesores y jurados puedan visualizarlo fácilmente.
 
 <h2>Viernes 31/10/2025</h2>
 
@@ -257,3 +262,11 @@ En esta jornada se completó la primera etapa de desarrollo, alcanzando un funci
 Lautaro Santolucito:
 
 Finalizamos la entrega del Manual de Usuario y del video de presentación ante los proyectos. Coordiné la subida del contenido y revisé los últimos detalles de estilo antes de la entrega. Con esta jornada cerramos una etapa clave del proyecto, dejando completa la documentación técnica y audiovisual del S.I.C.A.P.
+
+Facundo Ledesma:
+
+En la jornada de hoy me dediqué a realizar todas las correcciones indicadas por los profesores con el objetivo de mejorar el video de presentación del proyecto.
+Revisé cada observación y apliqué los cambios necesarios para optimizar tanto el contenido como la edición general. Ajusté tiempos, modifiqué textos, mejoré la sincronización de los clips y realicé pequeños retoques en la música y los subtítulos para lograr un resultado más claro y profesional.
+De esta manera, el video quedó completamente actualizado y listo para su revisión final por parte de los docentes y jurados.
+
+<srd> https://youtu.be/k7C2opmh9fs</src>
