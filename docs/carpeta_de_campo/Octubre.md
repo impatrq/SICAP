@@ -89,6 +89,18 @@ Avancé con la elaboración del glosario técnico y la introducción general del
 
 <h2> Miercoles 08/10/25 </h2>
 
+Facundo Ledesma:
+
+me dediqué a diseñar las remeras oficiales del proyecto S.I.C.A.P., con el objetivo de generar una identidad visual unificada para todo el equipo durante las presentaciones y la muestra.
+El diseño lo realicé utilizando Canva e Illustrator, definiendo los colores, tipografías y la disposición del logo del proyecto para mantener coherencia con la estética general de S.I.C.A.P.
+Una vez finalizado el diseño, procedí a enviar las remeras a confeccionar, asegurando una buena calidad de impresión y materiales. Con esta tarea logramos fortalecer la imagen institucional del proyecto, reflejando profesionalismo y cohesión en cada presentación.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f7345b6f-a08e-4741-a95e-439d52949f54" width="200"/>
+  <img src="https://github.com/user-attachments/assets/260be0a8-a364-4572-a4b7-9ce62b2e5207" width="200"/>
+  <img src="https://github.com/user-attachments/assets/397632af-87ea-4377-8717-205c4b3fc74a" width="200"/>
+  <img src="https://github.com/user-attachments/assets/5dee935a-f9b9-46d9-9707-be12761b7486" width="200"/>
+</p>
 
 Facu Spagno:
 
