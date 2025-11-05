@@ -19,7 +19,7 @@ Además, durante esta primera semana nos topamos con un problema recurrente en e
 
 Patella Tiziano:
 
-El día de hoyy comence arreglando la Pagina Web ya que previamente Medina habia hecho unas modificaciones ya que nuestro github no funcioana bien y debido a eso nuestra pagina dejo de funcionar. Previo a arreglar la pagina nos pusimos con facu S a finalizar el funcionamiento de la edicion de tags que habia quedado pendiente del día anterior. Mientras yo realizaba pruebas sobre el frontend y modificaciones en el .ts, facu se encargo de trabajar sobre la parte del backend del servidor para encontrar donde estaba el problema de la comunicacion. Al finalizar, logramos que se puedan editar tags desde la app y que estos se guarden en el servidor. Ademas de eso, habilite que los nombres de los nuevos tags se muestren para asi poder identificarlos de forma mas sencilla. 
+El día de hoy comence arreglando la Pagina Web ya que previamente Medina habia hecho unas modificaciones ya que nuestro github no funcioana bien y debido a eso nuestra pagina dejo de funcionar. Previo a arreglar la pagina nos pusimos con facu S a finalizar el funcionamiento de la edicion de tags que habia quedado pendiente del día anterior. Mientras yo realizaba pruebas sobre el frontend y modificaciones en el .ts, facu se encargo de trabajar sobre la parte del backend del servidor para encontrar donde estaba el problema de la comunicacion. Al finalizar, logramos que se puedan editar tags desde la app y que estos se guarden en el servidor. Ademas de eso, habilite que los nombres de los nuevos tags se muestren para asi poder identificarlos de forma mas sencilla. 
 
 <h2> Jueves 02/10/25 </h2>
 
@@ -129,6 +129,11 @@ Lautaro Santolucito:
 Comenzamos la semana previa a las ONIET revisando el estado general del sistema. Mientras los chicos terminaron ajustes de código, me encargué de verificar la documentación y las presentaciones. En paralelo, realicé pruebas adicionales sobre la comunicación entre el lector RFID, las antenas y el servidor y detecté persistencia del problema: lecturas parciales (una o dos antenas activas). Preparé una lista de chequeo de conexiones, alimentaciones y multiplexado de antenas para la intervención técnica del viernes.
 
 <h2>Martes 14/10/25</h2>
+
+Facundo Ledesma:
+
+Hoy me dediqué a diseñar y crear las cajas protectoras para los diferentes componentes del sistema, incluyendo la Raspberry Pi, la placa ESP32 y la placa conversora RS-232 a TTL. Para realizar este trabajo tomé como referencia distintos modelos encontrados en internet, que me sirvieron de base para definir medidas, formas y ventilaciones adecuadas.
+A partir de esas ideas, desarrollé mis propios diseños utilizando Tinkercad y AutoCAD, donde ajusté las dimensiones y detalles según las necesidades del proyecto. Una vez finalizados los modelos, procedí a imprimirlos en 3D, logrando cajas resistentes, organizadas y con una estética acorde al sistema S.I.C.A.P., optimizando así la presentación y protección de cada módulo electrónico.
 
 Tiziano Patella:
 
@@ -263,10 +268,3 @@ Lautaro Santolucito:
 
 Finalizamos la entrega del Manual de Usuario y del video de presentación ante los proyectos. Coordiné la subida del contenido y revisé los últimos detalles de estilo antes de la entrega. Con esta jornada cerramos una etapa clave del proyecto, dejando completa la documentación técnica y audiovisual del S.I.C.A.P.
 
-Facundo Ledesma:
-
-En la jornada de hoy me dediqué a realizar todas las correcciones indicadas por los profesores con el objetivo de mejorar el video de presentación del proyecto.
-Revisé cada observación y apliqué los cambios necesarios para optimizar tanto el contenido como la edición general. Ajusté tiempos, modifiqué textos, mejoré la sincronización de los clips y realicé pequeños retoques en la música y los subtítulos para lograr un resultado más claro y profesional.
-De esta manera, el video quedó completamente actualizado y listo para su revisión final por parte de los docentes y jurados.
-
-<srd> https://youtu.be/k7C2opmh9fs</src>
