@@ -49,6 +49,12 @@ Finalmente, se comprobó que el servidor continúa funcionando de manera estable
 Lautaro Santolucito:
 Continué trabajando sobre la carpeta técnica, ajustando los formatos, márgenes y estilos para lograr una presentación más prolija y uniforme. Organicé las secciones según las pautas solicitadas por los profesores, incorporando títulos, fechas y un sistema de numeración que facilite la lectura. Además, elaboré una estructura base para incluir más adelante imágenes, gráficos y descripciones técnicas de los componentes. Paralelamente, seguí recopilando mediciones y anotaciones sobre las lecturas inconsistentes de las antenas para poder comparar con las pruebas de hardware que íbamos a ejecutar.
 
+Pablo Osores:
+Monté todo el portal para ver si había que hacer alguna modificación ya sea en los soportes o en la estructura pero considere que estaba perfecto para poder llevar el proyecto a las oniet. Pensando en las oniet ya fui teniendo en cuenta la gestión de cables, para que quede un prototipo físico lo más prolijo posible.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/21bcdf9c-7c6a-4c9c-b3e1-7203c273bc73" width="200"/>
+</p>
 
 Patella  Tiziano:
 
