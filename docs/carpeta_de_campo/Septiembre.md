@@ -220,7 +220,7 @@ Arreglé los errores que ví en el primer prototipo del soporte para las antenas
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/7e1cc9e0-b5b0-440b-a941-db871c2a083d" width="200"/>
-  <img src="https://github.com/user-attachments/assets/9aa4806e-3cb6-44e4-9791-7bb81a41206e" width="200"/>
+  <img src="https://github.com/user-attachments/assets/0c03a5af-d692-4e41-bb5d-684ee57af48c" width="200"/>
 </p>
 
 <h2>Martes 30/09/2025 </h2>
