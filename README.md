@@ -5,6 +5,11 @@
 🔗 Visitanos en  
 👉 <a href="https://sicap.site" target="_blank" rel="noopener noreferrer"><strong>sicap.site</strong></a>
 
+
+## 🎥 Presentación oficial del proyecto
+
+[![Video de presentación de SICAP](https://img.youtube.com/vi/k7C2opmh9fs/0.jpg)](https://www.youtube.com/watch?v=k7C2opmh9fs "Ver en YouTube")
+
 <br><br>
 
 <a href="https://www.instagram.com/proyecto.sicap/" target="_blank" rel="noopener noreferrer">
