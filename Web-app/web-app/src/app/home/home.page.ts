@@ -15,7 +15,13 @@ type Registro = {
 };
 
 type EstadoTag = 'taller' | 'fuera';
-
+interface TagMeta {
+  nombre?: string;
+  categoria?: string | null;
+  lastId?: number;
+  lastTs: number;
+  estado: EstadoTag;
+}
 
 type Asignacion = {
   id: number;
@@ -63,7 +69,10 @@ export class HomePage implements OnInit, OnDestroy {
   private API_ASSIGN = 'http://192.168.111.218:5000/api/v1/assignments';
   private API_ASSIGN_AUTO = 'http://192.168.111.218:5000/api/v1/assignments/auto/';
 
-
+  // Estado local/meta
+  private tagMeta: Record<string, TagMeta> = {};
+  private lastSeen: Record<string, { id: number; ts: number }> = {};
+  private STORAGE_KEY = 'sicap_ui_estado';
 
   private pollingMs = 2000;
   private reqInFlight = false;
@@ -157,6 +166,12 @@ export class HomePage implements OnInit, OnDestroy {
     this.http.put(url, { categoria }).subscribe({
       next: () => {
         this.patchEverywhereByTag(reg.tag, { categoria: categoria as any });
+
+        const m = this.tagMeta[reg.tag] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[reg.tag] ?? 'taller' };
+        m.categoria = categoria as any;
+        this.tagMeta[reg.tag] = m;
+        this.saveState();
+
         if (categoria === 'persona') this.seccionActiva = 'Empleados';
         if (categoria === 'persona' && this.expanded.has(reg.tag)) {
           this.cargarAsignacionesPersona(reg.tag);
@@ -193,6 +208,11 @@ export class HomePage implements OnInit, OnDestroy {
     this.http.put(url, { nombre: nuevoNombre || null }).subscribe({
       next: () => {
         this.patchEverywhereByTag(reg.tag, { nombre: nuevoNombre || undefined });
+
+        const m = this.tagMeta[reg.tag] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[reg.tag] ?? 'taller' };
+        m.nombre = nuevoNombre || undefined;
+        this.tagMeta[reg.tag] = m;
+        this.saveState();
         this.ok('Nombre actualizado');
       },
       error: (e) => console.error('No se pudo actualizar el nombre', e)
@@ -337,9 +357,9 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   private aplicarMeta(r: Registro): Registro {
-
-  const nombre = r.nombre ?? undefined;
-  const catNorm = this.normCat(r.categoria ?? null) || null;
+    const m = this.tagMeta[r.tag];
+    const nombre = r.nombre ?? m?.nombre ?? undefined;
+    const catNorm = this.normCat(r.categoria ?? m?.categoria ?? null) || null;
     return { ...r, nombre, categoria: catNorm };
   }
 
@@ -352,10 +372,20 @@ export class HomePage implements OnInit, OnDestroy {
     this.tagsFuera  = apply(this.tagsFuera);
   }
 
+  private esEstrictamenteMasNuevo(nuevo: Registro): boolean {
+    const prev = this.lastSeen[nuevo.tag];
+    const t = this.ts(nuevo);
 
+    if (!prev) return true; // primera vez que vemos el tag
+    if (t && prev.ts) return t > prev.ts;
+    if (typeof nuevo.id === 'number' && typeof prev.id === 'number') {
+      return nuevo.id > prev.id;
+    }
+    return false;
+  }
 
   private marcarVisto(r: Registro) {
-
+    this.lastSeen[r.tag] = { id: Number(r.id) || 0, ts: this.ts(r) };
   }
 
   private upsertEnLista(lista: Registro[], r: Registro) {
@@ -394,6 +424,12 @@ export class HomePage implements OnInit, OnDestroy {
             nombre: this.modeloEdicion.nombre,
             categoria: categoriaPayload as any
           });
+
+          const meta = this.tagMeta[tag] ?? { lastTs: this.ts(row!), lastId: id, estado: this.tagsEstado[tag] ?? 'taller' };
+          meta.nombre = this.modeloEdicion.nombre || undefined;
+          meta.categoria = (categoriaPayload ?? null);
+          this.tagMeta[tag] = meta;
+          this.saveState();
         }
 
         if (categoriaPayload === 'persona')      this.seccionActiva = 'Empleados';
@@ -412,8 +448,8 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
-  this.cargarRegistros(); 
+    this.loadState();
+    this.cargarRegistros(); 
 
     this.visHandler = () => {
       if (document.hidden) {
@@ -456,47 +492,98 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   procesarRegistro(nuevo: Registro) {
-    // Ahora solo backend-driven: simplemente actualizar listas según el registro
     const reg = this.aplicarMeta(nuevo);
     const tag = reg.tag;
-    const cat = this.normCat(reg.categoria);
+    const ts  = this.ts(reg);
+    const idNum = Number(reg.id) || 0;
+    const cat = this.normCat(reg.categoria); // '' | 'persona' | 'insumo'
+
+    this.lastSeen[tag] = { id: idNum, ts };
 
     if (this.isPersona(cat)) {
       if (this.cooldownPersonaTag === tag && Date.now() < this.cooldownHasta) {
         return;
       }
+    }
+
+    if (this.isSinCategoria(cat)) {
+      const m = this.tagMeta[tag] ?? { lastTs: ts, lastId: idNum, estado: 'taller' as EstadoTag };
+      m.lastTs = ts;
+      m.lastId = idNum;
+      if (reg.nombre) m.nombre = reg.nombre;
+      m.categoria = null;
+      this.tagMeta[tag] = m;
+      this.saveState();
+      return;
+    }
+
+    if (this.isPersona(cat)) {
+      const m = this.tagMeta[tag] ?? { lastTs: ts, lastId: idNum, estado: 'taller' as EstadoTag };
+      m.lastTs = ts;
+      m.lastId = idNum;
+      if (reg.nombre) m.nombre = reg.nombre;
+      m.categoria = 'persona';
+      this.tagMeta[tag] = m;
+      this.saveState();
+
       if (this.currentPersona && this.currentPersona.tag === tag) {
-        this.cerrarSesionPersona();
+        this.cerrarSesionPersona(); 
         return;
       }
+
+      // si hay otra persona con sesión abierta -> intentar cerrar y luego ver si abrimos esta
       if (this.currentPersona && this.currentPersona.tag !== tag) {
         this.cerrarSesionPersona().then(() => {
+          // si la anterior quedó abierta (por activos), no abrir nueva
           if (this.currentPersona && this.currentPersona.tag !== tag) return;
+          // respetar cooldown antes de abrir
           if (!(this.cooldownPersonaTag === tag && Date.now() < this.cooldownHasta)) {
             this.abrirSesionPersona(reg);
           }
         });
         return;
       }
+
+      // no había sesión abierta: abrir si no está en cooldown
       if (!(this.cooldownPersonaTag === tag && Date.now() < this.cooldownHasta)) {
         this.abrirSesionPersona(reg);
       }
       return;
     }
 
-    if (this.isInsumo(cat)) {
-      // Si el tag está en taller, lo pasamos a fuera, y viceversa
-      if (this.tagsEstado[tag] === 'taller') {
-        this.tagsTaller = this.tagsTaller.filter(x => x.tag !== tag);
-        this.upsertEnLista(this.tagsFuera, reg);
-        this.tagsEstado[tag] = 'fuera';
-      } else {
-        this.tagsFuera = this.tagsFuera.filter(x => x.tag !== tag);
-        this.upsertEnLista(this.tagsTaller, reg);
-        this.tagsEstado[tag] = 'taller';
-      }
+    if (!this.tagMeta[tag]) {
+      this.tagMeta[tag] = {
+        lastTs: ts, lastId: idNum, estado: 'taller',
+        nombre: reg.nombre, categoria: 'insumo'
+      };
+      this.tagsTaller = this.tagsTaller.filter(x => x.tag !== tag);
+      this.upsertEnLista(this.tagsTaller, reg);
+      this.tagsEstado[tag] = 'taller';
+      this.saveState();
       this.sumarAlCarritoSiCorresponde(reg);
+      return;
     }
+
+    const m = this.tagMeta[tag];
+    if (m.estado === 'taller') {
+      this.tagsTaller = this.tagsTaller.filter(x => x.tag !== tag);
+      this.upsertEnLista(this.tagsFuera, reg);
+      m.estado = 'fuera';
+      this.tagsEstado[tag] = 'fuera';
+    } else {
+      this.tagsFuera = this.tagsFuera.filter(x => x.tag !== tag);
+      this.upsertEnLista(this.tagsTaller, reg);
+      m.estado = 'taller';
+      this.tagsEstado[tag] = 'taller';
+    }
+
+    m.lastTs = ts;
+    m.lastId = idNum;
+    if (reg.nombre) m.nombre = reg.nombre;
+    m.categoria = 'insumo';
+    this.saveState();
+
+    this.sumarAlCarritoSiCorresponde(reg);
   }
 
   cargarRegistros() {
@@ -510,6 +597,29 @@ export class HomePage implements OnInit, OnDestroy {
     this.http.get<Registro[]>(this.API).subscribe({
       next: (rows) => {
         this.registros = rows;
+
+        const latest: Record<string, Registro> = {};
+        for (const r of rows) {
+          const t = r.tag;
+          const ts = this.ts(r);
+          const prev = latest[t];
+          if (
+            !prev ||
+            ts > this.ts(prev) ||
+            (ts === this.ts(prev) && (Number(r.id) || 0) > (Number(prev.id) || 0))
+          ) {
+            latest[t] = r;
+          }
+        }
+
+        for (const r of Object.values(latest)) {
+          const ls = this.lastSeen[r.tag];
+          const ts = this.ts(r);
+          const id = Number(r.id) || 0;
+          const isNewer = !ls || ts > ls.ts || (ts === ls.ts && id > ls.id);
+          if (isNewer) this.procesarRegistro(r);
+        }
+
         this.loading = false;
         this.reqInFlight = false;
       },
@@ -522,7 +632,6 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   get tagsUnicos(): Registro[] {
-    // Ahora solo backend-driven: devolver los registros únicos por tag, el más reciente
     const ult: Record<string, Registro> = {};
     for (const r of this.registros) {
       const t = r.tag;
@@ -532,6 +641,24 @@ export class HomePage implements OnInit, OnDestroy {
         ult[t] = r;
       }
     }
+
+    for (const [t, m] of Object.entries(this.tagMeta)) {
+      if (!ult[t]) {
+        ult[t] = {
+          id: m.lastId ?? 0,
+          tag: t,
+          nombre: m.nombre,
+          categoria: m.categoria ?? null,
+          fecha_hora: m.lastTs ? new Date(m.lastTs).toISOString() : null,
+          created_at: null
+        };
+      } else {
+        const r = ult[t];
+        if (m.nombre && !r.nombre) r.nombre = m.nombre;
+        r.categoria = (this.normCat(r.categoria ?? m.categoria ?? null) || null);
+      }
+    }
+
     const lista = Object.values(ult).map(r => this.aplicarMeta(r));
     lista.sort((a, b) => this.ts(b) - this.ts(a) || ((Number(b.id)||0) - (Number(a.id)||0)));
     return lista;
@@ -563,9 +690,47 @@ export class HomePage implements OnInit, OnDestroy {
     this.tagsFuera  = [];
     this.tagsEstado = {};
     this.registros  = [];
+    this.lastSeen   = {};
+    this.tagMeta    = {};
+    localStorage.removeItem(this.STORAGE_KEY);
   }
 
+  private saveState() {
+    const snapshot = {
+      tagsEstado: this.tagsEstado,
+      lastSeen: this.lastSeen,
+      tagMeta: this.tagMeta,
+    };
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(snapshot));
+  }
 
+  private loadState() {
+    const raw = localStorage.getItem(this.STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const s = JSON.parse(raw);
+      this.tagsEstado = s.tagsEstado || {};
+      this.lastSeen   = s.lastSeen   || {};
+      this.tagMeta    = s.tagMeta    || {};
+
+      this.tagsTaller = [];
+      this.tagsFuera  = [];
+      for (const [tag, meta] of Object.entries(this.tagMeta)) {
+        const base: Registro = {
+          tag, id: meta.lastId ?? 0,
+          nombre: meta.nombre,
+          categoria: meta.categoria,
+          fecha_hora: meta.lastTs ? new Date(meta.lastTs).toISOString() : null,
+          created_at: null
+        };
+        const r = this.aplicarMeta(base);
+        if (!this.isInsumo(r.categoria)) continue; // filtrar solo insumos
+
+        if (meta.estado === 'taller') this.upsertEnLista(this.tagsTaller, r);
+        else                          this.upsertEnLista(this.tagsFuera,  r);
+      }
+    } catch {}
+  }
 
   trackById(index: number, item: any) {
     return item?.id ?? item?.tag ?? index;
