@@ -244,81 +244,120 @@
   </div>
 
   <!-- Espacio para Personalización -->
-<div *ngIf="seccionActiva === 'Personalización'" class="visual-content personalizacion">
-  <h2>Personalización</h2>
+  <div *ngIf="seccionActiva === 'Personalización'" class="visual-content personalizacion">
+    <h2>Personalización</h2>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Pendientes de categoría</ion-card-title>
-      <ion-card-subtitle>Objetos/personas sin categoría asignada</ion-card-subtitle>
-    </ion-card-header>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Pendientes de categoría</ion-card-title>
+        <ion-card-subtitle>Objetos/personas sin categoría asignada</ion-card-subtitle>
+      </ion-card-header>
 
-    <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col size="4"><b>Nombre</b></ion-col>
-          <ion-col size="3"><b>Tag</b></ion-col>
-          <ion-col size="3"><b>Última detección</b></ion-col>
-          <ion-col size="2"><b>Asignar</b></ion-col>
-        </ion-row>
+      <ion-card-content>
 
-        <ion-row *ngFor="let reg of sinCategoriaItems; let i = index; trackBy: trackById">
-          <ion-col size="4" class="clickeable" (click)="editarNombreInline(reg, $event)">{{ reg.nombre || '-' }}</ion-col>
-          <ion-col size="3">{{ reg.tag }}</ion-col>
-          <ion-col size="3">{{ (reg.fecha_hora || reg.created_at) | date:'shoSrt' }}</ion-col>
-          <ion-col size="2">
-            <ion-select
-              placeholder="Elegir"
-              interface="popover"
-              (ionChange)="onAsignarCategoria(sinCategoriaItems[i], $event)">
-              <ion-select-option value="persona">Persona</ion-select-option>
-              <ion-select-option value="insumo">Insumo</ion-select-option>
-            </ion-select>
-          </ion-col>
-        </ion-row>
+        <div class="header-line" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <ion-button size="small" fill="outline" (click)="toggleSelectAllSinCat()">
+            {{ selectAllActive ? 'Deseleccionar todo' : 'Seleccionar todo' }}
+          </ion-button>
 
-        <ion-row *ngIf="sinCategoriaItems.length === 0">
-          <ion-col class="ion-text-center">Todo categorizado ✅</ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-</div>
+          <ion-button size="small" color="danger" [disabled]="selectedTags.size === 0 || purgeLoading"
+                      (click)="borrarSeleccionadosSinCat()">
+            <ion-icon name="trash-outline" slot="start"></ion-icon>
+            Borrar seleccionados
+          </ion-button>
 
-<ion-modal
-  [isOpen]="editOpen"
-  (didDismiss)="editOpen = false"
-  keepContentsMounted="true"
->
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Editar registro</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="editOpen = false">Cerrar</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
+          <ion-spinner *ngIf="purgeLoading" name="dots"></ion-spinner>
 
-    <ion-content class="ion-padding">
-      <ion-item>
-        <ion-label position="stacked">Nombre</ion-label>
-        <ion-input [(ngModel)]="modeloEdicion.nombre" placeholder="Escribí el nombre..."></ion-input>
-      </ion-item>
+          <ion-text class="ml-auto" *ngIf="sinCategoriaItems.length > 0">
+            {{ selectedTags.size }} seleccionados / {{ sinCategoriaItems.length }} totales
+          </ion-text>
+        </div>
 
-      <ion-item>
-        <ion-label position="stacked">Categoría</ion-label>
-        <ion-select [(ngModel)]="modeloEdicion.categoria" interface="popover">
-          <ion-select-option value="">— Sin categoría —</ion-select-option>
-          <ion-select-option value="persona">Persona</ion-select-option>
-          <ion-select-option value="insumo">Insumo</ion-select-option>
-        </ion-select>
-      </ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="1" class="ion-text-center">
+              <ion-checkbox
+                [checked]="selectAllActive"
+                (ionChange)="toggleSelectAllSinCat()"
+                aria-label="Seleccionar todo">
+              </ion-checkbox>
+            </ion-col>
+            <ion-col size="3"><b>Nombre</b></ion-col>
+            <ion-col size="3"><b>Tag</b></ion-col>
+            <ion-col size="3"><b>Última detección</b></ion-col>
+            <ion-col size="2"><b>Asignar</b></ion-col>
+          </ion-row>
 
-      <ion-button expand="block" class="ion-margin-top" (click)="guardarEdicion()">
-        Guardar
-      </ion-button>
-    </ion-content>
-  </ng-template>
-</ion-modal>
+          <ion-row *ngFor="let reg of sinCategoriaItems; let i = index; trackBy: trackById">
+            <ion-col size="1" class="ion-text-center">
+              <ion-checkbox
+                [checked]="selectedTags.has(reg.tag)"
+                (ionChange)="toggleSelectTag(reg.tag)"
+                aria-label="Seleccionar fila">
+              </ion-checkbox>
+            </ion-col>
+
+            <ion-col size="3" class="clickeable" (click)="editarNombreInline(reg, $event)">
+              {{ reg.nombre || '-' }}
+            </ion-col>
+
+            <ion-col size="3">{{ reg.tag }}</ion-col>
+
+            <ion-col size="3">{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
+
+            <ion-col size="2">
+              <ion-select
+                placeholder="Elegir"
+                interface="popover"
+                (ionChange)="onAsignarCategoria(sinCategoriaItems[i], $event)">
+                <ion-select-option value="persona">Persona</ion-select-option>
+                <ion-select-option value="insumo">Insumo</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="sinCategoriaItems.length === 0">
+            <ion-col class="ion-text-center">Todo categorizado ✅</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-modal
+    [isOpen]="editOpen"
+    (didDismiss)="editOpen = false"
+    keepContentsMounted="true"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Editar registro</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="editOpen = false">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-input [(ngModel)]="modeloEdicion.nombre" placeholder="Escribí el nombre..."></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Categoría</ion-label>
+          <ion-select [(ngModel)]="modeloEdicion.categoria" interface="popover">
+            <ion-select-option value="">— Sin categoría —</ion-select-option>
+            <ion-select-option value="persona">Persona</ion-select-option>
+            <ion-select-option value="insumo">Insumo</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button expand="block" class="ion-margin-top" (click)="guardarEdicion()">
+          Guardar
+        </ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>
