@@ -5,13 +5,12 @@
 🔗 Visitanos en  
 👉 <a href="https://sicap.site" target="_blank" rel="noopener noreferrer"><strong>sicap.site</strong></a>
 
-
 ## 🎥 Presentación oficial del proyecto
 
-
-<a href="https://www.youtube.com/watch?v=k7C2opmh9fs" target="_blank">
-  <img src="https://github.com/kicklauti/SICAP/assets/placeholder/animated_banner.gif" alt="SICAP video banner" width="100%" style="border-radius:8px;">
+<a href="https://www.youtube.com/watch?v=k7C2opmh9fs" target="_blank" rel="noopener noreferrer">
+  <img src="https://img.shields.io/badge/Ver%20video%20oficial-red?logo=youtube&logoColor=white&style=for-the-badge" alt="YouTube - SICAP">
 </a>
+
 <br><br>
 
 <a href="https://www.instagram.com/proyecto.sicap/" target="_blank" rel="noopener noreferrer">
