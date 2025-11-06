@@ -73,6 +73,7 @@ export class HomePage implements OnInit, OnDestroy {
   private tagMeta: Record<string, TagMeta> = {};
   private lastSeen: Record<string, { id: number; ts: number }> = {};
   private STORAGE_KEY = 'sicap_ui_estado';
+   private API_BULK_DELETE = 'http://192.168.111.218:5000/api/v1/register/tag/bulk_delete/';
 
   private pollingMs = 2000;
   private reqInFlight = false;
@@ -82,10 +83,14 @@ export class HomePage implements OnInit, OnDestroy {
   private cooldownHasta = 0;
   private cooldownMs = 3000; 
 
-  //  SESIÓN DE PERSONA + CARRITO DE INSUMOS
   currentPersona: { tag: string; nombre?: string|null } | null = null;
   carritoSesion = new Map<string, { tag: string; nombre?: string|null; lastTs: number }>();
   ultimoPingPersonaTs = 0;
+
+  selectMode = false;
+  selectedTags = new Set<string>();   
+  selectAllActive = false;
+  purgeLoading = false;
 
   expanded: Set<string> = new Set();
   asigCache: Record<string, Asignacion[]> = {};
@@ -376,7 +381,7 @@ export class HomePage implements OnInit, OnDestroy {
     const prev = this.lastSeen[nuevo.tag];
     const t = this.ts(nuevo);
 
-    if (!prev) return true; // primera vez que vemos el tag
+    if (!prev) return true; 
     if (t && prev.ts) return t > prev.ts;
     if (typeof nuevo.id === 'number' && typeof prev.id === 'number') {
       return nuevo.id > prev.id;
@@ -393,6 +398,70 @@ export class HomePage implements OnInit, OnDestroy {
     if (i >= 0) lista.splice(i, 1);
     lista.unshift(r);
   }
+
+  toggleSelectTag(tag: string) {
+    if (this.selectedTags.has(tag)) this.selectedTags.delete(tag);
+    else this.selectedTags.add(tag);
+    this.recomputeSelectAllSinCat();
+  }
+
+  toggleSelectAllSinCat() {
+    if (this.selectAllActive) {
+      this.selectedTags.clear();
+      this.selectAllActive = false;
+      return;
+    }
+    const visibles = this.sinCategoriaItems.map(x => x.tag);
+    this.selectedTags = new Set(visibles);
+    this.selectAllActive = true;
+  }
+
+  private recomputeSelectAllSinCat() {
+    const visibles = new Set(this.sinCategoriaItems.map(x => x.tag));
+    let selVisibles = 0;
+    for (const t of this.selectedTags) if (visibles.has(t)) selVisibles++;
+    this.selectAllActive = visibles.size > 0 && selVisibles === visibles.size;
+  }
+
+  borrarSeleccionadosSinCat() {
+    if (this.selectedTags.size === 0 || this.purgeLoading) return;
+
+    const toDelete = [...this.selectedTags].filter(t =>
+      this.sinCategoriaItems.some(x => x.tag === t)
+    );
+    if (!toDelete.length) return;
+
+    this.purgeLoading = true;
+
+    this.http.post(this.API_BULK_DELETE, { tags: toDelete }).subscribe({
+      next: (_res: any) => {
+        const kill = new Set(toDelete);
+
+        const filtra = (arr: Registro[]) => arr.filter(x => !kill.has(x.tag));
+        this.registros  = filtra(this.registros);
+        this.tagsTaller = filtra(this.tagsTaller);
+        this.tagsFuera  = filtra(this.tagsFuera);
+
+        for (const t of kill) {
+          delete this.tagMeta[t];
+          delete this.tagsEstado[t];
+          delete this.lastSeen[t];
+          this.selectedTags.delete(t);
+        }
+        this.saveState();
+        this.recomputeSelectAllSinCat();
+
+        this.ok('Tags limpiados. Si vuelven a pasar por la antena, reaparecen acá.');
+        this.purgeLoading = false;
+      },
+      error: (e) => {
+        console.error(e);
+        this.purgeLoading = false;
+        this.ok('No pude borrar. Probá de nuevo.');
+      }
+    });
+  }
+
 
   abrirEdicion(reg: Registro, ev?: Event) {
     ev?.stopPropagation();

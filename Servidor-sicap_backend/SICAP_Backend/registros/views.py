@@ -273,6 +273,35 @@ def assignments_auto(request):
         'total_devueltos': len(devueltos),
     }, status=200)
 
+def bulk_delete_uncategorized_tags(request):
+  
+    data = request.data or {}
+    ids = data.get('ids') or []
+    tags = data.get('tags') or []
+
+    qs = RegistroTag.objects.all()
+    if ids:
+        qs = qs.filter(id__in=ids)
+    if tags:
+        qs = qs.filter(tag__in=tags)
+
+    qs = qs.filter(categoria__isnull=True)
+
+    referenciados_persona = set(
+        Asignacion.objects.filter(persona_tag__in=qs.values_list('tag', flat=True)).values_list('persona_tag', flat=True)
+    )
+    referenciados_item = set(
+        Asignacion.objects.filter(item_tag__in=qs.values_list('tag', flat=True)).values_list('item_tag', flat=True)
+    )
+    referenciados = referenciados_persona.union(referenciados_item)
+
+    eliminables = qs.exclude(tag__in=list(referenciados))
+    cant = eliminables.count()
+    eliminables.delete()
+
+    return Response({"status": "ok", "eliminados": cant})
+
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def assignments_list(request):
