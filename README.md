@@ -8,8 +8,10 @@
 
 ## 🎥 Presentación oficial del proyecto
 
-[![Video de presentación de SICAP](https://img.youtube.com/vi/k7C2opmh9fs/0.jpg)](https://www.youtube.com/watch?v=k7C2opmh9fs "Ver en YouTube")
 
+<a href="https://www.youtube.com/watch?v=k7C2opmh9fs" target="_blank">
+  <img src="https://github.com/kicklauti/SICAP/assets/placeholder/animated_banner.gif" alt="SICAP video banner" width="100%" style="border-radius:8px;">
+</a>
 <br><br>
 
 <a href="https://www.instagram.com/proyecto.sicap/" target="_blank" rel="noopener noreferrer">
