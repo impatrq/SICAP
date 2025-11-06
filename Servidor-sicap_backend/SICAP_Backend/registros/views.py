@@ -199,15 +199,27 @@ def csrf_ping(request):
 
 @require_GET
 def listar_tags(request):
-    rows = list(
+    # Obtener solo el registro más reciente de cada tag
+    # Devuelve todos los registros, uno por tag (el más reciente, sobrescribiendo)
+    from django.db.models import Max
+    sub = (
         RegistroTag.objects
-        .order_by("-fecha_hora")
-        .values("id", "tag", "nombre", "fecha_hora", "categoria")[:200]
+        .values('tag')
+        .annotate(max_id=Max('id'))
     )
-    for r in rows:
-        r["created_at"] = localtime(r["fecha_hora"]).strftime("%Y-%m-%d %H:%M:%S")
-        del r["fecha_hora"]
-    return JsonResponse(rows, safe=False)
+    ids = [row['max_id'] for row in sub if row['max_id'] is not None]
+    registros = RegistroTag.objects.filter(id__in=ids)
+    out = []
+    for r in registros:
+        d = {
+            'id': r.id,
+            'tag': r.tag,
+            'nombre': r.nombre,
+            'categoria': r.categoria,
+            'created_at': localtime(r.fecha_hora).strftime('%Y-%m-%d %H:%M:%S') if r.fecha_hora else None
+        }
+        out.append(d)
+    return JsonResponse(out, safe=False)
 
 
 @api_view(['POST'])
