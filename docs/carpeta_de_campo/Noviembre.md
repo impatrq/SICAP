@@ -17,3 +17,7 @@ En Canva me encargué de definir el concepto general del diseño, incluyendo la 
 
 Lautaro Santolucito:
 Durante la jornada desarmé toda la estructura del portal y la volví a armar correctamente, ya que había quedado floja y no garantizaba la estabilidad necesaria. Me aseguré de ajustar y reforzar cada punto de unión para dejar la estructura firme y alineada, optimizando su presentación y seguridad para futuras pruebas.
+
+<h2>Jueves 06/11/25</h2>
+Lautaro Santolucito:
+Durante el día me encargué de plote ar el BMW de SICAP para la muestra, aplicando los vinilos y detalles visuales que representan al proyecto.
