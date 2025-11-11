@@ -120,8 +120,45 @@ def recibir_tag(request):
     nombre = (data.get('nombre') or '').strip() or None
     categoria = _norm_cat(data.get('categoria'))
 
-    _log_registro(tag=tag, nombre=nombre, categoria=categoria)
+    # Buscar si el tag ya existe
+    reg = RegistroTag.objects.filter(tag=tag).order_by('-id').first()
+    now = timezone.now()
+    if reg:
+        # Actualizar registro existente (nombre, categoria, fecha)
+        reg.nombre = nombre or reg.nombre
+        reg.categoria = categoria or reg.categoria
+        reg.fecha_hora = now
+        reg.save(update_fields=['nombre', 'categoria', 'fecha_hora'])
+    else:
+        # Crear nuevo registro si no existe
+        reg = RegistroTag.objects.create(
+            tag=tag,
+            nombre=nombre,
+            categoria=categoria,
+            fecha_hora=now
+        )
 
+    # Lógica automática para insumos: crear/cerrar asignación
+    if categoria == 'insumo':
+        asig = Asignacion.objects.filter(item_tag=tag, activo=True).first()
+        if asig:
+            # Si está asignado, lo devolvemos (marca como devuelto)
+            asig.activo = False
+            asig.devuelto_en = now
+            asig.save(update_fields=['activo', 'devuelto_en'])
+        else:
+            # Si no está asignado, lo sacamos (crea asignación activa)
+            Asignacion.objects.create(
+                persona_tag='sistema',
+                persona_nombre='Sistema',
+                item_tag=tag,
+                item_nombre=reg.nombre,
+                asignado_en=now,
+                activo=True
+            )
+        return JsonResponse({'status': 'ok', 'accion': 'insumo_actualizado'})
+
+    # Lógica original para persona
     if categoria == 'persona':
         sesion = _sesion_abierta()
 
