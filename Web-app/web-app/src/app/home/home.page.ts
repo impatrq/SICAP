@@ -2,7 +2,7 @@ import { AlertController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
-import { interval, Subscription } from 'rxjs';
+import { interval, Subscription, firstValueFrom } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 type Registro = {
@@ -86,6 +86,8 @@ export class HomePage implements OnInit, OnDestroy {
   asigCache: Record<string, Asignacion[]> = {};
   asigLoading: Record<string, boolean> = {};
   asigError: Record<string, string | undefined> = {};
+  // metadata local mínimo (algunas funciones esperan tagMeta en este componente)
+  tagMeta: Record<string, any> = {};
 
   constructor(
     private toast: ToastController,
@@ -303,6 +305,120 @@ export class HomePage implements OnInit, OnDestroy {
     let selVisibles = 0;
     for (const t of this.selectedTags) if (visibles.has(t)) selVisibles++;
     this.selectAllActive = visibles.size > 0 && selVisibles === visibles.size;
+  }
+
+  private apiEliminarTag(id: number, force = false) {
+    const url = `${this.API_EDIT}/${id}/eliminar/${force ? '?force=1' : ''}`;
+    return this.http.delete<{status:string; borrados:number}>(url);
+  }
+
+  private saveState(): void {
+  }
+
+  private ok(msg: string): void {
+    this.toast.create({ message: msg, duration: 2000 }).then(t => t.present());
+  }
+
+  async confirmarEliminarDesdeModal() {
+    if (this.modeloEdicion.id == null) return;
+
+    const nombre = this.modeloEdicion.nombre?.trim();
+    const alerta = await this.alertCtrl.create({
+      header: 'Eliminar tag',
+      message: nombre
+        ? `¿Querés eliminar el tag <b>${nombre}</b>?`
+        : '¿Querés eliminar este tag?',
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: () => {
+            const id = this.modeloEdicion.id;
+            if (id == null) return;
+            this.eliminarTagById(id);
+          }
+        }
+      ]
+    });
+    await alerta.present();
+  }
+
+  abrirConfirmEliminar(reg: Registro, ev?: Event) {
+    ev?.stopPropagation();
+    this.modeloEdicion = {
+      id: reg.id,
+      nombre: reg.nombre || '',
+      categoria: this.normCat(reg.categoria)
+    };
+    this.confirmarEliminarDesdeModal();
+  }
+
+  async eliminarTagById(id: number) {
+    try {
+      const res = await firstValueFrom(this.apiEliminarTag(id));
+
+      const drop = (arr: Registro[]) => arr.filter(x => x.id !== id);
+      this.registros  = drop(this.registros);
+      this.tagsTaller = drop(this.tagsTaller);
+      this.tagsFuera  = drop(this.tagsFuera);
+
+      const allPrev = [...this.registros, ...this.tagsTaller, ...this.tagsFuera];
+      const eliminado = allPrev.find(r => r.id === id);
+      if (eliminado?.tag) {
+        delete this.tagMeta[eliminado.tag];
+        delete this.tagsEstado[eliminado.tag];
+        delete this.asigCache[eliminado.tag];
+        delete this.asigError[eliminado.tag];
+        delete this.asigLoading[eliminado.tag];
+        this.expanded.delete(eliminado.tag);
+        this.selectedTags.delete(eliminado.tag);
+      }
+
+      this.saveState();
+      this.editOpen = false;
+      this.ok('Tag eliminado');
+    } catch (e: any) {
+      const msg = (e?.status === 409)
+        ? 'No se puede eliminar: hay asignaciones activas'
+        : 'No pude eliminar el tag';
+      this.ok(msg);
+
+      if (e?.status === 409) {
+        const force = await this.alertCtrl.create({
+          header: 'Forzar eliminación',
+          message: 'Este tag tiene asignaciones activas. ¿Querés forzar la eliminación?',
+          buttons: [
+            { text: 'No', role: 'cancel' },
+            {
+              text: 'Sí, forzar',
+              role: 'destructive',
+              handler: async () => {
+                try {
+                  const idForce = this.modeloEdicion.id;
+                  if (idForce == null) {
+                    this.ok('ID inválido');
+                    return;
+                  }
+                  await firstValueFrom(this.apiEliminarTag(idForce, true));
+                  const drop = (arr: Registro[]) => arr.filter(x => x.id !== idForce);
+                  this.registros  = drop(this.registros);
+                  this.tagsTaller = drop(this.tagsTaller);
+                  this.tagsFuera  = drop(this.tagsFuera);
+                  this.editOpen = false;
+                  this.ok('Tag eliminado (forzado)');
+                } catch {
+                  this.ok('No pude forzar la eliminación');
+                }
+              }
+            }
+          ]
+        });
+        await force.present();
+      }
+
+      console.error(e);
+    }
   }
 
   borrarSeleccionadosSinCat() {

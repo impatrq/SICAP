@@ -135,10 +135,13 @@
   <!-- Espacio para Inventario -->
   <div *ngIf="seccionActiva === 'Inventario'" class="visual-content">
     <h2>Inventario</h2>
-    <ion-searchbar placeholder="Buscar insumo por nombre o tag"
-                   [(ngModel)]="qInventario"
-                   [debounce]="200">
-    </ion-searchbar>
+
+    <div class="header-line">
+      <ion-searchbar placeholder="Buscar por nombre o tag"
+                    [(ngModel)]="qInventario"
+                    [debounce]="200">
+      </ion-searchbar>
+    </div>
 
     <ion-grid>
       <ion-row>
@@ -146,31 +149,39 @@
         <ion-col><b>Categoría</b></ion-col>
         <ion-col><b>ID</b></ion-col>
         <ion-col><b>Última detección</b></ion-col>
-        <ion-col><b>Editar</b></ion-col>
+        <ion-col size="2" class="ion-text-center"><b>Acciones</b></ion-col>
       </ion-row>
 
-      <ion-row *ngFor="let reg of inventarioFiltrado; trackBy: trackById">
+      <ion-row *ngFor="let reg of inventarioItems; trackBy: trackById">
         <ion-col>{{ reg.nombre || '-' }}</ion-col>
         <ion-col>{{ friendlyCategoria(reg.categoria) }}</ion-col>
         <ion-col>{{ reg.tag }}</ion-col>
         <ion-col>{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
-        <ion-col>
-          <ion-button size="small" fill="clear" (click)="abrirEdicion(reg, $event)">
+        <ion-col size="2" class="ion-text-center">
+          <ion-button size="small" fill="clear" (click)="abrirEdicion(reg, $event)" title="Editar">
             <ion-icon name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button size="small" fill="clear" color="danger"
+                      (click)="abrirConfirmEliminar(reg, $event)" title="Eliminar">
+            <ion-icon name="trash-outline"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-text *ngIf="inventarioFiltrado.length === 0">No hay tags registrados.</ion-text>
+
+    <ion-text *ngIf="tagsUnicos.length === 0">No hay tags registrados.</ion-text>
   </div>
 
   <!-- Espacio para Empleados -->
   <div *ngIf="seccionActiva === 'Empleados'" class="visual-content">
     <h2>Empleados</h2>
-    <ion-searchbar placeholder="Buscar empleado por nombre o tag"
-                   [(ngModel)]="qEmpleados"
-                   [debounce]="200">
-    </ion-searchbar>
+
+    <div class="header-line">
+      <ion-searchbar placeholder="Buscar por nombre o tag"
+                    [(ngModel)]="qEmpleados"
+                    [debounce]="200">
+      </ion-searchbar>
+    </div>
 
     <ion-grid>
       <ion-row>
@@ -179,26 +190,35 @@
         <ion-col><b>ID</b></ion-col>
         <ion-col><b>Última detección</b></ion-col>
         <ion-col size="2"><b>Asignados</b></ion-col>
-        <ion-col><b>Editar</b></ion-col>
+        <ion-col size="2" class="ion-text-center"><b>Acciones</b></ion-col>
       </ion-row>
 
-      <ng-container *ngFor="let reg of empleadosFiltrados; trackBy: trackById">
+      <!-- fila principal -->
+      <ng-container *ngFor="let reg of empleadosItems; trackBy: trackById">
         <ion-row>
           <ion-col>{{ reg.nombre || reg.tag }}</ion-col>
           <ion-col>{{ friendlyCategoria(reg.categoria) }}</ion-col>
           <ion-col>{{ reg.id }}</ion-col>
           <ion-col>{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
+
           <ion-col size="2">
-            <ion-button fill="clear" size="small"
-                        (click)="toggleAsignados(reg, $event)"
-                        [attr.aria-expanded]="expanded.has(reg.tag)">
+            <ion-button
+              fill="clear"
+              size="small"
+              (click)="toggleAsignados(reg, $event)"
+              [attr.aria-expanded]="expanded.has(reg.tag)">
               <ion-icon [name]="expanded.has(reg.tag) ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
               <ion-label class="ml-1">Ver</ion-label>
             </ion-button>
           </ion-col>
-          <ion-col>
-            <ion-button size="small" fill="clear" (click)="abrirEdicion(reg, $event)">
+
+          <ion-col size="2" class="ion-text-center">
+            <ion-button size="small" fill="clear" (click)="abrirEdicion(reg, $event)" title="Editar">
               <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button size="small" fill="clear" color="danger"
+                        (click)="abrirConfirmEliminar(reg, $event)" title="Eliminar">
+              <ion-icon name="trash-outline"></ion-icon>
             </ion-button>
           </ion-col>
         </ion-row>
@@ -215,7 +235,10 @@
               </ng-container>
 
               <ng-container *ngIf="!asigLoading[reg.tag] && !asigError[reg.tag]">
-                <ion-text *ngIf="(asigCache[reg.tag] || []).length === 0">Sin insumos asignados.</ion-text>
+                <ion-text *ngIf="(asigCache[reg.tag] || []).length === 0">
+                  Sin insumos asignados.
+                </ion-text>
+
                 <ion-grid *ngIf="(asigCache[reg.tag] || []).length">
                   <ion-row>
                     <ion-col size="5"><b>Herramienta</b></ion-col>
@@ -223,6 +246,7 @@
                     <ion-col size="3"><b>Asignado</b></ion-col>
                     <ion-col size="1"></ion-col>
                   </ion-row>
+
                   <ion-row *ngFor="let a of asigCache[reg.tag]">
                     <ion-col size="5">{{ a.item_nombre || '—' }}</ion-col>
                     <ion-col size="3">{{ a.item_tag }}</ion-col>
@@ -240,7 +264,8 @@
         </ion-row>
       </ng-container>
     </ion-grid>
-    <ion-text *ngIf="empleadosFiltrados.length === 0">No se han registrado empleados.</ion-text>
+
+    <ion-text *ngIf="tagsUnicos.length === 0">No se han registrado empleados.</ion-text>
   </div>
 
   <!-- Espacio para Personalización -->
