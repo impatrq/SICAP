@@ -344,6 +344,16 @@ export class HomePage implements OnInit, OnDestroy {
     await alerta.present();
   }
 
+  abrirConfirmEliminar(reg: Registro, ev?: Event) {
+    ev?.stopPropagation();
+    this.modeloEdicion = {
+      id: reg.id,
+      nombre: reg.nombre || '',
+      categoria: this.normCat(reg.categoria)
+    };
+    this.confirmarEliminarDesdeModal();
+  }
+
   async eliminarTagById(id: number) {
     try {
       const res = await firstValueFrom(this.apiEliminarTag(id));

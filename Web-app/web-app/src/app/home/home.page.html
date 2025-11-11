@@ -162,7 +162,7 @@
             <ion-icon name="create-outline"></ion-icon>
           </ion-button>
           <ion-button size="small" fill="clear" color="danger"
-                      (click)="eliminarTagById(reg.id)" title="Eliminar">
+                      (click)="abrirConfirmEliminar(reg, $event)" title="Eliminar">
             <ion-icon name="trash-outline"></ion-icon>
           </ion-button>
         </ion-col>
@@ -217,7 +217,7 @@
               <ion-icon name="create-outline"></ion-icon>
             </ion-button>
             <ion-button size="small" fill="clear" color="danger"
-                        (click)="eliminarTagById(reg.id)" title="Eliminar">
+                        (click)="abrirConfirmEliminar(reg, $event)" title="Eliminar">
               <ion-icon name="trash-outline"></ion-icon>
             </ion-button>
           </ion-col>
