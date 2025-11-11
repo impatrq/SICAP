@@ -39,3 +39,11 @@ El objetivo de esta mejora fue permitir la limpieza de los registros que quedaba
 La función permite eliminar tags de forma individual o múltiple, según la necesidad del usuario, seleccionando uno o varios registros al mismo tiempo. Aunque inicialmente la función no operaba correctamente, quedó implementada y lista para su ajuste final.
 
 Además, aproveché la jornada para restaurar funciones eliminadas previamente del archivo TypeScript por Titi, reinsertándolas en el código para recuperar el correcto funcionamiento general del sistema.
+
+<h2>Martes 11/11/25</h2>
+
+Durante la jornada finalicé y optimicé la función de eliminación de tags en el frontend, logrando que el proceso se ejecute directamente desde la interfaz sin necesidad de acceder al backend. Esta función, iniciada el día anterior, quedó completamente operativa y estable.
+
+Además, desarrollé una nueva función de eliminación dentro de los apartados de Inventario y Empleados, permitiendo borrar tags específicos de cada sección. De esta manera, ahora es posible eliminar tanto los tags sin categoría como aquellos que ya no se utilizan en los módulos activos del sistema.
+
+También realicé ajustes en la Raspberry Pi, corrigiendo nuevamente el problema de la desconfiguración horaria. Para evitar que el inconveniente se repita, incorporé un miniscript automatizado que actualiza la hora del sistema cada vez que la Raspberry se desconecta y vuelve a conectarse. Con esta mejora, el servidor mantiene sincronizada su hora de manera continua, garantizando la precisión en los registros y evitando futuras inconsistencias.
