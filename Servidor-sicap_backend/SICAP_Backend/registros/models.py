@@ -8,7 +8,7 @@ class RegistroTag(models.Model):
     )
 
     nombre = models.CharField(max_length=100, blank=True, null=True) 
-    tag = models.CharField(max_length=100)
+    tag = models.CharField(max_length=100, unique=True)
     fecha_hora  = models.DateTimeField(default=timezone.now)
     categoria = models.CharField(max_length=20, choices=CATEGORIA_AELEGIR, blank=True, null=True, default=None )
 

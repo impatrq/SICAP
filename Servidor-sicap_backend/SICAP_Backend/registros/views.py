@@ -121,27 +121,17 @@ def recibir_tag(request):
     nombre = (data.get('nombre') or '').strip() or None
     categoria = _norm_cat(data.get('categoria'))
 
-    # Buscar si el tag ya existe
-    reg = RegistroTag.objects.filter(tag=tag).order_by('-id').first()
     now = timezone.now()
-    if reg:
-        # Actualizar registro existente (nombre, categoria, fecha)
-        reg.nombre = nombre or reg.nombre
-        reg.categoria = categoria or reg.categoria
-        reg.fecha_hora = now
-        reg.save(update_fields=['nombre', 'categoria', 'fecha_hora'])
-        # Eliminar duplicados, dejar solo el actual
-        RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
-    else:
-        # Crear nuevo registro si no existe
-        reg = RegistroTag.objects.create(
-            tag=tag,
-            nombre=nombre,
-            categoria=categoria,
-            fecha_hora=now
-        )
-        # Eliminar duplicados, dejar solo el actual
-        RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
+    reg, created = RegistroTag.objects.update_or_create(
+        tag=tag,
+        defaults={
+            'nombre': nombre,
+            'categoria': categoria,
+            'fecha_hora': now
+        }
+    )
+    # Eliminar cualquier otro registro con el mismo tag pero distinto id
+    RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
 
     # Lógica automática para insumos: crear/cerrar asignación
     if categoria == 'insumo':
@@ -241,10 +231,15 @@ def csrf_ping(request):
 
 @require_GET
 def listar_tags(request):
+    # Solo el registro más reciente por cada tag
+    from django.db.models import Max
+    latest_ids = (
+        RegistroTag.objects.values('tag').annotate(max_id=Max('id')).values_list('max_id', flat=True)
+    )
     rows = list(
-        RegistroTag.objects
+        RegistroTag.objects.filter(id__in=latest_ids)
         .order_by("-fecha_hora")
-        .values("id", "tag", "nombre", "fecha_hora", "categoria")[:200]
+        .values("id", "tag", "nombre", "fecha_hora", "categoria")
     )
     for r in rows:
         r["created_at"] = localtime(r["fecha_hora"]).strftime("%Y-%m-%d %H:%M:%S")
