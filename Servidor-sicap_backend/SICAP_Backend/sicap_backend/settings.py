@@ -141,6 +141,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:4200",   # Next.js (si lo usan)
     "http://192.168.111.101:8000",
     "http://192.168.111.101:4200",  # <--- AGREGADO: frontend en la red local
+    "http://192.168.111.100:4200/home"
 ]
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
@@ -149,6 +150,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:4200",
     "http://192.168.111.101:8000",
     "http://192.168.111.101:4200",  # <--- AGREGADO: frontend en la red local
+    "http://192.168.111.100:4200/home"
 ]
 
 # Para dev: que la cookie funcione entre el front (5173/3000) y el back (8000)
