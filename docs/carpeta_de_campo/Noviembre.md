@@ -10,6 +10,14 @@ De esta manera, el video quedó completamente actualizado y listo para su revisi
 
 <h2>Miercoles 5/11/2025</h2>
 
+Facu Spagno:
+
+Durante la jornada desarrollé la versión 2.0 del método de asignaciones, mejorando de forma significativa la lógica de funcionamiento implementada previamente.
+
+Esta nueva versión incorpora condiciones específicas de asignación de tags, lo que permite determinar en qué situaciones un insumo debe o no ser asignado a una persona. La lógica ahora evalúa distintos factores, como el estado actual de la herramienta, la disponibilidad en el sistema y las condiciones del usuario que realiza el retiro o la devolución.
+
+Con estas mejoras, el proceso de asignación se volvió más preciso, dinámico y adaptable a distintos escenarios, evitando errores y asegurando una trazabilidad más confiable dentro del inventario del sistema S.I.C.A.P.
+
 Facundo Ledesma:
 
 En la jornada de hoy comencé con la creación del anuncio para comunicar que estaremos presentes en la muestra. Para el desarrollo de este trabajo utilicé las aplicaciones Canva e Illustrator.
