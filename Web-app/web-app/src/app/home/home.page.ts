@@ -15,13 +15,6 @@ type Registro = {
 };
 
 type EstadoTag = 'taller' | 'fuera';
-interface TagMeta {
-  nombre?: string;
-  categoria?: string | null;
-  lastId?: number;
-  lastTs: number;
-  estado: EstadoTag;
-}
 
 type Asignacion = {
   id: number;
@@ -69,10 +62,7 @@ export class HomePage implements OnInit, OnDestroy {
   private API_ASSIGN = 'http://192.168.111.218:5000/api/v1/assignments';
   private API_ASSIGN_AUTO = 'http://192.168.111.218:5000/api/v1/assignments/auto/';
 
-  // Estado local/meta
-  private tagMeta: Record<string, TagMeta> = {};
-  private lastSeen: Record<string, { id: number; ts: number }> = {};
-  private STORAGE_KEY = 'sicap_ui_estado';
+  // Estado solo backend-driven
    private API_BULK_DELETE = 'http://192.168.111.218:5000/api/v1/register/tag/bulk_delete/';
 
   private pollingMs = 2000;
@@ -170,12 +160,8 @@ export class HomePage implements OnInit, OnDestroy {
     const url = `${this.API_EDIT}/${reg.id}/editar/`;
     this.http.put(url, { categoria }).subscribe({
       next: () => {
-        this.patchEverywhereByTag(reg.tag, { categoria: categoria as any });
 
-        const m = this.tagMeta[reg.tag] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[reg.tag] ?? 'taller' };
-        m.categoria = categoria as any;
-        this.tagMeta[reg.tag] = m;
-        this.saveState();
+  // Eliminado: lógica local de tagMeta
 
         if (categoria === 'persona') this.seccionActiva = 'Empleados';
         if (categoria === 'persona' && this.expanded.has(reg.tag)) {
@@ -212,13 +198,8 @@ export class HomePage implements OnInit, OnDestroy {
     const url = `${this.API_EDIT}/${reg.id}/editar/`;
     this.http.put(url, { nombre: nuevoNombre || null }).subscribe({
       next: () => {
-        this.patchEverywhereByTag(reg.tag, { nombre: nuevoNombre || undefined });
 
-        const m = this.tagMeta[reg.tag] ?? { lastTs: this.ts(reg), lastId: reg.id, estado: this.tagsEstado[reg.tag] ?? 'taller' };
-        m.nombre = nuevoNombre || undefined;
-        this.tagMeta[reg.tag] = m;
-        this.saveState();
-        this.ok('Nombre actualizado');
+  // Eliminado: lógica local de tagMeta
       },
       error: (e) => console.error('No se pudo actualizar el nombre', e)
     });
@@ -260,22 +241,18 @@ export class HomePage implements OnInit, OnDestroy {
       next: () => {
         const list = this.asigCache[a.persona_tag] || [];
         this.asigCache[a.persona_tag] = list.filter(x => x.id !== a.id);
-        this.ok('Devuelto');
+        this.cargarRegistros();
       },
       error: e => console.error('No se pudo devolver', e),
     });
   }
 
   private abrirSesionPersona(r: Registro) {
-    this.currentPersona = { tag: r.tag, nombre: r.nombre ?? null };
-    this.carritoSesion.clear();
-    this.ultimoPingPersonaTs = this.ts(r);
-
-    this.seccionActiva = 'Empleados';
-    this.expanded.add(r.tag);
-    this.cargarAsignacionesPersona(r.tag);
-
-    this.ok(`Sesión iniciada: ${r.nombre || r.tag}`);
+  this.currentPersona = { tag: r.tag, nombre: r.nombre ?? null };
+  this.carritoSesion.clear();
+  this.seccionActiva = 'Empleados';
+  this.expanded.add(r.tag);
+  this.cargarAsignacionesPersona(r.tag);
   }
 
   private async cerrarSesionPersona(): Promise<void> {
@@ -290,114 +267,19 @@ export class HomePage implements OnInit, OnDestroy {
     if (!items.length) {
       const activos = await this.fetchActivosCount(persona.tag);
       if (activos > 0) {
-        // Mantener sesión abierta
-        this.ok(`Aún quedan ${activos} insumo(s) activos: la sesión sigue abierta`);
+        // Lógica backend-driven: mantener sesión abierta si hay activos
         return;
       }
       this.currentPersona = null;
       this.carritoSesion.clear();
       this.cooldownPersonaTag = persona.tag;
       this.cooldownHasta = Date.now() + this.cooldownMs;
-      this.ok('Sesión cerrada');
       return;
     }
-  
-     const payload = {
-        persona_tag: persona.tag,
-        persona_nombre: persona.nombre ?? null,
-        items
-      };
-
-      try {
-        await this.http.post(this.API_ASSIGN_AUTO, payload).toPromise();
-        this.ok('Insumos asignados');
-
-        this.cargarAsignacionesPersona(persona.tag);
-
-        this.carritoSesion.clear();
-
-        const restantes = await this.fetchActivosCount(persona.tag);
-        if (restantes > 0) {
-          this.ok(`Quedan ${restantes} activo(s). La sesión sigue abierta.`);
-          return;
-        }
-
-        this.currentPersona = null;
-        this.cooldownPersonaTag = persona.tag;
-        this.cooldownHasta = Date.now() + this.cooldownMs;
-        this.ok('Sesión cerrada');
-      } catch (e) {
-        console.error('Fallo assignments/auto', e);
-        this.asigError[persona.tag] = 'No se pudieron asignar los insumos';
-      }
-    }
-  private sumarAlCarritoSiCorresponde(r: Registro) {
-    if (!this.currentPersona) return;
-    if (!this.isInsumo(r.categoria)) return;
-
-    const existia = this.carritoSesion.has(r.tag);
-    this.carritoSesion.set(r.tag, {
-      tag: r.tag,
-      nombre: r.nombre ?? null,
-      lastTs: this.ts(r)
-    });
-    if (!existia) {
-      this.ok(`+ ${r.nombre || r.tag} agregado a la sesión`);
-    }
+    // Lógica backend-driven: aquí puedes agregar lógica para cerrar sesión y limpiar
   }
 
-  private ts(r: Registro): number {
-    const f = r.fecha_hora || r.created_at;
-    return f ? new Date(f).getTime() : 0;
-  }
-
-  private async ok(msg: string) {
-    const toast = await this.toast.create({
-      message: msg,
-      duration: 1800,
-      color: 'success',
-      position: 'bottom'
-    });
-    await toast.present();
-  }
-
-  private aplicarMeta(r: Registro): Registro {
-    const m = this.tagMeta[r.tag];
-    const nombre = r.nombre ?? m?.nombre ?? undefined;
-    const catNorm = this.normCat(r.categoria ?? m?.categoria ?? null) || null;
-    return { ...r, nombre, categoria: catNorm };
-  }
-
-  private patchEverywhereByTag(tag: string, patch: Partial<Registro>) {
-    const apply = (arr: Registro[]) =>
-      arr.map(x => x.tag === tag ? ({ ...x, ...patch }) : x);
-
-    this.registros  = apply(this.registros);
-    this.tagsTaller = apply(this.tagsTaller);
-    this.tagsFuera  = apply(this.tagsFuera);
-  }
-
-  private esEstrictamenteMasNuevo(nuevo: Registro): boolean {
-    const prev = this.lastSeen[nuevo.tag];
-    const t = this.ts(nuevo);
-
-    if (!prev) return true; 
-    if (t && prev.ts) return t > prev.ts;
-    if (typeof nuevo.id === 'number' && typeof prev.id === 'number') {
-      return nuevo.id > prev.id;
-    }
-    return false;
-  }
-
-  private marcarVisto(r: Registro) {
-    this.lastSeen[r.tag] = { id: Number(r.id) || 0, ts: this.ts(r) };
-  }
-
-  private upsertEnLista(lista: Registro[], r: Registro) {
-    const i = lista.findIndex(x => x.tag === r.tag);
-    if (i >= 0) lista.splice(i, 1);
-    lista.unshift(r);
-  }
+  // Métodos de almacenamiento local eliminados. Solo lógica backend-driven.
 
   toggleSelectTag(tag: string) {
     if (this.selectedTags.has(tag)) this.selectedTags.delete(tag);
@@ -443,21 +325,15 @@ export class HomePage implements OnInit, OnDestroy {
         this.tagsFuera  = filtra(this.tagsFuera);
 
         for (const t of kill) {
-          delete this.tagMeta[t];
-          delete this.tagsEstado[t];
-          delete this.lastSeen[t];
           this.selectedTags.delete(t);
         }
-        this.saveState();
         this.recomputeSelectAllSinCat();
 
-        this.ok('Tags limpiados. Si vuelven a pasar por la antena, reaparecen acá.');
         this.purgeLoading = false;
       },
       error: (e) => {
         console.error(e);
         this.purgeLoading = false;
-        this.ok('No pude borrar. Probá de nuevo.');
       }
     });
   }
@@ -489,16 +365,6 @@ export class HomePage implements OnInit, OnDestroy {
         const tag = row?.tag;
 
         if (tag) {
-          this.patchEverywhereByTag(tag, {
-            nombre: this.modeloEdicion.nombre,
-            categoria: categoriaPayload as any
-          });
-
-          const meta = this.tagMeta[tag] ?? { lastTs: this.ts(row!), lastId: id, estado: this.tagsEstado[tag] ?? 'taller' };
-          meta.nombre = this.modeloEdicion.nombre || undefined;
-          meta.categoria = (categoriaPayload ?? null);
-          this.tagMeta[tag] = meta;
-          this.saveState();
         }
 
         if (categoriaPayload === 'persona')      this.seccionActiva = 'Empleados';
@@ -517,7 +383,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadState();
+  // Eliminado: lógica local de loadState
     this.cargarRegistros(); 
 
     this.visHandler = () => {
@@ -560,100 +426,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
-  procesarRegistro(nuevo: Registro) {
-    const reg = this.aplicarMeta(nuevo);
-    const tag = reg.tag;
-    const ts  = this.ts(reg);
-    const idNum = Number(reg.id) || 0;
-    const cat = this.normCat(reg.categoria); // '' | 'persona' | 'insumo'
-
-    this.lastSeen[tag] = { id: idNum, ts };
-
-    if (this.isPersona(cat)) {
-      if (this.cooldownPersonaTag === tag && Date.now() < this.cooldownHasta) {
-        return;
-      }
-    }
-
-    if (this.isSinCategoria(cat)) {
-      const m = this.tagMeta[tag] ?? { lastTs: ts, lastId: idNum, estado: 'taller' as EstadoTag };
-      m.lastTs = ts;
-      m.lastId = idNum;
-      if (reg.nombre) m.nombre = reg.nombre;
-      m.categoria = null;
-      this.tagMeta[tag] = m;
-      this.saveState();
-      return;
-    }
-
-    if (this.isPersona(cat)) {
-      const m = this.tagMeta[tag] ?? { lastTs: ts, lastId: idNum, estado: 'taller' as EstadoTag };
-      m.lastTs = ts;
-      m.lastId = idNum;
-      if (reg.nombre) m.nombre = reg.nombre;
-      m.categoria = 'persona';
-      this.tagMeta[tag] = m;
-      this.saveState();
-
-      if (this.currentPersona && this.currentPersona.tag === tag) {
-        this.cerrarSesionPersona(); 
-        return;
-      }
-
-      // si hay otra persona con sesión abierta -> intentar cerrar y luego ver si abrimos esta
-      if (this.currentPersona && this.currentPersona.tag !== tag) {
-        this.cerrarSesionPersona().then(() => {
-          // si la anterior quedó abierta (por activos), no abrir nueva
-          if (this.currentPersona && this.currentPersona.tag !== tag) return;
-          // respetar cooldown antes de abrir
-          if (!(this.cooldownPersonaTag === tag && Date.now() < this.cooldownHasta)) {
-            this.abrirSesionPersona(reg);
-          }
-        });
-        return;
-      }
-
-      // no había sesión abierta: abrir si no está en cooldown
-      if (!(this.cooldownPersonaTag === tag && Date.now() < this.cooldownHasta)) {
-        this.abrirSesionPersona(reg);
-      }
-      return;
-    }
-
-    if (!this.tagMeta[tag]) {
-      this.tagMeta[tag] = {
-        lastTs: ts, lastId: idNum, estado: 'taller',
-        nombre: reg.nombre, categoria: 'insumo'
-      };
-      this.tagsTaller = this.tagsTaller.filter(x => x.tag !== tag);
-      this.upsertEnLista(this.tagsTaller, reg);
-      this.tagsEstado[tag] = 'taller';
-      this.saveState();
-      this.sumarAlCarritoSiCorresponde(reg);
-      return;
-    }
-
-    const m = this.tagMeta[tag];
-    if (m.estado === 'taller') {
-      this.tagsTaller = this.tagsTaller.filter(x => x.tag !== tag);
-      this.upsertEnLista(this.tagsFuera, reg);
-      m.estado = 'fuera';
-      this.tagsEstado[tag] = 'fuera';
-    } else {
-      this.tagsFuera = this.tagsFuera.filter(x => x.tag !== tag);
-      this.upsertEnLista(this.tagsTaller, reg);
-      m.estado = 'taller';
-      this.tagsEstado[tag] = 'taller';
-    }
-
-    m.lastTs = ts;
-    m.lastId = idNum;
-    if (reg.nombre) m.nombre = reg.nombre;
-    m.categoria = 'insumo';
-    this.saveState();
-
-    this.sumarAlCarritoSiCorresponde(reg);
-  }
+  // Lógica local eliminada: solo backend-driven
 
   cargarRegistros() {
     if (this.reqInFlight) return;
@@ -666,29 +439,6 @@ export class HomePage implements OnInit, OnDestroy {
     this.http.get<Registro[]>(this.API).subscribe({
       next: (rows) => {
         this.registros = rows;
-
-        const latest: Record<string, Registro> = {};
-        for (const r of rows) {
-          const t = r.tag;
-          const ts = this.ts(r);
-          const prev = latest[t];
-          if (
-            !prev ||
-            ts > this.ts(prev) ||
-            (ts === this.ts(prev) && (Number(r.id) || 0) > (Number(prev.id) || 0))
-          ) {
-            latest[t] = r;
-          }
-        }
-
-        for (const r of Object.values(latest)) {
-          const ls = this.lastSeen[r.tag];
-          const ts = this.ts(r);
-          const id = Number(r.id) || 0;
-          const isNewer = !ls || ts > ls.ts || (ts === ls.ts && id > ls.id);
-          if (isNewer) this.procesarRegistro(r);
-        }
-
         this.loading = false;
         this.reqInFlight = false;
       },
@@ -701,36 +451,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   get tagsUnicos(): Registro[] {
-    const ult: Record<string, Registro> = {};
-    for (const r of this.registros) {
-      const t = r.tag;
-      const prev = ult[t];
-      const ts = this.ts(r);
-      if (!prev || ts > this.ts(prev) || (ts === this.ts(prev) && (Number(r.id)||0) > (Number(prev.id)||0))) {
-        ult[t] = r;
-      }
-    }
-
-    for (const [t, m] of Object.entries(this.tagMeta)) {
-      if (!ult[t]) {
-        ult[t] = {
-          id: m.lastId ?? 0,
-          tag: t,
-          nombre: m.nombre,
-          categoria: m.categoria ?? null,
-          fecha_hora: m.lastTs ? new Date(m.lastTs).toISOString() : null,
-          created_at: null
-        };
-      } else {
-        const r = ult[t];
-        if (m.nombre && !r.nombre) r.nombre = m.nombre;
-        r.categoria = (this.normCat(r.categoria ?? m.categoria ?? null) || null);
-      }
-    }
-
-    const lista = Object.values(ult).map(r => this.aplicarMeta(r));
-    lista.sort((a, b) => this.ts(b) - this.ts(a) || ((Number(b.id)||0) - (Number(a.id)||0)));
-    return lista;
+    return this.registros;
   }
 
   get tagsTallerSoloInsumo() { return this.tagsTaller.filter(r => this.isInsumo(r.categoria)); }
@@ -755,51 +476,10 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   limpiarTags() {
-    this.tagsTaller = [];
-    this.tagsFuera  = [];
-    this.tagsEstado = {};
     this.registros  = [];
-    this.lastSeen   = {};
-    this.tagMeta    = {};
-    localStorage.removeItem(this.STORAGE_KEY);
   }
 
-  private saveState() {
-    const snapshot = {
-      tagsEstado: this.tagsEstado,
-      lastSeen: this.lastSeen,
-      tagMeta: this.tagMeta,
-    };
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(snapshot));
-  }
-
-  private loadState() {
-    const raw = localStorage.getItem(this.STORAGE_KEY);
-    if (!raw) return;
-    try {
-      const s = JSON.parse(raw);
-      this.tagsEstado = s.tagsEstado || {};
-      this.lastSeen   = s.lastSeen   || {};
-      this.tagMeta    = s.tagMeta    || {};
-
-      this.tagsTaller = [];
-      this.tagsFuera  = [];
-      for (const [tag, meta] of Object.entries(this.tagMeta)) {
-        const base: Registro = {
-          tag, id: meta.lastId ?? 0,
-          nombre: meta.nombre,
-          categoria: meta.categoria,
-          fecha_hora: meta.lastTs ? new Date(meta.lastTs).toISOString() : null,
-          created_at: null
-        };
-        const r = this.aplicarMeta(base);
-        if (!this.isInsumo(r.categoria)) continue; // filtrar solo insumos
-
-        if (meta.estado === 'taller') this.upsertEnLista(this.tagsTaller, r);
-        else                          this.upsertEnLista(this.tagsFuera,  r);
-      }
-    } catch {}
-  }
+  // saveState y loadState eliminados: ya no hay almacenamiento local
 
   trackById(index: number, item: any) {
     return item?.id ?? item?.tag ?? index;
