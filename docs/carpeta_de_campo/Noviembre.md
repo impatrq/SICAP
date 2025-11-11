@@ -29,3 +29,13 @@ Durante la jornada desarmé toda la estructura del portal y la volví a armar co
 <h2>Jueves 06/11/25</h2>
 Lautaro Santolucito:
 Durante el día me encargué de plote ar el BMW de SICAP para la muestra, aplicando los vinilos y detalles visuales que representan al proyecto.
+
+Facu Spagno:
+
+Durante la jornada trabajé tanto en el backend como en el frontend del sistema, incorporando una nueva función destinada a la eliminación de tags.
+
+El objetivo de esta mejora fue permitir la limpieza de los registros que quedaban en el apartado de Personalización, especialmente aquellos tags sin categoría asignada que interferían con la organización del sistema. Para esto, desarrollé la lógica correspondiente en el backend y su respectiva implementación en el archivo TypeScript y en el HTML de la interfaz.
+
+La función permite eliminar tags de forma individual o múltiple, según la necesidad del usuario, seleccionando uno o varios registros al mismo tiempo. Aunque inicialmente la función no operaba correctamente, quedó implementada y lista para su ajuste final.
+
+Además, aproveché la jornada para restaurar funciones eliminadas previamente del archivo TypeScript por Titi, reinsertándolas en el código para recuperar el correcto funcionamiento general del sistema.
