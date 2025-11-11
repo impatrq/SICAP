@@ -130,6 +130,8 @@ def recibir_tag(request):
         reg.categoria = categoria or reg.categoria
         reg.fecha_hora = now
         reg.save(update_fields=['nombre', 'categoria', 'fecha_hora'])
+        # Eliminar duplicados, dejar solo el actual
+        RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
     else:
         # Crear nuevo registro si no existe
         reg = RegistroTag.objects.create(
@@ -138,6 +140,8 @@ def recibir_tag(request):
             categoria=categoria,
             fecha_hora=now
         )
+        # Eliminar duplicados, dejar solo el actual
+        RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
 
     # Lógica automática para insumos: crear/cerrar asignación
     if categoria == 'insumo':
