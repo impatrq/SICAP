@@ -12,7 +12,7 @@ urlpatterns = [
     path('', include (router.urls)),
     path('register/tag/', recibir_tag, name= "recibir-tag"),
     path('register/tag/list/', listar_tags, name="listar-tags"),  
-		path('register/tag/<int:id>/eliminar/', eliminar_tag, name='registrotag-eliminar'),01~    path('register/tag/<int:id>/eliminar/', eliminar_tag, name='registrotag-eliminar'),
+		path('register/tag/<int:id>/eliminar/', eliminar_tag, name='registrotag-eliminar'),
     path('register/tag/<int:id>/editar/', editar_tag, name="editar-tag"),
     path('register/tag/bulk_delete/', bulk_delete_uncategorized_tags, name='registrotag-bulk-delete'),
     path('assignments/', assignments_list, name='assignments_list'),
