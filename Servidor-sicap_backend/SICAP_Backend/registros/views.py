@@ -2,7 +2,8 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from rest_framework.decorators import api_view, permission_classes
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
-from django.db.models import F, Max
+from django.db.models import F, Max, Q
+from django.shortcuts import get_object_or_404
 from django.utils.timezone import localtime
 from django.utils import timezone
 from rest_framework.response import Response
@@ -269,38 +270,70 @@ def assignments_auto(request):
         'persona_nombre': persona_nombre,
         'asignados': asignados,
         'devueltos': devueltos,
-        'total_asignados': len(asignados),
         'total_devueltos': len(devueltos),
     }, status=200)
 
+@csrf_exempt
 def bulk_delete_uncategorized_tags(request):
-  
-    data = request.data or {}
-    ids = data.get('ids') or []
+
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método no permitido. Usá POST.'}, status=405)
+
+    try:
+        data = json.loads(request.body or "{}")
+    except Exception:
+        return JsonResponse({'error': 'JSON inválido'}, status=400)
+
     tags = data.get('tags') or []
+    if not isinstance(tags, list):
+        return JsonResponse({'error': 'tags debe ser una lista'}, status=400)
 
-    qs = RegistroTag.objects.all()
-    if ids:
-        qs = qs.filter(id__in=ids)
-    if tags:
-        qs = qs.filter(tag__in=tags)
+    tags = [str(t).strip() for t in tags if str(t).strip()]
+    if not tags:
+        return JsonResponse({'status': 'ok', 'borrados': 0})
 
-    qs = qs.filter(categoria__isnull=True)
+    from .models import RegistroTag
 
-    referenciados_persona = set(
-        Asignacion.objects.filter(persona_tag__in=qs.values_list('tag', flat=True)).values_list('persona_tag', flat=True)
-    )
-    referenciados_item = set(
-        Asignacion.objects.filter(item_tag__in=qs.values_list('tag', flat=True)).values_list('item_tag', flat=True)
-    )
-    referenciados = referenciados_persona.union(referenciados_item)
+    borrados, _ = RegistroTag.objects.filter(
+        tag__in=tags,
+        categoria__isnull=True
+    ).delete()
 
-    eliminables = qs.exclude(tag__in=list(referenciados))
-    cant = eliminables.count()
-    eliminables.delete()
+    return JsonResponse({'status': 'ok', 'borrados': borrados})
 
-    return Response({"status": "ok", "eliminados": cant})
+@csrf_exempt
+def eliminar_tag(request, id):
 
+    if request.method not in ('DELETE', 'POST'):
+        return JsonResponse({'error': 'Método no permitido. Usá DELETE o POST.'}, status=405)
+
+    from .models import RegistroTag, Asignacion
+
+    tag_obj = get_object_or_404(RegistroTag, pk=id)
+
+    force = False
+    try:
+        if request.method == 'POST':
+            body = json.loads(request.body or "{}")
+            force = bool(body.get('force', False))
+    except Exception:
+        pass
+    if request.GET.get('force') in ('1', 'true', 'True', 'yes', 'y'):
+        force = True
+
+    tiene_activos = Asignacion.objects.filter(
+        Q(persona_tag=tag_obj.tag) | Q(item_tag=tag_obj.tag),
+        activo=True
+    ).exists()
+
+    if tiene_activos and not force:
+        return JsonResponse(
+            {'error': 'No se puede eliminar: hay asignaciones activas. Usá force=1 para forzar.'},
+            status=409
+        )
+
+    tag_obj.delete()
+    return JsonResponse({'status': 'ok', 'borrados': 1})
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
