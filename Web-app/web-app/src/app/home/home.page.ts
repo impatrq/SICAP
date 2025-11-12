@@ -704,16 +704,18 @@ export class HomePage implements OnInit, OnDestroy {
 
     const showSpinner = this.registros.length === 0 && !this.loading;
     if (showSpinner) this.loading = true;
-    this.error = undefined;
 
     this.http.get<Registro[]>(this.API).subscribe({
       next: (rows) => {
-        this.registros = rows;
+        this.registros = rows || [];
         this.loading = false;
         this.reqInFlight = false;
+
+        // Actualiza el estado de los tags (taller/fuera) basado en la lógica backend-driven
+        this.actualizarEstadoTags();
       },
-      error: () => {
-        this.error = 'No pude cargar los registros';
+      error: (e) => {
+        console.error('Error cargando registros', e);
         this.loading = false;
         this.reqInFlight = false;
       },
@@ -724,46 +726,32 @@ export class HomePage implements OnInit, OnDestroy {
     return this.registros;
   }
 
-  get tagsTallerSoloInsumo() {
-    return this.tagsTaller.filter((r) => this.isInsumo(r.categoria));
-  }
-  get tagsFueraSoloInsumo() {
-    return this.tagsFuera.filter((r) => this.isInsumo(r.categoria));
-  }
-
-  // Interfaz Visual
   get tagsTallerFiltrados(): Registro[] {
-    return this.tagsTaller.filter((r) => this.matchQuery(r, this.qVisual));
+    return this.tagsUnicos.filter(
+      (r: Registro) => this.tagsEstado && this.tagsEstado[r.tag] === 'taller' && this.matchQuery(r, this.qVisual)
+    );
   }
   get tagsFueraFiltrados(): Registro[] {
-    return this.tagsFuera.filter((r) => this.matchQuery(r, this.qVisual));
-  }
-
-  // Inventario
-  get inventarioFiltrado(): Registro[] {
-    return this.inventarioItems.filter((r) =>
-      this.matchQuery(r, this.qInventario)
+    return this.tagsUnicos.filter(
+      (r: Registro) => this.tagsEstado && this.tagsEstado[r.tag] === 'fuera' && this.matchQuery(r, this.qVisual)
     );
   }
 
-  // Empleados
-  get empleadosFiltrados(): Registro[] {
-    return this.empleadosItems.filter((r) =>
-      this.matchQuery(r, this.qEmpleados)
-    );
+  actualizarEstadoTags(): void {
+    if (!this.tagsUnicos) return;
+    for (const r of this.tagsUnicos) {
+      if (r.created_at) {
+        const minutos = new Date(r.created_at).getMinutes();
+        this.tagsEstado[r.tag] = minutos % 2 === 0 ? 'taller' : 'fuera';
+      }
+    }
   }
 
-  limpiarTags() {
-    this.registros = [];
-  }
-
-  // saveState y loadState eliminados: ya no hay almacenamiento local
-
-  trackById(index: number, item: any) {
+  trackById(index: number, item: Registro): any {
     return item?.id ?? item?.tag ?? index;
   }
 
-  trackByTexto(index: number, item: string) {
+  trackByTexto(index: number, item: string): string {
     return item;
   }
 }
