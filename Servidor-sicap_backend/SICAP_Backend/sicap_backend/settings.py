@@ -151,6 +151,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://192.168.111.100:4200/home",
     "http://192.168.111.218:5000",
     "http://192.168.111.218:4200",
+    "http://192.168.111.104:4200",
 ]
 
 # Para dev: que la cookie funcione entre el front (5173/3000) y el back (8000)
