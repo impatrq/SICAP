@@ -129,11 +129,26 @@ def recibir_tag(request):
     categoria = _norm_cat(data.get("categoria"))
 
     now = timezone.now()
-    reg, created = RegistroTag.objects.update_or_create(
-        tag=tag, defaults={"nombre": nombre, "categoria": categoria, "fecha_hora": now}
-    )
-    # Eliminar cualquier otro registro con el mismo tag pero distinto id
-    RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
+    reg = RegistroTag.objects.filter(tag=tag).first()
+    if reg:
+        # Si ya tiene nombre/categoría, solo actualizo fecha_hora
+        if reg.nombre or reg.categoria:
+            reg.fecha_hora = now
+            reg.save(update_fields=["fecha_hora"])
+        else:
+            reg.nombre = nombre
+            reg.categoria = categoria
+            reg.fecha_hora = now
+            reg.save(update_fields=["nombre", "categoria", "fecha_hora"])
+        # Eliminar cualquier otro registro con el mismo tag pero distinto id
+        RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
+    else:
+        reg = RegistroTag.objects.create(
+            tag=tag,
+            nombre=nombre,
+            categoria=categoria,
+            fecha_hora=now
+        )
 
     # Lógica automática para insumos: crear/cerrar asignación
     if categoria == "insumo":
