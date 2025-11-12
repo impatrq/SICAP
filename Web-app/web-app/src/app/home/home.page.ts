@@ -321,14 +321,13 @@ export class HomePage implements OnInit, OnDestroy {
    * @param a Asignación a devolver
    */
   devolverAsignacion(a: Asignacion) {
-    // Marca una asignación como devuelta y actualiza la cache local
     this.http
       .put<Asignacion>(`${this.API_ASSIGN}/${a.id}/devolver/`, {})
       .subscribe({
         next: () => {
-          const list = this.asigCache[a.persona_tag] || [];
-          this.asigCache[a.persona_tag] = list.filter((x) => x.id !== a.id);
-          this.cargarRegistros();
+          // Refrescá su lista y mantené expandida la persona
+          this.cargarAsignacionesPersona(a.persona_tag);
+          this.ok('Devuelto');
         },
         error: (e) => console.error('No se pudo devolver', e),
       });
@@ -728,26 +727,38 @@ export class HomePage implements OnInit, OnDestroy {
 
   get tagsTallerFiltrados(): Registro[] {
     return this.tagsUnicos.filter(
-      (r: Registro) => this.tagsEstado && this.tagsEstado[r.tag] === 'taller' && this.matchQuery(r, this.qVisual)
+      (r) =>
+        this.isInsumo(r.categoria) && // <- SOLO INSUMOS
+        this.tagsEstado[r.tag] === 'taller' &&
+        this.matchQuery(r, this.qVisual)
     );
   }
+
   get tagsFueraFiltrados(): Registro[] {
     return this.tagsUnicos.filter(
-      (r: Registro) => this.tagsEstado && this.tagsEstado[r.tag] === 'fuera' && this.matchQuery(r, this.qVisual)
+      (r) =>
+        this.isInsumo(r.categoria) && // <- SOLO INSUMOS
+        this.tagsEstado[r.tag] === 'fuera' &&
+        this.matchQuery(r, this.qVisual)
     );
   }
 
   // Alterna el estado cada vez que el tag es detectado (cuando cambia created_at)
   actualizarEstadoTags(): void {
     if (!this.tagsUnicos) return;
+
     for (const r of this.tagsUnicos) {
+      // Ignorar personas en la IV y en el estado local
+      if (!this.isInsumo(r.categoria)) continue;
+
       const last = this.tagMeta[r.tag]?.lastCreatedAt;
       if (r.created_at && r.created_at !== last) {
-        // Si el tag fue detectado de nuevo, alterna el estado
-        this.tagsEstado[r.tag] = this.tagsEstado[r.tag] === 'taller' ? 'fuera' : 'taller';
+        // Alternar SOLO si es insumo
+        this.tagsEstado[r.tag] =
+          this.tagsEstado[r.tag] === 'taller' ? 'fuera' : 'taller';
         this.tagMeta[r.tag] = { lastCreatedAt: r.created_at };
       } else if (!this.tagsEstado[r.tag]) {
-        // Si no tiene estado, inicializa en 'taller'
+        // Primer vista: iniciar en 'taller'
         this.tagsEstado[r.tag] = 'taller';
         this.tagMeta[r.tag] = { lastCreatedAt: r.created_at };
       }

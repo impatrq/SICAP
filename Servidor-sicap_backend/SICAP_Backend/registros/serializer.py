@@ -21,10 +21,16 @@ class RegistroTagSerializer(serializers.ModelSerializer):
     categoria = serializers.ChoiceField(
         choices=["persona", "insumo"], allow_null=True, required=False
     )
+    created_at = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = RegistroTag
         fields = ["nombre", "categoria", "id", "tag", "fecha_hora", "created_at"]
+
+    def get_created_at(self, obj):
+        from django.utils.timezone import localtime
+
+        return localtime(obj.fecha_hora).strftime("%Y-%m-%d %H:%M:%S")
 
 
 class AsignacionSerializer(serializers.ModelSerializer):
