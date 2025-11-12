@@ -1,3 +1,17 @@
+"""
+Vistas y utilidades del módulo `registros`.
+
+Este módulo expone endpoints y helpers usados por el cliente para:
+- recibir lecturas de tags y persistir `RegistroTag`.
+- listar, editar y eliminar tags.
+- gestionar sesiones de persona (apertura/cierre) y crear asignaciones
+    automáticas para items de tipo "insumo".
+
+Las funciones auxiliares internas están prefijadas con guión bajo
+y simplifican la lógica reutilizable (normalización de categoría,
+apertura/cierre de sesiones, construcción de subqueries, etc.).
+"""
+
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 from rest_framework.decorators import api_view, permission_classes
@@ -30,16 +44,19 @@ def _norm_cat(raw):
 
 
 def _log_registro(tag: str, nombre=None, categoria=None):
+    # Crea un RegistroTag persistente con categoría normalizada.
     return RegistroTag.objects.create(
         tag=tag, nombre=(nombre or None), categoria=_norm_cat(categoria)
     )
 
 
 def _sesion_abierta():
+    # Devuelve la sesión de persona activa más reciente o None.
     return PersonaSesion.objects.filter(activo=True).order_by("-opened_at").first()
 
 
 def _abrir_sesion(persona_tag: str, persona_nombre: str | None):
+    # Cierra cualquier sesión abierta y crea una nueva sesión activa.
     PersonaSesion.objects.filter(activo=True).update(
         activo=False, closed_at=timezone.now()
     )
@@ -52,7 +69,9 @@ def _abrir_sesion(persona_tag: str, persona_nombre: str | None):
 
 
 def _ultimos_registros_desde(ts):
-
+    # Construye un subquery que para cada tag devuelve la última fecha
+    # de registro desde la marca de tiempo `ts`. Luego recupera el
+    # registro completo asociado a esa última fecha para cada tag.
     sub = (
         RegistroTag.objects.filter(fecha_hora__gte=ts)
         .values("tag")
@@ -78,6 +97,7 @@ def _cerrar_sesion_y_asignar(sesion: PersonaSesion):
     now = timezone.now()
     creadas = []
 
+    # Recupera los últimos registros desde que la sesión fue abierta.
     ultimos = _ultimos_registros_desde(sesion.opened_at)
     for r in ultimos:
         if _norm_cat(r.categoria) != "insumo":

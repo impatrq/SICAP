@@ -1,3 +1,9 @@
+"""
+Rutas del módulo `usuarios_login`.
+
+Define las URL para login, creación de usuarios y la API de menú.
+"""
+
 from django.urls import path
 from . import views
 

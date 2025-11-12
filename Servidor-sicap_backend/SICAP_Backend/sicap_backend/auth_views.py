@@ -1,3 +1,15 @@
+"""
+Vistas mínimas de autenticación usadas por el backend.
+
+Proveen endpoints sencillos para:
+- asegurar la cookie CSRF para clientes (csrf)
+- login via POST (login_api)
+- información del usuario autenticado (me)
+
+Estas vistas son deliberadamente simples y están pensadas para el
+cliente Ionic del proyecto, no como un sistema de auth completo.
+"""
+
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
@@ -8,6 +20,8 @@ import json
 
 @ensure_csrf_cookie
 def csrf(request):
+    # Endpoint que asegura la cookie CSRF y devuelve el token para uso
+    # del cliente si lo necesita.
     return JsonResponse({"csrfToken": get_token(request)})
 
 
@@ -24,6 +38,7 @@ def login_api(request):
             return JsonResponse(
                 {"ok": False, "error": "Credenciales inválidas"}, status=401
             )
+        # Crea la sesión del usuario en Django
         login(request, user)
         return JsonResponse(
             {"ok": True, "user": {"id": user, "username": user.username}}
@@ -34,6 +49,7 @@ def login_api(request):
 
 @login_required
 def me(request):
+    # Devuelve información básica del usuario autenticado (para debug/client)
     u = request.user
     return JsonResponse({"ok": True, "user": {"id": u.id, "username": u.username}})
 

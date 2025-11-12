@@ -1,3 +1,5 @@
+"""Configuración de la app `usuarios_login`."""
+
 from django.apps import AppConfig
 
 

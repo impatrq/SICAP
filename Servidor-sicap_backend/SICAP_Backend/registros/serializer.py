@@ -1,3 +1,10 @@
+"""
+Serializadores del módulo `registros`.
+
+Contienen las representaciones API de `Panol`, `RegistroTag` y
+`Asignacion` utilizadas por los endpoints REST.
+"""
+
 from rest_framework import serializers
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly

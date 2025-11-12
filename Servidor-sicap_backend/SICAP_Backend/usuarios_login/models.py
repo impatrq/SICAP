@@ -1,3 +1,10 @@
+"""
+Modelos del módulo `usuarios_login`.
+
+Modelos ligeros para administrar programadores y pañoles vinculados
+al usuario de Django.
+"""
+
 from django.db import models
 from django.contrib.auth.models import User
 

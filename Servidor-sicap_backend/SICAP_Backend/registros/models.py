@@ -1,3 +1,17 @@
+"""
+Modelos usados por el módulo `registros`.
+
+Modelos principales:
+- RegistroTag: una lectura de tag con nombre, categoría y timestamp.
+- Panol: entidad sencilla que representa un contenedor/almacén.
+- Asignacion: registro que vincula una persona con un item y su estado.
+- PersonaSesion: modelo temporal para controlar sesiones de persona
+    (aperturas/cierres) durante una operación de escaneo.
+
+Se incluyen índices en campos consultados frecuentemente para mejorar
+el rendimiento de las consultas.
+"""
+
 from django.db import models
 from django.utils import timezone
 

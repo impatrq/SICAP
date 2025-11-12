@@ -1,3 +1,11 @@
+"""
+Rutas del módulo `registros`.
+
+Define las URL expuestas por la API para panoles, tags y asignaciones.
+Se registran viewsets de DRF y vistas basadas en funciones para operaciones
+puntuales (registro de tags, listado, edición y borrado masivo).
+"""
+
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework import routers

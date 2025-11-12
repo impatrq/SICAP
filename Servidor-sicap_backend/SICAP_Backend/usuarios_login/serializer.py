@@ -1,3 +1,10 @@
+"""
+Serializadores del módulo `usuarios_login`.
+
+Incluye: ProgrammerSerializer, UserCreateSerializer (genera password
+aleatorio) y PañolSerializer.
+"""
+
 from django.contrib.auth.models import User
 from rest_framework import serializers
 import secrets

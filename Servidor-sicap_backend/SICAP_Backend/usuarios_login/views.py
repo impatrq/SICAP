@@ -1,3 +1,11 @@
+"""
+Vistas del módulo `usuarios_login`.
+
+Contienen endpoints básicos de autenticación empleados por el cliente
+y vistas administrativas para crear usuarios y listar los pañoles
+asociados a un usuario.
+"""
+
 from django.http import JsonResponse
 from rest_framework import viewsets, status
 from .serializer import ProgrammerSerializer, UserCreateSerializer, PañolSerializer
@@ -27,6 +35,8 @@ def login_view(request):
 
         if user is not None:
 
+            # No se crea sesión explícitamente aquí: el cliente solo
+            # necesita saber si las credenciales son correctas.
             return JsonResponse({"success": True, "message": "Login correcto"})
         else:
 
@@ -53,6 +63,7 @@ class MenúAPIView(APIView):
 
     def get(self, request):
 
+        # Devuelve la lista de pañoles asociados al usuario autenticado.
         pañoles = Pañol.objects.filter(usuario=request.user)
         serializer = PañolSerializer(pañoles, many=True)
         return Response(serializer.data)
