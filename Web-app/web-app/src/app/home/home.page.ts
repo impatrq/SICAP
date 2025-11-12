@@ -71,7 +71,7 @@ export class HomePage implements OnInit, OnDestroy {
   private API_BULK_DELETE =
     'http://192.168.111.218:5000/api/v1/register/tag/bulk_delete/';
 
-  private pollingMs = 2000;
+  private pollingMs = 1000; // Actualiza cada 1 segundo para mayor fluidez
   private reqInFlight = false;
   private visHandler?: () => void;
 
@@ -704,16 +704,18 @@ export class HomePage implements OnInit, OnDestroy {
 
     const showSpinner = this.registros.length === 0 && !this.loading;
     if (showSpinner) this.loading = true;
-    this.error = undefined;
 
     this.http.get<Registro[]>(this.API).subscribe({
       next: (rows) => {
-        this.registros = rows;
+        this.registros = rows || [];
         this.loading = false;
         this.reqInFlight = false;
+
+        // Actualiza el estado de los tags (taller/fuera) basado en la lógica backend-driven
+        this.actualizarEstadoTags();
       },
-      error: () => {
-        this.error = 'No pude cargar los registros';
+      error: (e) => {
+        console.error('Error cargando registros', e);
         this.loading = false;
         this.reqInFlight = false;
       },
@@ -724,46 +726,39 @@ export class HomePage implements OnInit, OnDestroy {
     return this.registros;
   }
 
-  get tagsTallerSoloInsumo() {
-    return this.tagsTaller.filter((r) => this.isInsumo(r.categoria));
-  }
-  get tagsFueraSoloInsumo() {
-    return this.tagsFuera.filter((r) => this.isInsumo(r.categoria));
-  }
-
-  // Interfaz Visual
   get tagsTallerFiltrados(): Registro[] {
-    return this.tagsTaller.filter((r) => this.matchQuery(r, this.qVisual));
+    return this.tagsUnicos.filter(
+      (r: Registro) => this.tagsEstado && this.tagsEstado[r.tag] === 'taller' && this.matchQuery(r, this.qVisual)
+    );
   }
   get tagsFueraFiltrados(): Registro[] {
-    return this.tagsFuera.filter((r) => this.matchQuery(r, this.qVisual));
-  }
-
-  // Inventario
-  get inventarioFiltrado(): Registro[] {
-    return this.inventarioItems.filter((r) =>
-      this.matchQuery(r, this.qInventario)
+    return this.tagsUnicos.filter(
+      (r: Registro) => this.tagsEstado && this.tagsEstado[r.tag] === 'fuera' && this.matchQuery(r, this.qVisual)
     );
   }
 
-  // Empleados
-  get empleadosFiltrados(): Registro[] {
-    return this.empleadosItems.filter((r) =>
-      this.matchQuery(r, this.qEmpleados)
-    );
+  // Alterna el estado cada vez que el tag es detectado (cuando cambia created_at)
+  actualizarEstadoTags(): void {
+    if (!this.tagsUnicos) return;
+    for (const r of this.tagsUnicos) {
+      const last = this.tagMeta[r.tag]?.lastCreatedAt;
+      if (r.created_at && r.created_at !== last) {
+        // Si el tag fue detectado de nuevo, alterna el estado
+        this.tagsEstado[r.tag] = this.tagsEstado[r.tag] === 'taller' ? 'fuera' : 'taller';
+        this.tagMeta[r.tag] = { lastCreatedAt: r.created_at };
+      } else if (!this.tagsEstado[r.tag]) {
+        // Si no tiene estado, inicializa en 'taller'
+        this.tagsEstado[r.tag] = 'taller';
+        this.tagMeta[r.tag] = { lastCreatedAt: r.created_at };
+      }
+    }
   }
 
-  limpiarTags() {
-    this.registros = [];
-  }
-
-  // saveState y loadState eliminados: ya no hay almacenamiento local
-
-  trackById(index: number, item: any) {
+  trackById(index: number, item: Registro): any {
     return item?.id ?? item?.tag ?? index;
   }
 
-  trackByTexto(index: number, item: string) {
+  trackByTexto(index: number, item: string): string {
     return item;
   }
 }
