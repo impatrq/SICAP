@@ -4,7 +4,8 @@ from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.views.decorators.http import require_GET
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
-from django.utils import timezone, localtime
+from django.utils import timezone
+from django.utils.timezone import localtime
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
