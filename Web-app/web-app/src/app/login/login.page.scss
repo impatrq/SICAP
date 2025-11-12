@@ -1,5 +1,7 @@
 // -------------------------------------------------------------------
-// Estilos para el Contenido Principal de la Página
+// Login page styles — estilos principales y animación.
+// Comentarios concisos añadidos para ayudar a la lectura sin cambiar
+// el comportamiento/CSS existente.
 // -------------------------------------------------------------------
 ion-content {
   --background: none;
@@ -18,7 +20,7 @@ ion-content {
 // -------------------------------------------------------------------
 
 .splash-container {
-  // Ocupa toda la pantalla y centra la animación en el medio.
+  // Contenedor splash: centra la animación en pantalla completa.
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,7 +28,7 @@ ion-content {
   width: 100vw;
 
   lottie-player {
-    // Define el tamaño de la animación para que se vea bien en todos los dispositivos.
+    // Tamaño de la animación responsive.
     width: 80vw;
     max-width: 450px;
   }
@@ -37,6 +39,7 @@ ion-content {
 // -------------------------------------------------------------------
 
 .login-content {
+  // Contenido del login: formulario visible tras la animación.
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,12 +53,12 @@ ion-content {
 // -------------------------------------------------------------------
 
 .logo-container {
-  // Centra la imagen y le da un espacio antes del formulario.
+  // Contenedor del logo: centrado y espacio superior para el formulario.
   text-align: center;
   margin-bottom: 2rem;
 
   img {
-    // Define la altura del logo. Puedes ajustar este valor.
+    // Altura del logo (ajustable según diseño).
     height: 200px;
   }
 }
@@ -64,6 +67,7 @@ ion-content {
 // Estilos para la Tarjeta del Formulario
 // -------------------------------------------------------------------
 
+// Tarjeta del formulario: color, tamaño y border radius.
 ion-card {
   background: #0d2c54;
   color: #ffffff;
@@ -76,24 +80,21 @@ ion-card {
   margin-right: auto;
 }
 
+// Campos del formulario: inputs e iconos con color claro sobre fondo oscuro.
 ion-item {
   --background: transparent;
-  // Define el color del borde inferior del campo.
-  --border-color: rgba(131, 245, 233, 0.2);
+  --border-color: rgba(131, 245, 233, 0.2); // borde sutil
 
-  // Estilo para los iconos (candado, persona)
   ion-icon {
-    color: #ffffff;
+    color: #ffffff; // iconos en blanco
   }
 
-  // Estilo para las etiquetas (Usuario, Contraseña)
   ion-label {
-    color: #ffffff;
+    color: #ffffff; // etiquetas en blanco
   }
 
-  // Estilo para el texto que el usuario escribe
   ion-input {
-    --color: #ffffff;
+    --color: #ffffff; // texto del input
   }
 }
 
@@ -101,6 +102,7 @@ ion-item {
 // Definición de la Animación de Aparición
 // -------------------------------------------------------------------
 
+// Animación de entrada usada por `.login-content`.
 @keyframes fadeIn {
   from {
     opacity: 0;

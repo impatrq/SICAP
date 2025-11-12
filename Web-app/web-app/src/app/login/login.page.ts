@@ -23,6 +23,7 @@ export class LoginPage {
     private loadingCtrl: LoadingController
   ) {}
 
+  // Marca que la animación inicial (lottie) terminó y muestra el formulario.
   onAnimationComplete() {
     this.animacionTerminada = true;
   }
@@ -48,12 +49,14 @@ export class LoginPage {
 
       await loading.dismiss();
 
+      // Validación de respuesta del servidor
       if (!response.ok) {
         throw new Error('Error en el servidor');
       }
 
       const data = await response.json();
 
+      // Resultado del endpoint: si success=true navegamos, sino mostramos alerta.
       if (data.success) {
         this.navCtrl.navigateForward('/menu');
       } else {
@@ -71,6 +74,11 @@ export class LoginPage {
     }
   }
 
+  /**
+   * Mostrar una alerta modal básica.
+   * @param titulo Texto del encabezado
+   * @param mensaje Texto del cuerpo
+   */
   async mostrarAlerta(titulo: string, mensaje: string) {
     const alert = await this.alertCtrl.create({
       header: titulo,
