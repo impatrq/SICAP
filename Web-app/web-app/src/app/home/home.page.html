@@ -202,7 +202,7 @@
         <ion-col size="2" class="ion-text-center"><b>Acciones</b></ion-col>
       </ion-row>
 
-      <ion-row *ngFor="let reg of inventarioItems; trackBy: trackById">
+      <ion-row *ngFor="let reg of inventarioItems, trackBy: trackById">
         <ion-col>{{ reg.nombre || '-' }}</ion-col>
         <ion-col>{{ friendlyCategoria(reg.categoria) }}</ion-col>
         <ion-col>{{ reg.tag }}</ion-col>
@@ -215,6 +215,7 @@
             fill="clear"
             (click)="abrirEdicion(reg, $event)"
             title="Editar"
+            color="light"
           >
             <ion-icon name="create-outline"></ion-icon>
           </ion-button>
@@ -273,6 +274,7 @@
             <ion-button
               fill="clear"
               size="small"
+              color="light"
               (click)="toggleAsignados(reg, $event)"
               [attr.aria-expanded]="expanded.has(reg.tag)"
             >
@@ -289,6 +291,7 @@
               fill="clear"
               (click)="abrirEdicion(reg, $event)"
               title="Editar"
+              color="light"
             >
               <ion-icon name="create-outline" class="editarnombre"></ion-icon>
             </ion-button>
