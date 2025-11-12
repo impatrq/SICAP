@@ -71,7 +71,7 @@ export class HomePage implements OnInit, OnDestroy {
   private API_BULK_DELETE =
     'http://192.168.111.218:5000/api/v1/register/tag/bulk_delete/';
 
-  private pollingMs = 2000;
+  private pollingMs = 1000; // Actualiza cada 1 segundo para mayor fluidez
   private reqInFlight = false;
   private visHandler?: () => void;
 
@@ -737,12 +737,19 @@ export class HomePage implements OnInit, OnDestroy {
     );
   }
 
+  // Alterna el estado cada vez que el tag es detectado (cuando cambia created_at)
   actualizarEstadoTags(): void {
     if (!this.tagsUnicos) return;
     for (const r of this.tagsUnicos) {
-      if (r.created_at) {
-        const minutos = new Date(r.created_at).getMinutes();
-        this.tagsEstado[r.tag] = minutos % 2 === 0 ? 'taller' : 'fuera';
+      const last = this.tagMeta[r.tag]?.lastCreatedAt;
+      if (r.created_at && r.created_at !== last) {
+        // Si el tag fue detectado de nuevo, alterna el estado
+        this.tagsEstado[r.tag] = this.tagsEstado[r.tag] === 'taller' ? 'fuera' : 'taller';
+        this.tagMeta[r.tag] = { lastCreatedAt: r.created_at };
+      } else if (!this.tagsEstado[r.tag]) {
+        // Si no tiene estado, inicializa en 'taller'
+        this.tagsEstado[r.tag] = 'taller';
+        this.tagMeta[r.tag] = { lastCreatedAt: r.created_at };
       }
     }
   }
