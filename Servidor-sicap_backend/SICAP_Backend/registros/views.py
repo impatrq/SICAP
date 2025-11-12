@@ -30,15 +30,28 @@ from .models import RegistroTag, Panol, PersonaSesion, Asignacion
 from django.shortcuts import get_object_or_404
 from .serializer import PanolSerializer, RegistroTagSerializer, AsignacionSerializer
 import json
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def _norm_cat(raw):
     if raw is None:
         return None
     k = str(raw).strip().lower()
-    if k == "objeto":
+    # Aceptar sinónimos comunes (es/eng) para mayor tolerancia
+    if k in (
+        "objeto",
+        "object",
+        "item",
+        "herramienta",
+        "herramientas",
+        "tool",
+        "tools",
+    ):
         return "insumo"
-    if k in ("persona", "insumo"):
+    if k in ("persona", "person", "usuario", "user", "empleado", "empleados", "insumo"):
         return k
     return None
 
@@ -149,26 +162,46 @@ def recibir_tag(request):
     categoria = _norm_cat(data.get("categoria"))
 
     now = timezone.now()
-    reg = RegistroTag.objects.filter(tag=tag).first()
-    if reg:
-        # Si ya tiene nombre/categoría, solo actualizo fecha_hora
-        if reg.nombre or reg.categoria:
-            reg.fecha_hora = now
-            reg.save(update_fields=["fecha_hora"])
-        else:
-            reg.nombre = nombre
-            reg.categoria = categoria
-            reg.fecha_hora = now
-            reg.save(update_fields=["nombre", "categoria", "fecha_hora"])
-        # Eliminar cualquier otro registro con el mismo tag pero distinto id
+
+    # Usar get_or_create para evitar duplicados en casos de concurrencia o
+    # múltiples escrituras simultáneas desde distintos lectores. Luego
+    # actualizamos solo los campos necesarios conservando valores ya definidos
+    # cuando sea apropiado.
+    reg, created = RegistroTag.objects.get_or_create(
+        tag=tag,
+        defaults={"nombre": nombre, "categoria": categoria, "fecha_hora": now},
+    )
+
+    if not created:
+        # Registro existente: si ya tiene nombre o categoría, solo actualizar
+        # la marca de tiempo. Si no tiene esos valores, rellenarlos si
+        # se proporcionaron.
+        try:
+            if reg.nombre or reg.categoria:
+                reg.fecha_hora = now
+                reg.save(update_fields=["fecha_hora"])
+                logger.debug("RegistroTag existente actualizado fecha_hora: %s", tag)
+            else:
+                # rellenar campos vacíos
+                reg.nombre = nombre or reg.nombre
+                reg.categoria = categoria or reg.categoria
+                reg.fecha_hora = now
+                reg.save(update_fields=["nombre", "categoria", "fecha_hora"])
+                logger.debug(
+                    "RegistroTag existente rellenado con nombre/categoria: %s", tag
+                )
+        except Exception:
+            # En un escenario raro de integridad, fallback a un create seguro
+            logger.exception(
+                "Error actualizando RegistroTag existente, intentando create fallback for %s",
+                tag,
+            )
+            reg = RegistroTag.objects.create(
+                tag=tag, nombre=nombre, categoria=categoria, fecha_hora=now
+            )
+
+        # Asegurar que solo quede una fila por tag: eliminar duplicados si los hay
         RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
-    else:
-        reg = RegistroTag.objects.create(
-            tag=tag,
-            nombre=nombre,
-            categoria=categoria,
-            fecha_hora=now
-        )
 
     # Lógica automática para insumos: crear/cerrar asignación
     if categoria == "insumo":
