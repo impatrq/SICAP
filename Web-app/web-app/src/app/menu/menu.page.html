@@ -1,27 +1,33 @@
 <ion-content [fullscreen]="true" class="page">
   <div class="wrap">
+    <!-- Estado: loading -->
     <div class="center" *ngIf="loading">
       <ion-spinner></ion-spinner>
     </div>
 
+    <!-- Mensaje de error si la carga falló -->
     <ion-text color="danger" class="center" *ngIf="!loading && error">
       {{ error }}
     </ion-text>
 
+    <!-- Grid de tarjetas: crear + listas de pañoles -->
     <section class="grid" *ngIf="!loading">
+      <!-- Tarjeta para crear un nuevo pañol -->
       <article class="card new" (click)="abrirCrear()">
         <div class="poster plus">+</div>
         <div class="name">CREAR USUARIO</div>
       </article>
 
+      <!-- Tarjeta por cada pañol -->
       <article class="card" *ngFor="let p of panoles">
-        <!-- Cubito -->
+        <!-- Click en el área principal abre el pañol -->
         <button class="poster" (click)="abrirPanol(p)">
           <ion-icon [name]="'cube'"></ion-icon>
         </button>
 
-        <!-- Barra de acciones: compacta, solo íconos -->
+        <!-- Acciones rápidas (renombrar / eliminar) -->
         <div class="actions-bar icons-only" (click)="$event.stopPropagation()">
+          <!-- Renombrar -->
           <button
             class="icon-btn"
             title="Renombrar"
@@ -30,6 +36,7 @@
           >
             <ion-icon name="pencil"></ion-icon>
           </button>
+          <!-- Eliminar (abre confirmación) -->
           <button
             class="icon-btn danger"
             title="Eliminar"
@@ -40,10 +47,12 @@
           </button>
         </div>
 
+        <!-- Nombre del pañol -->
         <div class="name">{{ p.nombre }}</div>
       </article>
     </section>
 
+    <!-- Modal: crear nuevo pañol -->
     <ion-modal
       mode="md"
       cssClass="tarjeta-modal"
@@ -64,6 +73,7 @@
         </ion-header>
 
         <ion-content class="ion-padding">
+          <!-- Input para el nombre del nuevo pañol -->
           <ion-item>
             <ion-input
               label="Nombre"
@@ -72,6 +82,7 @@
             ></ion-input>
           </ion-item>
 
+          <!-- Botones: crear / cancelar -->
           <div class="row mt">
             <ion-button
               [disabled]="saving || !nombreNuevo.trim()"
@@ -84,6 +95,7 @@
             </ion-button>
           </div>
 
+          <!-- Error dentro del modal (si ocurre) -->
           <ion-text color="danger" *ngIf="error"> {{ error }} </ion-text>
         </ion-content>
       </ng-template>

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 
+// Tipo mínimo que describe un pañol tal como lo devuelve el backend
 type Panol = { id?: number; nombre: string; icono?: string };
 
 @Component({
@@ -13,14 +14,17 @@ type Panol = { id?: number; nombre: string; icono?: string };
   standalone: false,
 })
 export class MenuPage implements OnInit {
+  // Endpoints usados por este componente
   private API_BASE = environment.API_BASE;
   private PANOLES_URL = `${this.API_BASE}panoles/`;
   private CSRF_PING_URL = `${this.API_BASE}auth/csrf/`;
 
+  // Estado de la vista
   panoles: Panol[] = [];
   loading = false;
   error?: string;
 
+  // UI: creación rápida de pañol
   creating = false;
   nombreNuevo = '';
   saving = false;
@@ -33,13 +37,17 @@ export class MenuPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // 1) Plantar cookie CSRF y luego cargar pañoles
+    // Plantar cookie CSRF (si aplica) antes de hacer otras peticiones.
+    // Luego intentamos cargar la lista de pañoles en cualquier caso.
     this.http.get(this.CSRF_PING_URL, { withCredentials: true }).subscribe({
       next: () => this.cargar(),
       error: () => this.cargar(), // aunque falle, intento cargar
     });
   }
 
+  /**
+   * Carga la lista de pañoles desde el backend y actualiza el estado.
+   */
   cargar() {
     this.loading = true;
     this.error = undefined;
@@ -56,16 +64,22 @@ export class MenuPage implements OnInit {
     });
   }
 
+  // Abre el formulario para crear un nuevo pañol
   abrirCrear() {
     this.nombreNuevo = '';
     this.creating = true;
   }
 
+  // Cancela la creación y limpia el input
   cancelarCrear() {
     this.creating = false;
     this.nombreNuevo = '';
   }
 
+  /**
+   * Crea un nuevo pañol usando el valor de `nombreNuevo` y lo añade
+   * al inicio de la lista si la creación fue exitosa.
+   */
   crear() {
     const nombre = this.nombreNuevo.trim();
     if (!nombre) return;
@@ -91,16 +105,22 @@ export class MenuPage implements OnInit {
       });
   }
 
+  // Navega a la vista del pañol seleccionado
   abrirPanol(p: Panol) {
     if (!p.id) return;
     this.router.navigate(['/home', p.id]);
   }
 
+  // Evita que el evento burbujee y previene el comportamiento por defecto
   private stop(ev?: Event) {
     ev?.stopPropagation();
     ev?.preventDefault();
   }
 
+  /**
+   * Abre un diálogo para renombrar un pañol. Si se guarda, aplica un
+   * PATCH y actualiza el elemento en la lista local.
+   */
   async abrirRenombrar(p: Panol, ev?: Event) {
     this.stop(ev);
     const alert = await this.alert.create({
@@ -144,6 +164,9 @@ export class MenuPage implements OnInit {
     await alert.present();
   }
 
+  /**
+   * Muestra una confirmación antes de eliminar un pañol.
+   */
   async confirmarEliminar(p: Panol, ev?: Event) {
     this.stop(ev);
     const alert = await this.alert.create({
@@ -161,6 +184,7 @@ export class MenuPage implements OnInit {
     await alert.present();
   }
 
+  // Elimina el pañol en el backend y actualiza la lista local
   private eliminar(p: Panol) {
     if (!p.id) return;
     this.http
@@ -181,6 +205,7 @@ export class MenuPage implements OnInit {
       });
   }
 
+  // Muestra un toast corto para feedback al usuario
   private async msg(text: string) {
     const t = await this.toast.create({ message: text, duration: 1500 });
     await t.present();

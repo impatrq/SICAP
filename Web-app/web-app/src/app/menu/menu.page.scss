@@ -1,21 +1,25 @@
+// Página: fondo y color base
 ion-content.page {
   --background: #0b0b0b;
   color: #eaeaea;
 }
 
 .wrap {
+  // Contenedor centrado
   min-height: 100%;
   display: grid;
   place-items: center;
   padding: 16px;
 }
 .center {
+  // Utilidad: centrar contenido horizontal y vertical
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .grid {
+  // Grid responsivo para tarjetas de pañol
   width: min(1200px, 96vw);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -24,6 +28,7 @@ ion-content.page {
 }
 
 .card {
+  // Tarjeta principal para cada pañol
   position: relative;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -37,12 +42,14 @@ ion-content.page {
   overflow: hidden;
 }
 .card:hover {
+  /* Hover sutil para elevar la tarjeta */
   transform: translateY(-2px);
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
   border-color: rgba(122, 164, 255, 0.18);
 }
 
 .poster {
+  // Zona visual (icono) dentro de la tarjeta
   width: 100%;
   height: 140px;
   border-radius: 14px;
@@ -66,6 +73,7 @@ ion-content.page {
 }
 
 .name {
+  // Nombre del pañol
   margin-top: 10px;
   font-weight: 700;
   color: #cfe2ff;
@@ -73,12 +81,14 @@ ion-content.page {
 }
 
 .grid .card.new .name {
+  // Estilo especial para tarjeta "nueva"
   text-transform: uppercase;
   color: #a6d9ec;
   letter-spacing: 0.6px;
 }
 
 .actions-bar {
+  // Barra de acciones (botones) dentro de la tarjeta
   position: absolute;
   left: 14px;
   right: 14px;
@@ -101,12 +111,14 @@ ion-content.page {
 }
 
 .card:hover .actions-bar {
+  /* Mostrar acciones al hover */
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
 
 .ab-btn {
+  // Botón circular para acciones en la tarjeta
   width: 46px;
   height: 46px;
   display: inline-flex;
@@ -126,6 +138,7 @@ ion-content.page {
 }
 
 .ab-btn:hover {
+  // Hover para botón de acción
   background: rgba(255, 255, 255, 0.18);
   transform: translateY(-2px);
   box-shadow: 0 0 10px rgba(158, 193, 255, 0.35);
@@ -135,10 +148,12 @@ ion-content.page {
 }
 
 .ab-btn:active {
+  // Estado activo al presionar
   transform: scale(0.95);
 }
 
 .ab-btn.danger {
+  // Variante de peligro para acciones destructivas
   background: rgba(255, 80, 80, 0.18);
   color: #ffb3b3;
 }
@@ -148,6 +163,7 @@ ion-content.page {
 }
 
 @media (max-width: 767px) {
+  // Ajustes móviles: mostrar siempre la barra de acciones
   .actions-bar {
     opacity: 1;
     transform: none;
@@ -163,6 +179,7 @@ ion-content.page {
 }
 
 .tarjeta-modal {
+  // Estilo del modal de creación/edición de pañol
   margin: auto;
   width: min(640px, 92vh);
   max-height: 82vh;
