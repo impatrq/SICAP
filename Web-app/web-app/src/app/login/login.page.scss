@@ -2,19 +2,16 @@
 // Estilos para el Contenido Principal de la Página
 // -------------------------------------------------------------------
 ion-content {
---background: none;
+  --background: none;
 
-  background-image: url('../../assets/images/Fondo-login.jpg');
+  background-image: url("../../assets/images/Fondo-login.jpg");
 
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-      filter: brightness(0.7);
-      z-index: -1;
-    }
-
-
-
+  filter: brightness(0.7);
+  z-index: -1;
+}
 
 // -------------------------------------------------------------------
 // Estilos para la Animación de Inicio (Splash Screen)
@@ -22,34 +19,31 @@ ion-content {
 
 .splash-container {
   // Ocupa toda la pantalla y centra la animación en el medio.
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
 
-    lottie-player {
+  lottie-player {
     // Define el tamaño de la animación para que se vea bien en todos los dispositivos.
     width: 80vw;
     max-width: 450px;
+  }
 }
-}
-
 
 // -------------------------------------------------------------------
 // Estilos para el Contenido del Login (Cuando la animación termina)
 // -------------------------------------------------------------------
 
 .login-content {
-  
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    
-    animation: fadeIn 0.5s ease-in-out;
-}
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 
+  animation: fadeIn 0.5s ease-in-out;
+}
 
 // -------------------------------------------------------------------
 // Estilos para el Logo Estático
@@ -57,53 +51,50 @@ ion-content {
 
 .logo-container {
   // Centra la imagen y le da un espacio antes del formulario.
-    text-align: center;
-    margin-bottom: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
 
-    img {
+  img {
     // Define la altura del logo. Puedes ajustar este valor.
-    height: 200px
-    }
+    height: 200px;
+  }
 }
-
 
 // -------------------------------------------------------------------
 // Estilos para la Tarjeta del Formulario
 // -------------------------------------------------------------------
 
 ion-card {
-  
-    background: #0d2c54; 
-    color: #ffffff;
+  background: #0d2c54;
+  color: #ffffff;
 
-    width: 90%;
-    max-width: 380px;
-    border-radius:20px;
+  width: 90%;
+  max-width: 380px;
+  border-radius: 20px;
 
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 ion-item {
-  
-    --background: transparent;
+  --background: transparent;
   // Define el color del borde inferior del campo.
-    --border-color: rgba(131, 245, 233, 0.2);
+  --border-color: rgba(131, 245, 233, 0.2);
 
   // Estilo para los iconos (candado, persona)
-    ion-icon {
+  ion-icon {
     color: #ffffff;
-    }
+  }
 
   // Estilo para las etiquetas (Usuario, Contraseña)
-    ion-label {
+  ion-label {
     color: #ffffff;
-}
+  }
 
   // Estilo para el texto que el usuario escribe
-    ion-input {
+  ion-input {
     --color: #ffffff;
-}
+  }
 }
 
 // -------------------------------------------------------------------
@@ -111,12 +102,12 @@ ion-item {
 // -------------------------------------------------------------------
 
 @keyframes fadeIn {
-    from {
+  from {
     opacity: 0;
     transform: translateY(10px);
-    }
-    to {
+  }
+  to {
     opacity: 1;
     transform: translateY(0);
-    }
+  }
 }

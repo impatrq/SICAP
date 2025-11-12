@@ -8,60 +8,70 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" 
-             class="has-video-bg" 
-             [class.menu-principal-activo]="!seccionActiva">
+<ion-content
+  [fullscreen]="true"
+  class="has-video-bg"
+  [class.menu-principal-activo]="!seccionActiva"
+>
+  <video
+    autoplay
+    preload="auto"
+    loop
+    muted
+    playsinline
+    webkit-playsinline="true"
+    id="bg-video"
+    style="pointer-events: none"
+  >
+    <source src="assets/Animaciones/animacion_sicap.mp4" type="video/mp4" />
+    No carga animación
+  </video>
 
-    <video autoplay 
-           preload="auto" 
-           loop 
-           muted 
-           playsinline 
-           webkit-playsinline="true"
-           id="bg-video" 
-           style="pointer-events:none;">
-  <source src="assets/Animaciones/animacion_sicap.mp4" type="video/mp4">
-  No carga animación
-</video>
+  <div class="bg-overlay"></div>
+  <!-- Toolbar lateral solo si está activa la Interfaz Visual -->
+  <div
+    class="vertical-toolbar"
+    [class.activa]="seccionActiva"
+    [style.pointer-events]="seccionActiva ? 'auto' : 'none'"
+  >
+    <ion-button
+      *ngFor="let opcion of opcionesMenu; trackBy: trackByTexto"
+      expand="block"
+      [disabled]="opcion === seccionActiva"
+      (click)="activarSeccion(opcion)"
+    >
+      {{ opcion }}
+    </ion-button>
+    <ion-button expand="block" color="medium" (click)="volverAlMenuCentral()"
+      >Volver</ion-button
+    >
+  </div>
 
-<div class="bg-overlay"></div>
-<!-- Toolbar lateral solo si está activa la Interfaz Visual -->
-<div class="vertical-toolbar"
-  [class.activa]="seccionActiva"
-  [style.pointer-events]="seccionActiva ? 'auto' : 'none'">
-  <ion-button
-    *ngFor="let opcion of opcionesMenu; trackBy: trackByTexto"
-    expand="block"
-    [disabled]="opcion === seccionActiva"
-    (click)="activarSeccion(opcion)">
-    {{ opcion }}
-  </ion-button>
-  <ion-button expand="block" color="medium" (click)="volverAlMenuCentral()">Volver</ion-button>
-</div>
+  <!-- Toolbar móvil - solo visible en dispositivos móviles cuando SÍ hay sección activa -->
+  <div class="mobile-toolbar" *ngIf="seccionActiva">
+    <ion-button
+      *ngFor="let opcion of opcionesMenu; trackBy: trackByTexto"
+      expand="block"
+      size="small"
+      [disabled]="opcion === seccionActiva"
+      (click)="activarSeccion(opcion)"
+      class="toolbar-btn-mobile"
+    >
+      {{ opcion }}
+    </ion-button>
+    <ion-button
+      expand="block"
+      size="small"
+      color="medium"
+      (click)="volverAlMenuCentral()"
+      class="toolbar-btn-mobile"
+    >
+      Volver
+    </ion-button>
+  </div>
 
-<!-- Toolbar móvil - solo visible en dispositivos móviles cuando SÍ hay sección activa -->
-<div class="mobile-toolbar" *ngIf="seccionActiva">
-  <ion-button
-    *ngFor="let opcion of opcionesMenu; trackBy: trackByTexto"
-    expand="block"
-    size="small"
-    [disabled]="opcion === seccionActiva"
-    (click)="activarSeccion(opcion)"
-    class="toolbar-btn-mobile">
-    {{ opcion }}
-  </ion-button>
-  <ion-button 
-    expand="block" 
-    size="small"
-    color="medium" 
-    (click)="volverAlMenuCentral()"
-    class="toolbar-btn-mobile">
-    Volver
-  </ion-button>
-</div>
-
-<!-- Botón de basurita -->
-<!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed"
+  <!-- Botón de basurita -->
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed"
          *ngIf="seccionActiva === 'Interfaz Visual' || seccionActiva === 'Inventario' || seccionActiva === 'Empleados'">
   <ion-fab-button size="small" (click)="limpiarTags()" aria-label="Limpiar">
     <ion-icon name="trash-outline"></ion-icon>
@@ -70,18 +80,40 @@
 
   <!-- Menú entral solo si NO hay sección activa -->
   <div *ngIf="!seccionActiva" class="botones-menu-central">
-    <ion-button expand="block" (click)="activarSeccion('Interfaz Visual')"class="menu-animado">Interfaz Visual</ion-button>
-    <ion-button expand="block" (click)="activarSeccion('Inventario')"class="menu-animado">Inventario</ion-button>
-    <ion-button expand="block" (click)="activarSeccion('Empleados')"class="menu-animado">Empleados</ion-button>
-    <ion-button expand="block" (click)="activarSeccion('Personalización')"class="menu-animado">Personalización</ion-button>
+    <ion-button
+      expand="block"
+      (click)="activarSeccion('Interfaz Visual')"
+      class="menu-animado"
+      >Interfaz Visual</ion-button
+    >
+    <ion-button
+      expand="block"
+      (click)="activarSeccion('Inventario')"
+      class="menu-animado"
+      >Inventario</ion-button
+    >
+    <ion-button
+      expand="block"
+      (click)="activarSeccion('Empleados')"
+      class="menu-animado"
+      >Empleados</ion-button
+    >
+    <ion-button
+      expand="block"
+      (click)="activarSeccion('Personalización')"
+      class="menu-animado"
+      >Personalización</ion-button
+    >
   </div>
 
   <!-- Espacio para Interfaz Visual -->
   <div *ngIf="seccionActiva === 'Interfaz Visual'" class="visual-content">
     <div class="header-line">
-      <ion-searchbar placeholder="Buscar por nombre o tag"
-                     [(ngModel)]="qVisual"
-                     [debounce]="200">
+      <ion-searchbar
+        placeholder="Buscar por nombre o tag"
+        [(ngModel)]="qVisual"
+        [debounce]="200"
+      >
       </ion-searchbar>
     </div>
 
@@ -92,20 +124,28 @@
         <div *ngFor="let r of tagsTallerFiltrados; trackBy: trackById">
           <ion-card class="reg-card">
             <ion-card-header>
-              <ion-card-title class="mono"><b>Nombre:</b> {{ r.nombre || '-' }}</ion-card-title>
+              <ion-card-title class="mono"
+                ><b>Nombre:</b> {{ r.nombre || '-' }}</ion-card-title
+              >
               <ion-card-subtitle class="muted">
-                <b>Categoría:</b> {{ friendlyCategoria(r.categoria) }}<br>
+                <b>Categoría:</b> {{ friendlyCategoria(r.categoria) }}<br />
                 {{ (r.fecha_hora || r.created_at) | date:'dd/MM/yyyy HH:mm' }}
               </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-              <ion-button size="small" fill="clear" (click)="abrirEdicion(r, $event)">
+              <ion-button
+                size="small"
+                fill="clear"
+                (click)="abrirEdicion(r, $event)"
+              >
                 <ion-icon name="create-outline"></ion-icon>
               </ion-button>
             </ion-card-content>
           </ion-card>
         </div>
-        <ion-text *ngIf="!tagsTallerFiltrados.length">Sin tags en taller</ion-text>
+        <ion-text *ngIf="!tagsTallerFiltrados.length"
+          >Sin tags en taller</ion-text
+        >
       </div>
 
       <!-- Caja Fuera -->
@@ -114,20 +154,28 @@
         <div *ngFor="let r of tagsFueraFiltrados; trackBy: trackById">
           <ion-card class="reg-card">
             <ion-card-header>
-              <ion-card-title class="mono"><b>Nombre:</b> {{ r.nombre || '-' }}</ion-card-title>
+              <ion-card-title class="mono"
+                ><b>Nombre:</b> {{ r.nombre || '-' }}</ion-card-title
+              >
               <ion-card-subtitle class="muted">
-                <b>Categoría:</b> {{ friendlyCategoria(r.categoria) }}<br>
+                <b>Categoría:</b> {{ friendlyCategoria(r.categoria) }}<br />
                 {{ (r.fecha_hora || r.created_at) | date:'dd/MM/yyyy HH:mm' }}
               </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-              <ion-button size="small" fill="clear" (click)="abrirEdicion(r, $event)">
+              <ion-button
+                size="small"
+                fill="clear"
+                (click)="abrirEdicion(r, $event)"
+              >
                 <ion-icon name="create-outline"></ion-icon>
               </ion-button>
             </ion-card-content>
           </ion-card>
         </div>
-        <ion-text *ngIf="!tagsFueraFiltrados.length">Sin tags fuera del taller</ion-text>
+        <ion-text *ngIf="!tagsFueraFiltrados.length"
+          >Sin tags fuera del taller</ion-text
+        >
       </div>
     </div>
   </div>
@@ -137,9 +185,11 @@
     <h2>Inventario</h2>
 
     <div class="header-line">
-      <ion-searchbar placeholder="Buscar por nombre o tag"
-                    [(ngModel)]="qInventario"
-                    [debounce]="200">
+      <ion-searchbar
+        placeholder="Buscar por nombre o tag"
+        [(ngModel)]="qInventario"
+        [debounce]="200"
+      >
       </ion-searchbar>
     </div>
 
@@ -156,20 +206,34 @@
         <ion-col>{{ reg.nombre || '-' }}</ion-col>
         <ion-col>{{ friendlyCategoria(reg.categoria) }}</ion-col>
         <ion-col>{{ reg.tag }}</ion-col>
-        <ion-col>{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
+        <ion-col
+          >{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col
+        >
         <ion-col size="2" class="ion-text-center">
-          <ion-button size="small" fill="clear" (click)="abrirEdicion(reg, $event)" title="Editar">
+          <ion-button
+            size="small"
+            fill="clear"
+            (click)="abrirEdicion(reg, $event)"
+            title="Editar"
+          >
             <ion-icon name="create-outline"></ion-icon>
           </ion-button>
-          <ion-button size="small" fill="clear" color="danger"
-                      (click)="abrirConfirmEliminar(reg, $event)" title="Eliminar">
+          <ion-button
+            size="small"
+            fill="clear"
+            color="danger"
+            (click)="abrirConfirmEliminar(reg, $event)"
+            title="Eliminar"
+          >
             <ion-icon name="trash-outline"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
 
-    <ion-text *ngIf="tagsUnicos.length === 0">No hay tags registrados.</ion-text>
+    <ion-text *ngIf="tagsUnicos.length === 0"
+      >No hay tags registrados.</ion-text
+    >
   </div>
 
   <!-- Espacio para Empleados -->
@@ -177,9 +241,11 @@
     <h2>Empleados</h2>
 
     <div class="header-line">
-      <ion-searchbar placeholder="Buscar por nombre o tag"
-                    [(ngModel)]="qEmpleados"
-                    [debounce]="200">
+      <ion-searchbar
+        placeholder="Buscar por nombre o tag"
+        [(ngModel)]="qEmpleados"
+        [debounce]="200"
+      >
       </ion-searchbar>
     </div>
 
@@ -199,25 +265,40 @@
           <ion-col>{{ reg.nombre || reg.tag }}</ion-col>
           <ion-col>{{ friendlyCategoria(reg.categoria) }}</ion-col>
           <ion-col>{{ reg.id }}</ion-col>
-          <ion-col>{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
+          <ion-col
+            >{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col
+          >
 
           <ion-col size="2">
             <ion-button
               fill="clear"
               size="small"
               (click)="toggleAsignados(reg, $event)"
-              [attr.aria-expanded]="expanded.has(reg.tag)">
-              <ion-icon [name]="expanded.has(reg.tag) ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+              [attr.aria-expanded]="expanded.has(reg.tag)"
+            >
+              <ion-icon
+                [name]="expanded.has(reg.tag) ? 'chevron-up-outline' : 'chevron-down-outline'"
+              ></ion-icon>
               <ion-label class="ml-1">Ver</ion-label>
             </ion-button>
           </ion-col>
 
           <ion-col size="2" class="ion-text-center">
-            <ion-button size="small" fill="clear" (click)="abrirEdicion(reg, $event)" title="Editar">
+            <ion-button
+              size="small"
+              fill="clear"
+              (click)="abrirEdicion(reg, $event)"
+              title="Editar"
+            >
               <ion-icon name="create-outline"></ion-icon>
             </ion-button>
-            <ion-button size="small" fill="clear" color="danger"
-                        (click)="abrirConfirmEliminar(reg, $event)" title="Eliminar">
+            <ion-button
+              size="small"
+              fill="clear"
+              color="danger"
+              (click)="abrirConfirmEliminar(reg, $event)"
+              title="Eliminar"
+            >
               <ion-icon name="trash-outline"></ion-icon>
             </ion-button>
           </ion-col>
@@ -234,7 +315,9 @@
                 <ion-text color="danger">{{ asigError[reg.tag] }}</ion-text>
               </ng-container>
 
-              <ng-container *ngIf="!asigLoading[reg.tag] && !asigError[reg.tag]">
+              <ng-container
+                *ngIf="!asigLoading[reg.tag] && !asigError[reg.tag]"
+              >
                 <ion-text *ngIf="(asigCache[reg.tag] || []).length === 0">
                   Sin insumos asignados.
                 </ion-text>
@@ -250,9 +333,16 @@
                   <ion-row *ngFor="let a of asigCache[reg.tag]">
                     <ion-col size="5">{{ a.item_nombre || '—' }}</ion-col>
                     <ion-col size="3">{{ a.item_tag }}</ion-col>
-                    <ion-col size="3">{{ a.asignado_en | date:'short' }}</ion-col>
+                    <ion-col size="3"
+                      >{{ a.asignado_en | date:'short' }}</ion-col
+                    >
                     <ion-col size="1">
-                      <ion-button size="small" fill="clear" (click)="devolverAsignacion(a)" [disabled]="!a.activo">
+                      <ion-button
+                        size="small"
+                        fill="clear"
+                        (click)="devolverAsignacion(a)"
+                        [disabled]="!a.activo"
+                      >
                         <ion-icon name="return-down-back-outline"></ion-icon>
                       </ion-button>
                     </ion-col>
@@ -265,28 +355,45 @@
       </ng-container>
     </ion-grid>
 
-    <ion-text *ngIf="tagsUnicos.length === 0">No se han registrado empleados.</ion-text>
+    <ion-text *ngIf="tagsUnicos.length === 0"
+      >No se han registrado empleados.</ion-text
+    >
   </div>
 
   <!-- Espacio para Personalización -->
-  <div *ngIf="seccionActiva === 'Personalización'" class="visual-content personalizacion">
+  <div
+    *ngIf="seccionActiva === 'Personalización'"
+    class="visual-content personalizacion"
+  >
     <h2>Personalización</h2>
 
     <ion-card>
       <ion-card-header>
         <ion-card-title>Pendientes de categoría</ion-card-title>
-        <ion-card-subtitle>Objetos/personas sin categoría asignada</ion-card-subtitle>
+        <ion-card-subtitle
+          >Objetos/personas sin categoría asignada</ion-card-subtitle
+        >
       </ion-card-header>
 
       <ion-card-content>
-
-        <div class="header-line" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-          <ion-button size="small" fill="outline" (click)="toggleSelectAllSinCat()">
+        <div
+          class="header-line"
+          style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap"
+        >
+          <ion-button
+            size="small"
+            fill="outline"
+            (click)="toggleSelectAllSinCat()"
+          >
             {{ selectAllActive ? 'Deseleccionar todo' : 'Seleccionar todo' }}
           </ion-button>
 
-          <ion-button size="small" color="danger" [disabled]="selectedTags.size === 0 || purgeLoading"
-                      (click)="borrarSeleccionadosSinCat()">
+          <ion-button
+            size="small"
+            color="danger"
+            [disabled]="selectedTags.size === 0 || purgeLoading"
+            (click)="borrarSeleccionadosSinCat()"
+          >
             <ion-icon name="trash-outline" slot="start"></ion-icon>
             Borrar seleccionados
           </ion-button>
@@ -294,7 +401,8 @@
           <ion-spinner *ngIf="purgeLoading" name="dots"></ion-spinner>
 
           <ion-text class="ml-auto" *ngIf="sinCategoriaItems.length > 0">
-            {{ selectedTags.size }} seleccionados / {{ sinCategoriaItems.length }} totales
+            {{ selectedTags.size }} seleccionados / {{ sinCategoriaItems.length
+            }} totales
           </ion-text>
         </div>
 
@@ -304,7 +412,8 @@
               <ion-checkbox
                 [checked]="selectAllActive"
                 (ionChange)="toggleSelectAllSinCat()"
-                aria-label="Seleccionar todo">
+                aria-label="Seleccionar todo"
+              >
               </ion-checkbox>
             </ion-col>
             <ion-col size="3"><b>Nombre</b></ion-col>
@@ -313,28 +422,38 @@
             <ion-col size="2"><b>Asignar</b></ion-col>
           </ion-row>
 
-          <ion-row *ngFor="let reg of sinCategoriaItems; let i = index; trackBy: trackById">
+          <ion-row
+            *ngFor="let reg of sinCategoriaItems; let i = index; trackBy: trackById"
+          >
             <ion-col size="1" class="ion-text-center">
               <ion-checkbox
                 [checked]="selectedTags.has(reg.tag)"
                 (ionChange)="toggleSelectTag(reg.tag)"
-                aria-label="Seleccionar fila">
+                aria-label="Seleccionar fila"
+              >
               </ion-checkbox>
             </ion-col>
 
-            <ion-col size="3" class="clickeable" (click)="editarNombreInline(reg, $event)">
+            <ion-col
+              size="3"
+              class="clickeable"
+              (click)="editarNombreInline(reg, $event)"
+            >
               {{ reg.nombre || '-' }}
             </ion-col>
 
             <ion-col size="3">{{ reg.tag }}</ion-col>
 
-            <ion-col size="3">{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col>
+            <ion-col size="3"
+              >{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col
+            >
 
             <ion-col size="2">
               <ion-select
                 placeholder="Elegir"
                 interface="popover"
-                (ionChange)="onAsignarCategoria(sinCategoriaItems[i], $event)">
+                (ionChange)="onAsignarCategoria(sinCategoriaItems[i], $event)"
+              >
                 <ion-select-option value="persona">Persona</ion-select-option>
                 <ion-select-option value="insumo">Insumo</ion-select-option>
               </ion-select>
@@ -367,7 +486,10 @@
       <ion-content class="ion-padding">
         <ion-item>
           <ion-label position="stacked">Nombre</ion-label>
-          <ion-input [(ngModel)]="modeloEdicion.nombre" placeholder="Escribí el nombre..."></ion-input>
+          <ion-input
+            [(ngModel)]="modeloEdicion.nombre"
+            placeholder="Escribí el nombre..."
+          ></ion-input>
         </ion-item>
 
         <ion-item>
@@ -379,7 +501,11 @@
           </ion-select>
         </ion-item>
 
-        <ion-button expand="block" class="ion-margin-top" (click)="guardarEdicion()">
+        <ion-button
+          expand="block"
+          class="ion-margin-top"
+          (click)="guardarEdicion()"
+        >
           Guardar
         </ion-button>
       </ion-content>

@@ -1,4 +1,5 @@
 .has-video-bg {
+  // Fondo transparente cuando hay video detrás
   --background: transparent !important;
 }
 
@@ -10,57 +11,66 @@
 //   background-repeat: no-repeat;
 // }
 
-//Video de fondo
+// Video de fondo: ocupa toda la pantalla
 #bg-video {
   position: fixed !important;
   width: 100% !important;
   height: 100% !important;
-  inset: 0 !important; 
+  inset: 0 !important;
   object-fit: cover !important;
   z-index: -1 !important;
   pointer-events: none !important;
 }
 
-//Capa oscura sobre el video
+// Capa oscura sobre el video para mejorar contraste de la UI
 .bg-overlay {
   position: fixed !important;
   inset: 0 !important;
   z-index: 0 !important;
-  background:
-    radial-gradient(80rem 80rem at 10% -10%, rgba(var(--indigo-rgb, 40,75,99), .25), transparent 60%),
-    radial-gradient(70rem 70rem at 110% 10%, rgba(var(--paynes-rgb, 76,92,104), .25), transparent 50%),
-    linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35)) !important;
+  background: radial-gradient(
+      80rem 80rem at 10% -10%,
+      rgba(var(--indigo-rgb, 40, 75, 99), 0.25),
+      transparent 60%
+    ),
+    radial-gradient(
+      70rem 70rem at 110% 10%,
+      rgba(var(--paynes-rgb, 76, 92, 104), 0.25),
+      transparent 50%
+    ),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)) !important;
   pointer-events: none !important;
 }
 
-//Hacer que el contenido esté por encima del video y la capa oscura
-.visual-content, .vertical-toolbar, .botones-menu-central {
+// Elevar contenido interactivo sobre el fondo (video + overlay)
+.visual-content,
+.vertical-toolbar,
+.botones-menu-central {
   position: relative;
   z-index: 1;
   color: var(--platinum);
 }
 
-// Estilos para ion-content
+// Ajustes del scroll del content
 ion-content::part(scroll) {
   display: block !important;
   align-items: unset;
-  justify-content:unset !important;
+  justify-content: unset !important;
   height: auto !important;
 }
 
-// Estilos para el menú central
+// Menú central (pantalla principal) - layout y espaciado
 .botones-menu-central {
   width: 30%;
   margin: auto;
-    display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 80vh;      // Ocupa casi toda la altura de la pantalla
-  gap: 15px;   
+  height: 80vh; // Ocupa casi toda la altura de la pantalla
+  gap: 15px;
 }
 
-//Transiciones suaves para los botones del menú
+// Transición y efecto hover para botones principales
 .menu-animado {
   width: 100%;
   transition-property: background-color, transform;
@@ -68,17 +78,16 @@ ion-content::part(scroll) {
   transition-timing-function: ease;
 }
 
-//efecto hover y focus para los botones del menú
+// Hover/focus: escala y color
 .menu-animado:hover,
 .menu-animado:focus {
   transform: scale(1.08);
-  background-color: rgba(var(--indigo-rgb), .85) !important;
+  background-color: rgba(var(--indigo-rgb), 0.85) !important;
   color: var(--platinum) !important;
 }
 
-// Estilos para ion-accordion-group
+// Container de acordeones: limitar ancho para legibilidad
 ion-accordion-group {
-
   max-width: 700px;
   width: 90%;
 }
@@ -108,26 +117,27 @@ ion-accordion-group {
 //   font-size: 1.3rem;
 // }
 
-//Toolbar 
+// Toolbar lateral (desktop)
 .vertical-toolbar {
   position: fixed;
   left: 0;
   top: 56px;
   width: 220px;
   height: calc(100vh - 56px);
-  background: rgba(var(--paynes-rgb), .18);
+  background: rgba(var(--paynes-rgb), 0.18);
   backdrop-filter: blur(12px) saturate(160%);
   -webkit-backdrop-filter: blur(12px) saturate(160%);
-  border-right: 1px solid rgba(var(--platinum-rgb), .18);
+  border-right: 1px solid rgba(var(--platinum-rgb), 0.18);
   display: flex;
   flex-direction: column;
   padding: 10px;
   z-index: 1000;
-  transition: transform 0.4s cubic-bezier(.4,0,.2,1), opacity 0.4s cubic-bezier(.4,0,.2,1);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateX(-100%);
   opacity: 0;
   pointer-events: none;
-  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
 }
 .vertical-toolbar.activa {
   transform: translateX(0);
@@ -135,54 +145,63 @@ ion-accordion-group {
   pointer-events: auto;
 }
 
-//Modal de Edición
+// Estilos del modal de edición
 ion-modal::part(content) {
-  background: linear-gradient(135deg, rgba(var(--indigo-rgb), .90), rgba(var(--paynes-rgb), .90));
+  background: linear-gradient(
+    135deg,
+    rgba(var(--indigo-rgb), 0.9),
+    rgba(var(--paynes-rgb), 0.9)
+  );
   color: var(--platinum);
-  border: 1px solid rgba(var(--platinum-rgb), .15);
-  box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  border: 1px solid rgba(var(--platinum-rgb), 0.15);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(12px) saturate(140%);
 }
 
 ion-modal ion-item {
   --background: transparent;
   --color: var(--platinum);
-  --border-color: rgba(var(--platinum-rgb), .25);
+  --border-color: rgba(var(--platinum-rgb), 0.25);
 }
-ion-modal ion-label { 
-  color: var(--platinum); 
-  opacity: .9; 
+ion-modal ion-label {
+  color: var(--platinum);
+  opacity: 0.9;
 }
 
 ion-modal ion-input,
 ion-modal ion-select {
-  --color: var(--platinum);                
-  --placeholder-color: rgba(220,220,221,.6);
+  --color: var(--platinum);
+  --placeholder-color: rgba(220, 220, 221, 0.6);
 }
 
-ion-modal ion-select::part(icon) { color: var(--platinum); opacity: .9; }
+ion-modal ion-select::part(icon) {
+  color: var(--platinum);
+  opacity: 0.9;
+}
 
 .visual-content {
-  margin-left: 220px; 
+  // Contenedor principal con margen para la toolbar lateral
+  margin-left: 220px;
   padding: 20px;
   pointer-events: auto;
 }
 
 .header-line {
+  // Línea de cabecera con buscador y acciones rápidas
   display: flex;
-  align-items: center; 
-  gap: 8px; 
+  align-items: center;
+  gap: 8px;
   margin-bottom: 8px;
 }
 
 .grow {
-  flex:1;
+  flex: 1;
 }
 
 .stats-row {
   display: flex;
-  gap:8px; 
-  margin:8px 0 12px; 
+  gap: 8px;
+  margin: 8px 0 12px;
   flex-wrap: wrap;
 }
 
@@ -192,77 +211,91 @@ ion-modal ion-select::part(icon) { color: var(--platinum); opacity: .9; }
   padding-right: 6px;
 }
 
-.muted { 
-  color: var(--ion-color-medium); 
+.muted {
+  color: var(--ion-color-medium);
 }
-.row { 
-  display: flex; 
-  gap: 8px; 
-  align-items: center; 
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
-.center { display:flex; 
-  justify-content:center; 
-  padding: 12px; 
+.center {
+  display: flex;
+  justify-content: center;
+  padding: 12px;
 }
 
 .ion-margin-bottom {
   align-items: center;
 }
 
-
+// Grid principal que contiene las dos cajas (Taller / Fuera)
 .cajas-tags {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 36px;
   justify-content: center;
-  align-items: start;       
+  align-items: start;
   margin: 24px auto 0;
   padding: 0 24px;
   width: 100%;
-  max-width: 1700px;       
-  margin-inline: auto;  
+  max-width: 1700px;
+  margin-inline: auto;
 }
 
+// Tarjeta de agrupación de tags
 .caja-tags {
-  background: linear-gradient(135deg,
-    rgba(var(--indigo-rgb, 40,75,99), 0.75) 0%,
-    rgba(var(--paynes-rgb, 76,92,104), 0.75) 100%);
-  border: 1px solid rgba(var(--platinum-rgb, 220,220,221), .18);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--indigo-rgb, 40, 75, 99), 0.75) 0%,
+    rgba(var(--paynes-rgb, 76, 92, 104), 0.75) 100%
+  );
+  border: 1px solid rgba(var(--platinum-rgb, 220, 220, 221), 0.18);
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 14px 36px rgba(0,0,0,.35);
-  backdrop-filter: blur(8px) saturate(125%);        
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px) saturate(125%);
   -webkit-backdrop-filter: blur(8px) saturate(125%);
-  // min-width: 480px;                                  
-  // width: clamp(480px, 46vw, 720px);     
+  // min-width: 480px;
+  // width: clamp(480px, 46vw, 720px);
 }
 
+// Título de cada caja
 .caja-tags h3 {
   margin: 0 0 12px;
   text-align: left;
   font-weight: 700;
   color: var(--platinum);
-  background: linear-gradient(90deg, rgba(var(--indigo-rgb), .55), rgba(var(--indigo-rgb), 0));
+  background: linear-gradient(
+    90deg,
+    rgba(var(--indigo-rgb), 0.55),
+    rgba(var(--indigo-rgb), 0)
+  );
   padding: 8px 12px;
   border-radius: 12px;
-  border: 1px solid rgba(var(--platinum-rgb), .12);
+  border: 1px solid rgba(var(--platinum-rgb), 0.12);
 }
+// Estilos generales para grids dentro de la app
 ion-grid {
-  background: linear-gradient(180deg, rgba(var(--indigo-rgb), .55), rgba(var(--paynes-rgb), .55));
-  border: 1px solid rgba(var(--platinum-rgb), .16);
+  background: linear-gradient(
+    180deg,
+    rgba(var(--indigo-rgb), 0.55),
+    rgba(var(--paynes-rgb), 0.55)
+  );
+  border: 1px solid rgba(var(--platinum-rgb), 0.16);
   border-radius: 16px;
   padding: 12px;
-  box-shadow: 0 14px 36px rgba(0,0,0,.35);
-  backdrop-filter: blur(6px) saturate(125%);    
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px) saturate(125%);
   -webkit-backdrop-filter: blur(6px) saturate(125%);
   margin-top: 16px;
-  color: var(--platinum); 
+  color: var(--platinum);
   pointer-events: auto;
 }
 
 ion-row {
-  border-bottom: 1px solid rgba(var(--platinum-rgb), .12);
+  border-bottom: 1px solid rgba(var(--platinum-rgb), 0.12);
   pointer-events: auto;
 }
 
@@ -276,16 +309,17 @@ ion-row:first-child {
   color: var(--platinum);
   font-weight: 700;
   z-index: 1;
-  background: rgba(var(--indigo-rgb), .55);
+  background: rgba(var(--indigo-rgb), 0.55);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  border-bottom: 1px solid rgba(var(--platinum-rgb), .2);
+  border-bottom: 1px solid rgba(var(--platinum-rgb), 0.2);
 }
 
 ion-col {
   padding: 8px 4px;
 }
 
+// Card de cada registro (estilo y hover)
 .reg-card {
   background: linear-gradient(
     135deg,
@@ -300,15 +334,18 @@ ion-col {
   transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
+// Elevación sutil al pasar el mouse por la card
 .reg-card:hover {
   transform: translateY(-4px);
-  background: linear-gradient(135deg,
-    rgba(var(--indigo-rgb, 40,75,99), 0.70) 0%,
-    rgba(var(--paynes-rgb, 76,92,104), 0.70) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--indigo-rgb, 40, 75, 99), 0.7) 0%,
+    rgba(var(--paynes-rgb, 76, 92, 104), 0.7) 100%
+  );
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
 }
 
-// Títulos y subtítulos dentro de la card 
+// Tipografía interna de las cards
 .reg-card ion-card-title {
   color: var(--platinum);
   font-weight: 600;
@@ -327,11 +364,16 @@ ion-col {
   pointer-events: none;
 }
 
+// Estilos para la sección de personalización
 .personalizacion ion-card {
-  background: linear-gradient(135deg, rgba(var(--indigo-rgb), .75), rgba(var(--paynes-rgb), .75));
+  background: linear-gradient(
+    135deg,
+    rgba(var(--indigo-rgb), 0.75),
+    rgba(var(--paynes-rgb), 0.75)
+  );
   color: var(--platinum);
-  border: 1px solid rgba(var(--platinum-rgb), .18);
-  box-shadow: 0 14px 36px rgba(0,0,0,.35);
+  border: 1px solid rgba(var(--platinum-rgb), 0.18);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(8px) saturate(125%);
   -webkit-backdrop-filter: blur(8px) saturate(125%);
 }
@@ -347,18 +389,23 @@ ion-col {
 }
 
 .personalizacion ion-row:first-child {
-  background: linear-gradient(180deg, rgba(var(--indigo-rgb), .55), rgba(var(--paynes-rgb), .55));
-  border-bottom: 1px solid rgba(var(--platinum-rgb), .2);
+  background: linear-gradient(
+    180deg,
+    rgba(var(--indigo-rgb), 0.55),
+    rgba(var(--paynes-rgb), 0.55)
+  );
+  border-bottom: 1px solid rgba(var(--platinum-rgb), 0.2);
 }
 
 .personalizacion ion-select::part(text) {
   color: var(--platinum);
 }
 
+// Popover de selección (estética)
 ion-select-popover {
-  --background: rgba(var(--indigo-rgb), .90);
+  --background: rgba(var(--indigo-rgb), 0.9);
   color: var(--platinum) !important;
-  border: 1px solid rgba(var(--platinum-rgb), .18);
+  border: 1px solid rgba(var(--platinum-rgb), 0.18);
   backdrop-filter: blur(8px) saturate(130%);
 }
 
@@ -369,9 +416,10 @@ ion-select-popover ion-label {
 }
 
 ion-select-popover ion-item[button]:hover {
-  background: rgba(var(--platinum-rgb), .10);
+  background: rgba(var(--platinum-rgb), 0.1);
 }
 
+// Searchbar: apariencia y focus
 ion-searchbar {
   --background: transparent;
   --color: var(--platinum);
@@ -388,10 +436,10 @@ ion-searchbar {
 
   background: linear-gradient(
     135deg,
-    rgba(var(--indigo-rgb, 40,75,99), 0.85) 0%,
-    rgba(var(--paynes-rgb, 76,92,104), 0.85) 100%
+    rgba(var(--indigo-rgb, 40, 75, 99), 0.85) 0%,
+    rgba(var(--paynes-rgb, 76, 92, 104), 0.85) 100%
   );
-  border: 1px solid rgba(var(--platinum-rgb, 220,220,221), .18);
+  border: 1px solid rgba(var(--platinum-rgb, 220, 220, 221), 0.18);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(10px) saturate(130%);
   -webkit-backdrop-filter: blur(10px) saturate(130%);
@@ -415,32 +463,34 @@ ion-searchbar::part(input) {
 ion-searchbar:focus-within {
   background: linear-gradient(
     135deg,
-    rgba(var(--indigo-rgb, 40,75,99), 0.9) 0%,
-    rgba(var(--paynes-rgb, 76,92,104), 0.9) 100%
+    rgba(var(--indigo-rgb, 40, 75, 99), 0.9) 0%,
+    rgba(var(--paynes-rgb, 76, 92, 104), 0.9) 100%
   );
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.12);
-  border-color: rgba(var(--platinum-rgb, 220,220,221), .25);
+  border-color: rgba(var(--platinum-rgb, 220, 220, 221), 0.25);
 }
 
+// Clase utilitaria: elemento clickeable con hover
 .clickeable {
   cursor: pointer;
 }
 
-.clickeable:hover { 
-  text-decoration: underline; 
-  text-underline-offset: 2px; 
+.clickeable:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
+// Panel que muestra las asignaciones de una persona
 .asig-panel {
   margin-top: 8px;
   padding: 12px;
   border-radius: 12px;
   background: linear-gradient(
     135deg,
-    rgba(var(--indigo-rgb, 40,75,99), .45),
-    rgba(var(--paynes-rgb, 76,92,104), .45)
+    rgba(var(--indigo-rgb, 40, 75, 99), 0.45),
+    rgba(var(--paynes-rgb, 76, 92, 104), 0.45)
   );
-  border: 1px solid rgba(var(--platinum-rgb, 220,220,221), .18);
+  border: 1px solid rgba(var(--platinum-rgb, 220, 220, 221), 0.18);
   backdrop-filter: blur(6px) saturate(125%);
   -webkit-backdrop-filter: blur(6px) saturate(125%);
   color: var(--platinum);
@@ -450,8 +500,8 @@ ion-searchbar:focus-within {
   width: 100%;
 }
 
-.ml-1 { 
-  margin-left: .25rem; 
+.ml-1 {
+  margin-left: 0.25rem;
 }
 
 // Ocultar header en todas las pantallas
@@ -461,20 +511,20 @@ ion-header {
 }
 
 @media (max-width: 992px) {
-  .visual-content { 
-    margin-left: 0; 
-    }
-  
-  .vertical-toolbar { 
-    position: static; 
-    width: auto; 
-    height: auto; 
+  .visual-content {
+    margin-left: 0;
+  }
+
+  .vertical-toolbar {
+    position: static;
+    width: auto;
+    height: auto;
   }
 }
 
 @media (max-width: 1100px) {
   .cajas-tags {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
   }
 }
 
@@ -490,24 +540,24 @@ ion-header {
     z-index: -1 !important;
     pointer-events: none !important;
   }
-  
+
   .bg-overlay {
     position: fixed !important;
     inset: 0 !important;
     z-index: 0 !important;
     pointer-events: none !important;
   }
-  
+
   // Ocultar header en móviles
   .header-desktop {
     display: none !important;
   }
-  
+
   // Ocultar toolbar lateral de desktop en móviles
   .vertical-toolbar {
     display: none !important;
   }
-  
+
   // Restaurar botones centrales para la pantalla principal
   .botones-menu-central {
     position: absolute !important;
@@ -526,14 +576,14 @@ ion-header {
     justify-content: center !important;
     margin: 0 !important;
   }
-  
+
   .menu-animado {
     min-height: 50px !important;
     font-size: 0.95rem !important;
     width: 100% !important;
     text-align: center !important;
   }
-  
+
   // Mostrar toolbar móvil SOLO cuando hay sección activa
   .mobile-toolbar {
     position: fixed !important;
@@ -542,22 +592,27 @@ ion-header {
     transform: translateX(-50%) !important;
     width: 95% !important;
     max-width: 400px !important;
-    background: linear-gradient(135deg, 
-      rgba(var(--indigo-rgb, 40,75,99), 0.95) 0%,
-      rgba(var(--paynes-rgb, 76,92,104), 0.95) 100%) !important;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--indigo-rgb, 40, 75, 99), 0.95) 0%,
+      rgba(var(--paynes-rgb, 76, 92, 104), 0.95) 100%
+    ) !important;
     backdrop-filter: blur(12px) saturate(160%) !important;
     -webkit-backdrop-filter: blur(12px) saturate(160%) !important;
-    border: 1px solid rgba(var(--platinum-rgb), .25) !important;
+    border: 1px solid rgba(var(--platinum-rgb), 0.25) !important;
     border-radius: 20px !important;
     padding: 12px !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,.4) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important; // 3 columnas para acomodar 5 botones
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ) !important; // 3 columnas para acomodar 5 botones
     grid-template-rows: repeat(2, 1fr) !important;
     gap: 6px !important;
     z-index: 1000 !important;
   }
-  
+
   .toolbar-btn-mobile {
     min-height: 36px !important;
     font-size: 0.8rem !important;
@@ -566,17 +621,17 @@ ion-header {
     --padding-start: 6px !important;
     --padding-end: 6px !important;
   }
-  
+
   // El botón "Volver" ocupa toda la fila inferior
   .mobile-toolbar ion-button:last-child {
     grid-column: 1 / -1 !important;
   }
-  
+
   // Eliminar scroll solo cuando está en el menú principal
   .menu-principal-activo {
     --overflow: hidden !important;
   }
-  
+
   .menu-principal-activo::part(scroll) {
     overflow: hidden !important;
     height: 100vh !important;
@@ -585,7 +640,7 @@ ion-header {
     justify-content: center !important;
     padding: 0 !important;
   }
-  
+
   // Ajustes para cuando hay sección activa
   .visual-content {
     margin-left: 0 !important;
@@ -593,7 +648,7 @@ ion-header {
     padding-bottom: 100px !important; // Espacio para la toolbar cuando hay contenido
     margin-top: 0 !important;
   }
-  
+
   // Asegurar que las cajas estén lado a lado en móviles también
   .cajas-tags {
     display: grid !important;
@@ -602,7 +657,7 @@ ion-header {
     margin: 10px auto 0 !important;
     padding: 0 10px !important;
   }
-  
+
   .caja-tags {
     min-width: auto !important;
     width: 100% !important;
@@ -628,22 +683,22 @@ ion-header {
     z-index: -1 !important;
     pointer-events: none !important;
   }
-  
+
   .bg-overlay {
     position: fixed !important;
     inset: 0 !important;
     z-index: 0 !important;
     pointer-events: none !important;
   }
-  
+
   .header-desktop {
     display: none !important;
   }
-  
+
   .vertical-toolbar {
     display: none !important;
   }
-  
+
   // Restaurar botones centrales también en pantallas pequeñas
   .botones-menu-central {
     position: absolute !important;
@@ -661,14 +716,14 @@ ion-header {
     align-items: center !important;
     justify-content: center !important;
   }
-  
+
   .menu-animado {
     min-height: 46px !important;
     font-size: 0.9rem !important;
     width: 100% !important;
     text-align: center !important;
   }
-  
+
   .mobile-toolbar {
     width: 98% !important;
     bottom: 15px !important;
@@ -676,20 +731,20 @@ ion-header {
     padding: 10px !important;
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  
+
   .toolbar-btn-mobile {
     min-height: 38px !important;
     font-size: 0.8rem !important;
     --border-radius: 10px !important;
   }
-  
+
   // Mantener cajas lado a lado incluso en pantallas muy pequeñas
   .cajas-tags {
     grid-template-columns: 1fr 1fr !important;
     gap: 8px !important;
     padding: 0 5px !important;
   }
-  
+
   .caja-tags h3 {
     font-size: 0.9rem !important;
     padding: 6px 8px !important;

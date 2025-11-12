@@ -7,31 +7,33 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate 
-from rest_framework.permissions import IsAuthenticated 
+from django.contrib.auth import authenticate
+from rest_framework.permissions import IsAuthenticated
 
 
 class ProgrammerViewSet(viewsets.ModelViewSet):
     queryset = Programmer.objects.all()
     serializer_class = ProgrammerSerializer
 
+
 @csrf_exempt
 def login_view(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         data = json.loads(request.body)
-        username = data.get('username')
-        password = data.get('password')
+        username = data.get("username")
+        password = data.get("password")
 
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            
-            return JsonResponse({'success': True, 'message': 'Login correcto'})
+
+            return JsonResponse({"success": True, "message": "Login correcto"})
         else:
-            
-            return JsonResponse({'success': False, 'message': 'Datos Incorrectos'})
-            
-    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+            return JsonResponse({"success": False, "message": "Datos Incorrectos"})
+
+    return JsonResponse({"error": "Método no permitido"}, status=405)
+
 
 class UserCreateAPIView(APIView):
 
@@ -44,12 +46,13 @@ class UserCreateAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class MenúAPIView(APIView):
-    
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        
+
         pañoles = Pañol.objects.filter(usuario=request.user)
         serializer = PañolSerializer(pañoles, many=True)
         return Response(serializer.data)

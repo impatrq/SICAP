@@ -22,12 +22,20 @@
 
         <!-- Barra de acciones: compacta, solo íconos -->
         <div class="actions-bar icons-only" (click)="$event.stopPropagation()">
-          <button class="icon-btn" title="Renombrar" aria-label="Renombrar"
-                  (click)="abrirRenombrar(p, $event)">
+          <button
+            class="icon-btn"
+            title="Renombrar"
+            aria-label="Renombrar"
+            (click)="abrirRenombrar(p, $event)"
+          >
             <ion-icon name="pencil"></ion-icon>
           </button>
-          <button class="icon-btn danger" title="Eliminar" aria-label="Eliminar"
-                  (click)="confirmarEliminar(p, $event)">
+          <button
+            class="icon-btn danger"
+            title="Eliminar"
+            aria-label="Eliminar"
+            (click)="confirmarEliminar(p, $event)"
+          >
             <ion-icon name="trash"></ion-icon>
           </button>
         </div>
@@ -76,9 +84,7 @@
             </ion-button>
           </div>
 
-          <ion-text color="danger" *ngIf="error">
-            {{ error }}
-          </ion-text>
+          <ion-text color="danger" *ngIf="error"> {{ error }} </ion-text>
         </ion-content>
       </ng-template>
     </ion-modal>

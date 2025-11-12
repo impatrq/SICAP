@@ -1,23 +1,18 @@
-
-<ion-header [translucent]="true" *ngIf="animacionTerminada">
-</ion-header>
+<ion-header [translucent]="true" *ngIf="animacionTerminada"> </ion-header>
 
 <ion-content [fullscreen]="true">
-
-  
   <div *ngIf="!animacionTerminada" class="splash-container">
     <lottie-player
       src="assets/Animaciones/animacion.login.json"
       background="transparent"
       speed="1"
       autoplay
-      (complete)="onAnimationComplete()">
+      (complete)="onAnimationComplete()"
+    >
     </lottie-player>
   </div>
 
-  
   <div *ngIf="animacionTerminada" class="login-content ion-padding">
-    
     <div class="logo-container">
       <img src="assets/Images/Sicap-grande.png" alt="Logo SICAP" />
     </div>
@@ -26,18 +21,34 @@
       <ion-card-content>
         <form (ngSubmit)="login()">
           <ion-item>
-            <ion-icon name="person-outline" slot="start" color="medium"></ion-icon>
+            <ion-icon
+              name="person-outline"
+              slot="start"
+              color="medium"
+            ></ion-icon>
             <ion-label position="floating">Usuario</ion-label>
-            <ion-input type="text" [(ngModel)]="username" name="username"></ion-input>
+            <ion-input
+              type="text"
+              [(ngModel)]="username"
+              name="username"
+            ></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
+            <ion-icon
+              name="lock-closed-outline"
+              slot="start"
+              color="medium"
+            ></ion-icon>
             <ion-label position="floating">Contraseña</ion-label>
-            <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+            <ion-input
+              type="password"
+              [(ngModel)]="password"
+              name="password"
+            ></ion-input>
           </ion-item>
-            
-          <br>
+
+          <br />
 
           <ion-button type="submit" expand="block" shape="round">
             Ingresar
@@ -47,5 +58,4 @@
       </ion-card-content>
     </ion-card>
   </div>
-
 </ion-content>
