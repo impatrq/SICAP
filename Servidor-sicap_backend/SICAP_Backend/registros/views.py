@@ -45,36 +45,35 @@ def recibir_tag(request):
         print("Recibiendo tag: tag faltante")
         return JsonResponse({"error": "tag faltante"}, status=400)
     nombre = (data.get("nombre") or "").strip() or None
-    categoria = _norm_cat(data.get("categoria"))
-    print(f"Categoria normalizada: {categoria}")
+    categoria_recibida = _norm_cat(data.get("categoria"))
     now = timezone.now()
     reg, created = RegistroTag.objects.get_or_create(
         tag=tag,
-        defaults={"nombre": nombre, "categoria": categoria, "fecha_hora": now},
+        defaults={"nombre": nombre, "categoria": categoria_recibida, "fecha_hora": now},
     )
     print(f"RegistroTag creado: {created}, datos: {reg}")
     if not created:
         if nombre:
             reg.nombre = nombre
-        if categoria:
-            reg.categoria = categoria
+        # Solo actualizar la categoría si se recibe explícitamente y es válida
+        if categoria_recibida in ("persona", "insumo"):
+            reg.categoria = categoria_recibida
         reg.fecha_hora = now
         reg.save(update_fields=["nombre", "categoria", "fecha_hora"])
         print(f"RegistroTag actualizado: {reg}")
         RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
-    print(f"Categoria para lógica: {categoria}")
+    # Usar la categoría guardada en la base para la lógica
+    categoria = reg.categoria
+    print(f"Categoria para lógica (base): {categoria}")
     from .models import PersonaSesion
-    # Lógica de sesiones
+    # Lógica de sesiones usando la categoría guardada
     if categoria == "persona":
-        # Cerrar sesiones previas activas
         PersonaSesion.objects.filter(activa=True).update(activa=False, fin=now)
-        # Abrir nueva sesión para esta persona
         sesion = PersonaSesion.objects.create(persona_tag=tag, nombre=nombre, inicio=now, activa=True)
         respuesta = {"status": "ok", "accion": "sesion_persona_abierta", "sesion_id": sesion.id}
         print("Respuesta:", respuesta)
         return JsonResponse(respuesta)
     if categoria == "insumo":
-        # Buscar sesión activa
         sesion = PersonaSesion.objects.filter(activa=True).order_by("-inicio").first()
         print(f"Sesion activa encontrada: {sesion}")
         asig_activa = Asignacion.objects.filter(item_tag=tag, activo=True).first()
