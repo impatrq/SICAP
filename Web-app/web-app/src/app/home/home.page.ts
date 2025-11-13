@@ -97,7 +97,12 @@ export class HomePage implements OnInit, OnDestroy {
         }
       } else if (categoria === 'insumo') {
         if (res.accion === 'asignacion_creada') {
-          this.ok('Insumo asignado a persona');
+          // Buscar nombre de herramienta y persona
+          const herramienta = this.tagsUnicos.find(r => r.tag === tag);
+          const persona = this.tagsUnicos.find(r => r.tag === res.persona_tag);
+          const nombreHerramienta = herramienta?.nombre || herramienta?.tag || 'Herramienta';
+          const nombrePersona = persona?.nombre || persona?.tag || 'Persona';
+          this.ok(`Herramienta "${nombreHerramienta}" asignada a "${nombrePersona}"`);
           if (this.currentPersona) {
             this.cargarAsignacionesPersona(this.currentPersona.tag);
           }
