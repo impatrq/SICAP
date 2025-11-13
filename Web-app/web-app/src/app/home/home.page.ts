@@ -34,22 +34,22 @@ type Asignacion = {
   standalone: false,
 })
 export class HomePage implements OnInit, OnDestroy {
-    // Método público para integrar con el lector RFID o input manual
-    // Llamar a este método cuando se detecte un tag
-    onTagDetectado(tag: string) {
-      // Buscar el registro en la lista local para obtener la categoría y nombre
-      const reg = this.tagsUnicos.find(r => r.tag === tag);
-      if (!reg) {
-        this.ok('Tag no registrado');
-        return;
-      }
-      const categoria = this.normCat(reg.categoria);
-      if (categoria === 'persona' || categoria === 'insumo') {
-        this.procesarTagDetectado(tag, categoria, reg.nombre);
-      } else {
-        this.ok('El tag no tiene categoría asignada');
-      }
+  // Método público para integrar con el lector RFID o input manual
+  // Llamar a este método cuando se detecte un tag
+  onTagDetectado(tag: string) {
+    // Buscar el registro en la lista local para obtener la categoría y nombre
+    const reg = this.tagsUnicos.find((r) => r.tag === tag);
+    if (!reg) {
+      this.ok('Tag no registrado');
+      return;
     }
+    const categoria = this.normCat(reg.categoria);
+    if (categoria === 'persona' || categoria === 'insumo') {
+      this.procesarTagDetectado(tag, categoria, reg.nombre);
+    } else {
+      this.ok('El tag no tiene categoría asignada');
+    }
+  }
   // Se controla secciones, listas de tags y acciones
   // de CRUD mínimas. Mantener este componente enfocado en comportamiento
   // de UI + llamadas al backend; la lógica de negocio más compleja puede
@@ -80,10 +80,15 @@ export class HomePage implements OnInit, OnDestroy {
   private API = 'http://192.168.111.218:5000/api/v1/register/tag/list/';
   private API_EDIT = 'http://192.168.111.218:5000/api/v1/register/tag';
   private API_ASSIGN = 'http://192.168.111.218:5000/api/v1/assignments';
-  private API_ASSIGN_AUTO = 'http://192.168.111.218:5000/api/v1/assignments/auto/';
+  private API_ASSIGN_AUTO =
+    'http://192.168.111.218:5000/api/v1/assignments/auto/';
   private API_RECIBIR_TAG = 'http://192.168.111.218:5000/api/v1/recibir_tag/';
   // Detecta un tag y lo envía al backend para abrir sesión o asignar insumo
-  async procesarTagDetectado(tag: string, categoria: 'persona' | 'insumo', nombre?: string) {
+  async procesarTagDetectado(
+    tag: string,
+    categoria: 'persona' | 'insumo',
+    nombre?: string
+  ) {
     try {
       const res: any = await firstValueFrom(
         this.http.post(this.API_RECIBIR_TAG, { tag, categoria, nombre })
@@ -98,11 +103,16 @@ export class HomePage implements OnInit, OnDestroy {
       } else if (categoria === 'insumo') {
         if (res.accion === 'asignacion_creada') {
           // Buscar nombre de herramienta y persona
-          const herramienta = this.tagsUnicos.find(r => r.tag === tag);
-          const persona = this.tagsUnicos.find(r => r.tag === res.persona_tag);
-          const nombreHerramienta = herramienta?.nombre || herramienta?.tag || 'Herramienta';
+          const herramienta = this.tagsUnicos.find((r) => r.tag === tag);
+          const persona = this.tagsUnicos.find(
+            (r) => r.tag === res.persona_tag
+          );
+          const nombreHerramienta =
+            herramienta?.nombre || herramienta?.tag || 'Herramienta';
           const nombrePersona = persona?.nombre || persona?.tag || 'Persona';
-          this.ok(`Herramienta "${nombreHerramienta}" asignada a "${nombrePersona}"`);
+          this.ok(
+            `Herramienta "${nombreHerramienta}" asignada a "${nombrePersona}"`
+          );
           if (this.currentPersona) {
             this.cargarAsignacionesPersona(this.currentPersona.tag);
           }
@@ -340,11 +350,10 @@ export class HomePage implements OnInit, OnDestroy {
 
   /**
    * Carga asignaciones activas para una persona y las cachea localmente.
+   * Ahora acumula inteligentemente: si hay nuevas asignaciones, las agrega sin borrar anteriores.
    * @param tag Tag de la persona
    */
   private cargarAsignacionesPersona(tag: string) {
-    // Carga y cachea las asignaciones activas para una persona. El
-    // caching evita peticiones repetidas al expandir/plegar la vista.
     this.asigLoading[tag] = true;
     this.asigError[tag] = undefined;
 
@@ -354,7 +363,34 @@ export class HomePage implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (rows) => {
-          this.asigCache[tag] = rows || [];
+          const nuevas = rows || [];
+
+          // Si NO tenía cache, inicializar
+          if (!this.asigCache[tag]) {
+            this.asigCache[tag] = nuevas;
+          } else {
+            // ✅ LÓGICA DE ACUMULACIÓN INTELIGENTE:
+            // - Mantener asignaciones que siguen activas
+            // - Remover las que ya fueron devueltas
+            // - Agregar las nuevas que llegaron
+            const cache = this.asigCache[tag];
+
+            // Crear un Map de nuevas por ID para búsqueda rápida
+            const nuevasMap = new Map(nuevas.map((a) => [a.id, a]));
+
+            // Mantener las que siguen activas, remover las devueltas
+            const actualizado = cache.filter(
+              (a) => nuevasMap.has(a.id) || a.activo
+            );
+
+            // Agregar las nuevas que NO estaban en cache
+            const ids_cache = new Set(cache.map((a) => a.id));
+            const realmente_nuevas = nuevas.filter((a) => !ids_cache.has(a.id));
+
+            // Combinar: lo que estaba + lo que es realmente nuevo
+            this.asigCache[tag] = [...actualizado, ...realmente_nuevas];
+          }
+
           this.asigLoading[tag] = false;
         },
         error: (err) => {
@@ -379,21 +415,35 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   /**
-   * Marca una asignación como devuelta y actualiza la cache local.
+   * Marca una asignación como devuelta. Actualiza cache localmente de inmediato.
    * @param a Asignación a devolver
    */
   devolverAsignacion(a: Asignacion) {
+    // Optimista: marca como devuelta LOCALMENTE de inmediato
+    a.activo = false;
+    a.devuelto_en = new Date().toISOString();
+
+    // Refresca la lista quitando la asignación devuelta
+    if (this.asigCache[a.persona_tag]) {
+      this.asigCache[a.persona_tag] = this.asigCache[a.persona_tag].filter(
+        (x) => x.id !== a.id
+      );
+    }
+
+    // Envía al servidor de forma asincrónica
     this.http
       .put<Asignacion>(`${this.API_ASSIGN}/${a.id}/devolver/`, {})
       .subscribe({
         next: () => {
-          this.ok('Asignación devuelta');
-          this.cargarAsignacionesPersona(a.persona_tag);
-          this.cargarRegistros(); // Refresca lista tras devolución
+          this.ok('✅ Herramienta devuelta');
+          // Refresca registros para sincronizar el estado general
+          this.cargarRegistros();
         },
         error: (e) => {
-          this.ok('No se pudo devolver la asignación');
-          console.error('No se pudo devolver', e);
+          this.ok('❌ Error al devolver');
+          console.error('Error:', e);
+          // Si falla, recargar la lista completa
+          this.cargarAsignacionesPersona(a.persona_tag);
         },
       });
   }
@@ -738,10 +788,9 @@ export class HomePage implements OnInit, OnDestroy {
   /**
    * Solicita al backend la lista completa de registros y actualiza el
    * estado local. Evita peticiones concurrentes con `reqInFlight`.
+   * También refresca asignaciones de personas expandidas automáticamente.
    */
   cargarRegistros() {
-    // Carga la lista de registros desde el backend con protección contra
-    // peticiones concurrentes (reqInFlight).
     if (this.reqInFlight) return;
     this.reqInFlight = true;
 
@@ -754,8 +803,18 @@ export class HomePage implements OnInit, OnDestroy {
         this.loading = false;
         this.reqInFlight = false;
 
-        // Actualiza el estado de los tags (taller/fuera) basado en la lógica backend-driven
+        // Actualiza el estado de los tags (taller/fuera)
         this.actualizarEstadoTags();
+
+        // ✅ NUEVO: Refresca asignaciones de personas expandidas automáticamente
+        // Esto permite que las asignaciones se acumulen en la UI sin necesidad
+        // de que el usuario tenga que expandir/contraer la fila.
+        for (const tag of this.expanded) {
+          const persona = this.registros.find((r) => r.tag === tag);
+          if (persona && this.isPersona(persona.categoria)) {
+            this.cargarAsignacionesPersona(tag);
+          }
+        }
       },
       error: (e) => {
         console.error('Error cargando registros', e);

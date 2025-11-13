@@ -339,14 +339,16 @@
                     <ion-col size="3"
                       >{{ a.asignado_en | date:'short' }}</ion-col
                     >
-                    <ion-col size="1">
+                    <ion-col size="1" class="ion-text-center">
                       <ion-button
                         size="small"
-                        fill="clear"
+                        fill="solid"
+                        color="success"
                         (click)="devolverAsignacion(a)"
                         [disabled]="!a.activo"
+                        title="Devolver herramienta"
                       >
-                        <ion-icon name="return-down-back-outline"></ion-icon>
+                        <ion-icon name="checkmark-done-outline"></ion-icon>
                       </ion-button>
                     </ion-col>
                   </ion-row>
