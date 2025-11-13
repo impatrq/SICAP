@@ -40,16 +40,19 @@ def recibir_tag(request):
         return JsonResponse({"error": f"json inválido: {e}"}, status=400)
     print("Recibiendo tag:", data)
     tag = str(data.get("tag", "")).strip()
+    print(f"Tag recibido: {tag}")
     if not tag:
         print("Recibiendo tag: tag faltante")
         return JsonResponse({"error": "tag faltante"}, status=400)
     nombre = (data.get("nombre") or "").strip() or None
     categoria = _norm_cat(data.get("categoria"))
+    print(f"Categoria normalizada: {categoria}")
     now = timezone.now()
     reg, created = RegistroTag.objects.get_or_create(
         tag=tag,
         defaults={"nombre": nombre, "categoria": categoria, "fecha_hora": now},
     )
+    print(f"RegistroTag creado: {created}, datos: {reg}")
     if not created:
         if nombre:
             reg.nombre = nombre
@@ -57,14 +60,18 @@ def recibir_tag(request):
             reg.categoria = categoria
         reg.fecha_hora = now
         reg.save(update_fields=["nombre", "categoria", "fecha_hora"])
+        print(f"RegistroTag actualizado: {reg}")
         RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
+    print(f"Categoria para lógica: {categoria}")
     if categoria == "persona":
         respuesta = {"status": "ok", "accion": "persona_actualizada"}
         print("Respuesta:", respuesta)
         return JsonResponse(respuesta)
     if categoria == "insumo":
+        print(f"Buscando asignación activa para item_tag={tag}")
         asig_activa = Asignacion.objects.filter(item_tag=tag, activo=True).first()
         ventana = now - timezone.timedelta(seconds=20)
+        print(f"Ventana de tiempo: {ventana} a {now}")
         persona_candidata = (
             RegistroTag.objects.filter(
                 categoria="persona", created_at__gte=ventana
@@ -72,8 +79,11 @@ def recibir_tag(request):
             .order_by("-created_at")
             .first()
         )
+        print(f"Persona candidata encontrada: {persona_candidata}")
         if not asig_activa:
+            print("No hay asignación activa, evaluando persona candidata...")
             if persona_candidata:
+                print(f"Creando asignación automática para persona_tag={persona_candidata.tag} y item_tag={tag}")
                 Asignacion.objects.create(
                     persona_tag=persona_candidata.tag,
                     persona_nombre=persona_candidata.nombre,
@@ -86,21 +96,26 @@ def recibir_tag(request):
                 print("Respuesta:", respuesta)
                 return JsonResponse(respuesta)
             else:
+                print("No se encontró persona candidata en la ventana de tiempo.")
                 respuesta = {"status": "ok", "accion": "sin_persona_candidata"}
                 print("Respuesta:", respuesta)
                 return JsonResponse(respuesta)
         else:
+            print(f"Asignación activa encontrada: {asig_activa}")
             asig_activa.activo = False
             asig_activa.devuelto_en = now
             asig_activa.save(update_fields=["activo", "devuelto_en"])
             if persona_candidata and persona_candidata.tag != asig_activa.persona_tag:
+                print("Cerrando asignación y detectando otro usuario.")
                 respuesta = {"status": "ok", "accion": "asignacion_cerrada_otro_usuario", "persona_tag": persona_candidata.tag}
                 print("Respuesta:", respuesta)
                 return JsonResponse(respuesta)
             else:
+                print("Cerrando asignación para el mismo usuario.")
                 respuesta = {"status": "ok", "accion": "asignacion_cerrada"}
                 print("Respuesta:", respuesta)
                 return JsonResponse(respuesta)
+    print("No se detectó categoría relevante, devolviendo tag_actualizado.")
     respuesta = {"status": "ok", "accion": "tag_actualizado"}
     print("Respuesta:", respuesta)
     return JsonResponse(respuesta)
