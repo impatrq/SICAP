@@ -1,3 +1,17 @@
+from django.http import JsonResponse
+from rest_framework.decorators import api_view, permission_classes
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+from django.views.decorators.http import require_GET
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
+from django.utils import timezone, localtime
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins, viewsets
+from .models import RegistroTag, Panol, Asignacion
+from .serializer import PanolSerializer, RegistroTagSerializer, AsignacionSerializer
+import json
 ## Endpoints principales SICAP
 def _norm_cat(raw):
     # Normaliza categoría: solo "persona" o "insumo"
@@ -15,41 +29,133 @@ def _norm_cat(raw):
     return None
 @csrf_exempt
 def recibir_tag(request):
-    # Recibe tag, actualiza RegistroTag y gestiona asignaciones
+    if request.method != "POST":
+        return JsonResponse({"error": "método no permitido"}, status=405)
+    try:
+        data = json.loads(request.body or "{}")
+    except Exception as e:
+        return JsonResponse({"error": f"json inválido: {e}"}, status=400)
+    tag = str(data.get("tag", "")).strip()
+    if not tag:
+        return JsonResponse({"error": "tag faltante"}, status=400)
+    nombre = (data.get("nombre") or "").strip() or None
+    categoria = _norm_cat(data.get("categoria"))
+    now = timezone.now()
+    reg, created = RegistroTag.objects.get_or_create(
+        tag=tag,
+        defaults={"nombre": nombre, "categoria": categoria, "fecha_hora": now},
+    )
+    if not created:
+        if nombre:
+            reg.nombre = nombre
+        if categoria:
+            reg.categoria = categoria
+        reg.fecha_hora = now
+        reg.save(update_fields=["nombre", "categoria", "fecha_hora"])
+        RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
+    if categoria == "persona":
+        return JsonResponse({"status": "ok", "accion": "persona_actualizada"})
+    if categoria == "insumo":
+        asig_activa = Asignacion.objects.filter(item_tag=tag, activo=True).first()
+        ventana = now - timezone.timedelta(seconds=20)
+        persona_candidata = (
+            RegistroTag.objects.filter(
+                categoria="persona", fecha_hora__gte=ventana
+            )
+            .order_by("-fecha_hora")
+            .first()
+        )
+        if not asig_activa:
+            if persona_candidata:
+                Asignacion.objects.create(
+                    persona_tag=persona_candidata.tag,
+                    persona_nombre=persona_candidata.nombre,
+                    item_tag=tag,
+                    item_nombre=reg.nombre,
+                    asignado_en=now,
+                    activo=True,
+                )
+                return JsonResponse({"status": "ok", "accion": "asignacion_creada", "persona_tag": persona_candidata.tag})
+            else:
+                return JsonResponse({"status": "ok", "accion": "sin_persona_candidata"})
+        else:
+            asig_activa.activo = False
+            asig_activa.devuelto_en = now
+            asig_activa.save(update_fields=["activo", "devuelto_en"])
+            if persona_candidata and persona_candidata.tag != asig_activa.persona_tag:
+                return JsonResponse({"status": "ok", "accion": "asignacion_cerrada_otro_usuario", "persona_tag": persona_candidata.tag})
+            else:
+                return JsonResponse({"status": "ok", "accion": "asignacion_cerrada"})
+    return JsonResponse({"status": "ok", "accion": "tag_actualizado"})
 @api_view(["GET"])
 def listar_tags(request):
-    # Lista todos los tags registrados
+    tags = RegistroTag.objects.all().order_by("-fecha_hora")
+    serializer = RegistroTagSerializer(tags, many=True)
+    return Response(serializer.data)
 @api_view(["GET"])
+@permission_classes([AllowAny])
 def assignments_list(request):
-    # Lista asignaciones, permite filtrar por activo/persona_tag
+    qs = Asignacion.objects.all().order_by("-asignado_en")
+    activo = request.GET.get("activo")
+    if activo is not None:
+        qs = qs.filter(activo=(str(activo).lower() in ["1", "true", "t", "yes", "y"]))
+    persona_tag = request.GET.get("persona_tag")
+    if persona_tag:
+        qs = qs.filter(persona_tag=persona_tag)
+    ser = AsignacionSerializer(qs, many=True)
+    return Response(ser.data)
 @api_view(["PUT"])
+@permission_classes([AllowAny])
 def assignments_devolver(request, id):
-    # Cierra una asignación manualmente
-@api_view(["POST"])
+    a = Asignacion.objects.filter(pk=id, activo=True).first()
+    if not a:
+        return Response({"error": "asignación no encontrada o ya devuelta"}, status=404)
+    a.activo = False
+    a.devuelto_en = timezone.now()
+    a.save()
+    return Response(AsignacionSerializer(a).data)
+@csrf_exempt
 def bulk_delete_uncategorized_tags(request):
-    # Borra masivamente tags sin categoría
-@api_view(["DELETE", "POST"])
-def eliminar_tag(request, id):
-    # Borra un tag, impide si hay asignaciones activas salvo force
-@api_view(["DELETE", "POST"])
+    """
+    Borra masivamente tags sin categoría (solo si categoria es null).
+    Recibe lista de tags por POST (JSON).
+    """
+    if request.method != "POST":
+        return JsonResponse({"error": "Método no permitido. Usá POST."}, status=405)
+    try:
+        data = json.loads(request.body or "{}")
+    except Exception:
+        return JsonResponse({"error": "JSON inválido"}, status=400)
+    tags = data.get("tags") or []
+    if not isinstance(tags, list):
+        return JsonResponse({"error": "tags debe ser una lista"}, status=400)
+    tags = [str(t).strip() for t in tags if str(t).strip()]
+    if not tags:
+        return JsonResponse({"status": "ok", "borrados": 0})
+    borrados, _ = RegistroTag.objects.filter(tag__in=tags, categoria__isnull=True).delete()
+    return JsonResponse({"status": "ok", "borrados": borrados})
+@csrf_exempt
 def eliminar_tag(request, id):
     """
-    Endpoint para borrar un tag completamente.
-    Si hay asignaciones activas relacionadas, requiere parámetro force.
+    Elimina un tag por id. Si hay asignaciones activas, requiere force=1 para forzar.
     """
-    force = bool(request.GET.get("force", False))
-    tag_obj = get_object_or_404(RegistroTag, id=id)
-    # Verificar asignaciones activas como persona o item
-    asig_activas = Asignacion.objects.filter(
-        (Q(persona_tag=tag_obj.tag) | Q(item_tag=tag_obj.tag)), activo=True
-    )
-    if asig_activas.exists() and not force:
-        return Response({"status": "error", "msg": "No se puede borrar: hay asignaciones activas."}, status=409)
-    # Si hay asignaciones activas y force, cerrarlas
-    if asig_activas.exists() and force:
-        asig_activas.update(activo=False, devuelto_en=timezone.now())
+    if request.method not in ("DELETE", "POST"):
+        return JsonResponse({"error": "Método no permitido. Usá DELETE o POST."}, status=405)
+    tag_obj = get_object_or_404(RegistroTag, pk=id)
+    force = False
+    try:
+        if request.method == "POST":
+            body = json.loads(request.body or "{}")
+            force = bool(body.get("force", False))
+    except Exception:
+        pass
+    if request.GET.get("force") in ("1", "true", "True", "yes", "y"):
+        force = True
+    tiene_activos = Asignacion.objects.filter(Q(persona_tag=tag_obj.tag) | Q(item_tag=tag_obj.tag), activo=True).exists()
+    if tiene_activos and not force:
+        return JsonResponse({"error": "No se puede eliminar: hay asignaciones activas. Usá force=1 para forzar."}, status=409)
     tag_obj.delete()
-    return Response({"status": "ok", "msg": "Tag eliminado."})
+    return JsonResponse({"status": "ok", "borrados": 1})
 @api_view(["POST"])
 def bulk_delete_uncategorized_tags(request):
     """
@@ -66,25 +172,7 @@ def bulk_delete_uncategorized_tags(request):
     borrados = RegistroTag.objects.filter(categoria__isnull=True, tag__in=tags).delete()
     return Response({"status": "ok", "borrados": borrados[0]})
 
-from django.http import JsonResponse
-from django.views.decorators.http import require_GET
-from rest_framework.decorators import api_view, permission_classes
-from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
-from django.db.models import F, Max, Q
-from django.shortcuts import get_object_or_404
-from django.utils.timezone import localtime
-from django.utils import timezone
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework import viewsets, mixins, status
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
-from .models import RegistroTag, Panol, Asignacion
-from django.shortcuts import get_object_or_404
-from .serializer import PanolSerializer, RegistroTagSerializer, AsignacionSerializer
-import json
-        )
+    
     if categoria == "insumo":
         # Buscar asignación activa de este item
         asig_activa = Asignacion.objects.filter(item_tag=tag, activo=True).first()
@@ -123,7 +211,7 @@ import json
             "nombre": tag_obj.nombre,
             "categoria": tag_obj.categoria,
         }
-    )
+
 
 
 @ensure_csrf_cookie
