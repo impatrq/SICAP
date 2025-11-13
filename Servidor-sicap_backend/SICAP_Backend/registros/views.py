@@ -415,3 +415,25 @@ class RegistroTagViewSet(
     queryset = RegistroTag.objects.all().order_by("-fecha_hora")
     serializer_class = RegistroTagSerializer
     permission_classes = [AllowAny]
+
+@csrf_exempt
+def editar_tag(request, id):
+    """
+    Edita el nombre y/o la categoría de un tag por id.
+    Solo acepta método PUT. Recibe JSON con 'nombre' y/o 'categoria'.
+    """
+    if request.method != "PUT":
+        return JsonResponse({"error": "Método no permitido. Usá PUT."}, status=405)
+    tag_obj = get_object_or_404(RegistroTag, pk=id)
+    try:
+        data = json.loads(request.body or "{}")
+    except Exception:
+        return JsonResponse({"error": "JSON inválido"}, status=400)
+    nombre = (data.get("nombre") or "").strip() or None
+    categoria = data.get("categoria")
+    if nombre is not None:
+        tag_obj.nombre = nombre
+    if categoria in ("persona", "insumo", None):
+        tag_obj.categoria = categoria
+    tag_obj.save(update_fields=[f for f in ["nombre", "categoria"] if getattr(tag_obj, f) is not None])
+    return JsonResponse({"status": "ok", "id": tag_obj.id, "nombre": tag_obj.nombre, "categoria": tag_obj.categoria})
