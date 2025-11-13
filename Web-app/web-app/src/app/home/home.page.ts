@@ -214,14 +214,19 @@ export class HomePage implements OnInit, OnDestroy {
     const url = `${this.API_EDIT}/${reg.id}/editar/`;
     this.http.put(url, { categoria }).subscribe({
       next: () => {
+        this.ok('Categoría actualizada');
         // Actualiza vista según la nueva categoría
         if (categoria === 'persona') this.seccionActiva = 'Empleados';
         if (categoria === 'persona' && this.expanded.has(reg.tag)) {
           this.cargarAsignacionesPersona(reg.tag);
         }
         if (categoria === 'insumo') this.seccionActiva = 'Inventario';
+        this.cargarRegistros(); // Refresca lista para evitar inconsistencias
       },
-      error: (e) => console.error(e),
+      error: (e) => {
+        this.ok('No se pudo actualizar la categoría');
+        console.error(e);
+      },
     });
   }
 
@@ -270,9 +275,13 @@ export class HomePage implements OnInit, OnDestroy {
     const url = `${this.API_EDIT}/${reg.id}/editar/`;
     this.http.put(url, { nombre: nuevoNombre || null }).subscribe({
       next: () => {
-        // Actualización completada; la lista se refresca por polling
+        this.ok('Nombre actualizado');
+        this.cargarRegistros(); // Refresca lista tras editar nombre
       },
-      error: (e) => console.error('No se pudo actualizar el nombre', e),
+      error: (e) => {
+        this.ok('No se pudo actualizar el nombre');
+        console.error('No se pudo actualizar el nombre', e);
+      },
     });
   }
 
@@ -325,11 +334,14 @@ export class HomePage implements OnInit, OnDestroy {
       .put<Asignacion>(`${this.API_ASSIGN}/${a.id}/devolver/`, {})
       .subscribe({
         next: () => {
-          // Refrescá su lista y mantené expandida la persona
+          this.ok('Asignación devuelta');
           this.cargarAsignacionesPersona(a.persona_tag);
-          this.ok('Devuelto');
+          this.cargarRegistros(); // Refresca lista tras devolución
         },
-        error: (e) => console.error('No se pudo devolver', e),
+        error: (e) => {
+          this.ok('No se pudo devolver la asignación');
+          console.error('No se pudo devolver', e);
+        },
       });
   }
 
@@ -606,6 +618,8 @@ export class HomePage implements OnInit, OnDestroy {
       })
       .subscribe({
         next: () => {
+          this.ok('Cambios guardados');
+          this.cargarRegistros(); // Refresca lista tras guardar edición
           const row = [
             ...this.registros,
             ...this.tagsTaller,
@@ -636,8 +650,45 @@ export class HomePage implements OnInit, OnDestroy {
             this.cargarAsignacionesPersona(persona.tag);
           }
         },
-        error: (err) => console.error('No se pudo guardar', err),
+        error: (err) => {
+          this.ok('No se pudo guardar');
+          console.error('No se pudo guardar', err);
+        },
       });
+  }
+
+  /**
+   * Asigna todas las herramientas del carrito a la persona activa usando el endpoint /assignments/auto/
+   */
+  async asignarCarritoAPersona() {
+    if (!this.currentPersona) {
+      this.ok('No hay persona activa');
+      return;
+    }
+    const items = Array.from(this.carritoSesion.values()).map((x) => ({
+      tag: x.tag,
+      nombre: x.nombre ?? null,
+    }));
+    if (!items.length) {
+      this.ok('No hay herramientas en el carrito');
+      return;
+    }
+    try {
+      await firstValueFrom(
+        this.http.post(this.API_ASSIGN_AUTO, {
+          persona_tag: this.currentPersona.tag,
+          persona_nombre: this.currentPersona.nombre ?? null,
+          items,
+        })
+      );
+      this.ok('Herramientas asignadas');
+      this.carritoSesion.clear();
+      this.cargarAsignacionesPersona(this.currentPersona.tag);
+      this.cargarRegistros();
+    } catch (e) {
+      this.ok('No se pudo asignar herramientas');
+      console.error('Error asignando herramientas', e);
+    }
   }
 
   ngOnInit() {

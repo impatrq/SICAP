@@ -30,13 +30,17 @@ def _norm_cat(raw):
 @csrf_exempt
 def recibir_tag(request):
     if request.method != "POST":
+        print("Recibiendo tag: método no permitido")
         return JsonResponse({"error": "método no permitido"}, status=405)
     try:
         data = json.loads(request.body or "{}")
     except Exception as e:
+        print("Recibiendo tag: json inválido", e)
         return JsonResponse({"error": f"json inválido: {e}"}, status=400)
+    print("Recibiendo tag:", data)
     tag = str(data.get("tag", "")).strip()
     if not tag:
+        print("Recibiendo tag: tag faltante")
         return JsonResponse({"error": "tag faltante"}, status=400)
     nombre = (data.get("nombre") or "").strip() or None
     categoria = _norm_cat(data.get("categoria"))
@@ -54,7 +58,9 @@ def recibir_tag(request):
         reg.save(update_fields=["nombre", "categoria", "fecha_hora"])
         RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
     if categoria == "persona":
-        return JsonResponse({"status": "ok", "accion": "persona_actualizada"})
+        respuesta = {"status": "ok", "accion": "persona_actualizada"}
+        print("Respuesta:", respuesta)
+        return JsonResponse(respuesta)
     if categoria == "insumo":
         asig_activa = Asignacion.objects.filter(item_tag=tag, activo=True).first()
         ventana = now - timezone.timedelta(seconds=20)
@@ -75,18 +81,28 @@ def recibir_tag(request):
                     asignado_en=now,
                     activo=True,
                 )
-                return JsonResponse({"status": "ok", "accion": "asignacion_creada", "persona_tag": persona_candidata.tag})
+                respuesta = {"status": "ok", "accion": "asignacion_creada", "persona_tag": persona_candidata.tag}
+                print("Respuesta:", respuesta)
+                return JsonResponse(respuesta)
             else:
-                return JsonResponse({"status": "ok", "accion": "sin_persona_candidata"})
+                respuesta = {"status": "ok", "accion": "sin_persona_candidata"}
+                print("Respuesta:", respuesta)
+                return JsonResponse(respuesta)
         else:
             asig_activa.activo = False
             asig_activa.devuelto_en = now
             asig_activa.save(update_fields=["activo", "devuelto_en"])
             if persona_candidata and persona_candidata.tag != asig_activa.persona_tag:
-                return JsonResponse({"status": "ok", "accion": "asignacion_cerrada_otro_usuario", "persona_tag": persona_candidata.tag})
+                respuesta = {"status": "ok", "accion": "asignacion_cerrada_otro_usuario", "persona_tag": persona_candidata.tag}
+                print("Respuesta:", respuesta)
+                return JsonResponse(respuesta)
             else:
-                return JsonResponse({"status": "ok", "accion": "asignacion_cerrada"})
-    return JsonResponse({"status": "ok", "accion": "tag_actualizado"})
+                respuesta = {"status": "ok", "accion": "asignacion_cerrada"}
+                print("Respuesta:", respuesta)
+                return JsonResponse(respuesta)
+    respuesta = {"status": "ok", "accion": "tag_actualizado"}
+    print("Respuesta:", respuesta)
+    return JsonResponse(respuesta)
 @api_view(["GET"])
 def listar_tags(request):
     tags = RegistroTag.objects.all().order_by("-fecha_hora")
