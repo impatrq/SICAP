@@ -120,7 +120,18 @@ export class HomePage implements OnInit, OnDestroy {
         } else if (res.accion === 'sin_sesion_persona') {
           this.ok('No hay sesión activa de persona');
         } else if (res.accion === 'asignacion_cerrada') {
-          this.ok('Asignación cerrada (devolución)');
+          // ✅ MEJORADO: Mostrar información completa de la devolución
+          const nombreHerramienta = res.item_nombre || tag || 'Herramienta';
+          const nombrePersona = res.persona_nombre || 'Persona';
+          this.ok(`"${nombreHerramienta}" devuelta por "${nombrePersona}"`);
+
+          // ✅ MEJORADO: Actualizar el cache de asignaciones de la persona
+          if (res.persona_tag && this.asigCache[res.persona_tag]) {
+            this.asigCache[res.persona_tag] = this.asigCache[
+              res.persona_tag
+            ].filter((x) => x.item_tag !== tag);
+          }
+
           this.cargarRegistros();
         }
       }
@@ -134,9 +145,10 @@ export class HomePage implements OnInit, OnDestroy {
   private API_BULK_DELETE =
     'http://192.168.111.218:5000/api/v1/register/tag/bulk_delete/';
 
-  private pollingMs = 1000; // Actualiza cada 1 segundo para mayor fluidez
+  private pollingMs = 2000; // Intervalo de polling (reducido a 2s + cambio inteligente)
   private reqInFlight = false;
   private visHandler?: () => void;
+  private lastRegistrosHash = ''; // Hash para detectar cambios reales
 
   private cooldownPersonaTag: string | null = null;
   private cooldownHasta = 0;
@@ -192,6 +204,21 @@ export class HomePage implements OnInit, OnDestroy {
       .replace(/\p{Diacritic}/gu, '')
       .toLowerCase()
       .trim();
+  }
+
+  private getRegistrosHash(rows: Registro[]): string {
+    // Genera un hash simple de los registros para detectar cambios
+    // Considera: IDs, tags, activos/inactivos y timestamps
+    const str = rows
+      .map((r) => `${r.id}|${r.tag}|${r.created_at || ''}`)
+      .join('|');
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = (hash << 5) - hash + char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash).toString(36);
   }
 
   private matchQuery(reg: Registro, q: string): boolean {
@@ -350,7 +377,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   /**
    * Carga asignaciones activas para una persona y las cachea localmente.
-   * Ahora acumula inteligentemente: si hay nuevas asignaciones, las agrega sin borrar anteriores.
+   * Deduplica automáticamente por ID para evitar duplicados en la UI.
    * @param tag Tag de la persona
    */
   private cargarAsignacionesPersona(tag: string) {
@@ -363,34 +390,17 @@ export class HomePage implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (rows) => {
+          // ✅ DEDUPLICACIÓN: Usar Map con ID como clave para garantizar 1 asignación por ID
           const nuevas = rows || [];
+          const dedupMap = new Map<number, Asignacion>();
 
-          // Si NO tenía cache, inicializar
-          if (!this.asigCache[tag]) {
-            this.asigCache[tag] = nuevas;
-          } else {
-            // ✅ LÓGICA DE ACUMULACIÓN INTELIGENTE:
-            // - Mantener asignaciones que siguen activas
-            // - Remover las que ya fueron devueltas
-            // - Agregar las nuevas que llegaron
-            const cache = this.asigCache[tag];
-
-            // Crear un Map de nuevas por ID para búsqueda rápida
-            const nuevasMap = new Map(nuevas.map((a) => [a.id, a]));
-
-            // Mantener las que siguen activas, remover las devueltas
-            const actualizado = cache.filter(
-              (a) => nuevasMap.has(a.id) || a.activo
-            );
-
-            // Agregar las nuevas que NO estaban en cache
-            const ids_cache = new Set(cache.map((a) => a.id));
-            const realmente_nuevas = nuevas.filter((a) => !ids_cache.has(a.id));
-
-            // Combinar: lo que estaba + lo que es realmente nuevo
-            this.asigCache[tag] = [...actualizado, ...realmente_nuevas];
+          // Primero agregar las que vienen del servidor (son la fuente de verdad)
+          for (const a of nuevas) {
+            dedupMap.set(a.id, a);
           }
 
+          // Reemplazar cache completamente con datos deduplicados del servidor
+          this.asigCache[tag] = Array.from(dedupMap.values());
           this.asigLoading[tag] = false;
         },
         error: (err) => {
@@ -788,7 +798,8 @@ export class HomePage implements OnInit, OnDestroy {
   /**
    * Solicita al backend la lista completa de registros y actualiza el
    * estado local. Evita peticiones concurrentes con `reqInFlight`.
-   * También refresca asignaciones de personas expandidas automáticamente.
+   * ✅ OPTIMIZACIÓN: Solo actualiza si hay cambios reales (detectados por hash)
+   * Esto reduce parpadeo de la UI y mejora rendimiento significativamente.
    */
   cargarRegistros() {
     if (this.reqInFlight) return;
@@ -799,12 +810,23 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.http.get<Registro[]>(this.API).subscribe({
       next: (rows) => {
-        this.registros = rows || [];
+        rows = rows || [];
+
+        // ✅ CAMBIO CLAVE: Calcular hash y comparar para evitar actualizaciones innecesarias
+        const nuevoHash = this.getRegistrosHash(rows);
+        const hayChangios = nuevoHash !== this.lastRegistrosHash;
+
+        // Solo actualizar si hay cambios reales
+        if (hayChangios) {
+          this.registros = rows;
+          this.lastRegistrosHash = nuevoHash;
+
+          // Actualiza el estado de los tags (taller/fuera)
+          this.actualizarEstadoTags();
+        }
+
         this.loading = false;
         this.reqInFlight = false;
-
-        // Actualiza el estado de los tags (taller/fuera)
-        this.actualizarEstadoTags();
 
         // ✅ NUEVO: Refresca asignaciones de personas expandidas automáticamente
         // Esto permite que las asignaciones se acumulen en la UI sin necesidad

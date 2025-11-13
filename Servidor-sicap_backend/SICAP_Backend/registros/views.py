@@ -101,7 +101,14 @@ def recibir_tag(request):
             asig_activa.devuelto_en = now
             asig_activa.save()
             return JsonResponse(
-                {"status": "ok", "accion": "insumo_devuelto", "item_tag": tag}
+                {
+                    "status": "ok",
+                    "accion": "asignacion_cerrada",
+                    "item_tag": tag,
+                    "item_nombre": asig_activa.item_nombre,
+                    "persona_tag": asig_activa.persona_tag,
+                    "persona_nombre": asig_activa.persona_nombre,
+                }
             )
         else:
             # Toggle: asignar
@@ -116,7 +123,7 @@ def recibir_tag(request):
             return JsonResponse(
                 {
                     "status": "ok",
-                    "accion": "insumo_asignado",
+                    "accion": "asignacion_creada",
                     "item_tag": tag,
                     "persona_tag": sesion.persona_tag,
                 }
