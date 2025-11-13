@@ -1,16 +1,70 @@
-"""
-Vistas y utilidades del módulo `registros`.
-
-Este módulo expone endpoints y helpers usados por el cliente para:
-- recibir lecturas de tags y persistir `RegistroTag`.
-- listar, editar y eliminar tags.
-- gestionar sesiones de persona (apertura/cierre) y crear asignaciones
-    automáticas para items de tipo "insumo".
-
-Las funciones auxiliares internas están prefijadas con guión bajo
-y simplifican la lógica reutilizable (normalización de categoría,
-apertura/cierre de sesiones, construcción de subqueries, etc.).
-"""
+## Endpoints principales SICAP
+def _norm_cat(raw):
+    # Normaliza categoría: solo "persona" o "insumo"
+    if raw is None:
+        return None
+    k = str(raw).strip().lower()
+    if k in (
+        "objeto", "object", "item", "herramienta", "herramientas", "tool", "tools"
+    ):
+        return "insumo"
+    if k in ("persona", "person", "usuario", "user", "empleado", "empleados"):
+        return "persona"
+    if k == "insumo":
+        return "insumo"
+    return None
+@csrf_exempt
+def recibir_tag(request):
+    # Recibe tag, actualiza RegistroTag y gestiona asignaciones
+@api_view(["GET"])
+def listar_tags(request):
+    # Lista todos los tags registrados
+@api_view(["GET"])
+def assignments_list(request):
+    # Lista asignaciones, permite filtrar por activo/persona_tag
+@api_view(["PUT"])
+def assignments_devolver(request, id):
+    # Cierra una asignación manualmente
+@api_view(["POST"])
+def bulk_delete_uncategorized_tags(request):
+    # Borra masivamente tags sin categoría
+@api_view(["DELETE", "POST"])
+def eliminar_tag(request, id):
+    # Borra un tag, impide si hay asignaciones activas salvo force
+@api_view(["DELETE", "POST"])
+def eliminar_tag(request, id):
+    """
+    Endpoint para borrar un tag completamente.
+    Si hay asignaciones activas relacionadas, requiere parámetro force.
+    """
+    force = bool(request.GET.get("force", False))
+    tag_obj = get_object_or_404(RegistroTag, id=id)
+    # Verificar asignaciones activas como persona o item
+    asig_activas = Asignacion.objects.filter(
+        (Q(persona_tag=tag_obj.tag) | Q(item_tag=tag_obj.tag)), activo=True
+    )
+    if asig_activas.exists() and not force:
+        return Response({"status": "error", "msg": "No se puede borrar: hay asignaciones activas."}, status=409)
+    # Si hay asignaciones activas y force, cerrarlas
+    if asig_activas.exists() and force:
+        asig_activas.update(activo=False, devuelto_en=timezone.now())
+    tag_obj.delete()
+    return Response({"status": "ok", "msg": "Tag eliminado."})
+@api_view(["POST"])
+def bulk_delete_uncategorized_tags(request):
+    """
+    Endpoint para borrar masivamente tags sin categoría.
+    Solo borra RegistroTag donde categoria es null y el tag está en la lista.
+    """
+    try:
+        data = request.data if hasattr(request, "data") else json.loads(request.body or "{}")
+        tags = data.get("tags", [])
+    except Exception as e:
+        return Response({"status": "error", "msg": f"json inválido: {e}"}, status=400)
+    if not tags:
+        return Response({"status": "error", "msg": "Lista de tags vacía."}, status=400)
+    borrados = RegistroTag.objects.filter(categoria__isnull=True, tag__in=tags).delete()
+    return Response({"status": "ok", "borrados": borrados[0]})
 
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
@@ -26,280 +80,43 @@ from rest_framework import viewsets, mixins, status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
-from .models import RegistroTag, Panol, PersonaSesion, Asignacion
+from .models import RegistroTag, Panol, Asignacion
 from django.shortcuts import get_object_or_404
 from .serializer import PanolSerializer, RegistroTagSerializer, AsignacionSerializer
 import json
-import logging
+        )
+    if categoria == "insumo":
+        # Buscar asignación activa de este item
+        asig_activa = Asignacion.objects.filter(item_tag=tag, activo=True).first()
 
-
-logger = logging.getLogger(__name__)
-
-
-def _norm_cat(raw):
-    if raw is None:
-        return None
-    k = str(raw).strip().lower()
-    # Aceptar sinónimos comunes (es/eng) para mayor tolerancia
-    if k in (
-        "objeto",
-        "object",
-        "item",
-        "herramienta",
-        "herramientas",
-        "tool",
-        "tools",
-    ):
-        return "insumo"
-    if k in ("persona", "person", "usuario", "user", "empleado", "empleados", "insumo"):
-        return k
-    return None
-
-
-def _log_registro(tag: str, nombre=None, categoria=None):
-    # Crea un RegistroTag persistente con categoría normalizada.
-    return RegistroTag.objects.create(
-        tag=tag, nombre=(nombre or None), categoria=_norm_cat(categoria)
-    )
-
-
-def _sesion_abierta():
-    # Devuelve la sesión de persona activa más reciente o None.
-    return PersonaSesion.objects.filter(activo=True).order_by("-opened_at").first()
-
-
-def _abrir_sesion(persona_tag: str, persona_nombre: str | None):
-    # Cierra cualquier sesión abierta y crea una nueva sesión activa.
-    PersonaSesion.objects.filter(activo=True).update(
-        activo=False, closed_at=timezone.now()
-    )
-    return PersonaSesion.objects.create(
-        persona_tag=persona_tag,
-        persona_nombre=persona_nombre or None,
-        opened_at=timezone.now(),
-        activo=True,
-    )
-
-
-def _ultimos_registros_desde(ts):
-    # Construye un subquery que para cada tag devuelve la última fecha
-    # de registro desde la marca de tiempo `ts`. Luego recupera el
-    # registro completo asociado a esa última fecha para cada tag.
-    sub = (
-        RegistroTag.objects.filter(fecha_hora__gte=ts)
-        .values("tag")
-        .annotate(last_ts=Max("fecha_hora"))
-    )
-
-    out = []
-    for row in sub:
-        tag = row["tag"]
-        last_ts = row["last_ts"]
-        r = (
-            RegistroTag.objects.filter(tag=tag, fecha_hora=last_ts)
-            .order_by("-id")
+        # Buscar persona candidata en ventana de 20s
+        ventana = now - timezone.timedelta(seconds=20)
+        persona_candidata = (
+            RegistroTag.objects.filter(
+                categoria="persona", fecha_hora__gte=ventana
+            )
+            .order_by("-fecha_hora")
             .first()
         )
-        if r:
-            out.append(r)
-    return out
 
-
-def _cerrar_sesion_y_asignar(sesion: PersonaSesion):
-
-    now = timezone.now()
-    creadas = []
-
-    # Recupera los últimos registros desde que la sesión fue abierta.
-    ultimos = _ultimos_registros_desde(sesion.opened_at)
-    for r in ultimos:
-        if _norm_cat(r.categoria) != "insumo":
-            continue
-
-        # evitar duplicado activo para la misma persona
-        if Asignacion.objects.filter(
-            persona_tag=sesion.persona_tag, item_tag=r.tag, activo=True
-        ).exists():
-            continue
-
-        # dar de baja asignaciones activas previas de ese item (si las hay)
-        Asignacion.objects.filter(item_tag=r.tag, activo=True).update(
-            activo=False, devuelto_en=now
-        )
-
-        a = Asignacion.objects.create(
-            persona_tag=sesion.persona_tag,
-            persona_nombre=sesion.persona_nombre,
-            item_tag=r.tag,
-            item_nombre=r.nombre or None,
-            asignado_en=now,
-            activo=True,
-        )
-        creadas.append(a)
-
-    sesion.activo = False
-    sesion.closed_at = now
-    sesion.save(update_fields=["activo", "closed_at"])
-    return creadas
-
-
-@csrf_exempt
-def recibir_tag(request):
-
-    if request.method != "POST":
-        return JsonResponse({"error": "método no permitido"}, status=405)
-
-    try:
-        data = json.loads(request.body or "{}")
-    except Exception as e:
-        return JsonResponse({"error": f"json inválido: {e}"}, status=400)
-
-    tag = str(data.get("tag", "")).strip()
-    if not tag:
-        return JsonResponse({"error": "tag faltante"}, status=400)
-
-    nombre = (data.get("nombre") or "").strip() or None
-    categoria = _norm_cat(data.get("categoria"))
-
-    now = timezone.now()
-
-    # Usar get_or_create para evitar duplicados en casos de concurrencia o
-    # múltiples escrituras simultáneas desde distintos lectores. Luego
-    # actualizamos solo los campos necesarios conservando valores ya definidos
-    # cuando sea apropiado.
-    reg, created = RegistroTag.objects.get_or_create(
-        tag=tag,
-        defaults={"nombre": nombre, "categoria": categoria, "fecha_hora": now},
-    )
-
-    if not created:
-        # Registro existente: si ya tiene nombre o categoría, solo actualizar
-        # la marca de tiempo. Si no tiene esos valores, rellenarlos si
-        # se proporcionaron.
-        try:
-            if reg.nombre or reg.categoria:
-                reg.fecha_hora = now
-                reg.save(update_fields=["fecha_hora"])
-                logger.debug("RegistroTag existente actualizado fecha_hora: %s", tag)
+        if not asig_activa:
+            # Caso 1: herramienta en pañol, sale con persona
+            if persona_candidata:
+                Asignacion.objects.create(
+                    persona_tag=persona_candidata.tag,
+                    persona_nombre=persona_candidata.nombre,
+                    item_tag=tag,
+                    item_nombre=reg.nombre,
+                    asignado_en=now,
+                    activo=True,
+                )
+                return JsonResponse({"status": "ok", "accion": "asignacion_creada", "persona_tag": persona_candidata.tag})
             else:
-                # rellenar campos vacíos
-                reg.nombre = nombre or reg.nombre
-                reg.categoria = categoria or reg.categoria
-                reg.fecha_hora = now
-                reg.save(update_fields=["nombre", "categoria", "fecha_hora"])
-                logger.debug(
-                    "RegistroTag existente rellenado con nombre/categoria: %s", tag
-                )
-        except Exception:
-            # En un escenario raro de integridad, fallback a un create seguro
-            logger.exception(
-                "Error actualizando RegistroTag existente, intentando create fallback for %s",
-                tag,
-            )
-            reg = RegistroTag.objects.create(
-                tag=tag, nombre=nombre, categoria=categoria, fecha_hora=now
-            )
-
-        # Asegurar que solo quede una fila por tag: eliminar duplicados si los hay
-        RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
-
-    # Lógica automática para insumos: crear/cerrar asignación
-    if categoria == "insumo":
-        asig = Asignacion.objects.filter(item_tag=tag, activo=True).first()
-        if asig:
-            # Si está asignado, lo devolvemos (marca como devuelto)
-            asig.activo = False
-            asig.devuelto_en = now
-            asig.save(update_fields=["activo", "devuelto_en"])
+                # No hay persona candidata, no se crea asignación
+                return JsonResponse({"status": "ok", "accion": "sin_persona_candidata"})
         else:
-            # Si no está asignado, lo sacamos (crea asignación activa)
-            Asignacion.objects.create(
-                persona_tag="sistema",
-                persona_nombre="Sistema",
-                item_tag=tag,
-                item_nombre=reg.nombre,
-                asignado_en=now,
-                activo=True,
-            )
-        return JsonResponse({"status": "ok", "accion": "insumo_actualizado"})
-
-    # Lógica original para persona
-    if categoria == "persona":
-        sesion = _sesion_abierta()
-
-        if not sesion:
-            nueva = _abrir_sesion(persona_tag=tag, persona_nombre=nombre)
-            return JsonResponse(
-                {
-                    "status": "ok",
-                    "accion": "sesion_abierta",
-                    "persona_tag": nueva.persona_tag,
-                    "opened_at": nueva.opened_at.isoformat(),
-                }
-            )
-
-        if sesion.persona_tag == tag:
-            creadas = _cerrar_sesion_y_asignar(sesion)
-            return JsonResponse(
-                {
-                    "status": "ok",
-                    "accion": "sesion_cerrada",
-                    "persona_tag": sesion.persona_tag,
-                    "asignados": [
-                        {
-                            "id": a.id,
-                            "item_tag": a.item_tag,
-                            "item_nombre": a.item_nombre,
-                            "asignado_en": a.asignado_en.isoformat(),
-                        }
-                        for a in creadas
-                    ],
-                    "count": len(creadas),
-                }
-            )
-
-        _cerrar_sesion_y_asignar(sesion)
-        nueva = _abrir_sesion(persona_tag=tag, persona_nombre=nombre)
-        return JsonResponse(
-            {
-                "status": "ok",
-                "accion": "sesion_cambiada",
-                "persona_tag": nueva.persona_tag,
-                "opened_at": nueva.opened_at.isoformat(),
-            }
-        )
-
-    return JsonResponse({"status": "ok"})
-
-
-@csrf_exempt
-def editar_tag(request, id):
-    if request.method != "PUT":
-        return JsonResponse({"error": "Método no permitido"}, status=405)
-
-    tag_obj = get_object_or_404(RegistroTag, pk=id)
-    data = json.loads(request.body or "{}")
-
-    if "nombre" in data:
-        tag_obj.nombre = data["nombre"]
-
-    if "categoria" in data:
-        raw = data["categoria"]
-        if raw in (None, "", "null"):
-            tag_obj.categoria = None
-        else:
-            categoria = str(raw).lower().strip()
-            if categoria not in ["persona", "insumo"]:
-                return JsonResponse(
-                    {
-                        "error": 'valor de categoría inválido. Debe ser "persona" o "insumo".'
-                    },
-                    status=400,
-                )
-            tag_obj.categoria = categoria
-
-    tag_obj.save()
-    return JsonResponse(
+            # Caso 2: herramienta fuera, se devuelve
+            asig_activa.activo = False
         {
             "status": "ok",
             "id": tag_obj.id,

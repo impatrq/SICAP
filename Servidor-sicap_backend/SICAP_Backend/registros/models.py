@@ -72,19 +72,3 @@ class Asignacion(models.Model):
         return f"{self.persona_tag} ← {self.item_tag} ({estado})"
 
 
-class PersonaSesion(models.Model):
-    persona_tag = models.CharField(max_length=64, db_index=True)
-    persona_nombre = models.CharField(max_length=128, null=True, blank=True)
-    opened_at = models.DateTimeField(default=timezone.now)
-    closed_at = models.DateTimeField(null=True, blank=True)
-    activo = models.BooleanField(default=True)
-
-    class Meta:
-        indexes = [
-            models.Index(fields=["persona_tag", "activo"]),
-            models.Index(fields=["opened_at"]),
-        ]
-
-    def __str__(self):
-        estado = "abierta" if self.activo else "cerrada"
-        return f"{self.persona_tag} ({estado}) {self.opened_at:%Y-%m-%d %H:%M:%S}"
