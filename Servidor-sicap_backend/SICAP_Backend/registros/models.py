@@ -33,6 +33,18 @@ class RegistroTag(models.Model):
         return f"{self.tag} - {self.fecha_hora}"
 
 
+
+class PersonaSesion(models.Model):
+    persona_tag = models.CharField(max_length=100, db_index=True)
+    nombre = models.CharField(max_length=100, blank=True, null=True)
+    inicio = models.DateTimeField(default=timezone.now)
+    fin = models.DateTimeField(null=True, blank=True)
+    activa = models.BooleanField(default=True)
+
+    def __str__(self):
+        estado = "activa" if self.activa else f"cerrada {self.fin:%Y-%m-%d %H:%M:%S}" if self.fin else "inactiva"
+        return f"Sesion {self.persona_tag} ({estado})"
+
 class Panol(models.Model):
     nombre = models.CharField(max_length=100)
     icono = models.CharField(max_length=50, default="cube")

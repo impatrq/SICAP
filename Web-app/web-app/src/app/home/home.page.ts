@@ -34,6 +34,22 @@ type Asignacion = {
   standalone: false,
 })
 export class HomePage implements OnInit, OnDestroy {
+    // Método público para integrar con el lector RFID o input manual
+    // Llamar a este método cuando se detecte un tag
+    onTagDetectado(tag: string) {
+      // Buscar el registro en la lista local para obtener la categoría y nombre
+      const reg = this.tagsUnicos.find(r => r.tag === tag);
+      if (!reg) {
+        this.ok('Tag no registrado');
+        return;
+      }
+      const categoria = this.normCat(reg.categoria);
+      if (categoria === 'persona' || categoria === 'insumo') {
+        this.procesarTagDetectado(tag, categoria, reg.nombre);
+      } else {
+        this.ok('El tag no tiene categoría asignada');
+      }
+    }
   // Se controla secciones, listas de tags y acciones
   // de CRUD mínimas. Mantener este componente enfocado en comportamiento
   // de UI + llamadas al backend; la lógica de negocio más compleja puede
@@ -64,8 +80,40 @@ export class HomePage implements OnInit, OnDestroy {
   private API = 'http://192.168.111.218:5000/api/v1/register/tag/list/';
   private API_EDIT = 'http://192.168.111.218:5000/api/v1/register/tag';
   private API_ASSIGN = 'http://192.168.111.218:5000/api/v1/assignments';
-  private API_ASSIGN_AUTO =
-    'http://192.168.111.218:5000/api/v1/assignments/auto/';
+  private API_ASSIGN_AUTO = 'http://192.168.111.218:5000/api/v1/assignments/auto/';
+  private API_RECIBIR_TAG = 'http://192.168.111.218:5000/api/v1/recibir_tag/';
+  // Detecta un tag y lo envía al backend para abrir sesión o asignar insumo
+  async procesarTagDetectado(tag: string, categoria: 'persona' | 'insumo', nombre?: string) {
+    try {
+      const res: any = await firstValueFrom(
+        this.http.post(this.API_RECIBIR_TAG, { tag, categoria, nombre })
+      );
+      if (categoria === 'persona') {
+        if (res.accion === 'sesion_persona_abierta') {
+          this.ok('Sesión de persona abierta');
+          this.currentPersona = { tag, nombre: nombre ?? null };
+          this.seccionActiva = 'Empleados';
+          this.cargarAsignacionesPersona(tag);
+        }
+      } else if (categoria === 'insumo') {
+        if (res.accion === 'asignacion_creada') {
+          this.ok('Insumo asignado a persona');
+          if (this.currentPersona) {
+            this.cargarAsignacionesPersona(this.currentPersona.tag);
+          }
+          this.cargarRegistros();
+        } else if (res.accion === 'sin_sesion_persona') {
+          this.ok('No hay sesión activa de persona');
+        } else if (res.accion === 'asignacion_cerrada') {
+          this.ok('Asignación cerrada (devolución)');
+          this.cargarRegistros();
+        }
+      }
+    } catch (e) {
+      this.ok('Error comunicando con backend');
+      console.error('Error procesando tag', e);
+    }
+  }
 
   // Estado solo backend-driven
   private API_BULK_DELETE =
@@ -345,39 +393,9 @@ export class HomePage implements OnInit, OnDestroy {
       });
   }
 
-  private abrirSesionPersona(r: Registro) {
-    // Inicia la sesión de persona en la interfaz: limpia el carrito local,
-    // selecciona la sección de Empleados y carga las asignaciones activas.
-    this.currentPersona = { tag: r.tag, nombre: r.nombre ?? null };
-    this.carritoSesion.clear();
-    this.seccionActiva = 'Empleados';
-    this.expanded.add(r.tag);
-    this.cargarAsignacionesPersona(r.tag);
-  }
+  // La apertura de sesión ahora se hace vía procesarTagDetectado
 
-  private async cerrarSesionPersona(): Promise<void> {
-    if (!this.currentPersona) return;
-
-    const persona = this.currentPersona;
-    const items = Array.from(this.carritoSesion.values()).map((x) => ({
-      tag: x.tag,
-      nombre: x.nombre ?? null,
-    }));
-
-    if (!items.length) {
-      const activos = await this.fetchActivosCount(persona.tag);
-      if (activos > 0) {
-        // Lógica backend-driven: mantener sesión abierta si hay activos
-        return;
-      }
-      this.currentPersona = null;
-      this.carritoSesion.clear();
-      this.cooldownPersonaTag = persona.tag;
-      this.cooldownHasta = Date.now() + this.cooldownMs;
-      return;
-    }
-    // Lógica backend-driven: aquí puedes agregar lógica para cerrar sesión y limpiar
-  }
+  // El cierre de sesión lo maneja el backend automáticamente
 
   // Métodos de almacenamiento local eliminados. Solo lógica backend-driven.
 
@@ -660,36 +678,6 @@ export class HomePage implements OnInit, OnDestroy {
   /**
    * Asigna todas las herramientas del carrito a la persona activa usando el endpoint /assignments/auto/
    */
-  async asignarCarritoAPersona() {
-    if (!this.currentPersona) {
-      this.ok('No hay persona activa');
-      return;
-    }
-    const items = Array.from(this.carritoSesion.values()).map((x) => ({
-      tag: x.tag,
-      nombre: x.nombre ?? null,
-    }));
-    if (!items.length) {
-      this.ok('No hay herramientas en el carrito');
-      return;
-    }
-    try {
-      await firstValueFrom(
-        this.http.post(this.API_ASSIGN_AUTO, {
-          persona_tag: this.currentPersona.tag,
-          persona_nombre: this.currentPersona.nombre ?? null,
-          items,
-        })
-      );
-      this.ok('Herramientas asignadas');
-      this.carritoSesion.clear();
-      this.cargarAsignacionesPersona(this.currentPersona.tag);
-      this.cargarRegistros();
-    } catch (e) {
-      this.ok('No se pudo asignar herramientas');
-      console.error('Error asignando herramientas', e);
-    }
-  }
 
   ngOnInit() {
     // Inicio: cargamos registros y arrancamos polling cuando corresponda

@@ -63,58 +63,47 @@ def recibir_tag(request):
         print(f"RegistroTag actualizado: {reg}")
         RegistroTag.objects.filter(tag=tag).exclude(id=reg.id).delete()
     print(f"Categoria para lógica: {categoria}")
+    from .models import PersonaSesion
+    # Lógica de sesiones
     if categoria == "persona":
-        respuesta = {"status": "ok", "accion": "persona_actualizada"}
+        # Cerrar sesiones previas activas
+        PersonaSesion.objects.filter(activa=True).update(activa=False, fin=now)
+        # Abrir nueva sesión para esta persona
+        sesion = PersonaSesion.objects.create(persona_tag=tag, nombre=nombre, inicio=now, activa=True)
+        respuesta = {"status": "ok", "accion": "sesion_persona_abierta", "sesion_id": sesion.id}
         print("Respuesta:", respuesta)
         return JsonResponse(respuesta)
     if categoria == "insumo":
-        print(f"Buscando asignación activa para item_tag={tag}")
+        # Buscar sesión activa
+        sesion = PersonaSesion.objects.filter(activa=True).order_by("-inicio").first()
+        print(f"Sesion activa encontrada: {sesion}")
         asig_activa = Asignacion.objects.filter(item_tag=tag, activo=True).first()
-        ventana = now - timezone.timedelta(seconds=20)
-        print(f"Ventana de tiempo: {ventana} a {now}")
-        persona_candidata = (
-            RegistroTag.objects.filter(
-                categoria="persona", created_at__gte=ventana
+        if sesion and not asig_activa:
+            print(f"Asignando insumo {tag} a persona {sesion.persona_tag}")
+            Asignacion.objects.create(
+                persona_tag=sesion.persona_tag,
+                persona_nombre=sesion.nombre,
+                item_tag=tag,
+                item_nombre=reg.nombre,
+                asignado_en=now,
+                activo=True,
             )
-            .order_by("-created_at")
-            .first()
-        )
-        print(f"Persona candidata encontrada: {persona_candidata}")
-        if not asig_activa:
-            print("No hay asignación activa, evaluando persona candidata...")
-            if persona_candidata:
-                print(f"Creando asignación automática para persona_tag={persona_candidata.tag} y item_tag={tag}")
-                Asignacion.objects.create(
-                    persona_tag=persona_candidata.tag,
-                    persona_nombre=persona_candidata.nombre,
-                    item_tag=tag,
-                    item_nombre=reg.nombre,
-                    asignado_en=now,
-                    activo=True,
-                )
-                respuesta = {"status": "ok", "accion": "asignacion_creada", "persona_tag": persona_candidata.tag}
-                print("Respuesta:", respuesta)
-                return JsonResponse(respuesta)
-            else:
-                print("No se encontró persona candidata en la ventana de tiempo.")
-                respuesta = {"status": "ok", "accion": "sin_persona_candidata"}
-                print("Respuesta:", respuesta)
-                return JsonResponse(respuesta)
+            respuesta = {"status": "ok", "accion": "asignacion_creada", "persona_tag": sesion.persona_tag}
+            print("Respuesta:", respuesta)
+            return JsonResponse(respuesta)
+        elif not sesion:
+            print("No hay sesión activa de persona.")
+            respuesta = {"status": "ok", "accion": "sin_sesion_persona"}
+            print("Respuesta:", respuesta)
+            return JsonResponse(respuesta)
         else:
             print(f"Asignación activa encontrada: {asig_activa}")
             asig_activa.activo = False
             asig_activa.devuelto_en = now
             asig_activa.save(update_fields=["activo", "devuelto_en"])
-            if persona_candidata and persona_candidata.tag != asig_activa.persona_tag:
-                print("Cerrando asignación y detectando otro usuario.")
-                respuesta = {"status": "ok", "accion": "asignacion_cerrada_otro_usuario", "persona_tag": persona_candidata.tag}
-                print("Respuesta:", respuesta)
-                return JsonResponse(respuesta)
-            else:
-                print("Cerrando asignación para el mismo usuario.")
-                respuesta = {"status": "ok", "accion": "asignacion_cerrada"}
-                print("Respuesta:", respuesta)
-                return JsonResponse(respuesta)
+            respuesta = {"status": "ok", "accion": "asignacion_cerrada"}
+            print("Respuesta:", respuesta)
+            return JsonResponse(respuesta)
     print("No se detectó categoría relevante, devolviendo tag_actualizado.")
     respuesta = {"status": "ok", "accion": "tag_actualizado"}
     print("Respuesta:", respuesta)
