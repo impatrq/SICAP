@@ -67,9 +67,9 @@ def recibir_tag(request):
         ventana = now - timezone.timedelta(seconds=20)
         persona_candidata = (
             RegistroTag.objects.filter(
-                categoria="persona", fecha_hora__gte=ventana
+                categoria="persona", created_at__gte=ventana
             )
-            .order_by("-fecha_hora")
+            .order_by("-created_at")
             .first()
         )
         if not asig_activa:
