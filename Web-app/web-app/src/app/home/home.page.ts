@@ -2,7 +2,7 @@ import { AlertController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
-import { interval, Subscription, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 type Registro = {
@@ -75,8 +75,6 @@ export class HomePage implements OnInit, OnDestroy {
   qInventario: string = '';
   qEmpleados: string = '';
 
-  private sub?: Subscription;
-
   private API = 'http://192.168.111.218:5000/api/v1/register/tag/list/';
   private API_EDIT = 'http://192.168.111.218:5000/api/v1/register/tag';
   private API_ASSIGN = 'http://192.168.111.218:5000/api/v1/assignments';
@@ -145,9 +143,7 @@ export class HomePage implements OnInit, OnDestroy {
   private API_BULK_DELETE =
     'http://192.168.111.218:5000/api/v1/register/tag/bulk_delete/';
 
-  private pollingMs = 2000; // Intervalo de polling (reducido a 2s + cambio inteligente)
   private reqInFlight = false;
-  private visHandler?: () => void;
   private lastRegistrosHash = ''; // Hash para detectar cambios reales
 
   private cooldownPersonaTag: string | null = null;
@@ -745,28 +741,14 @@ export class HomePage implements OnInit, OnDestroy {
    */
 
   ngOnInit() {
-    // Inicio: cargamos registros y arrancamos polling cuando corresponda
-    // (se evita recargar si ya hay una petición en vuelo)
+    // Carga inicial: no se arranca polling periódico.
+    // Las actualizaciones posteriores se realizan bajo demanda cuando
+    // ocurre una acción (asignación/devolución) que invoque `cargarRegistros()`.
     this.cargarRegistros();
-
-    this.visHandler = () => {
-      if (document.hidden) {
-        this.sub?.unsubscribe();
-      } else if (this.seccionActiva) {
-        this.sub?.unsubscribe();
-        this.sub = interval(this.pollingMs).subscribe(() =>
-          this.cargarRegistros()
-        );
-      }
-    };
-    document.addEventListener('visibilitychange', this.visHandler);
   }
 
   ngOnDestroy() {
-    this.sub?.unsubscribe();
-    if (this.visHandler) {
-      document.removeEventListener('visibilitychange', this.visHandler);
-    }
+    // Sin suscripciones periódicas que limpiar.
   }
 
   activarSeccion(nombre: string) {
@@ -778,19 +760,14 @@ export class HomePage implements OnInit, OnDestroy {
       nombre === 'Empleados' ||
       nombre === 'Personalización';
 
-    this.sub?.unsubscribe();
-
+    // Cargar datos sólo cuando se activa la sección (no polling contínuo).
     if (necesitaDatos) {
       this.cargarRegistros();
-      this.sub = interval(this.pollingMs).subscribe(() =>
-        this.cargarRegistros()
-      );
     }
   }
 
   volverAlMenuCentral() {
     this.seccionActiva = null;
-    this.sub?.unsubscribe();
   }
 
   // Lógica local eliminada: solo backend-driven
