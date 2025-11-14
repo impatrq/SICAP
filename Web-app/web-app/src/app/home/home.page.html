@@ -254,6 +254,7 @@
       <ion-row>
         <ion-col><b>Empleado</b></ion-col>
         <ion-col><b>Categoría</b></ion-col>
+        <ion-col><b>ID</b></ion-col>
         <ion-col><b>Última detección</b></ion-col>
         <ion-col size="2"><b>Asignados</b></ion-col>
         <ion-col size="2" class="ion-text-center"><b>Acciones</b></ion-col>
@@ -264,6 +265,7 @@
         <ion-row>
           <ion-col>{{ reg.nombre || reg.tag }}</ion-col>
           <ion-col>{{ friendlyCategoria(reg.categoria) }}</ion-col>
+          <ion-col>{{ reg.id }}</ion-col>
           <ion-col
             >{{ (reg.fecha_hora || reg.created_at) | date:'short' }}</ion-col
           >
@@ -337,14 +339,16 @@
                     <ion-col size="3"
                       >{{ a.asignado_en | date:'short' }}</ion-col
                     >
-                    <ion-col size="1">
+                    <ion-col size="1" class="ion-text-center">
                       <ion-button
                         size="small"
-                        fill="clear"
+                        fill="solid"
+                        color="success"
                         (click)="devolverAsignacion(a)"
                         [disabled]="!a.activo"
+                        title="Devolver herramienta"
                       >
-                        <ion-icon name="return-down-back-outline"></ion-icon>
+                        <ion-icon name="checkmark-done-outline"></ion-icon>
                       </ion-button>
                     </ion-col>
                   </ion-row>
