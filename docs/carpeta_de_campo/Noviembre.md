@@ -52,6 +52,8 @@ También realicé ajustes en la Raspberry Pi, corrigiendo nuevamente el problema
 
 <h2>Miercoles 12/11/25</h2>
 
+Facu Spagno:
+
 Durante la jornada me dediqué a realizar una reorganización completa del código, tanto en el backend como en el frontend. El proyecto había acumulado varias funciones, estructuras y fragmentos desordenados, por lo que enfoqué el día en dejar todo en un formato profesional, prolijo y fácil de mantener.
 
 Reorganicé los archivos respetando una estructura lógica y coherente, y agregué comentarios descriptivos en cada función para explicar su funcionamiento interno. Además, incorporé en la parte superior de cada archivo una descripción clara de su propósito, con el objetivo de que cualquier persona que consulte el código en el futuro pueda comprender rápidamente su rol dentro del sistema.
@@ -59,3 +61,14 @@ Reorganicé los archivos respetando una estructura lógica y coherente, y agregu
 Posteriormente, trabajé en la mejora de la lógica de asignaciones, ya que presentaba fallas y no estaba adaptada al nuevo sistema de almacenamiento implementado previamente. Debido a estos cambios, la asignación de tags no estaba funcionando correctamente. Reescribí y ajusté la lógica para compatibilizarla con el nuevo método de almacenamiento, logrando que el proceso sea más fluido y estable.
 
 Si bien la funcionalidad quedó operativa, se encuentra en una versión beta 2.0, lo que significa que todavía requiere una etapa de refinamiento final para alcanzar su versión completamente estable.
+
+<h2>Jueves 13/11/25</h2>
+
+Facu Spagno:
+
+Para finalizar la carpeta de campo, dediqué la jornada a realizar las pruebas finales del sistema de asignaciones, evaluando los nuevos estados y verificando que toda la lógica respondiera correctamente en distintos escenarios. Estas pruebas permitieron detectar pequeños ajustes necesarios, los cuales corregí directamente en el backend para optimizar aún más el funcionamiento general.
+
+Como último paso, desarrollé la versión final del módulo de asignaciones (versión 3.0). Esta actualización representa la etapa más madura y estable del sistema, ya que permite que las herramientas e insumos se asignen y se devuelvan en tiempo real, sin demoras ni errores.
+La lógica fue optimizada para que el inventario de cada persona se actualice de forma automática cada 2 segundos, garantizando una trazabilidad completamente inmediata entre el momento en que una persona entra o sale del pañol y el estado de los elementos que lleva consigo.
+
+Con esta versión 3.0, el comportamiento del sistema quedó totalmente estable, fluido y funcional, cerrando así la etapa de desarrollo del módulo de asignaciones con un resultado profesional y definitivo.
