@@ -42,8 +42,20 @@ Además, aproveché la jornada para restaurar funciones eliminadas previamente d
 
 <h2>Martes 11/11/25</h2>
 
+Facu Spagno:
+
 Durante la jornada finalicé y optimicé la función de eliminación de tags en el frontend, logrando que el proceso se ejecute directamente desde la interfaz sin necesidad de acceder al backend. Esta función, iniciada el día anterior, quedó completamente operativa y estable.
 
 Además, desarrollé una nueva función de eliminación dentro de los apartados de Inventario y Empleados, permitiendo borrar tags específicos de cada sección. De esta manera, ahora es posible eliminar tanto los tags sin categoría como aquellos que ya no se utilizan en los módulos activos del sistema.
 
 También realicé ajustes en la Raspberry Pi, corrigiendo nuevamente el problema de la desconfiguración horaria. Para evitar que el inconveniente se repita, incorporé un miniscript automatizado que actualiza la hora del sistema cada vez que la Raspberry se desconecta y vuelve a conectarse. Con esta mejora, el servidor mantiene sincronizada su hora de manera continua, garantizando la precisión en los registros y evitando futuras inconsistencias.
+
+<h2>Miercoles 12/11/25</h2>
+
+Durante la jornada me dediqué a realizar una reorganización completa del código, tanto en el backend como en el frontend. El proyecto había acumulado varias funciones, estructuras y fragmentos desordenados, por lo que enfoqué el día en dejar todo en un formato profesional, prolijo y fácil de mantener.
+
+Reorganicé los archivos respetando una estructura lógica y coherente, y agregué comentarios descriptivos en cada función para explicar su funcionamiento interno. Además, incorporé en la parte superior de cada archivo una descripción clara de su propósito, con el objetivo de que cualquier persona que consulte el código en el futuro pueda comprender rápidamente su rol dentro del sistema.
+
+Posteriormente, trabajé en la mejora de la lógica de asignaciones, ya que presentaba fallas y no estaba adaptada al nuevo sistema de almacenamiento implementado previamente. Debido a estos cambios, la asignación de tags no estaba funcionando correctamente. Reescribí y ajusté la lógica para compatibilizarla con el nuevo método de almacenamiento, logrando que el proceso sea más fluido y estable.
+
+Si bien la funcionalidad quedó operativa, se encuentra en una versión beta 2.0, lo que significa que todavía requiere una etapa de refinamiento final para alcanzar su versión completamente estable.
