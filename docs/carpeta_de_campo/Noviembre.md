@@ -41,6 +41,8 @@ La función permite eliminar tags de forma individual o múltiple, según la nec
 Además, aproveché la jornada para restaurar funciones eliminadas previamente del archivo TypeScript por Titi, reinsertándolas en el código para recuperar el correcto funcionamiento general del sistema.
 
 <h2>Martes 11/11/25</h2>
+Facundo Ledesma:
+Hoy elaboré el modelo digital de la caja destinada a cubrir la ESP utilizando AutoCAD. Durante el proceso definí las dimensiones generales de la estructura según los requerimientos de la placa, diseñé las superficies y paredes con el espesor adecuado para garantizar rigidez y protección, e incorporé las aberturas necesarias para ventilación, puertos de conexión y montaje interno. Además, realicé los ajustes finales para asegurar la compatibilidad del diseño con el resto del sistema, dejando el modelo listo para su revisión técnica y posterior prototipado.
 
 Facu Spagno:
 
