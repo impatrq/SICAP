@@ -83,3 +83,7 @@ Como último paso, desarrollé la versión final del módulo de asignaciones (ve
 La lógica fue optimizada para que el inventario de cada persona se actualice de forma automática cada 2 segundos, garantizando una trazabilidad completamente inmediata entre el momento en que una persona entra o sale del pañol y el estado de los elementos que lleva consigo.
 
 Con esta versión 3.0, el comportamiento del sistema quedó totalmente estable, fluido y funcional, cerrando así la etapa de desarrollo del módulo de asignaciones con un resultado profesional y definitivo.
+
+Tiziano Patella:
+
+El día de hoy ayude a Facu Spagno con el sistema de asignaciones ya que debido a la nueva logica que de almacenamiento, su sistema para asignar herramientas dejo de funcionar. Tras el haber arreglado todo yo me puse a trabajar con mejorar las versiones de dispotivos moviles de la app.
