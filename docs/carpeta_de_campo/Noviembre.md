@@ -52,6 +52,10 @@ Además, desarrollé una nueva función de eliminación dentro de los apartados 
 
 También realicé ajustes en la Raspberry Pi, corrigiendo nuevamente el problema de la desconfiguración horaria. Para evitar que el inconveniente se repita, incorporé un miniscript automatizado que actualiza la hora del sistema cada vez que la Raspberry se desconecta y vuelve a conectarse. Con esta mejora, el servidor mantiene sincronizada su hora de manera continua, garantizando la precisión en los registros y evitando futuras inconsistencias.
 
+Patella Tiziano:
+
+Tras todos los días de trabajo previos en los que estuve tratando de implentar la nueva logica de almacenamiento logical sin exito, logre hacerlo finalmente hoy. La idea de cambiar la logica de almacenamiento de local a servidor era que al utilizar la app en diferentes dispotisivos existia la problematica de estos mostraban un distinto almacenamiento de los tags, esto debido a que el almacenamiento era local sobre el dispotivo donde se estaba ejecutando. Por esto, hice que en lugar de guardarse la información en cada dispotivo lo hiciese en el servidor, cosa de que no importa desde sin importar desde donde ingrese, la informacion siempre sera la misma 
+
 <h2>Miercoles 12/11/25</h2>
 
 Lautaro Santolucito:
