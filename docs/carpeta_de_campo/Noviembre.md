@@ -98,3 +98,8 @@ Con esta versión 3.0, el comportamiento del sistema quedó totalmente estable, 
 Tiziano Patella:
 
 El día de hoy ayude a Facu Spagno con el sistema de asignaciones ya que debido a la nueva logica que de almacenamiento, su sistema para asignar herramientas dejo de funcionar. Tras el haber arreglado todo yo me puse a trabajar con mejorar las versiones de dispotivos moviles de la app.
+
+Pablo Osores:
+
+Teniendo en cuenta que la muestra era al otro día, fuimos con FacuLed y Lauti a buscar los stickers de SICAP que habia mandado a imprimir Facu, una vez estando en la escuela, los tres nos encargamos de agregarle los NFC a cada uno de los stickers para que cuando una persona acerce su celular lo mande directamente al instagram del proyecto.
+Ademas junto con Lauti hicimos un inventario de las herramientas que ibamos a usar para mostrar el proyecto en la muestra, analizando la forma de poner las etiquetas RFID de manera que sea práctico para cualquier persona que la use y que tenga una buena lectura. Una vez todas las herramientas con etiquetas, junto con Facuspagno, Lauti y Titi nos encargamos de registrar todas las herramientas dentro de la base de datos del proyecto para poder mostrar el funcionamiento mediante la aplicacion web.
