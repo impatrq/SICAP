@@ -168,6 +168,9 @@ Llegada la tarde, tras haber hecho funcionar el sistema con exito y el tipo de t
 
 Ante esta problematica de ultimo momento decidimos que la mejor opción era juntarnos en una casa durante la noche para poder arreglar todo y llegar a la ONIET con un proyecto funcional.
 
+Pablo Osores:
+
+Teniendo en cuenta que al día siguiente eran las ONIET, desarmé el portal intentando que ocupe el menor espacio posible para poder transportarlo en el micro. A su vez teniendo en cuenta que mi presencia no era posible, a medida que fuí desarmando le iba indicando a Lauti el procedimiento para que el portal quede tal cual estaba armado en la escuela. Por último hice una lista de las herramientas necesarias para el armado y desarmado del portal.
 
 Lautaro Santolucito:
 
