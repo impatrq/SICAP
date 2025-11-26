@@ -68,6 +68,11 @@ Posteriormente, trabajé en la mejora de la lógica de asignaciones, ya que pres
 
 Si bien la funcionalidad quedó operativa, se encuentra en una versión beta 2.0, lo que significa que todavía requiere una etapa de refinamiento final para alcanzar su versión completamente estable.
 
+Tiziano Patella:
+
+Debido a la nueva logica implementada para el almacenamiento, algunas funciones previas ya existentes de la app dejaron de funcionar por lo que tuve que arreglarlas.
+La interfaz Visual ya no mostraba los tags y el moviento de una seccion a otra por lo que tras un largo analisis logre encontrar el problema y hacerla funcionar nuevamente. Ademas de eso, tuve que hablitar un nuevo valor de CORS debido a que por alguna extraña razon el router cambia constantemente la IP de la app por lo que tuve que ingresar la nueva dirrecion que se había genereado para así poder volver a ingresar a la app. 
+
 <h2>Jueves 13/11/25</h2>
 
 Facu Spagno:
