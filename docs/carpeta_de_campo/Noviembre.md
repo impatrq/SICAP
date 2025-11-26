@@ -54,6 +54,11 @@ También realicé ajustes en la Raspberry Pi, corrigiendo nuevamente el problema
 
 <h2>Miercoles 12/11/25</h2>
 
+Lautaro Santolucito:
+La jornada de hoy estuvo enfocada en completar por completo la sección de Revisión del Informe Descriptivo del proyecto. Esta tarea era la única parte pendiente para cumplir con todos los requisitos necesarios para la aprobación total de la documentación, por lo que trabajé en ajustar el contenido, mejorar la redacción técnica y asegurar que cada punto solicitado esté correctamente desarrollado.
+
+Con esta revisión final, el informe queda terminado y en condiciones de ser presentado.
+
 Facu Spagno:
 
 Durante la jornada me dediqué a realizar una reorganización completa del código, tanto en el backend como en el frontend. El proyecto había acumulado varias funciones, estructuras y fragmentos desordenados, por lo que enfoqué el día en dejar todo en un formato profesional, prolijo y fácil de mantener.
