@@ -26,6 +26,12 @@ En Canva me encargué de definir el concepto general del diseño, incluyendo la 
 Lautaro Santolucito:
 Durante la jornada desarmé toda la estructura del portal y la volví a armar correctamente, ya que había quedado floja y no garantizaba la estabilidad necesaria. Me aseguré de ajustar y reforzar cada punto de unión para dejar la estructura firme y alineada, optimizando su presentación y seguridad para futuras pruebas.
 
+Tiziano Patella: 
+
+El día de hoy quise resolver una de las problematias mas molestas que tenía la app y era que no siempre se podia abrir la misma en otro dispotivo( a veces funcionaba y otras no). Esto era uno de los mayores apartados de nuestro sistema por lo que tenía que estar listo para la muestra.
+
+Tras haber investigado me di cuenta que la posible solucion podria llegar a ser trabajar con las asignaciones de CORS, con esta iba a poder permitir que la app se abra en los sitios que yo quiera, por lo que tras habilitar un par de cosas logre que la IP desde donde se abre app sea reconozida como segura y se permita y despliegue rapido de esta en celulares. 
+
 <h2>Jueves 06/11/25</h2>
 Lautaro Santolucito:
 Durante el día me encargué de plote ar el BMW de SICAP para la muestra, aplicando los vinilos y detalles visuales que representan al proyecto.
